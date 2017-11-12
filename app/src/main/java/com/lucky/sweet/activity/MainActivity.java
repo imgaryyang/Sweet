@@ -10,7 +10,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        //测试
+        //测试垃圾玩意！！！！
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
