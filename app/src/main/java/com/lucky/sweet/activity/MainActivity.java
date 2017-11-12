@@ -10,7 +10,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        //
+        //收拾收拾
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //qiuyueqiuyue
