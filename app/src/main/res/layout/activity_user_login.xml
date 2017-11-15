@@ -59,31 +59,13 @@
             android:background="@drawable/bg_edittext_normal"
             android:hint="请输入邮箱账号"/>
 
-        <LinearLayout
+        <include
+            android:id="@+id/submit_area"
+            layout="@layout/layout_submit_button"
             android:layout_width="260dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ed_password">
+            android:layout_below="@id/ed_password"/>
 
-            <Button
-                android:textColor="@color/white"
-                android:background="@drawable/bg_button_user_register"
-                android:layout_width="0"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="注册"/>
 
-            <View
-                android:layout_width="0"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-
-            <Button
-
-                android:layout_width="0"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/bg_button_user_login"
-                android:text="登陆"/>
-        </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

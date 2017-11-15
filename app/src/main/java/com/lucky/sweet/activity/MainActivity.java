@@ -8,10 +8,8 @@ public class MainActivity extends BasicActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         //收拾qqq
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //qiuyueqiuyue
     }
 }

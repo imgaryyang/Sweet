@@ -77,31 +77,12 @@
             android:background="@drawable/bg_edittext_normal"
             android:hint="请输入验证码"/>
 
-        <LinearLayout
+        <include
+            android:id="@+id/submit_area"
+            layout="@layout/layout_submit_button"
             android:layout_width="260dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ed_authcode">
+            android:layout_below="@id/ed_authcode"/>
 
-            <Button
-                android:layout_width="0"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/bg_button_user_register"
-                android:text="注册"
-                android:textColor="@color/white"/>
-
-            <View
-                android:layout_width="0"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-
-            <Button
-
-                android:layout_width="0"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/bg_button_user_login"
-                android:text="登陆"/>
-        </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>
