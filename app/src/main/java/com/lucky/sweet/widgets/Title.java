@@ -14,7 +14,7 @@ import com.lucky.sweet.R;
 /**
  * Created by lenovo on 2016/2/22.
  */
-public class Title extends RelativeLayout {
+public class Title extends RelativeLayout{
 
     private RelativeLayout titleCustomLayoutAear = null;//自定义View区
     private View titleCustomView = null;//用户设置的自定义View
@@ -197,7 +197,9 @@ public class Title extends RelativeLayout {
                 if(titleName != null){
                     titleName.setTextColor(getResources().getColor(R.color.transparentAA));
                 }
-
+                /*buttonHolderLeft.text.setTextColor(Color.BLACK);
+                buttonHolderRight1.text.setTextColor(Color.BLACK);
+                buttonHolderRight2.text.setTextColor(Color.BLACK);*/
                 buttonHolderLeft.text.setTextColor(getResources().getColorStateList(R.color.selector_titletext_themelight));
                 buttonHolderRight1.text.setTextColor(getResources().getColorStateList(R.color.selector_titletext_themelight));
                 buttonHolderRight2.text.setTextColor(getResources().getColorStateList(R.color.selector_titletext_themelight));
@@ -209,7 +211,9 @@ public class Title extends RelativeLayout {
                 if(titleName != null){
                     titleName.setTextColor(Color.WHITE);
                 }
-
+                /*buttonHolderLeft.text.setTextColor(Color.WHITE);
+                buttonHolderRight1.text.setTextColor(Color.WHITE);
+                buttonHolderRight2.text.setTextColor(Color.WHITE);*/
                 buttonHolderLeft.text.setTextColor(getResources().getColorStateList(R.color.selector_titletext_themetransport));
                 buttonHolderRight1.text.setTextColor(getResources().getColorStateList(R.color.selector_titletext_themetransport));
                 buttonHolderRight2.text.setTextColor(getResources().getColorStateList(R.color.selector_titletext_themetransport));
@@ -221,7 +225,9 @@ public class Title extends RelativeLayout {
                 if(titleName != null){
                     titleName.setTextColor(Color.WHITE);
                 }
-
+                /*buttonHolderLeft.text.setTextColor(Color.WHITE);
+                buttonHolderRight1.text.setTextColor(Color.WHITE);
+                buttonHolderRight2.text.setTextColor(Color.WHITE);*/
                 buttonHolderLeft.text.setTextColor(getResources().getColorStateList(R.color.selector_titletext_themetransport));
                 buttonHolderRight1.text.setTextColor(getResources().getColorStateList(R.color.selector_titletext_themetransport));
                 buttonHolderRight2.text.setTextColor(getResources().getColorStateList(R.color.selector_titletext_themetransport));

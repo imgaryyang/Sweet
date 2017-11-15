@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="Myappcolor">#AACF25</color>
+
+
     <color name="gray0">#FFEEEEEE</color>
     <color name="gray1">#FFDDDDDD</color>
     <color name="gray2">#FFC0C0C0</color>
@@ -22,7 +25,8 @@
     <color name="transparent55">#55000000</color>
 
     <color name="backgroundBlack">#4c212121</color>
-    <color name="frameColor">#DCCEDC8</color>
+    <color name="frameColor">#4c212121</color>
+    <color name="frameColorwhite">#19EEEEEE</color>
 
 
 </resources>

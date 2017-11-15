@@ -2,6 +2,7 @@ package com.lucky.sweet.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.inputmethod.InputMethodManager;
 
@@ -9,17 +10,28 @@ import com.lucky.sweet.R;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
-public class UserRegisterActivity extends AppCompatActivity {
+/**
+ * Created by Qiuyue on 2017/11/15.
+ */
+
+// ╭︿︿︿╮  ╭︿︿︿╮  ╭︿︿︿╮
+// {/ o o /} {/ . . /} {/ ︿︿ /}
+// ( (oo) )  ( (oo) )  ( (oo) )
+//   ︶︶︶     ︶︶︶     ︶︶︶
+
+public class UserCheckPwdActivity extends AppCompatActivity {
     private Title title = null;
     private ToolBar toolBar;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_register);
+        setContentView(R.layout.activity_user_checkpwd);
         toolBar = new ToolBar(this);
         toolBar.setImmersionBar();
         initTitle();
+
     }
+
     private void initTitle(){
         title = (Title)findViewById(R.id.title);
         title.setTitleNameStr("注册");

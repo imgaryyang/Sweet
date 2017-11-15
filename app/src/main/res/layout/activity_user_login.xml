@@ -1,71 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundBlack"
+    android:background="@mipmap/user_bg"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context="com.lucky.sweet.activity.UserLoginActivity">
+
+    <!--<include layout="@layout/layout_title"/>-->
 
     <ImageView
         android:id="@+id/im_logo"
         android:layout_width="175dp"
         android:layout_height="175dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="53dp"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center"
         android:clickable="false"
         android:focusable="false"
-        android:src="@mipmap/loginlog"/>
+        android:src="@mipmap/logo_user_login"/>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
+<FrameLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="40dp">
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@mipmap/ic_user"
+        android:layout_marginLeft="15dp"
+        android:layout_gravity="left|center"/>
+
+    <EditText
+        android:id="@+id/ed_userID"
+        android:layout_width="260dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_edittext_normal"
+        android:hint="请输入邮箱账号"
+        android:textSize="14dp"
+        android:paddingLeft="45dp"
+        android:textColorHint="@color/white"/>
+    <Button
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:background="@mipmap/clear_content"
+        android:layout_gravity="right|center"
+        android:visibility="gone"
+        android:layout_marginRight="15dp"/>
+
+</FrameLayout>
+
+
+<FrameLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="25dp">
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@mipmap/ic_pwd"
+        android:layout_marginLeft="15dp"
+        android:layout_gravity="left|center"/>
+
+    <EditText
+        android:id="@+id/ed_password"
+        android:layout_width="260dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_edittext_normal"
+        android:hint="请输入密码"
+        android:textSize="14dp"
+        android:paddingLeft="45dp"
+        android:textColorHint="@color/white"/>
+    <Button
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:visibility="gone"
+        android:background="@mipmap/clear_content"
+        android:layout_gravity="right|center"
+        android:layout_marginRight="15dp"/>
+
+</FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/im_logo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp">
+        android:orientation="horizontal"
+        android:layout_marginTop="25dp">
 
         <TextView
-            android:id="@+id/tv_email"
+            android:id="@+id/loginTextViewRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="邮箱号："
+            android:text="立即注册"
+            android:layout_marginLeft="50dp"
             android:textColor="@color/white"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right">
+            <TextView
+                android:id="@+id/loginTextViewForgetPwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="忘记密码"
+                android:layout_marginRight="50dp"
+                android:textColor="@color/white"/>
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/ed_userID"
-            android:layout_width="260dp"
-            android:layout_height="40dp"
-            android:layout_below="@id/tv_email"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_edittext_normal"
-            android:hint="请输入邮箱账号"
-            android:paddingTop="10dp"/>
+    </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_password"
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/shape_btn_login"
+        android:text="登 录"
+        android:textSize="15dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp">
+
+        <ImageView
+            android:id="@+id/loginImageButtonLoginWeiXin"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="128dp"
+            android:src="@drawable/selector_ic_thir_wechat"/>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ed_userID"
-            android:layout_marginTop="10dp"
-            android:text="密码："
-            android:textColor="@color/white"/>
+            android:gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
 
-        <EditText
-            android:id="@+id/ed_password"
-            android:layout_width="260dp"
-            android:layout_height="40dp"
-            android:layout_below="@id/tv_password"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_edittext_normal"
-            android:hint="请输入邮箱账号"/>
-
-        <include
-            android:id="@+id/submit_area"
-            layout="@layout/layout_submit_button"
-            android:layout_width="260dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ed_password"/>
+            <ImageView
+                android:id="@+id/loginImageButtonLoginQQ"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/selector_ic_thir_qq"/>
+        </LinearLayout>
 
 
-    </RelativeLayout>
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/loginImageButtonLoginXinLang"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/selector_ic_thir_weibo"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

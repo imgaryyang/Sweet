@@ -28,7 +28,94 @@ import android.widget.FrameLayout;
 
 public class ToolBar {
 
+/*
+    public static final int COLOR = 1;
+    public static final int TRANSPARENT = 2;
+    public static final int IMMERSION = 3;
+    public static final int HINT = 4;
+
+
+
+    private int type;
+
+    @ColorInt
+    private int color;
+
+    private int alpha;
+
+
+    private ToolBar(Builder builder) {
+        this.type = builder.type;
+        this.color = builder.color;
+        this.alpha = builder.alpha;
+
+    }
+
+
+
+
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
+
+
+    public void into(Activity activity) {
+        if (type == COLOR) {
+            setColorBar(activity, color, alpha);
+        } else if (type == TRANSPARENT) {
+            setTransparentBar(activity, color, alpha);
+        } else if (type == IMMERSION) {
+            setImmersionBar(activity);
+        } else if (type == HINT) {
+            setHintBar(activity);
+        } else {
+            throw new NullPointerException("you must set a correct type");
+        }
+    }
+
+
+    public static class Builder {
+
+        private int type;
+
+        @ColorInt
+        private int color;
+
+        private int alpha;
+
+        private Builder() {}
+
+        public Builder type(int type) {
+            this.type = type;
+            return this;
+        }
+
+
+
+        public Builder color(@ColorInt int color) {
+            this.color = color;
+            return this;
+        }
+
+
+        public Builder alpha(int alpha) {
+            this.alpha = alpha;
+            return this;
+        }
+
+
+        public ToolBar build() {
+            return new ToolBar(this);
+        }
+
+    }*/
+
+
+
+
     private Activity activity;
+//    public ToolBar() {}
 
     public ToolBar(Activity activity) {
         this.activity = activity;

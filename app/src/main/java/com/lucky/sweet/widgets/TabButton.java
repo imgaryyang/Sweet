@@ -15,9 +15,9 @@ import com.lucky.sweet.R;
  */
 public class TabButton extends RelativeLayout {
 
-    public static final int TYPE_ALL        = 1;//同时显示图片文字
-    public static final int TYPE_IMG        = 2;//仅显示图片
-    public static final int TYPE_TEXT       = 3;//仅显示文字
+    public static final int TYPE_ALL = 1;//同时显示图片文字
+    public static final int TYPE_IMG = 2;//仅显示图片
+    public static final int TYPE_TEXT = 3;//仅显示文字
 
     private int positionTag;//TabButton唯一标识
 
@@ -26,7 +26,7 @@ public class TabButton extends RelativeLayout {
      * TYPE_IMG_TEXT,TYPE_IMG,TYPE_TEXT
      */
     private int mButtonType = TYPE_ALL;//按钮类型
-    private boolean mSelecteAble = true;//是否支持选中
+    private boolean mSelectAble = true;//是否支持选中
     private TabButtonData parmas = null;//按钮配置参数
 
     private boolean checked = false;  //是否处于选中状态
@@ -36,17 +36,17 @@ public class TabButton extends RelativeLayout {
     private OnClickListener mClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(mSelecteAble){
+            if (mSelectAble) {
                 checked = !checked;
                 refreshView();
             }
-            if(null != mOnTabClickLinstener){
-                mOnTabClickLinstener.onTabClick(TabButton.this, positionTag, parmas == null ? null : parmas.tag);
+            if (null != mOnTabClickListener) {
+                mOnTabClickListener.onTabClick(TabButton.this, positionTag, parmas == null ? null : parmas.tag);
             }
         }
     };
 
-    private OnTabClickLinstener mOnTabClickLinstener = null;
+    private OnTabClickListener mOnTabClickListener = null;
 
 
     //布局、图片、文本
@@ -64,45 +64,45 @@ public class TabButton extends RelativeLayout {
         initViews();
     }
 
-    private void initViews(){
+    private void initViews() {
         mCellFront = findViewById(R.id.tabFrontCell);
-        mCellFrontImg = (ImageView)findViewById(R.id.tabFrontImg);
-        mCellFrontText = (TextView)findViewById(R.id.tabFrontTxt);
+        mCellFrontImg = (ImageView) findViewById(R.id.tabFrontImg);
+        mCellFrontText = (TextView) findViewById(R.id.tabFrontTxt);
         this.setOnClickListener(mClickListener);
     }
 
-    public void setButtonData(TabButtonData parmas){
+    public void setButtonData(TabButtonData parmas) {
         this.parmas = parmas;
-        this.mSelecteAble = parmas.mSelecteAble;
-        this.mButtonType = parmas.mButtonType;
+        this.mSelectAble = parmas.selectAble;
+        this.mButtonType = parmas.buttonType;
         this.checked = parmas.checked;
         refreshView();
     }
 
-    public void setOnTabClickLinstener(OnTabClickLinstener onTabClickLinstener){
-        this.mOnTabClickLinstener = onTabClickLinstener;
+    public void setOnTabClickListener(OnTabClickListener onTabClickListener) {
+        this.mOnTabClickListener = onTabClickListener;
     }
 
-    public void setPositionTag(int positionTag){
+    public void setPositionTag(int positionTag) {
         this.positionTag = positionTag;
     }
 
 
-    public boolean isChecked(){
+    public boolean isChecked() {
         return checked;
     }
 
-    public void setChecked(boolean is){
+    public void setChecked(boolean is) {
         this.checked = is;
         refreshView();
     }
 
-    public void refreshView(){
-        if(checked){
+    public void refreshView() {
+        if (checked) {
             mCellFrontText.setText(parmas.textChecked);
             mCellFrontText.setTextColor(parmas.colorChecked);
             mCellFrontImg.setImageResource(parmas.imgChecked);
-        }else{
+        } else {
             mCellFrontText.setText(parmas.textNormal);
             mCellFrontText.setTextColor(parmas.colorNormal);
             mCellFrontImg.setImageResource(parmas.imgNormal);
@@ -112,15 +112,15 @@ public class TabButton extends RelativeLayout {
     /**
      * Tab点击监听事件
      */
-    public static abstract class OnTabClickLinstener {
+    public static abstract class OnTabClickListener {
         public abstract void onTabClick(View view, int positionTag, String tag);
     }
 
-    public static class TabButtonData{
+    public static class TabButtonData {
         public boolean checked = false;
         public String tag = null;
-        public boolean mSelecteAble = true;//是否支持选中
-        public int mButtonType = TYPE_ALL;//按钮类型
+        public boolean selectAble = true;//是否支持选中
+        public int buttonType = TYPE_ALL;//按钮类型
 
         public String textNormal;
         public String textChecked;

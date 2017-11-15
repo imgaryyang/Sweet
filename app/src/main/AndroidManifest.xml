@@ -10,21 +10,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.BasicActivity"
             android:label="@string/title_activity_basic"
             android:theme="@style/AppTheme">
         </activity>
+
         <activity android:name=".activity.UserLoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".activity.UserRegisterActivity">
+
         </activity>
+        <activity android:name=".activity.UserCheckPwdActivity">
+
+        </activity>
+
     </application>
 
 </manifest>
