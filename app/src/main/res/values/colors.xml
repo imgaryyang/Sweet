@@ -21,7 +21,8 @@
     <color name="transparentAA">#AA000000</color>
     <color name="transparent55">#55000000</color>
 
-
+    <color name="backgroundBlack">#4c212121</color>
+    <color name="frameColor">#DCCEDC8</color>
 
 
 </resources>

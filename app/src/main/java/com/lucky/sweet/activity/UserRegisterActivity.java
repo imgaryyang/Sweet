@@ -1,17 +1,15 @@
 package com.lucky.sweet.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.lucky.sweet.R;
 
-public class MainActivity extends BasicActivity {
+public class UserRegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        //收拾qqq
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        //qiuyueqiuyue
+        setContentView(R.layout.activity_user_register);
     }
 }
