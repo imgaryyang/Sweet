@@ -35,7 +35,7 @@
         android:layout_gravity="left|center"/>
 
     <EditText
-        android:id="@+id/ed_userID"
+        android:id="@+id/edt_userEmail"
         android:layout_width="260dp"
         android:layout_height="40dp"
         android:background="@drawable/bg_edittext_normal"
@@ -67,7 +67,8 @@
         android:layout_gravity="left|center"/>
 
     <EditText
-        android:id="@+id/ed_password"
+        android:inputType="textPassword"
+        android:id="@+id/edt_password"
         android:layout_width="260dp"
         android:layout_height="40dp"
         android:background="@drawable/bg_edittext_normal"
@@ -92,7 +93,8 @@
         android:layout_marginTop="25dp">
 
         <TextView
-            android:id="@+id/loginTextViewRegister"
+            android:clickable="true"
+            android:id="@+id/tv_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="立即注册"
@@ -121,7 +123,8 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/shape_btn_login"
         android:text="登 录"
-        android:textSize="15dp"/>
+        android:textSize="15dp"
+        android:onClick="login"/>
 
     <LinearLayout
         android:layout_width="match_parent"

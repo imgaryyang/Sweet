@@ -12,4 +12,5 @@ import android.app.Fragment;
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
 public class CircleFragment extends Fragment {
+
 }
