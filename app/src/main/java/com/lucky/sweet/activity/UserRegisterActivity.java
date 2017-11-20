@@ -1,7 +1,6 @@
 package com.lucky.sweet.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -9,7 +8,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.manager.LoginRegisterManager;
+import com.lucky.sweet.moudel.LoginRegisterHandler;
+import com.lucky.sweet.moudel.LoginRegisterManager;
+import com.lucky.sweet.utility.EmailUtiliy;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -18,12 +19,14 @@ public class UserRegisterActivity extends BasicActivity {
     private ToolBar toolBar;
     private EditText edt_userEmail;
     private EditText edt_verPassword;
+    private LoginRegisterManager loginRegisterManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_register);
-
+        loginRegisterManager = new LoginRegisterManager(this, new LoginRegisterHandler(this)
+        );
         initView();
 
         initTitle();
@@ -37,29 +40,29 @@ public class UserRegisterActivity extends BasicActivity {
         edt_verPassword = findViewById(R.id.edt_userEmail);
 
     }
-    public void delete(View view){
+
+    public void delete(View view) {
         edt_userEmail.setText("");
     }
+
     public void getVerification(View view) {
         String email = edt_userEmail.getText().toString().trim();
-        if (!email.isEmpty())
-            LoginRegisterManager.CheckOutEmail(email);
-        else
+        if (!email.isEmpty()) {
+            if (EmailUtiliy.checkEmail(email))
+                loginRegisterManager.CheckOutEmail(email);
+            else
+                Toast.makeText(this, "请输入正确邮箱", Toast.LENGTH_SHORT).show();
+        } else
             Toast.makeText(this, "请输入账号", Toast.LENGTH_SHORT).show();
     }
 
     public void nextStep(View view) {
         String email = edt_userEmail.getText().toString().trim();
         String verPsw = edt_verPassword.getText().toString().trim();
-        if (!email.isEmpty() && !verPsw.isEmpty())
-        {
-        Intent intent = new Intent(UserRegisterActivity.this,
-                UserCheckPwdActivity.class);
-        intent.putExtra("userEmail",email);
-        startActivity(intent);
-        }
-        else
-            Toast.makeText(this, "信息不完整", Toast.LENGTH_SHORT).show();
+        if (!email.isEmpty() && !verPsw.isEmpty()) {
+            loginRegisterManager.CheckOutEmailFirPsw(email,verPsw);
+        } else
+            Toast.makeText(this, "请填写完整信息", Toast.LENGTH_SHORT).show();
     }
 
     private void initTitle() {

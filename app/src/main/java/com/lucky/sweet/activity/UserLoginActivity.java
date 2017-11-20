@@ -7,7 +7,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.manager.LoginRegisterManager;
+import com.lucky.sweet.moudel.LoginRegisterHandler;
+import com.lucky.sweet.moudel.LoginRegisterManager;
 import com.lucky.sweet.widgets.ToolBar;
 
 public class UserLoginActivity extends BasicActivity {
@@ -15,12 +16,13 @@ public class UserLoginActivity extends BasicActivity {
     private ToolBar toolBar;
     private EditText edt_userEmail;
     private EditText edt_password;
+    private LoginRegisterManager loginRegisterManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
-
+        loginRegisterManager = new LoginRegisterManager(this, new LoginRegisterHandler(this));
         initView();
 
         initEvent();
@@ -50,11 +52,11 @@ public class UserLoginActivity extends BasicActivity {
         String userID = edt_userEmail.getText().toString().trim();
         String password = edt_password.getText().toString().trim();
         if (!userID.isEmpty() && !password.isEmpty()) {
-            if (LoginRegisterManager.userLogin(userID, password)) {
+            /*if (loginRegisterManager.userLogin(userID, password)) {
                 Toast.makeText(this, "登入成功", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "登入失败", Toast.LENGTH_SHORT).show();
-            }
+            }*/
         } else {
             Toast.makeText(this, "请输入账号或者密码", Toast.LENGTH_SHORT).show();
         }

@@ -48,6 +48,7 @@
             android:layout_marginRight="15dp"/>
 
         <EditText
+            android:singleLine="true"
             android:id="@+id/edt_psw"
             android:layout_width="320dp"
             android:layout_height="40dp"
@@ -73,6 +74,7 @@
             android:layout_gravity="left|center"/>
 
         <EditText
+            android:singleLine="true"
             android:id="@+id/edt_verifypsw"
             android:layout_width="320dp"
             android:layout_height="40dp"

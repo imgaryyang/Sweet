@@ -22,6 +22,7 @@ public class EmailUtiliy {
         }catch(Exception e){
             flag = false;
         }
+        System.out.println(flag);
         return flag;
     }
 

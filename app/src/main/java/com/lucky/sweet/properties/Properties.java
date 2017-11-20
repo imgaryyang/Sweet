@@ -18,5 +18,9 @@ public class Properties {
     public static final String MAILVERIFICATION = "http://thethreestooges" +
             ".cn/consumer/bean/login/mail_verification.php";
 
+    public static final int USERLOGIN=1;
+    public static final int CHECKOUTEMAIL=2;
+    public static final int CHECKOUTEMAILFIRPSW=3;
+    public static final int REGESTUSER =4;
 
 }
