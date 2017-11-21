@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.moudel.LoginRegisterHandler;
+import com.lucky.sweet.moudel.LoginRegisterManager;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -28,19 +30,31 @@ public class UserCheckPwdActivity extends BasicActivity {
     private ToolBar toolBar;
     private EditText edt_psw;
     private EditText edt_verifypsw;
+    private LoginRegisterManager loginRegisterManager;
+    private String userEmail;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_checkpwd);
-        Intent intent = getIntent();
-        String userEmail = intent.getStringExtra("userEmail");
-        Log.i("userEmail",userEmail);
+
+        getData();
 
         initView();
 
         initTitle();
 
+        initialize();
+    }
+
+    private void initialize() {
+        loginRegisterManager = new LoginRegisterManager(this, new LoginRegisterHandler(this));
+    }
+
+    private void getData() {
+        Intent intent = getIntent();
+        userEmail = intent.getStringExtra("userEmail");
+        Log.i("userEmail", userEmail);
     }
 
     private void initView() {
@@ -56,7 +70,7 @@ public class UserCheckPwdActivity extends BasicActivity {
         String verifypsw = edt_verifypsw.getText().toString().trim();
         if (psw.equals(verifypsw)) {
             Toast.makeText(this, "successful", Toast.LENGTH_SHORT).show();
-
+            loginRegisterManager.UserRegister(userEmail, psw);
         } else {
             Toast.makeText(this, "两次密码不同", Toast.LENGTH_SHORT).show();
         }

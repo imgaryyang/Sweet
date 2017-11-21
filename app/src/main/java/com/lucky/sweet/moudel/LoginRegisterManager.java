@@ -2,6 +2,8 @@ package com.lucky.sweet.moudel;
 
 import android.content.Context;
 import android.os.Message;
+import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.lucky.sweet.properties.Properties;
 
@@ -10,7 +12,6 @@ import java.io.IOException;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -24,6 +25,16 @@ import okhttp3.Response;
 public class LoginRegisterManager {
     private Context context;
     private LoginRegisterHandler handler;
+    /**
+     * USERLOGIN ：用户登陆
+     * CHECKOUTEMAIL ：邮箱检测
+     * EMAILVER ：确认验证码
+     * USERREGISTER ：用户注册
+     */
+    public final static int USERLOGIN = 1;
+    public final static int CHECKOUTEMAIL = 2;
+    public final static int EMAILVER = 3;
+    public final static int USERREGISTER = 4;
 
     public LoginRegisterManager(Context context, LoginRegisterHandler handler) {
         this.context = context;
@@ -31,30 +42,44 @@ public class LoginRegisterManager {
     }
 
     /**
-     * 用户登陆验证
+     * 发送数据请求
      *
-     * @param mailAddress 用户账号
-     * @param password    用户密码
-     * @return 情况反馈
-     * 登陆成功时候 返回 0
-     * 密码错误 返回 1
-     * 用户不存在 返回 2
-     * 提交字段有误 返回 3
+     * @param type     数据请求类型
+     * @param email    邮箱
+     * @param password 密码
      */
-    public void UserLogin(final String mailAddress, final String password) {
+    private void sendRequest(final int type, final String email, @Nullable final
+    String password) {
         new Thread() {
             @Override
             public void run() {
                 try {
                     OkHttpClient client = new OkHttpClient();
-                    RequestBody requestBody = new FormBody.Builder().add("username", mailAddress).add("password", password).build();
-                    Request request = new Request.Builder().url(Properties.LOGINREQUESTPATH).post(requestBody).build();
+                    Request request = null;
+                    switch (type) {
+                        case USERLOGIN:
+                            request = new Request.Builder().url(Properties.LOGINREQUESTPATH).post(new FormBody.Builder().add("username", email).add("password", password).build()).build();
+                            break;
+                        case CHECKOUTEMAIL:
+                            request = new Request.Builder().url(Properties.CHECKOUTEMAILPATH).post(new FormBody.Builder().add("mail_address", email).build()).build();
+                            break;
+                        case EMAILVER:
+                            request = new Request.Builder().url(Properties.MAILVERPATH).post(new FormBody.Builder().add("mail_address", email).add(" mail_ver", password).build()).build();
+                            break;
+                        case USERREGISTER:
+                            request = new Request.Builder().url(Properties.USERREGISTERPATH).post(new FormBody.Builder().add("mail_address", email).add(" password", password).build()).build();
+                            break;
+                        default:
+                            break;
+                    }
+
                     Response response = client.newCall(request).execute();
+
                     if (response.isSuccessful()) {
                         String str = response.body().string();
-                        System.out.println("服务器响应为: " + str);
+                        Log.i("ServerBackCode:", str);
                         Message message = new Message();
-                        message.what = Properties.USERLOGIN;
+                        message.what = type;
                         message.arg1 = Integer.parseInt(str);
                         handler.sendMessage(message);
                     }
@@ -65,44 +90,27 @@ public class LoginRegisterManager {
         }.start();
     }
 
-    static final int SUBMITSUCCESSFUL = 0;
-    static final int EMAILEXIST = 1;
-    static final int STRINGERROR = 3;
+    /**
+     * 用户登陆
+     *
+     * @param email    用户邮箱
+     * @param password 密码
+     */
+    public void UserLogin(String email, String password) {
+
+        sendRequest(USERLOGIN, email, password);
+
+
+    }
 
     /**
      * 请求验证码
      *
      * @param email 邮箱字符串
-     * @return 情况反馈
-     * 邮箱已存在返回 1
-     * 发送成功返回   0
-     * 提交字段有误 返回 3
      */
-    public void CheckOutEmail(final String email) {
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    OkHttpClient client = new OkHttpClient();
-                    RequestBody requestBody = new FormBody.Builder().add
-                            ("mail_address",
-                                    email).build();
-                    Request request = new Request.Builder().url(Properties
-                            .MAILSUBMITPATH).post(requestBody).build();
-                    Response response = client.newCall(request).execute();
-                    if (response.isSuccessful()) {
-                        String str = response.body().string();
-                        System.out.println("服务器响应为: " + str);
-                        Message msg = new Message();
-                        msg.what = Properties.CHECKOUTEMAIL;
-                        msg.arg1 = Integer.parseInt(str);
-                        handler.sendMessage(msg);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
+    public void CheckOutEmail(String email) {
+
+        sendRequest(CHECKOUTEMAIL, email, null);
 
     }
 
@@ -113,31 +121,9 @@ public class LoginRegisterManager {
      * @param verPassword 验证码
      * @return
      */
-    public void CheckOutEmailFirPsw(final String email, final String verPassword) {
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    OkHttpClient client = new OkHttpClient();
-                    RequestBody requestBody = new FormBody.Builder().add("mail_address",
-                            email).add(" mail_ver", verPassword).build();
-                    Request request = new Request.Builder().url(Properties
-                            .MAILVERIFICATION).post(requestBody).build();
-                    Response response = client.newCall(request).execute();
-                    if (response.isSuccessful()) {
-                        String str = response.body().string();
-                        Message msg = new Message();
-                        msg.what = Properties.CHECKOUTEMAILFIRPSW;
-                        msg.arg1 = Integer.parseInt(str);
-                        handler.sendMessage(msg);
-                        System.out.println("服务器响应为: " + str);
-                    }
+    public void emailVer(String email, String verPassword) {
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
+        sendRequest(EMAILVER, email, verPassword);
 
     }
 
@@ -145,40 +131,16 @@ public class LoginRegisterManager {
      * 提交邮箱和密码
      *
      * @param email    邮箱
-     * @param Password 密码
-     * @return 情况反馈
-     * 成功返回 0
-     * 验证码未通过匹配 1
-     * 邮箱不存在或已过期返回 2
-     * 提交字段有误 返回 3
+     * @param password 密码
      */
-    public void RegestUser(final String email, final String Password) {
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    OkHttpClient client = new OkHttpClient();
-                    RequestBody requestBody = new FormBody.Builder().add("mail_address", email).add(" password", Password).build();
-                    Request request = new Request.Builder().url(Properties.REGISTERQUESTPATH).post(requestBody).build();
-                    Response response = client.newCall(request).execute();
-                    if (response.isSuccessful()) {
-                        String str = response.body().string();
-                        Message msg = new Message();
-                        msg.what = Properties.REGESTUSER;
-                        msg.arg1 = Integer.parseInt(str);
-                        handler.sendMessage(msg);
+    public void UserRegister(String email, String password) {
 
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
+        sendRequest(USERREGISTER, email, password);
 
     }
 
     /**
-     *
+     * 删除表
      */
     public static void deleteTable() {
         new Thread() {
@@ -186,7 +148,6 @@ public class LoginRegisterManager {
             public void run() {
                 try {
                     OkHttpClient client = new OkHttpClient();
-
                     Request request = new Request.Builder().url("  http://thethreestooges.cn/consumer/test/temp_delete.php").get().build();
                     Response response = client.newCall(request).execute();
                     if (response.isSuccessful()) {

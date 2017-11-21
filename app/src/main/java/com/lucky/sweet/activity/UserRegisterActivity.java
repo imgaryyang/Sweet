@@ -25,8 +25,8 @@ public class UserRegisterActivity extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_register);
-        loginRegisterManager = new LoginRegisterManager(this, new LoginRegisterHandler(this)
-        );
+
+        loginRegisterManager = new LoginRegisterManager(this, new LoginRegisterHandler(this));
         initView();
 
         initTitle();
@@ -37,7 +37,20 @@ public class UserRegisterActivity extends BasicActivity {
         toolBar = new ToolBar(this);
         toolBar.setImmersionBar();
         edt_userEmail = findViewById(R.id.edt_userEmail);
-        edt_verPassword = findViewById(R.id.edt_userEmail);
+        edt_verPassword = findViewById(R.id.edt_verPassword);
+        findViewById(R.id.btn_nextStep).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = edt_userEmail.getText().toString().trim();
+                String verPsw = edt_verPassword.getText().toString().trim();
+                if (!email.isEmpty() && !verPsw.isEmpty()) {
+                    System.out.println("email:"+email+"verPsw"+verPsw);
+                    loginRegisterManager.emailVer(email,verPsw);
+                } else
+                    Toast.makeText(UserRegisterActivity.this, "请填写完整信息", Toast
+                            .LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -57,12 +70,12 @@ public class UserRegisterActivity extends BasicActivity {
     }
 
     public void nextStep(View view) {
-        String email = edt_userEmail.getText().toString().trim();
+       /* String email = edt_userEmail.getText().toString().trim();
         String verPsw = edt_verPassword.getText().toString().trim();
         if (!email.isEmpty() && !verPsw.isEmpty()) {
             loginRegisterManager.CheckOutEmailFirPsw(email,verPsw);
         } else
-            Toast.makeText(this, "请填写完整信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请填写完整信息", Toast.LENGTH_SHORT).show();*/
     }
 
     private void initTitle() {

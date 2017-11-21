@@ -52,11 +52,7 @@ public class UserLoginActivity extends BasicActivity {
         String userID = edt_userEmail.getText().toString().trim();
         String password = edt_password.getText().toString().trim();
         if (!userID.isEmpty() && !password.isEmpty()) {
-            /*if (loginRegisterManager.userLogin(userID, password)) {
-                Toast.makeText(this, "登入成功", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "登入失败", Toast.LENGTH_SHORT).show();
-            }*/
+            loginRegisterManager.UserLogin(userID, password);
         } else {
             Toast.makeText(this, "请输入账号或者密码", Toast.LENGTH_SHORT).show();
         }
