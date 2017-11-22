@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.lucky.sweet.activity.MainActivity;
 import com.lucky.sweet.activity.UserCheckPwdActivity;
+import com.lucky.sweet.entitty.UserInfo;
 import com.lucky.sweet.properties.Properties;
 
 /**
@@ -26,7 +27,7 @@ public class LoginRegisterHandler extends Handler {
    * 验证码发送频率过快 2
    */
     private static final int SUBMITSUCCESSFUL = 0;
-    private static final int EMAILEXIST = 1;
+    private static final int EMAILEXIST = 3;
     private static final int FREQUENCYFAST = 2;
     /*
       *执行成功返回 0
@@ -109,16 +110,17 @@ public class LoginRegisterHandler extends Handler {
             case LoginRegisterManager.EMAILVER:
                 switch (msg.arg1) {
                     case VERSSUCCEED:
-                        Toast.makeText(context, "成功！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "验证成功！", Toast.LENGTH_SHORT)
+                                .show();
                         Intent intent = new Intent(context, UserCheckPwdActivity.class);
-                        intent.putExtra("userEmail", (String) msg.obj);
+                        intent.putExtra("userEmail", ((UserInfo) msg.obj).getUserName());
                         context.startActivity(intent);
                         break;
                     case VERSFAILD:
-                        Toast.makeText(context, "验证码不匹配", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "验证码正确但写入失败", Toast.LENGTH_SHORT).show();
                         break;
                     case VERTIMOUT:
-                        Toast.makeText(context, "验证码过期或邮箱不存在返回", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "验证码过期并重新发送成功返回", Toast.LENGTH_SHORT).show();
                         break;
                     default:
                         Toast.makeText(context, "验证失败", Toast.LENGTH_SHORT)

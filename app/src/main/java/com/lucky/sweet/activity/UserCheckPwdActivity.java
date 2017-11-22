@@ -69,7 +69,6 @@ public class UserCheckPwdActivity extends BasicActivity {
         String psw = edt_psw.getText().toString().trim();
         String verifypsw = edt_verifypsw.getText().toString().trim();
         if (psw.equals(verifypsw)) {
-            Toast.makeText(this, "successful", Toast.LENGTH_SHORT).show();
             loginRegisterManager.UserRegister(userEmail, psw);
         } else {
             Toast.makeText(this, "两次密码不同", Toast.LENGTH_SHORT).show();

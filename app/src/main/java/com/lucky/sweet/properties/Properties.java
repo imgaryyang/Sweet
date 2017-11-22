@@ -12,7 +12,7 @@ public class Properties {
     public static final String LOGINREQUESTPATH =
             "http://thethreestooges.cn/consumer/bean/login/login.php";
     public static final String USERREGISTERPATH =
-            "http://thethreestooges.cn/consumer/bean/login/user_build.php";
+            "http://thethreestooges.cn/consumer/bean/login/user_write.php";
     public static final String CHECKOUTEMAILPATH =
             "http://thethreestooges.cn/consumer/bean/login/mail_submit.php";
     public static final String MAILVERPATH =

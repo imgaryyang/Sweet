@@ -5,6 +5,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.lucky.sweet.entitty.UserInfo;
 import com.lucky.sweet.properties.Properties;
 
 import java.io.IOException;
@@ -81,7 +82,10 @@ public class LoginRegisterManager {
                         Message message = new Message();
                         message.what = type;
                         message.arg1 = Integer.parseInt(str);
+                        message.obj= new UserInfo(email, password);
                         handler.sendMessage(message);
+                    }else {
+                        System.out.println("发送失败");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
