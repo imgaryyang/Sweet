@@ -7,8 +7,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.moudel.LoginRegisterHandler;
-import com.lucky.sweet.moudel.LoginRegisterManager;
+import com.lucky.sweet.moudel.loginregister.LoginRegisterHandler;
+import com.lucky.sweet.moudel.loginregister.LoginRegisterManager;
 import com.lucky.sweet.widgets.ToolBar;
 
 public class UserLoginActivity extends BasicActivity {

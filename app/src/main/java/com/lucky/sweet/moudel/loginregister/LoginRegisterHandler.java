@@ -1,4 +1,4 @@
-package com.lucky.sweet.moudel;
+package com.lucky.sweet.moudel.loginregister;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,9 +7,7 @@ import android.os.Message;
 import android.widget.Toast;
 
 import com.lucky.sweet.activity.MainActivity;
-import com.lucky.sweet.activity.UserCheckPwdActivity;
-import com.lucky.sweet.entitty.UserInfo;
-import com.lucky.sweet.properties.Properties;
+import com.lucky.sweet.activity.UserRegisterActivity;
 
 /**
  * Created by c on 2017/11/20.
@@ -110,11 +108,16 @@ public class LoginRegisterHandler extends Handler {
             case LoginRegisterManager.EMAILVER:
                 switch (msg.arg1) {
                     case VERSSUCCEED:
-                        Toast.makeText(context, "验证成功！", Toast.LENGTH_SHORT)
+                        if (context instanceof UserRegisterActivity) {
+                            Toast.makeText(context, "验证成功！", Toast.LENGTH_SHORT).show();
+                            ((UserRegisterActivity)context).moveToNextStep();
+                            ((UserRegisterActivity)context).setEmail(((String) msg.obj));
+                        }
+                     /*   Toast.makeText(context, "验证成功！", Toast.LENGTH_SHORT)
                                 .show();
                         Intent intent = new Intent(context, UserCheckPwdActivity.class);
-                        intent.putExtra("userEmail", ((UserInfo) msg.obj).getUserName());
-                        context.startActivity(intent);
+                        intent.putExtra("userEmail", );
+                        context.startActivity(intent);*/
                         break;
                     case VERSFAILD:
                         Toast.makeText(context, "验证码正确但写入失败", Toast.LENGTH_SHORT).show();

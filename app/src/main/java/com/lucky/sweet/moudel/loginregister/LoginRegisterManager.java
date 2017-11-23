@@ -1,11 +1,10 @@
-package com.lucky.sweet.moudel;
+package com.lucky.sweet.moudel.loginregister;
 
 import android.content.Context;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.lucky.sweet.entitty.UserInfo;
 import com.lucky.sweet.properties.Properties;
 
 import java.io.IOException;
@@ -82,7 +81,7 @@ public class LoginRegisterManager {
                         Message message = new Message();
                         message.what = type;
                         message.arg1 = Integer.parseInt(str);
-                        message.obj= new UserInfo(email, password);
+                        message.obj= /*new UserInfo(email, password)*/email;
                         handler.sendMessage(message);
                     }else {
                         System.out.println("发送失败");
@@ -152,7 +151,7 @@ public class LoginRegisterManager {
             public void run() {
                 try {
                     OkHttpClient client = new OkHttpClient();
-                    Request request = new Request.Builder().url("  http://thethreestooges.cn/consumer/test/temp_delete.php").get().build();
+                    Request request = new Request.Builder().url("http://thethreestooges.cn/consumer/test/temp_delete.php").get().build();
                     Response response = client.newCall(request).execute();
                     if (response.isSuccessful()) {
                         System.out.println(response.body().string());

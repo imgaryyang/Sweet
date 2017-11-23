@@ -2,24 +2,29 @@ package com.lucky.sweet.activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v4.app.Fragment;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.moudel.LoginRegisterHandler;
-import com.lucky.sweet.moudel.LoginRegisterManager;
-import com.lucky.sweet.utility.EmailUtiliy;
+import com.lucky.sweet.fragment.EmailSubmitFragment;
+import com.lucky.sweet.fragment.PassWordSubimitFragment;
+import com.lucky.sweet.moudel.loginregister.LoginRegisterHandler;
+import com.lucky.sweet.moudel.loginregister.LoginRegisterManager;
+import com.lucky.sweet.noscrollview.DepthPageTransformer;
+import com.lucky.sweet.noscrollview.FragAdapter;
+import com.lucky.sweet.noscrollview.NoScrollViewPager;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
+
+import java.util.ArrayList;
 
 public class UserRegisterActivity extends BasicActivity {
     private Title title = null;
     private ToolBar toolBar;
-    private EditText edt_userEmail;
-    private EditText edt_verPassword;
     private LoginRegisterManager loginRegisterManager;
+    private NoScrollViewPager vp_reg;
+    private PassWordSubimitFragment passWordSubimitFragment;
+    private EmailSubmitFragment emailSubmitFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,51 +36,26 @@ public class UserRegisterActivity extends BasicActivity {
 
         initTitle();
 
+        initData();
+
+    }
+
+    private void initData() {
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        fragments.add(emailSubmitFragment);
+        fragments.add(passWordSubimitFragment);
+
+        vp_reg.setAdapter(new FragAdapter(getSupportFragmentManager(), fragments));
+        vp_reg.setPageTransformer(true,new DepthPageTransformer());
     }
 
     private void initView() {
         toolBar = new ToolBar(this);
         toolBar.setImmersionBar();
-        edt_userEmail = findViewById(R.id.edt_userEmail);
-        edt_verPassword = findViewById(R.id.edt_verPassword);
-        findViewById(R.id.btn_nextStep).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email = edt_userEmail.getText().toString().trim();
-                String verPsw = edt_verPassword.getText().toString().trim();
-                if (!email.isEmpty() && !verPsw.isEmpty()) {
-                    System.out.println("email:"+email+"verPsw"+verPsw);
-                    loginRegisterManager.emailVer(email,verPsw);
-                } else
-                    Toast.makeText(UserRegisterActivity.this, "请填写完整信息", Toast
-                            .LENGTH_SHORT).show();
-            }
-        });
+        vp_reg = findViewById(R.id.vp_reg);
 
-    }
-
-    public void delete(View view) {
-        edt_userEmail.setText("");
-    }
-
-    public void getVerification(View view) {
-        String email = edt_userEmail.getText().toString().trim();
-        if (!email.isEmpty()) {
-            if (EmailUtiliy.checkEmail(email))
-                loginRegisterManager.CheckOutEmail(email);
-            else
-                Toast.makeText(this, "请输入正确邮箱", Toast.LENGTH_SHORT).show();
-        } else
-            Toast.makeText(this, "请输入账号", Toast.LENGTH_SHORT).show();
-    }
-
-    public void nextStep(View view) {
-       /* String email = edt_userEmail.getText().toString().trim();
-        String verPsw = edt_verPassword.getText().toString().trim();
-        if (!email.isEmpty() && !verPsw.isEmpty()) {
-            loginRegisterManager.CheckOutEmailFirPsw(email,verPsw);
-        } else
-            Toast.makeText(this, "请填写完整信息", Toast.LENGTH_SHORT).show();*/
+        emailSubmitFragment = new EmailSubmitFragment(loginRegisterManager);
+        passWordSubimitFragment = new PassWordSubimitFragment(loginRegisterManager);
     }
 
     private void initTitle() {
@@ -92,6 +72,11 @@ public class UserRegisterActivity extends BasicActivity {
                 switch (id) {
                     case Title.BUTTON_LEFT:
                         hintInputKb();
+                        if (vp_reg.getCurrentItem() != 0) {
+                            vp_reg.setCurrentItem(vp_reg.getCurrentItem() -
+                                    1, false);
+                            return;
+                        }
                         finish();
                         break;
 
@@ -111,5 +96,22 @@ public class UserRegisterActivity extends BasicActivity {
                         InputMethodManager.HIDE_NOT_ALWAYS);
             }
         }
+    }
+
+    public void setEmail(String email) {
+        passWordSubimitFragment.setCurrentEmail(email);
+    }
+
+    public void moveToNextStep() {
+        vp_reg.setCurrentItem(vp_reg.getCurrentItem() + 1, true);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (vp_reg.getCurrentItem() != 0) {
+            vp_reg.setCurrentItem(vp_reg.getCurrentItem() - 1, true);
+            return;
+        }
+        super.onBackPressed();
     }
 }
