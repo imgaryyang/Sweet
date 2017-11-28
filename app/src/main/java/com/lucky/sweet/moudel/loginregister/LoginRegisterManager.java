@@ -27,14 +27,24 @@ public class LoginRegisterManager {
     private LoginRegisterHandler handler;
     /**
      * USERLOGIN ：用户登陆
+     */
+    public final static int USERLOGIN = 1;
+    /**
      * CHECKOUTEMAIL ：邮箱检测
      * EMAILVER ：确认验证码
      * USERREGISTER ：用户注册
      */
-    public final static int USERLOGIN = 1;
     public final static int CHECKOUTEMAIL = 2;
     public final static int EMAILVER = 3;
     public final static int USERREGISTER = 4;
+    /**
+     * FORGETSUBMIT:找回密码确认邮箱
+     * FORGETVALIDATE：验证邮箱和对应邮箱验证码
+     * USERFORGET：修改密码
+     */
+    public final static int FORGETSUBMIT = 5;
+    public final static int FORGETVALIDATE = 6;
+    public final static int USERFORGET = 7;
 
     public LoginRegisterManager(Context context, LoginRegisterHandler handler) {
         this.context = context;
@@ -58,17 +68,28 @@ public class LoginRegisterManager {
                     Request request = null;
                     switch (type) {
                         case USERLOGIN:
-                            request = new Request.Builder().url(Properties.LOGINREQUESTPATH).post(new FormBody.Builder().add("username", email).add("password", password).build()).build();
+                            request = new Request.Builder().url(Properties.LOGINPATH).post(new FormBody.Builder().add("username", email).add("password", password).build()).build();
                             break;
                         case CHECKOUTEMAIL:
-                            request = new Request.Builder().url(Properties.CHECKOUTEMAILPATH).post(new FormBody.Builder().add("mail_address", email).build()).build();
+                            request = new Request.Builder().url(Properties.MAILSUBMITPATH).post(new FormBody.Builder().add("mail_address", email).build()).build();
                             break;
                         case EMAILVER:
-                            request = new Request.Builder().url(Properties.MAILVERPATH).post(new FormBody.Builder().add("mail_address", email).add(" mail_ver", password).build()).build();
+                            request = new Request.Builder().url(Properties.MAILVALIDATEPATH).post(new FormBody.Builder().add("mail_address", email).add(" mail_ver", password).build()).build();
                             break;
                         case USERREGISTER:
-                            request = new Request.Builder().url(Properties.USERREGISTERPATH).post(new FormBody.Builder().add("mail_address", email).add(" password", password).build()).build();
+                            request = new Request.Builder().url(Properties.USERWRITEPATH).post(new FormBody.Builder().add("mail_address", email).add(" password", password).build()).build();
                             break;
+                        case FORGETSUBMIT:
+                            request = new Request.Builder().url(Properties
+                                    .FORGETSUBMITPATH).post(new FormBody.Builder().add("mail_address", email) .build()).build();
+                            break;
+                        case FORGETVALIDATE:
+                            request = new Request.Builder().url(Properties.FORGETVALIDATEPATH).post(new FormBody.Builder().add("mail_address", email).add(" mail_ver", password).build()).build();
+                            break;
+                        case USERFORGET:
+                            request = new Request.Builder().url(Properties.USERFORGETPATH).post(new FormBody.Builder().add("mail_address", email).add(" password", password).build()).build();
+                            break;
+
                         default:
                             break;
                     }
@@ -81,9 +102,9 @@ public class LoginRegisterManager {
                         Message message = new Message();
                         message.what = type;
                         message.arg1 = Integer.parseInt(str);
-                        message.obj= /*new UserInfo(email, password)*/email;
+                        message.obj = email;
                         handler.sendMessage(message);
-                    }else {
+                    } else {
                         System.out.println("发送失败");
                     }
                 } catch (IOException e) {
@@ -99,10 +120,9 @@ public class LoginRegisterManager {
      * @param email    用户邮箱
      * @param password 密码
      */
-    public void UserLogin(String email, String password) {
+    public void userLogin(String email, String password) {
 
         sendRequest(USERLOGIN, email, password);
-
 
     }
 
@@ -111,7 +131,7 @@ public class LoginRegisterManager {
      *
      * @param email 邮箱字符串
      */
-    public void CheckOutEmail(String email) {
+    public void checkOutEmail(String email) {
 
         sendRequest(CHECKOUTEMAIL, email, null);
 
@@ -136,16 +156,39 @@ public class LoginRegisterManager {
      * @param email    邮箱
      * @param password 密码
      */
-    public void UserRegister(String email, String password) {
+    public void userRegister(String email, String password) {
 
         sendRequest(USERREGISTER, email, password);
 
     }
 
     /**
+     * 忘记密码确认邮箱
+     * @param email
+     */
+    public void forgetSubmit(String email) {
+
+        sendRequest(FORGETSUBMIT, email,null);
+
+    }
+
+
+    public void forgetValidate(String email,String verPassword) {
+
+        sendRequest(FORGETVALIDATE, email,verPassword);
+
+    }
+
+    public void userForget(String email,String password) {
+
+        sendRequest(USERFORGET, email,password);
+
+    }
+
+    /**
      * 删除表
      */
-    public static void deleteTable() {
+    public void deleteTable() {
         new Thread() {
             @Override
             public void run() {

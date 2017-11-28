@@ -43,9 +43,40 @@ public class LoginRegisterHandler extends Handler {
     private static final int LOGINSSUCCEED = 0;
     private static final int PSWFAILD = 1;
     private static final int USERUNEXIST = 2;
-
+    /**
+     * 注册失败
+     * 注册成功
+     */
     private static final int REGESTERSCUSS = 0;
     private static final int REGESTERFAIL = 1;
+    /**
+     * 发送成功返回   0
+     * 发送失败返回   1
+     * 验证码发送频率过快返回 2  （测试时间100秒）
+     * 邮箱已存在返回 3
+     */
+    private static final int FORGETSUCCESS = 0;
+    private static final int FORGETFAIL = 1;
+    private static final int FORGETFAST = 2;
+    private static final int FORGETEMAILEXIST = 3;
+    /**
+     * 执行成功返回 0
+     * 验证码错误 1
+     * 验证码过期并重新发送失败返回 3
+     * 无该用户记录返回 5
+     * 提交字段有误 返回 4
+     */
+    private static final int FORGETVERSUCCESS = 0;
+    private static final int FORGETVERFAIL = 1;
+    private static final int FORGETTIMEOUT = 3;
+    private static final int FORGETUNEMAILEXIST = 5;
+
+    /**
+     * 成功返回 0
+     * 失败返回 1
+     */
+    private static final int FORGETCHANGESUCCESS = 0;
+    private static final int FORGETCHANGRFAIL = 1;
 
     public LoginRegisterHandler(Context context) {
         this.context = context;
@@ -110,14 +141,9 @@ public class LoginRegisterHandler extends Handler {
                     case VERSSUCCEED:
                         if (context instanceof UserRegisterActivity) {
                             Toast.makeText(context, "验证成功！", Toast.LENGTH_SHORT).show();
-                            ((UserRegisterActivity)context).moveToNextStep();
-                            ((UserRegisterActivity)context).setEmail(((String) msg.obj));
+                            ((UserRegisterActivity) context).moveToNextStep();
+                            ((UserRegisterActivity) context).setEmail(((String) msg.obj));
                         }
-                     /*   Toast.makeText(context, "验证成功！", Toast.LENGTH_SHORT)
-                                .show();
-                        Intent intent = new Intent(context, UserCheckPwdActivity.class);
-                        intent.putExtra("userEmail", );
-                        context.startActivity(intent);*/
                         break;
                     case VERSFAILD:
                         Toast.makeText(context, "验证码正确但写入失败", Toast.LENGTH_SHORT).show();
@@ -132,6 +158,65 @@ public class LoginRegisterHandler extends Handler {
                 }
                 break;
 
+            case LoginRegisterManager.FORGETSUBMIT:
+                switch (msg.arg1) {
+                    case FORGETSUCCESS:
+                        Toast.makeText(context, "发送成功请稍等", Toast.LENGTH_SHORT)
+                                .show();
+                        break;
+                    case FORGETFAIL:
+                        Toast.makeText(context, "发送失败", Toast.LENGTH_SHORT)
+                                .show();
+                        break;
+                    case FORGETFAST:
+                        Toast.makeText(context, "验证码发送频率过快", Toast.LENGTH_SHORT)
+                                .show();
+                        break;
+                    case FORGETEMAILEXIST:
+                        Toast.makeText(context, "邮箱已存在", Toast.LENGTH_SHORT)
+                                .show();
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case LoginRegisterManager.FORGETVALIDATE:
+                switch (msg.arg1) {
+                    case FORGETVERSUCCESS:
+                        Toast.makeText(context, "执行成功", Toast.LENGTH_SHORT)
+                                .show();
+                        break;
+                    case FORGETVERFAIL:
+                        Toast.makeText(context, "验证码错误", Toast.LENGTH_SHORT)
+                                .show();
+                        break;
+                    case FORGETTIMEOUT:
+                        Toast.makeText(context, "验证码过期并重新发送失败返回 ", Toast.LENGTH_SHORT)
+                                .show();
+                        break;
+                    case FORGETUNEMAILEXIST:
+                        Toast.makeText(context, "无该用户记录返回 ", Toast.LENGTH_SHORT)
+                                .show();
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case LoginRegisterManager.USERFORGET:
+                switch (msg.arg1) {
+                    case FORGETCHANGESUCCESS:
+                        Toast.makeText(context, "成功返回 ", Toast.LENGTH_SHORT)
+                                .show();
+                        break;
+                    case FORGETCHANGRFAIL:
+                        Toast.makeText(context, "失败返回 ", Toast.LENGTH_SHORT)
+                                .show();
+                        break;
+                    default:
+                        break;
+                }
+
+                break;
             default:
                 break;
         }

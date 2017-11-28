@@ -9,18 +9,24 @@ package com.lucky.sweet.properties;
  */
 
 public class Properties {
-    public static final String LOGINREQUESTPATH =
+    public static final String LOGINPATH =
             "http://thethreestooges.cn/consumer/bean/login/login.php";
-    public static final String USERREGISTERPATH =
+
+    public static final String USERWRITEPATH =
             "http://thethreestooges.cn/consumer/bean/login/user_write.php";
-    public static final String CHECKOUTEMAILPATH =
+    public static final String MAILSUBMITPATH =
             "http://thethreestooges.cn/consumer/bean/login/mail_submit.php";
-    public static final String MAILVERPATH =
+    public static final String MAILVALIDATEPATH =
             "http://thethreestooges.cn/consumer/bean/login/mail_validate.php";
 
-    public static final int USERLOGIN = 1;
-    public static final int CHECKOUTEMAIL = 2;
-    public static final int CHECKOUTEMAILFIRPSW = 3;
-    public static final int REGESTUSER = 4;
+    public static final String FORGETSUBMITPATH =
+            "http://thethreestooges.cn/consumer/bean/login/forget_submit.php";
+    public static final String FORGETVALIDATEPATH =
+            "http://thethreestooges.cn/consumer/bean/login/forget_validate.php";
+    public static final String USERFORGETPATH =
+            "http://thethreestooges.cn/consumer/bean/login/user_forget.php";
+
+
+
 
 }

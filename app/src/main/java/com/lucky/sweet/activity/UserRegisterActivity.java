@@ -74,7 +74,7 @@ public class UserRegisterActivity extends BasicActivity {
                         hintInputKb();
                         if (vp_reg.getCurrentItem() != 0) {
                             vp_reg.setCurrentItem(vp_reg.getCurrentItem() -
-                                    1, false);
+                                    1, true);
                             return;
                         }
                         finish();

@@ -51,7 +51,7 @@ public class PassWordSubimitFragment extends Fragment {
                 String psw = edt_psw.getText().toString().trim();
                 String verifypsw = edt_verifypsw.getText().toString().trim();
                 if (psw.equals(verifypsw)) {
-                    loginRegisterManager.UserRegister(userEmail, psw);
+                    loginRegisterManager.userRegister(userEmail, psw);
                 } else {
                     Toast.makeText(getActivity(), "两次密码不同", Toast.LENGTH_SHORT).show();
                 }

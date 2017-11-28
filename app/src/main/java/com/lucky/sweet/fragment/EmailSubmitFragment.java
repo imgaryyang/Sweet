@@ -49,7 +49,7 @@ public class EmailSubmitFragment extends Fragment {
                 String email = edt_userEmail.getText().toString().trim();
                 if (!email.isEmpty()) {
                     if (EmailUtiliy.checkEmail(email))
-                        loginRegisterManager.CheckOutEmail(email);
+                        loginRegisterManager.checkOutEmail(email);
                     else
                         Toast.makeText(getActivity(), "请输入正确邮箱", Toast.LENGTH_SHORT).show();
                 } else
