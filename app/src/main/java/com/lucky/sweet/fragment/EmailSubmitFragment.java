@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.moudel.loginregister.LoginRegisterManager;
-import com.lucky.sweet.utility.EmailUtiliy;
+import com.lucky.sweet.utility.StringFormatUtility;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,7 +51,7 @@ public class EmailSubmitFragment extends Fragment {
             public void onClick(View view) {
                 String email = edt_userEmail.getText().toString().trim();
                 if (!email.isEmpty()) {
-                    if (EmailUtiliy.checkEmail(email)) {
+                    if (StringFormatUtility.checkoutEmail(email)) {
                         if (isRegister)
                             loginRegisterManager.checkOutEmail(email);
                         else

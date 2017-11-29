@@ -1,5 +1,6 @@
 package com.lucky.sweet.moudel.loginregister;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Message;
 import android.support.annotation.Nullable;

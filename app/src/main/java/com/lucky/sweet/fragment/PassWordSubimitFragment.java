@@ -1,6 +1,7 @@
 package com.lucky.sweet.fragment;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,7 +12,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.activity.BasicActivity;
 import com.lucky.sweet.moudel.loginregister.LoginRegisterManager;
+import com.lucky.sweet.utility.StringFormatUtility;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,10 +54,17 @@ public class PassWordSubimitFragment extends Fragment {
                 String psw = edt_psw.getText().toString().trim();
                 String verifypsw = edt_verifypsw.getText().toString().trim();
                 if (psw.equals(verifypsw)) {
-                    if (isRegister) {
-                        loginRegisterManager.userRegister(userEmail, psw);
+                    if (psw.length() >= 6 && StringFormatUtility.checkOutPSW(psw)) {
+                        if (isRegister) {
+                            loginRegisterManager.userRegister(userEmail, psw);
+                        } else {
+                            loginRegisterManager.userForget(userEmail, psw);
+                        }
                     } else {
-                        loginRegisterManager.userForget(userEmail, psw);
+                        ((BasicActivity) getContext()).showDialogBaseAct
+                                (null, "密码必须同时包含数字和字母。并且长度不小于6位", "确认", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {dialogInterface.cancel();}}, null, null, null, null, getContext());
                     }
                 } else {
                     Toast.makeText(getActivity(), "两次密码不同", Toast.LENGTH_SHORT).show();
