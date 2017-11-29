@@ -46,9 +46,9 @@ public class LoginRegisterManager {
     public final static int FORGETVALIDATE = 6;
     public final static int USERFORGET = 7;
 
-    public LoginRegisterManager(Context context, LoginRegisterHandler handler) {
+    public LoginRegisterManager(Context context) {
         this.context = context;
-        this.handler = handler;
+        this.handler = new LoginRegisterHandler(context);
     }
 
     /**
@@ -80,8 +80,7 @@ public class LoginRegisterManager {
                             request = new Request.Builder().url(Properties.USERWRITEPATH).post(new FormBody.Builder().add("mail_address", email).add(" password", password).build()).build();
                             break;
                         case FORGETSUBMIT:
-                            request = new Request.Builder().url(Properties
-                                    .FORGETSUBMITPATH).post(new FormBody.Builder().add("mail_address", email) .build()).build();
+                            request = new Request.Builder().url(Properties.FORGETSUBMITPATH).post(new FormBody.Builder().add("mail_address", email) .build()).build();
                             break;
                         case FORGETVALIDATE:
                             request = new Request.Builder().url(Properties.FORGETVALIDATEPATH).post(new FormBody.Builder().add("mail_address", email).add(" mail_ver", password).build()).build();

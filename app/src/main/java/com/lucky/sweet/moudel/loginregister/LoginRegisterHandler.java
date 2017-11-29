@@ -7,6 +7,7 @@ import android.os.Message;
 import android.widget.Toast;
 
 import com.lucky.sweet.activity.MainActivity;
+import com.lucky.sweet.activity.UserLoginActivity;
 import com.lucky.sweet.activity.UserRegisterActivity;
 
 /**
@@ -183,8 +184,10 @@ public class LoginRegisterHandler extends Handler {
             case LoginRegisterManager.FORGETVALIDATE:
                 switch (msg.arg1) {
                     case FORGETVERSUCCESS:
-                        Toast.makeText(context, "执行成功", Toast.LENGTH_SHORT)
-                                .show();
+                        if (context instanceof UserRegisterActivity) {
+                            ((UserRegisterActivity) context).moveToNextStep();
+                            ((UserRegisterActivity) context).setEmail(((String) msg.obj));
+                        }
                         break;
                     case FORGETVERFAIL:
                         Toast.makeText(context, "验证码错误", Toast.LENGTH_SHORT)
@@ -205,8 +208,9 @@ public class LoginRegisterHandler extends Handler {
             case LoginRegisterManager.USERFORGET:
                 switch (msg.arg1) {
                     case FORGETCHANGESUCCESS:
-                        Toast.makeText(context, "成功返回 ", Toast.LENGTH_SHORT)
+                        Toast.makeText(context, "修改成功 ", Toast.LENGTH_SHORT)
                                 .show();
+                        context.startActivity(new Intent(context, UserLoginActivity.class));
                         break;
                     case FORGETCHANGRFAIL:
                         Toast.makeText(context, "失败返回 ", Toast.LENGTH_SHORT)

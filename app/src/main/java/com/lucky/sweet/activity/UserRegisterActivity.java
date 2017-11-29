@@ -8,7 +8,6 @@ import android.view.inputmethod.InputMethodManager;
 import com.lucky.sweet.R;
 import com.lucky.sweet.fragment.EmailSubmitFragment;
 import com.lucky.sweet.fragment.PassWordSubimitFragment;
-import com.lucky.sweet.moudel.loginregister.LoginRegisterHandler;
 import com.lucky.sweet.moudel.loginregister.LoginRegisterManager;
 import com.lucky.sweet.noscrollview.DepthPageTransformer;
 import com.lucky.sweet.noscrollview.FragAdapter;
@@ -25,13 +24,16 @@ public class UserRegisterActivity extends BasicActivity {
     private NoScrollViewPager vp_reg;
     private PassWordSubimitFragment passWordSubimitFragment;
     private EmailSubmitFragment emailSubmitFragment;
+    private Boolean isRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_register);
 
-        loginRegisterManager = new LoginRegisterManager(this, new LoginRegisterHandler(this));
+        isRegister = getIntent().getBooleanExtra("isRegister", true);
+        loginRegisterManager = new LoginRegisterManager(this);
+
         initView();
 
         initTitle();
@@ -46,7 +48,7 @@ public class UserRegisterActivity extends BasicActivity {
         fragments.add(passWordSubimitFragment);
 
         vp_reg.setAdapter(new FragAdapter(getSupportFragmentManager(), fragments));
-        vp_reg.setPageTransformer(true,new DepthPageTransformer());
+        vp_reg.setPageTransformer(true, new DepthPageTransformer());
     }
 
     private void initView() {
@@ -54,13 +56,16 @@ public class UserRegisterActivity extends BasicActivity {
         toolBar.setImmersionBar();
         vp_reg = findViewById(R.id.vp_reg);
 
-        emailSubmitFragment = new EmailSubmitFragment(loginRegisterManager);
-        passWordSubimitFragment = new PassWordSubimitFragment(loginRegisterManager);
+        emailSubmitFragment = new EmailSubmitFragment(loginRegisterManager, isRegister);
+        passWordSubimitFragment = new PassWordSubimitFragment(loginRegisterManager, isRegister);
     }
 
     private void initTitle() {
         title = (Title) findViewById(R.id.title);
-        title.setTitleNameStr("注册");
+        if (isRegister)
+            title.setTitleNameStr("注册");
+        else
+            title.setTitleNameStr("找回密码");
         title.setTheme(Title.Theme.THEME_TRANSLATE_NODIVIDER);
 //        Title.ButtonInfo buttonLeft=new Title.ButtonInfo(true,Title.BUTTON_LEFT,0,"立即注册");
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title

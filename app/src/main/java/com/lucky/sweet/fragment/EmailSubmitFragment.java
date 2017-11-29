@@ -22,6 +22,8 @@ import com.lucky.sweet.utility.EmailUtiliy;
  * create an instance of this fragment.
  */
 public class EmailSubmitFragment extends Fragment {
+    private final Boolean isRegister;
+
     private LoginRegisterManager loginRegisterManager;
     private EditText edt_userEmail;
     private EditText edt_verPassword;
@@ -29,8 +31,9 @@ public class EmailSubmitFragment extends Fragment {
     private Button btn_nextStep;
     private Button btn_verCode;
 
-    public EmailSubmitFragment(LoginRegisterManager loginRegisterManager) {
+    public EmailSubmitFragment(LoginRegisterManager loginRegisterManager, Boolean isRegister) {
         this.loginRegisterManager = loginRegisterManager;
+        this.isRegister = isRegister;
     }
 
     @Override
@@ -48,9 +51,12 @@ public class EmailSubmitFragment extends Fragment {
             public void onClick(View view) {
                 String email = edt_userEmail.getText().toString().trim();
                 if (!email.isEmpty()) {
-                    if (EmailUtiliy.checkEmail(email))
-                        loginRegisterManager.checkOutEmail(email);
-                    else
+                    if (EmailUtiliy.checkEmail(email)) {
+                        if (isRegister)
+                            loginRegisterManager.checkOutEmail(email);
+                        else
+                            loginRegisterManager.forgetSubmit(email);
+                    } else
                         Toast.makeText(getActivity(), "请输入正确邮箱", Toast.LENGTH_SHORT).show();
                 } else
                     Toast.makeText(getActivity(), "请输入账号", Toast.LENGTH_SHORT).show();
@@ -69,8 +75,11 @@ public class EmailSubmitFragment extends Fragment {
                 String email = edt_userEmail.getText().toString().trim();
                 String verPsw = edt_verPassword.getText().toString().trim();
                 if (!email.isEmpty() && !verPsw.isEmpty()) {
-                    System.out.println("email:" + email + "verPsw" + verPsw);
-                    loginRegisterManager.emailVer(email, verPsw);
+                    if (isRegister) {
+                        loginRegisterManager.emailVer(email, verPsw);
+                    } else {
+                        loginRegisterManager.forgetValidate(email, verPsw);
+                    }
                 } else
                     Toast.makeText(getActivity(), "请填写完整信息", Toast.LENGTH_SHORT).show();
             }

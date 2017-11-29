@@ -19,8 +19,7 @@ import com.lucky.sweet.moudel.loginregister.LoginRegisterManager;
 public class PassWordSubimitFragment extends Fragment {
 
 
-
-
+    private final Boolean isRegister;
     private String userEmail;
     private LoginRegisterManager loginRegisterManager;
     private EditText edt_psw;
@@ -39,8 +38,9 @@ public class PassWordSubimitFragment extends Fragment {
 
     }
 
-    public PassWordSubimitFragment(LoginRegisterManager loginRegisterManager) {
+    public PassWordSubimitFragment(LoginRegisterManager loginRegisterManager, Boolean isRegister) {
         this.loginRegisterManager = loginRegisterManager;
+        this.isRegister = isRegister;
     }
 
 
@@ -51,7 +51,11 @@ public class PassWordSubimitFragment extends Fragment {
                 String psw = edt_psw.getText().toString().trim();
                 String verifypsw = edt_verifypsw.getText().toString().trim();
                 if (psw.equals(verifypsw)) {
-                    loginRegisterManager.userRegister(userEmail, psw);
+                    if (isRegister) {
+                        loginRegisterManager.userRegister(userEmail, psw);
+                    } else {
+                        loginRegisterManager.userForget(userEmail, psw);
+                    }
                 } else {
                     Toast.makeText(getActivity(), "两次密码不同", Toast.LENGTH_SHORT).show();
                 }

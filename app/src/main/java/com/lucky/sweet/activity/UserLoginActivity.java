@@ -7,7 +7,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.moudel.loginregister.LoginRegisterHandler;
 import com.lucky.sweet.moudel.loginregister.LoginRegisterManager;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -22,23 +21,12 @@ public class UserLoginActivity extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
-        loginRegisterManager = new LoginRegisterManager(this, new LoginRegisterHandler(this));
+        loginRegisterManager = new LoginRegisterManager(this);
+
         initView();
 
-        initEvent();
-
     }
 
-    private void initEvent() {
-
-        findViewById(R.id.tv_register).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(UserLoginActivity.this,
-                        UserRegisterActivity.class));
-            }
-        });
-    }
 
     private void initView() {
         toolBar = new ToolBar(this);
@@ -56,5 +44,19 @@ public class UserLoginActivity extends BasicActivity {
         } else {
             Toast.makeText(this, "请输入账号或者密码", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void forgetPsw(View view) {
+        Intent intent = new Intent(this, UserRegisterActivity.class);
+        intent.putExtra("isRegister", false);
+        startActivity(intent);
+
+    }
+
+    public void register(View view) {
+        Intent intent = new Intent(this,
+                UserRegisterActivity.class);
+        intent.putExtra("isRegister", true);
+        startActivity(intent);
     }
 }
