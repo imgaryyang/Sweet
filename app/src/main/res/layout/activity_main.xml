@@ -1,37 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/home_3">
 
-    <!--test qiuyue-->
 
-    <FrameLayout
-
-        android:id="@+id/contentLayout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="40dp">
-    </FrameLayout>
-    <!--tab-->
-    <include
-        layout="@layout/layout_tab"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-    <!--radio-->
-    <!--<ImageView
-        android:id="@+id/buttonRecorder"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
-        android:layout_marginBottom="8dp"
-        android:scaleType="fitEnd"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:clickable="true"
-        android:longClickable="true"
-        android:background="@drawable/selector_voice_recorder" />-->
+        android:background="@android:color/white"
+        android:orientation="vertical">
 
-</RelativeLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/tab_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:overScrollMode="never" />
+
+
+        <com.lucky.sweet.widgets.Tab.TabContainerView
+            android:id="@+id/ll_tab_container"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@mipmap/tab_bg" />
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
+
+
+
+
+
+
+
+
+
