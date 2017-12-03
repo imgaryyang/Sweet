@@ -12,8 +12,11 @@ import com.lucky.sweet.fragment.ImMeFragment;
 import com.lucky.sweet.fragment.ImStoreFragment;
 import com.lucky.sweet.widgets.Tab.TabContainerView;
 import com.lucky.sweet.widgets.Tab.TabFragmentAdapter;
+import com.lucky.sweet.widgets.ToolBar;
 
 public class MainActivity extends BasicActivity implements ViewPager.OnPageChangeListener{
+
+    final ToolBar toolBar = new ToolBar(MainActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

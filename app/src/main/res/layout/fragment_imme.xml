@@ -3,8 +3,121 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Myappcolor">
+    android:background="@color/gray0">
 
+    <com.lucky.sweet.widgets.ZoomInScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="170dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:background="@color/Myappcolor"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+                    <com.lucky.sweet.views.ImageViewExtend
+                        android:id="@+id/img_head"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:onClick="onButtonClick"
+                        android:src="@mipmap/test_header"
+                        android:layout_gravity="center">
+                    </com.lucky.sweet.views.ImageViewExtend>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="5dp">
+                        <TextView
+                            android:id="@+id/tv_userName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="邱悦"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Lv7"
+                            android:layout_marginLeft="5dp"
+                            android:textColor="@color/white"
+                            android:textSize="12dp"/>
+                    </LinearLayout>
+
+                    </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="bottom|center"
+                    android:layout_marginBottom="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="关注："
+                        android:textColor="@color/white"
+                        android:textSize="14dp"
+                        android:layout_gravity="center"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="20"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:layout_gravity="center"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:src="@mipmap/me_line"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="粉丝："
+                        android:textColor="@color/white"
+                        android:textSize="14dp"
+                        android:layout_gravity="center"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="78"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+
+                <Button
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@mipmap/ic_set"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="right"/>
+
+
+
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </com.lucky.sweet.widgets.ZoomInScrollView>
 
 
 </LinearLayout>
