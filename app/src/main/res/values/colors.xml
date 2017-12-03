@@ -21,7 +21,7 @@
     <color name="white">#ffffff</color>
     <color name="transparent">#00000000</color>
     <color name="grayDividerDark">@color/gray2</color>
-    <color name="transparentAA">#AA000000</color>
+    <color name="black">#AA000000</color>
     <color name="transparent55">#55000000</color>
 
     <color name="backgroundBlack">#4c212121</color>

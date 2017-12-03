@@ -195,7 +195,7 @@ public class Title extends RelativeLayout{
 
             case THEME_LIGHT:
                 if(titleName != null){
-                    titleName.setTextColor(getResources().getColor(R.color.transparentAA));
+                    titleName.setTextColor(getResources().getColor(R.color.black));
                 }
                 /*buttonHolderLeft.text.setTextColor(Color.BLACK);
                 buttonHolderRight1.text.setTextColor(Color.BLACK);
