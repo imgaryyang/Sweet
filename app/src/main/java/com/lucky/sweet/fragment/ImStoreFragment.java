@@ -23,10 +23,22 @@ import com.lucky.sweet.widgets.ToolBar;
 public class ImStoreFragment extends Fragment {
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup
-            container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_imstore,
-                container, false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_imstore, container, false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ToolBar toolBar = new ToolBar(getActivity());
+            toolBar.setStatusBarDarkMode();
+            int statusBarHeight = toolBar.getStatusBarHeight(getActivity());
+            View view_margin = view.findViewById(R.id.view_margin);
+            ViewGroup.LayoutParams lp;
+            lp = view_margin.getLayoutParams();
+            lp.height = statusBarHeight;
+            view_margin.setLayoutParams(lp);
+        } else {
+        }
+
+
         return view;
     }
 }

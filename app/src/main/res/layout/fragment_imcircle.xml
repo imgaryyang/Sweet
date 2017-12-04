@@ -4,4 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/title_msg"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:id="@+id/view_margin"/>
+        <include layout="@layout/layout_title"/>
+    </LinearLayout>
+
 </LinearLayout>

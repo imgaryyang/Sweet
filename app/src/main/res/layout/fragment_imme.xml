@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/gray0">
 
     <com.lucky.sweet.widgets.ZoomInScrollView
@@ -107,7 +108,8 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:background="@mipmap/ic_set"
-                    android:layout_margin="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="25dp"
                     android:layout_gravity="right"/>
 
 
@@ -118,6 +120,17 @@
         </LinearLayout>
 
     </com.lucky.sweet.widgets.ZoomInScrollView>
+
+    <LinearLayout
+        android:id="@+id/title_msg"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:id="@+id/view_margin"/>
+    </LinearLayout>
 
 
 </LinearLayout>
