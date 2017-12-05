@@ -112,10 +112,305 @@
                     android:layout_marginTop="25dp"
                     android:layout_gravity="right"/>
 
-
-
-
             </FrameLayout>
+
+            <include layout="@layout/layout_melist_divider_10"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_item_click">
+
+                    <ImageView
+                        android:id="@+id/imv_ic1"
+                        android:layout_width="30dp"
+                        android:layout_height="35dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="30dp"
+                        android:src="@mipmap/ic_me_item"/>
+
+                    <TextView
+                        android:id="@+id/tv_count1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/imv_ic1"
+                        android:layout_marginLeft="11dp"
+                        android:layout_toRightOf="@id/imv_ic1"
+                        android:text="4"
+                        android:textColor="@color/black"
+                        android:textSize="14dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/imv_ic1"
+                        android:layout_below="@id/tv_count1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@id/imv_ic1"
+                        android:text="我的好友"
+                        android:textColor="@color/black"
+                        android:textSize="14dp"/>
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@color/grayDividerDark" />
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:background="@drawable/selector_item_click">
+
+                    <ImageView
+                        android:id="@+id/imv_ic"
+                        android:layout_width="30dp"
+                        android:layout_height="35dp"
+                        android:src="@mipmap/ic_me_item"
+                        android:layout_marginLeft="30dp"
+                        android:layout_centerVertical="true"/>
+
+                    <TextView
+                        android:id="@+id/tv_count"
+                        android:text="4"
+                        android:textSize="14dp"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/imv_ic"
+                        android:layout_alignTop="@id/imv_ic"
+                        android:layout_marginLeft="11dp"/>
+
+                    <TextView
+                        android:text="我的好友"
+                        android:textSize="14dp"
+                        android:layout_alignBottom="@id/imv_ic"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_count"
+                        android:layout_toRightOf="@id/imv_ic"
+                        android:layout_marginLeft="10dp"/>
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/grayDividerDark" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:orientation="horizontal"
+                android:background="@color/white">
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:background="@drawable/selector_item_click">
+
+                    <ImageView
+                        android:id="@+id/imv_ic4"
+                        android:layout_width="30dp"
+                        android:layout_height="35dp"
+                        android:src="@mipmap/ic_me_item"
+                        android:layout_marginLeft="30dp"
+                        android:layout_centerVertical="true"/>
+
+                    <TextView
+                        android:id="@+id/tv_count4"
+                        android:text="4"
+                        android:textSize="14dp"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/imv_ic4"
+                        android:layout_alignTop="@id/imv_ic4"
+                        android:layout_marginLeft="11dp"/>
+
+                    <TextView
+                        android:text="我的好友"
+                        android:textSize="14dp"
+                        android:layout_alignBottom="@id/imv_ic4"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_count4"
+                        android:layout_toRightOf="@id/imv_ic4"
+                        android:layout_marginLeft="10dp"/>
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@color/grayDividerDark" />
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:background="@drawable/selector_item_click">
+
+                    <ImageView
+                        android:id="@+id/imv_ic5"
+                        android:layout_width="30dp"
+                        android:layout_height="35dp"
+                        android:src="@mipmap/ic_me_item"
+                        android:layout_marginLeft="30dp"
+                        android:layout_centerVertical="true"/>
+
+                    <TextView
+                        android:id="@+id/tv_count5"
+                        android:text="4"
+                        android:textSize="14dp"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/imv_ic5"
+                        android:layout_alignTop="@id/imv_ic5"
+                        android:layout_marginLeft="11dp"/>
+
+                    <TextView
+                        android:text="我的好友"
+                        android:textSize="14dp"
+                        android:layout_alignBottom="@id/imv_ic5"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_count5"
+                        android:layout_toRightOf="@id/imv_ic5"
+                        android:layout_marginLeft="10dp"/>
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/grayDividerDark" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:orientation="horizontal"
+                android:background="@color/white">
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:background="@drawable/selector_item_click">
+
+                    <ImageView
+                        android:id="@+id/imv_ic7"
+                        android:layout_width="30dp"
+                        android:layout_height="35dp"
+                        android:src="@mipmap/ic_me_item"
+                        android:layout_marginLeft="30dp"
+                        android:layout_centerVertical="true"/>
+
+                    <TextView
+                        android:id="@+id/tv_count7"
+                        android:text="4"
+                        android:textSize="14dp"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/imv_ic7"
+                        android:layout_alignTop="@id/imv_ic7"
+                        android:layout_marginLeft="11dp"/>
+
+                    <TextView
+                        android:text="我的好友"
+                        android:textSize="14dp"
+                        android:layout_alignBottom="@id/imv_ic7"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_count7"
+                        android:layout_toRightOf="@id/imv_ic7"
+                        android:layout_marginLeft="10dp"/>
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@color/grayDividerDark" />
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:background="@drawable/selector_item_click">
+
+                    <ImageView
+                        android:id="@+id/imv_ic2"
+                        android:layout_width="30dp"
+                        android:layout_height="35dp"
+                        android:src="@mipmap/ic_me_item"
+                        android:layout_marginLeft="30dp"
+                        android:layout_centerVertical="true"/>
+
+                    <TextView
+                        android:id="@+id/tv_count2"
+                        android:text="4"
+                        android:textSize="14dp"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/imv_ic2"
+                        android:layout_alignTop="@id/imv_ic2"
+                        android:layout_marginLeft="11dp"/>
+
+                    <TextView
+                        android:text="我的好友"
+                        android:textSize="14dp"
+                        android:layout_alignBottom="@id/imv_ic2"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_count2"
+                        android:layout_toRightOf="@id/imv_ic2"
+                        android:layout_marginLeft="10dp"/>
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/grayDividerDark" />
 
         </LinearLayout>
 
