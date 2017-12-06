@@ -1,11 +1,11 @@
 package com.lucky.sweet.moudel.loginregister;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.lucky.sweet.entity.UserLoginInfo;
 import com.lucky.sweet.properties.Properties;
 
 import java.io.IOException;
@@ -102,7 +102,7 @@ public class LoginRegisterManager {
                         Message message = new Message();
                         message.what = type;
                         message.arg1 = Integer.parseInt(str);
-                        message.obj = email;
+                        message.obj = new UserLoginInfo(email,password);
                         handler.sendMessage(message);
                     } else {
                         System.out.println("发送失败");

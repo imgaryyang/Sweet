@@ -32,5 +32,6 @@ public class BasicActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
         return dialog;
+
     }
 }

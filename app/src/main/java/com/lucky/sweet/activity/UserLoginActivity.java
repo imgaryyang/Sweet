@@ -1,6 +1,7 @@
 package com.lucky.sweet.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -16,14 +17,23 @@ public class UserLoginActivity extends BasicActivity {
     private EditText edt_userEmail;
     private EditText edt_password;
     private LoginRegisterManager loginRegisterManager;
+    private SharedPreferences.Editor edit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
-        loginRegisterManager = new LoginRegisterManager(this);
+
+        initData();
 
         initView();
+
+
+
+    }
+
+    private void initData() {
+        loginRegisterManager = new LoginRegisterManager(this);
 
     }
 
@@ -59,4 +69,6 @@ public class UserLoginActivity extends BasicActivity {
         intent.putExtra("isRegister", true);
         startActivity(intent);
     }
+
+
 }

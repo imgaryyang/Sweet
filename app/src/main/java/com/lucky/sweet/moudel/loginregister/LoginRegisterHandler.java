@@ -1,7 +1,9 @@
 package com.lucky.sweet.moudel.loginregister;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
@@ -9,6 +11,7 @@ import android.widget.Toast;
 import com.lucky.sweet.activity.MainActivity;
 import com.lucky.sweet.activity.UserLoginActivity;
 import com.lucky.sweet.activity.UserRegisterActivity;
+import com.lucky.sweet.entity.UserLoginInfo;
 
 /**
  * Created by c on 2017/11/20.
@@ -79,8 +82,13 @@ public class LoginRegisterHandler extends Handler {
     private static final int FORGETCHANGESUCCESS = 0;
     private static final int FORGETCHANGRFAIL = 1;
 
+    private final SharedPreferences.Editor edit;
+
     public LoginRegisterHandler(Context context) {
         this.context = context;
+        SharedPreferences config = context.getSharedPreferences("config",
+                Activity.MODE_PRIVATE);
+        edit = config.edit();
     }
 
     @Override
@@ -106,9 +114,13 @@ public class LoginRegisterHandler extends Handler {
                     case LOGINSSUCCEED:
                         Toast.makeText(context, "登陆成功", Toast.LENGTH_SHORT)
                                 .show();
-                        context.startActivity(new Intent(context,
-                                MainActivity.class));
-
+                        UserLoginInfo info = (UserLoginInfo) msg.obj;
+                        if (loginSucced(info.getEmail(), info.getPsw())) {
+                            Intent intent = new Intent();
+                            intent.putExtra("login", true);
+                            ((Activity) context).setResult(0, intent);
+                           /* context.startActivity(new Intent(context, MainActivity.class));*/
+                        }
                         break;
                     case PSWFAILD:
                         Toast.makeText(context, "用户不存在或密码错误", Toast.LENGTH_SHORT)
@@ -125,8 +137,10 @@ public class LoginRegisterHandler extends Handler {
                 switch (msg.arg1) {
                     case REGESTERSCUSS:
                         Toast.makeText(context, "注册成功", Toast.LENGTH_SHORT).show();
-                        context.startActivity(new Intent(context, MainActivity.class));
-
+                        UserLoginInfo info = (UserLoginInfo) msg.obj;
+                        if (loginSucced(info.getEmail(), info.getPsw())) {
+                            context.startActivity(new Intent(context, MainActivity.class));
+                        }
                         break;
                     case REGESTERFAIL:
                         Toast.makeText(context, "注册失败", Toast.LENGTH_SHORT).show();
@@ -143,7 +157,7 @@ public class LoginRegisterHandler extends Handler {
                         if (context instanceof UserRegisterActivity) {
                             Toast.makeText(context, "验证成功！", Toast.LENGTH_SHORT).show();
                             ((UserRegisterActivity) context).moveToNextStep();
-                            ((UserRegisterActivity) context).setEmail(((String) msg.obj));
+                            ((UserRegisterActivity) context).setEmail(((UserLoginInfo) msg.obj).getEmail());
                         }
                         break;
                     case VERSFAILD:
@@ -224,5 +238,12 @@ public class LoginRegisterHandler extends Handler {
             default:
                 break;
         }
+    }
+
+    public boolean loginSucced(String email, String psw) {
+        edit.putBoolean("logined", true);
+        edit.putString("ID", email);
+        edit.putString("PSW", psw);
+        return edit.commit();
     }
 }
