@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.AdViewPager;
 import com.lucky.sweet.moudel.ImStoreFragmentManager.ImStoreManager;
+import com.lucky.sweet.viewpagerexpand.AdViewPagerTransformer;
 import com.lucky.sweet.widgets.ToolBar;
 
 /**
@@ -57,6 +58,8 @@ public class ImStoreFragment extends Fragment {
         context = getContext();
         ImStoreManager imStoreManager = new ImStoreManager(context);
         vp_ad.setPageMargin(20);
+        vp_ad.setOffscreenPageLimit(3);
+        vp_ad.setPageTransformer(true, new AdViewPagerTransformer());
         vp_ad.setAdapter(new AdViewPager(getContext(), imStoreManager.getAdInfoList()));
     }
 
