@@ -6,12 +6,21 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-public class BasicActivity extends AppCompatActivity {
+import com.tencent.map.geolocation.TencentLocation;
+import com.tencent.map.geolocation.TencentLocationListener;
+
+public class BasicActivity extends AppCompatActivity implements TencentLocationListener {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
     }
+
+
 
     public AlertDialog showDialogBaseAct(String title, String message,
                                          String natureName,
@@ -33,5 +42,22 @@ public class BasicActivity extends AppCompatActivity {
         dialog.show();
         return dialog;
 
+    }
+
+    @Override
+    public void onLocationChanged(TencentLocation tencentLocation, int i, String s) {
+      /*  if (requestCode == TencentLocation.ERROR_OK) {
+            city = tencentLocation.getName().toString().trim();
+        }
+        stopLocation();*/
+    }
+
+    @Override
+    public void onStatusUpdate(String s, int i, String s1) {
+
+    }
+
+    public void stopLocation() {
+        //locationManager.removeUpdates(this);
     }
 }
