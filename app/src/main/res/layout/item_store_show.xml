@@ -11,20 +11,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="15dp">
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
         <TextView
+            android:id="@+id/tv_cate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18dp"
+            android:textColor="@color/black"
             android:gravity="left|center"
             android:text="美食"/>
 
         <TextView
+            android:id="@+id/tv_more"
+            android:onClick="onButtonClick"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="查看更多>"
             android:textSize="13dp"
-            android:gravity="right|center"/>
+            android:gravity="right|center"
+            android:textColor="@color/Myappcolor"/>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -32,7 +38,6 @@
         android:layout_margin="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-
 
 
 </LinearLayout>

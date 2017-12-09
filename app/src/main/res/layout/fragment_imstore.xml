@@ -35,32 +35,42 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="15dp"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:src="@mipmap/ic_position"/>
-
-                <TextView
-                    android:id="@+id/tv_location"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:text="大连"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"/>
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/ic_position"/>
+
+                    <TextView
+                        android:id="@+id/tv_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:text="大连"
+                        android:textColor="@color/black"
+                        android:textSize="14dp"/>
+
+                </LinearLayout>
+
+
 
                 <LinearLayout
-                    android:layout_width="240dp"
+                    android:layout_weight="6.6"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp">
 
                     <include layout="@layout/layout_search"/>
@@ -69,9 +79,9 @@
 
 
                 <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right">
+                    android:layout_weight="0.7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
 
                     <ImageView
                         android:id="@+id/imv_weather"
@@ -93,7 +103,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:layout_height="95dp"
                 android:layout_margin="15dp"
                 android:background="@color/white"
                 android:clipChildren="false">
@@ -115,27 +125,135 @@
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:background="@color/gray0"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_margin="15dp"
+                android:background="@color/white"
+                android:clipChildren="false">
 
-            <include layout="@layout/item_store_show"/>
+                <android.support.v4.view.ViewPager
+
+                    android:id="@+id/vp_otherad"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipChildren="false"
+                    android:orientation="horizontal"
+                    android:overScrollMode="never">
+
+                </android.support.v4.view.ViewPager>
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:background="@color/gray0"/>
 
-            <include layout="@layout/item_store_show"/>
+            <!--<include-->
+                <!--android:id="@+id/item_food"-->
+                <!--layout="@layout/item_store_show"/>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:orientation="vertical"
+                android:layout_margin="15dp"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp">
+                    <TextView
+                        android:id="@+id/tv_food"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18dp"
+                        android:textColor="@color/black"
+                        android:gravity="left|center"
+                        android:text="美食"/>
+
+                    <TextView
+                        android:id="@+id/tv_moreFood"
+                        android:onClick="onButtonClick"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="查看更多>"
+                        android:textSize="13dp"
+                        android:gravity="right|center"
+                        android:textColor="@color/Myappcolor"/>
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rcv_foodStore"
+                    android:layout_margin="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:background="@color/gray0"/>
 
-            <include layout="@layout/item_store_show"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:orientation="vertical"
+                android:layout_margin="15dp"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp">
+                    <TextView
+                        android:id="@+id/tv_relaxCate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18dp"
+                        android:textColor="@color/black"
+                        android:gravity="left|center"
+                        android:text="休闲"/>
+
+                    <TextView
+                        android:id="@+id/tv_moreRelax"
+                        android:onClick="onButtonClick"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="查看更多>"
+                        android:textSize="13dp"
+                        android:gravity="right|center"
+                        android:textColor="@color/Myappcolor"/>
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rcv_relaxStore"
+                    android:layout_margin="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+            </LinearLayout>
+
+            <!--<include-->
+                <!--android:id="@+id/item_relax"-->
+                <!--layout="@layout/item_store_show"/>-->
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:background="@color/gray0"/>
+
+
+
 
         </LinearLayout>
 

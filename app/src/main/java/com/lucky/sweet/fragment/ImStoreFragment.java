@@ -1,6 +1,8 @@
 package com.lucky.sweet.fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.activity.StoreDisplatActivity;
 import com.lucky.sweet.adapter.AdViewPager;
 import com.lucky.sweet.moudel.ImStoreFragmentManager.ImStoreManager;
 import com.lucky.sweet.properties.Properties;
@@ -41,7 +44,7 @@ import java.net.URL;
 // ( (oo) )  ( (oo) )  ( (oo) )
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
-public class ImStoreFragment extends Fragment {
+public class ImStoreFragment extends Fragment implements View.OnClickListener{
 
 
     private ViewPager vp_ad;
@@ -52,6 +55,12 @@ public class ImStoreFragment extends Fragment {
     private final int MAXTIME = 300000000;
 
     private TencentLocationManager locationManager;
+    private TextView tv_more;
+    private TextView tv_cate;
+    private View item_food;
+    private View item_relax;
+    private TextView tv_moreFood;
+    private TextView tv_moreRelax;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -175,25 +184,39 @@ public class ImStoreFragment extends Fragment {
 
 
     private void initData() {
-
-
         ImStoreManager imStoreManager = new ImStoreManager(context);
         vp_ad.setPageMargin(20);
         vp_ad.setOffscreenPageLimit(3);
         vp_ad.setPageTransformer(true, new AdViewPagerTransformer());
         AdViewPager adViewPager = new AdViewPager(getContext(), imStoreManager.getAdInfoList());
         vp_ad.setAdapter(adViewPager);
-
     }
 
 
     private void initView(View view) {
-
         vp_ad = view.findViewById(R.id.vp_ad);
         tv_location = view.findViewById(R.id.tv_location);
-
+        tv_moreFood = view.findViewById(R.id.tv_moreFood);
+        tv_moreFood.setOnClickListener(this);
+        tv_moreRelax = view.findViewById(R.id.tv_moreRelax);
+        tv_moreRelax.setOnClickListener(this);
     }
 
-
+    @Override
+    public void onClick(View v) {
+        //获得父控件的对象，然后获得父控件的id
+        switch (v.getId()) {
+            case R.id.tv_moreFood:
+                Intent intent = new Intent(getActivity(), StoreDisplatActivity.class);
+                intent.putExtra("tv_moreFood", "Food");
+                startActivity(intent);
+                break;
+            case R.id.tv_moreRelax:
+                Intent intent1 = new Intent(getActivity(), StoreDisplatActivity.class);
+                intent1.putExtra("tv_moreRelax", "Relax");
+                startActivity(intent1);
+                break;
+        }
+    }
 }
 

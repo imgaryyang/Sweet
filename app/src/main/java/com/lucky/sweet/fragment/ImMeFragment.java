@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.activity.SetUserInfoActivity;
 import com.lucky.sweet.activity.UserLoginActivity;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -26,16 +27,17 @@ import com.lucky.sweet.widgets.ToolBar;
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
 public class ImMeFragment extends Fragment {
-    private Button btn_userOut;
+    /*private Button btn_userOut;
     private SharedPreferences config;
-    private SharedPreferences.Editor edit;
+    private SharedPreferences.Editor edit;*/
+    private Button btn_setUserInfo;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_imme, container, false);
-        initData();
+//        initData();
 
         initView(view);
 
@@ -55,12 +57,12 @@ public class ImMeFragment extends Fragment {
         return view;
     }
 
-    private void initData() {
+  /*  private void initData() {
         config = getActivity().getSharedPreferences("config", Activity.MODE_PRIVATE);
         edit = config.edit();
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             switch (resultCode) {
@@ -79,12 +81,10 @@ public class ImMeFragment extends Fragment {
             }
 
         }
-
-
-    }
+    }*/
 
     private void initView(View view) {
-        btn_userOut = view.findViewById(R.id.btn_userOut);
+        /*btn_userOut = view.findViewById(R.id.btn_userOut);
         if (config.getBoolean("logined", false)) {
             btn_userOut.setText("退出登陆");
         } else {
@@ -103,6 +103,14 @@ public class ImMeFragment extends Fragment {
                     btn_userOut.getText().toString().equals("用户登陆");
                     return;
                 }
+            }
+        });*/
+        btn_setUserInfo = view.findViewById(R.id.btn_setUserInfo);
+        btn_setUserInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SetUserInfoActivity.class);
+                startActivity(intent);
             }
         });
     }

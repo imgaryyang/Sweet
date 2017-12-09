@@ -5,11 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/gray0">
-    <Button
-        android:text="退出登陆"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_userOut"/>
+
     <com.lucky.sweet.widgets.ZoomInScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -109,6 +105,7 @@
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/btn_setUserInfo"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:background="@mipmap/ic_set"

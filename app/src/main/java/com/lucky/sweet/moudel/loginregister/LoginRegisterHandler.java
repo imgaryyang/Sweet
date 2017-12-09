@@ -119,7 +119,7 @@ public class LoginRegisterHandler extends Handler {
                             Intent intent = new Intent();
                             intent.putExtra("login", true);
                             ((Activity) context).setResult(0, intent);
-                           /* context.startActivity(new Intent(context, MainActivity.class));*/
+                            context.startActivity(new Intent(context, MainActivity.class));
                         }
                         break;
                     case PSWFAILD:
