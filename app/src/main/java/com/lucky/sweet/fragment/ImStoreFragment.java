@@ -82,10 +82,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener{
             lp = view_margin.getLayoutParams();
             lp.height = statusBarHeight;
             view_margin.setLayoutParams(lp);
-        } else {
-
         }
-
         return view;
     }
 
