@@ -26,7 +26,9 @@ public class Properties {
     public static final String USERFORGETPATH =
             "http://thethreestooges.cn/consumer/bean/login/user_forget.php";
 
-
+    public static final String WEATHERPATH="https://api.heweather.com/s6/weather";
+    public static final String
+            WEATHERREQUESTBODY="key=e14dc2b9f04d4a84b467f7f43e3137f2 &location=";
 
 
 }
