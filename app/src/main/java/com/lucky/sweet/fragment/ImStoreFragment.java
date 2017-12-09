@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.AdViewPager;
 import com.lucky.sweet.moudel.ImStoreFragmentManager.ImStoreManager;
+import com.lucky.sweet.properties.Properties;
 import com.lucky.sweet.utils.PanduanNet;
 import com.lucky.sweet.viewpagerexpand.AdViewPagerTransformer;
 import com.lucky.sweet.widgets.ToolBar;
@@ -22,6 +23,14 @@ import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
 import com.tencent.map.geolocation.TencentLocationRequest;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * Created by Qiuyue on 2017/11/15.
@@ -55,7 +64,6 @@ public class ImStoreFragment extends Fragment {
 
         initLocation();
 
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ToolBar toolBar = new ToolBar(getActivity());
             toolBar.setStatusBarDarkMode();
@@ -80,7 +88,11 @@ public class ImStoreFragment extends Fragment {
                                                       error, String s) {
 
                     if (error == TencentLocation.ERROR_OK) {
-                        tv_location.setText(tencentLocation.getCity().toString().trim());
+                        String city = tencentLocation.getCity().toString()
+                                .trim();
+                        initWeather(city);
+                        tv_location.setText(city);
+
                     }
                     stopLocation();
                 }
@@ -91,7 +103,55 @@ public class ImStoreFragment extends Fragment {
                 }
             };
 
-    public void stopLocation() {
+    private void initWeather(String city) {
+        if (city.indexOf("市") > 0) {
+            city = city.substring(0, city.length() - 1);
+        }
+        String param = Properties.WEATHERREQUESTBODY + city;
+        StringBuilder sb = new StringBuilder();
+        InputStream is = null;
+        BufferedReader br = null;
+        try {
+            //接口地址
+            String url = "https://api.heweather.com/s6/weather";
+            URL uri = new URL(url);
+            HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setReadTimeout(5000);
+            connection.setConnectTimeout(10000);
+            connection.setRequestProperty("accept", "*/*");
+            //发送参数
+            connection.setDoOutput(true);
+            PrintWriter out = new PrintWriter(connection.getOutputStream());
+            out.print(param);
+            out.flush();
+             //接收结果
+            is = connection.getInputStream();
+            br = new BufferedReader(new InputStreamReader(is));
+            String line;
+            //缓冲逐行读取
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+            System.out.println(sb.toString()+"aaaaaaaaa");
+        } catch (Exception ignored) {
+        } finally {
+            //关闭流
+            try {
+                if (is != null) {
+                    is.close();
+                }
+                if (br != null) {
+                    br.close();
+                }
+
+            } catch (IOException e2) {
+            }
+        }
+
+    }
+
+    private void stopLocation() {
         locationManager.removeUpdates(listener);
     }
 
@@ -121,7 +181,9 @@ public class ImStoreFragment extends Fragment {
         vp_ad.setPageMargin(20);
         vp_ad.setOffscreenPageLimit(3);
         vp_ad.setPageTransformer(true, new AdViewPagerTransformer());
-        vp_ad.setAdapter(new AdViewPager(getContext(), imStoreManager.getAdInfoList()));
+        AdViewPager adViewPager = new AdViewPager(getContext(), imStoreManager.getAdInfoList());
+        vp_ad.setAdapter(adViewPager);
+
     }
 
 

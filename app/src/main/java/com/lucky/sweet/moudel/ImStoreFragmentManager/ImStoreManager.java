@@ -29,4 +29,6 @@ public class ImStoreManager {
         strings.add(R.mipmap.adtestfour);
         return strings;
     }
+
+
 }

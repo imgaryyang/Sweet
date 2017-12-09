@@ -9,7 +9,7 @@ public class PanduanNet {
 
 	/**
 	 * 2015.5.18  �ж����� yang
-	 * 
+	 *
 	 */
 	public static boolean detect(Activity act) {
 
