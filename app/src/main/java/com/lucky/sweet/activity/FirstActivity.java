@@ -34,16 +34,18 @@ public class FirstActivity extends BasicActivity {
         toolBar.setImmersionBar();
 
         tv_time = (TextView)findViewById(R.id.tv_time);
-        timer = new MyCountDownTimer(6000,1000);
+        timer = new MyCountDownTimer(4000,1000);
         timer.start();
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 Intent intent = new Intent(FirstActivity.this,MainActivity.class);
                 startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+
                 finish();
             }
-        }, 6000);
+        }, 4000);
     }
 
     class MyCountDownTimer extends CountDownTimer {
