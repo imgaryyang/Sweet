@@ -51,7 +51,7 @@
 
         <activity android:name=".activity.StoreDisplatActivity"/>
         <activity android:name=".activity.SetUserInfoActivity"/>
-        <activity android:name=".activity.FirstActivity">
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

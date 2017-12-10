@@ -22,9 +22,9 @@ import com.lucky.sweet.widgets.ToolBar;
 // ( (oo) )  ( (oo) )  ( (oo) )
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
-public class SetUserInfoActivity extends BasicActivity{
+public class SetUserInfoActivity extends BasicActivity {
 
-    private Title title=null;
+    private Title title = null;
     private SharedPreferences config;
     private SharedPreferences.Editor edit;
     private Button btn_userOut;
@@ -87,8 +87,9 @@ public class SetUserInfoActivity extends BasicActivity{
 
 
     }
-    private void initViews(){
-        btn_userOut = (Button)findViewById(R.id.btn_userOut);
+
+    private void initViews() {
+        btn_userOut = (Button) findViewById(R.id.btn_userOut);
         if (config.getBoolean("logined", false)) {
             btn_userOut.setText("退出登陆");
         } else {
@@ -98,7 +99,7 @@ public class SetUserInfoActivity extends BasicActivity{
         btn_userOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (btn_userOut.getText().toString().equals("用户登陆")) {
+                if (btn_userOut.getText().toString().equals("退出登陆")) {
                     new AlertDialog.Builder(SetUserInfoActivity.this)
                             .setMessage("确定退出账号？")
                             .setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -120,6 +121,7 @@ public class SetUserInfoActivity extends BasicActivity{
                     edit.putBoolean("logined", false);
                     edit.commit();
                     btn_userOut.getText().toString().equals("用户登陆");
+                    startActivity(new Intent(SetUserInfoActivity.this, UserLoginActivity.class));
                     return;
                 }
             }

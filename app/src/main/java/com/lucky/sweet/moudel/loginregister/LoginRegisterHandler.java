@@ -39,12 +39,12 @@ public class LoginRegisterHandler extends Handler {
     private static final int VERSSUCCEED = 0;
     private static final int VERSFAILD = 1;
     private static final int VERTIMOUT = 2;
-//    登陆成功时候 返回 0
+//    登陆成功时候 返回 -1
 //    密码错误 返回 1
 //    用户不存在 返回 2
 //    提交字段有误 返回 3
 
-    private static final int LOGINSSUCCEED = 0;
+    public static final int LOGINSSUCCEED = -1;
     private static final int PSWFAILD = 1;
     private static final int USERUNEXIST = 2;
     /**
@@ -112,13 +112,11 @@ public class LoginRegisterHandler extends Handler {
             case LoginRegisterManager.USERLOGIN:
                 switch (msg.arg1) {
                     case LOGINSSUCCEED:
-                        Toast.makeText(context, "登陆成功", Toast.LENGTH_SHORT)
-                                .show();
+                        Toast.makeText(context, "登陆成功", Toast.LENGTH_SHORT).show();
                         UserLoginInfo info = (UserLoginInfo) msg.obj;
-                        if (loginSucced(info.getEmail(), info.getPsw())) {
+                        if (loginSucced(info, true)) {
                             Intent intent = new Intent();
                             intent.putExtra("login", true);
-                            ((Activity) context).setResult(0, intent);
                             context.startActivity(new Intent(context, MainActivity.class));
                         }
                         break;
@@ -138,7 +136,7 @@ public class LoginRegisterHandler extends Handler {
                     case REGESTERSCUSS:
                         Toast.makeText(context, "注册成功", Toast.LENGTH_SHORT).show();
                         UserLoginInfo info = (UserLoginInfo) msg.obj;
-                        if (loginSucced(info.getEmail(), info.getPsw())) {
+                        if (loginSucced(info, false)) {
                             context.startActivity(new Intent(context, MainActivity.class));
                         }
                         break;
@@ -240,10 +238,11 @@ public class LoginRegisterHandler extends Handler {
         }
     }
 
-    public boolean loginSucced(String email, String psw) {
+    public boolean loginSucced(UserLoginInfo info, boolean flag) {
         edit.putBoolean("logined", true);
-        edit.putString("ID", email);
-        edit.putString("PSW", psw);
+        edit.putString("ID", info.getEmail());
+        edit.putString("PSW", info.getPsw());
+        if (flag) edit.putString("Session", info.getSession());
         return edit.commit();
     }
 }

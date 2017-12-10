@@ -24,6 +24,7 @@ import okhttp3.Response;
  */
 
 public class LoginRegisterManager {
+    private Boolean isLogin = false;
     private Context context;
     private LoginRegisterHandler handler;
     /**
@@ -62,6 +63,8 @@ public class LoginRegisterManager {
     private void sendRequest(final int type, final String email, @Nullable final
     String password) {
         new Thread() {
+
+
             @Override
             public void run() {
                 try {
@@ -69,6 +72,7 @@ public class LoginRegisterManager {
                     Request request = null;
                     switch (type) {
                         case USERLOGIN:
+                            isLogin = true;
                             request = new Request.Builder().url(Properties.LOGINPATH).post(new FormBody.Builder().add("username", email).add("password", password).build()).build();
                             break;
                         case CHECKOUTEMAIL:
@@ -81,7 +85,7 @@ public class LoginRegisterManager {
                             request = new Request.Builder().url(Properties.USERWRITEPATH).post(new FormBody.Builder().add("mail_address", email).add(" password", password).build()).build();
                             break;
                         case FORGETSUBMIT:
-                            request = new Request.Builder().url(Properties.FORGETSUBMITPATH).post(new FormBody.Builder().add("mail_address", email) .build()).build();
+                            request = new Request.Builder().url(Properties.FORGETSUBMITPATH).post(new FormBody.Builder().add("mail_address", email).build()).build();
                             break;
                         case FORGETVALIDATE:
                             request = new Request.Builder().url(Properties.FORGETVALIDATEPATH).post(new FormBody.Builder().add("mail_address", email).add(" mail_ver", password).build()).build();
@@ -97,12 +101,21 @@ public class LoginRegisterManager {
                     Response response = client.newCall(request).execute();
 
                     if (response.isSuccessful()) {
+                        int responseType = -1;
                         String str = response.body().string();
                         Log.i("ServerBackCode:", str);
+                        UserLoginInfo info = new UserLoginInfo(email, password);
                         Message message = new Message();
                         message.what = type;
-                        message.arg1 = Integer.parseInt(str);
-                        message.obj = new UserLoginInfo(email,password);
+                        try {
+                            responseType = Integer.parseInt(str);
+                        } catch (NumberFormatException e) {
+                            info.setSession(str);
+                            responseType = LoginRegisterHandler.LOGINSSUCCEED;
+                            isLogin = false;
+                        }
+                        message.arg1 = responseType;
+                        message.obj = info;
                         handler.sendMessage(message);
                     } else {
                         System.out.println("发送失败");
@@ -164,24 +177,25 @@ public class LoginRegisterManager {
 
     /**
      * 忘记密码确认邮箱
+     *
      * @param email
      */
     public void forgetSubmit(String email) {
 
-        sendRequest(FORGETSUBMIT, email,null);
+        sendRequest(FORGETSUBMIT, email, null);
 
     }
 
 
-    public void forgetValidate(String email,String verPassword) {
+    public void forgetValidate(String email, String verPassword) {
 
-        sendRequest(FORGETVALIDATE, email,verPassword);
+        sendRequest(FORGETVALIDATE, email, verPassword);
 
     }
 
-    public void userForget(String email,String password) {
+    public void userForget(String email, String password) {
 
-        sendRequest(USERFORGET, email,password);
+        sendRequest(USERFORGET, email, password);
 
     }
 

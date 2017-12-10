@@ -35,8 +35,7 @@ public class RecreationViewPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View view = LayoutInflater.from(context).inflate(R.layout
-                .item_viewpager_foodinfo, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_viewpager_foodinfo, null);
         container.addView(view);
         return view;
     }

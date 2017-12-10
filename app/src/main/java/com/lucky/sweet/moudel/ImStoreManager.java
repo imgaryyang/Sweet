@@ -3,8 +3,10 @@ package com.lucky.sweet.moudel;
 import android.content.Context;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.RecreationInfo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by c on 2017/12/6.
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 
 public class ImStoreManager {
     private Context context;
+    private Object foodList;
 
     public ImStoreManager(Context context) {
         this.context = context;
@@ -31,4 +34,12 @@ public class ImStoreManager {
     }
 
 
+    public List<RecreationInfo> getFoodList() {
+        List<RecreationInfo> recreationInfos = new ArrayList<>();
+        recreationInfos.add(new RecreationInfo());
+        recreationInfos.add(new RecreationInfo());
+        recreationInfos.add(new RecreationInfo());
+        recreationInfos.add(new RecreationInfo());
+        return recreationInfos;
+    }
 }

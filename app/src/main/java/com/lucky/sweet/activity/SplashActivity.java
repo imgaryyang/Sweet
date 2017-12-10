@@ -17,7 +17,7 @@ import com.lucky.sweet.widgets.ToolBar;
 // ( (oo) )  ( (oo) )  ( (oo) )
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
-public class FirstActivity extends BasicActivity {
+public class SplashActivity extends BasicActivity {
     private TextView tv_time;
     private MyCountDownTimer timer;
     private ToolBar toolBar;
@@ -39,7 +39,7 @@ public class FirstActivity extends BasicActivity {
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(FirstActivity.this,MainActivity.class);
+                Intent intent = new Intent(SplashActivity.this,MainActivity.class);
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
 

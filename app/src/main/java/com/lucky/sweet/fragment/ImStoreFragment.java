@@ -17,7 +17,6 @@ import com.lucky.sweet.R;
 import com.lucky.sweet.activity.StoreDisplatActivity;
 import com.lucky.sweet.adapter.AdViewPagerAdapter;
 import com.lucky.sweet.adapter.RecreationViewPagerAdapter;
-import com.lucky.sweet.entity.RecreationInfo;
 import com.lucky.sweet.moudel.ImStoreManager;
 import com.lucky.sweet.properties.Properties;
 import com.lucky.sweet.utils.PanduanNet;
@@ -35,8 +34,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Qiuyue on 2017/11/15.
@@ -51,6 +48,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
 
     private ViewPager vp_ad;
+    private ViewPager vp_funne;
     private TextView tv_location;
 
     private Context context;
@@ -96,8 +94,10 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
                         String city = tencentLocation.getCity().toString()
                                 .trim();
                         //initWeather(city);
+                        if (city.length() > 3) {
+                            city = city.substring(0, 2) + "...";
+                        }
                         tv_location.setText(city);
-
                     }
                     stopLocation();
                 }
@@ -134,19 +134,15 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
     private void initData() {
         ImStoreManager imStoreManager = new ImStoreManager(context);
-        vp_ad.setPageMargin(20);
-        vp_ad.setOffscreenPageLimit(3);
+
         vp_ad.setPageTransformer(true, new AdViewPagerTransformer());
         AdViewPagerAdapter adViewPager = new AdViewPagerAdapter(getContext(), imStoreManager.getAdInfoList());
         vp_ad.setAdapter(adViewPager);
 
 
-        List<RecreationInfo> recreationInfos = new ArrayList<>();
-        recreationInfos.add(new RecreationInfo());
-        recreationInfos.add(new RecreationInfo());
-        recreationInfos.add(new RecreationInfo());
-        recreationInfos.add(new RecreationInfo());
-        vp_foodStore.setAdapter(new RecreationViewPagerAdapter(getActivity(), recreationInfos));
+        vp_foodStore.setAdapter(new RecreationViewPagerAdapter(getActivity(), imStoreManager.getFoodList()));
+        vp_funne.setAdapter(new RecreationViewPagerAdapter(getActivity(), imStoreManager.getFoodList()));
+
     }
 
 
@@ -156,6 +152,10 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         vp_foodStore = view.findViewById(R.id.vp_foodStore);
         vp_foodStore.setPageMargin(-100);
         vp_foodStore.setOffscreenPageLimit(3);
+
+        vp_funne = view.findViewById(R.id.vp_funne);
+        vp_funne.setPageMargin(-100);
+        vp_funne.setOffscreenPageLimit(3);
 
         tv_location = view.findViewById(R.id.tv_location);
         tv_moreFood = view.findViewById(R.id.tv_moreFood);
