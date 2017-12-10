@@ -12,4 +12,23 @@
            parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <!--spinner的样式-->
+    <style name="style_spinner">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:dropDownVerticalOffset">40dp</item>
+        <item name="android:dropDownWidth">1000dp</item>
+        <item name="android:layout_margin">0dp</item>
+
+    </style>
+
+    <!--定义spinner之间的线的样式-->
+    <style name="style_mian_verline">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">25dp</item>
+        <item name="android:background">#dcdcdc</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
 </resources>
