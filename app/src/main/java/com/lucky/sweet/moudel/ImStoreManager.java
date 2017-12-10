@@ -1,4 +1,4 @@
-package com.lucky.sweet.moudel.ImStoreFragmentManager;
+package com.lucky.sweet.moudel;
 
 import android.content.Context;
 

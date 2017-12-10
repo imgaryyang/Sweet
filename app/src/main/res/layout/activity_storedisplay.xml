@@ -13,7 +13,7 @@
         android:layout_height="40dp">
 
         <Spinner
-            android:id="@+id/main_sp1"
+            android:id="@+id/sp_businessarea"
             style="@style/style_spinner"
             />
         <!--这个是spinner之间的分割线-->
@@ -27,7 +27,7 @@
             android:src="@mipmap/me_line"/>
 
         <Spinner
-            android:id="@+id/main_sp2"
+            android:id="@+id/sp_recreationtype"
             style="@style/style_spinner"/>
 
         <!--<ImageView-->
@@ -40,7 +40,7 @@
             android:src="@mipmap/me_line"/>
 
         <Spinner
-            android:id="@+id/main_sp3"
+            android:id="@+id/sp_rankyype"
             style="@style/style_spinner"/>
 
     </LinearLayout>

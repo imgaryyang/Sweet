@@ -5,47 +5,40 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.RecreationInfo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by c on 2017/12/6.
+ * Created by c on 2017/12/10.
  * (╯°□°）╯︵ ┻━┻ MMP好气啊！
  * (╯‵□′)╯︵┻━┻ 老子怒掀桌子！
  * ┻━┻︵╰(‵□′)╯︵┻━┻老子双手掀桌！
  * ┬─┬﻿ ノ( ゜-゜ノ) 算了，我不生气了！日子还得过老老实实敲吧~
  */
 
-public class AdViewPager extends PagerAdapter {
-    List<Integer> datas;
-    Context context;
+public class RecreationViewPagerAdapter extends PagerAdapter {
+    private List<RecreationInfo> datas;
+    private Context context;
 
-    public AdViewPager(Context context, List<Integer> datas) {
-        this.context = context;
+    public RecreationViewPagerAdapter(Context context, List<RecreationInfo> datas) {
         this.datas = datas;
-    }
-
-    @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        View view = LayoutInflater.from(context).inflate(R.layout
-                .iitem_viewpager_ad, null);
-        ImageView imv_ab = view.findViewById(R.id.imv_ab);
-        Glide.with(context).load(datas.get(position)).diskCacheStrategy
-                (DiskCacheStrategy.ALL).into(imv_ab);
-        container.addView(view);
-        return view;
+        this.context = context;
     }
 
     @Override
     public int getCount() {
         return datas.size();
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        View view = LayoutInflater.from(context).inflate(R.layout
+                .item_viewpager_foodinfo, null);
+        container.addView(view);
+        return view;
     }
 
     @Override
@@ -59,4 +52,6 @@ public class AdViewPager extends PagerAdapter {
 
         return view == object;
     }
+
+
 }

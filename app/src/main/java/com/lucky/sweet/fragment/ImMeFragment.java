@@ -1,8 +1,6 @@
 package com.lucky.sweet.fragment;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,7 +12,6 @@ import android.widget.Button;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.activity.SetUserInfoActivity;
-import com.lucky.sweet.activity.UserLoginActivity;
 import com.lucky.sweet.widgets.ToolBar;
 
 /**

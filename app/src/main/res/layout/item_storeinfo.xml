@@ -5,6 +5,7 @@
               android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/imv_back"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="#000"/>

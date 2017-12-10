@@ -1,7 +1,6 @@
 package com.lucky.sweet.fragment;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,8 +15,10 @@ import android.widget.Toast;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.activity.StoreDisplatActivity;
-import com.lucky.sweet.adapter.AdViewPager;
-import com.lucky.sweet.moudel.ImStoreFragmentManager.ImStoreManager;
+import com.lucky.sweet.adapter.AdViewPagerAdapter;
+import com.lucky.sweet.adapter.RecreationViewPagerAdapter;
+import com.lucky.sweet.entity.RecreationInfo;
+import com.lucky.sweet.moudel.ImStoreManager;
 import com.lucky.sweet.properties.Properties;
 import com.lucky.sweet.utils.PanduanNet;
 import com.lucky.sweet.viewpagerexpand.AdViewPagerTransformer;
@@ -34,6 +35,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Qiuyue on 2017/11/15.
@@ -44,7 +47,7 @@ import java.net.URL;
 // ( (oo) )  ( (oo) )  ( (oo) )
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
-public class ImStoreFragment extends Fragment implements View.OnClickListener{
+public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
 
     private ViewPager vp_ad;
@@ -55,12 +58,10 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener{
     private final int MAXTIME = 300000000;
 
     private TencentLocationManager locationManager;
-    private TextView tv_more;
-    private TextView tv_cate;
-    private View item_food;
-    private View item_relax;
+
     private TextView tv_moreFood;
     private TextView tv_moreRelax;
+    private ViewPager vp_foodStore;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -89,14 +90,12 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener{
     private TencentLocationListener listener = new
             TencentLocationListener() {
                 @Override
-                public void onLocationChanged(TencentLocation
-                                                      tencentLocation, int
-                                                      error, String s) {
+                public void onLocationChanged(TencentLocation tencentLocation, int error, String s) {
 
                     if (error == TencentLocation.ERROR_OK) {
                         String city = tencentLocation.getCity().toString()
                                 .trim();
-                        initWeather(city);
+                        //initWeather(city);
                         tv_location.setText(city);
 
                     }
@@ -109,53 +108,6 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener{
                 }
             };
 
-    private void initWeather(String city) {
-        if (city.indexOf("市") > 0) {
-            city = city.substring(0, city.length() - 1);
-        }
-        String param = Properties.WEATHERREQUESTBODY + city;
-        StringBuilder sb = new StringBuilder();
-        InputStream is = null;
-        BufferedReader br = null;
-        try {
-            //接口地址
-            String url = "https://api.heweather.com/s6/weather";
-            URL uri = new URL(url);
-            HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
-            connection.setRequestMethod("POST");
-            connection.setReadTimeout(5000);
-            connection.setConnectTimeout(10000);
-            connection.setRequestProperty("accept", "*/*");
-            //发送参数
-            connection.setDoOutput(true);
-            PrintWriter out = new PrintWriter(connection.getOutputStream());
-            out.print(param);
-            out.flush();
-             //接收结果
-            is = connection.getInputStream();
-            br = new BufferedReader(new InputStreamReader(is));
-            String line;
-            //缓冲逐行读取
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-            System.out.println(sb.toString()+"aaaaaaaaa");
-        } catch (Exception ignored) {
-        } finally {
-            //关闭流
-            try {
-                if (is != null) {
-                    is.close();
-                }
-                if (br != null) {
-                    br.close();
-                }
-
-            } catch (IOException e2) {
-            }
-        }
-
-    }
 
     private void stopLocation() {
         locationManager.removeUpdates(listener);
@@ -185,13 +137,26 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener{
         vp_ad.setPageMargin(20);
         vp_ad.setOffscreenPageLimit(3);
         vp_ad.setPageTransformer(true, new AdViewPagerTransformer());
-        AdViewPager adViewPager = new AdViewPager(getContext(), imStoreManager.getAdInfoList());
+        AdViewPagerAdapter adViewPager = new AdViewPagerAdapter(getContext(), imStoreManager.getAdInfoList());
         vp_ad.setAdapter(adViewPager);
+
+
+        List<RecreationInfo> recreationInfos = new ArrayList<>();
+        recreationInfos.add(new RecreationInfo());
+        recreationInfos.add(new RecreationInfo());
+        recreationInfos.add(new RecreationInfo());
+        recreationInfos.add(new RecreationInfo());
+        vp_foodStore.setAdapter(new RecreationViewPagerAdapter(getActivity(), recreationInfos));
     }
 
 
     private void initView(View view) {
         vp_ad = view.findViewById(R.id.vp_ad);
+
+        vp_foodStore = view.findViewById(R.id.vp_foodStore);
+        vp_foodStore.setPageMargin(-100);
+        vp_foodStore.setOffscreenPageLimit(3);
+
         tv_location = view.findViewById(R.id.tv_location);
         tv_moreFood = view.findViewById(R.id.tv_moreFood);
         tv_moreFood.setOnClickListener(this);
@@ -214,6 +179,54 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent1);
                 break;
         }
+    }
+
+    private void initWeather(String city) {
+        if (city.indexOf("市") > 0) {
+            city = city.substring(0, city.length() - 1);
+        }
+        String param = Properties.WEATHERREQUESTBODY + city;
+        StringBuilder sb = new StringBuilder();
+        InputStream is = null;
+        BufferedReader br = null;
+        try {
+            //接口地址
+            String url = "https://api.heweather.com/s6/weather";
+            URL uri = new URL(url);
+            HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setReadTimeout(5000);
+            connection.setConnectTimeout(10000);
+            connection.setRequestProperty("accept", "*/*");
+            //发送参数
+            connection.setDoOutput(true);
+            PrintWriter out = new PrintWriter(connection.getOutputStream());
+            out.print(param);
+            out.flush();
+            //接收结果
+            is = connection.getInputStream();
+            br = new BufferedReader(new InputStreamReader(is));
+            String line;
+            //缓冲逐行读取
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+            System.out.println(sb.toString() + "aaaaaaaaa");
+        } catch (Exception ignored) {
+        } finally {
+            //关闭流
+            try {
+                if (is != null) {
+                    is.close();
+                }
+                if (br != null) {
+                    br.close();
+                }
+
+            } catch (IOException e2) {
+            }
+        }
+
     }
 }
 
