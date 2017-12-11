@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
+import android.view.View;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.fragment.ImCircleFragment;
@@ -14,9 +15,11 @@ import com.lucky.sweet.widgets.Tab.TabContainerView;
 import com.lucky.sweet.widgets.Tab.TabFragmentAdapter;
 import com.lucky.sweet.widgets.ToolBar;
 
-public class MainActivity extends BasicActivity implements ViewPager.OnPageChangeListener{
+public class MainActivity extends BasicActivity implements ViewPager.OnPageChangeListener {
 
     final ToolBar toolBar = new ToolBar(MainActivity.this);
+    private TabContainerView mTabLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +45,10 @@ public class MainActivity extends BasicActivity implements ViewPager.OnPageChang
             }
     };
 
-    /** tab 颜色值*/
-    private final int[] TAB_COLORS = new int []{
+    /**
+     * tab 颜色值
+     */
+    private final int[] TAB_COLORS = new int[]{
             R.color.gray4,
             R.color.Myappcolor};
 
@@ -55,12 +60,12 @@ public class MainActivity extends BasicActivity implements ViewPager.OnPageChang
 
     private void initViews() {
         TabFragmentAdapter mAdapter = new TabFragmentAdapter(getSupportFragmentManager(), fragments);
-        ViewPager mPager = (ViewPager) findViewById(R.id.tab_pager);
+        ViewPager  mPager = (ViewPager) findViewById(R.id.tab_pager);
         //设置当前可见Item左右可见page数，次范围内不会被销毁
         mPager.setOffscreenPageLimit(1);
         mPager.setAdapter(mAdapter);
 
-        TabContainerView mTabLayout = (TabContainerView) findViewById(R.id.ll_tab_container);
+        mTabLayout = (TabContainerView) findViewById(R.id.ll_tab_container);
         mTabLayout.setOnPageChangeListener(this);
 
         mTabLayout.initContainer(getResources().getStringArray(R.array.tab_name), ICONS_RES, TAB_COLORS, true);
@@ -72,6 +77,11 @@ public class MainActivity extends BasicActivity implements ViewPager.OnPageChang
         mPager.setCurrentItem(getIntent().getIntExtra("tab", 0));
     }
 
+    public View getTabView() {
+        return mTabLayout;
+
+    }
+
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -79,7 +89,7 @@ public class MainActivity extends BasicActivity implements ViewPager.OnPageChang
 
     @Override
     public void onPageSelected(int position) {
-        for (int index = 0, len = fragments.length; index < len; index ++) {
+        for (int index = 0, len = fragments.length; index < len; index++) {
             fragments[index].onHiddenChanged(index != position);
         }
     }

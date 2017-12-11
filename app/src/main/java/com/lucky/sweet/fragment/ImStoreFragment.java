@@ -14,13 +14,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.activity.MainActivity;
 import com.lucky.sweet.activity.StoreDisplatActivity;
 import com.lucky.sweet.adapter.AdViewPagerAdapter;
 import com.lucky.sweet.adapter.RecreationViewPagerAdapter;
 import com.lucky.sweet.moudel.ImStoreManager;
 import com.lucky.sweet.properties.Properties;
+import com.lucky.sweet.utility.HiddenAnimUtils;
 import com.lucky.sweet.utils.PanduanNet;
 import com.lucky.sweet.viewpagerexpand.AdViewPagerTransformer;
+import com.lucky.sweet.views.GradualChangeLinearLayout;
+import com.lucky.sweet.views.MySearchView;
 import com.lucky.sweet.widgets.ToolBar;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
@@ -48,18 +52,22 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
 
     private ViewPager vp_ad;
+    private MySearchView msv_search;
     private ViewPager vp_funne;
     private TextView tv_location;
+    private GradualChangeLinearLayout ll_se;
+
+    private TextView tv_moreFood;
+    private TextView tv_moreRelax;
+    private ViewPager vp_foodStore;
 
     private Context context;
 
     private final int MAXTIME = 300000000;
 
     private TencentLocationManager locationManager;
+    private HiddenAnimUtils hiddenAnimUtils;
 
-    private TextView tv_moreFood;
-    private TextView tv_moreRelax;
-    private ViewPager vp_foodStore;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,6 +78,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
         initData();
 
+        initEvent();
         initLocation();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -83,6 +92,26 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
             view_margin.setLayoutParams(lp);
         }
         return view;
+    }
+
+    private void initEvent() {
+        tv_moreFood.setOnClickListener(this);
+        tv_moreRelax.setOnClickListener(this);
+        ll_se.setOnSearchClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                hiddenAnimUtils.toggle(((MainActivity) getActivity()).getTabView());
+            }
+        });
+        msv_search.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                hiddenAnimUtils.toggle(((MainActivity) getActivity()).getTabView());
+
+            }
+        });
     }
 
     private TencentLocationListener listener = new
@@ -135,11 +164,12 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
     private void initData() {
         ImStoreManager imStoreManager = new ImStoreManager(context);
 
+        hiddenAnimUtils = HiddenAnimUtils.newInstance(getContext(),
+                ll_se, msv_search, 1600);
+
         vp_ad.setPageTransformer(true, new AdViewPagerTransformer());
-        AdViewPagerAdapter adViewPager = new AdViewPagerAdapter(getContext(), imStoreManager.getAdInfoList());
-        vp_ad.setAdapter(adViewPager);
 
-
+        vp_ad.setAdapter(new AdViewPagerAdapter(getContext(), imStoreManager.getAdInfoList()));
         vp_foodStore.setAdapter(new RecreationViewPagerAdapter(getActivity(), imStoreManager.getFoodList()));
         vp_funne.setAdapter(new RecreationViewPagerAdapter(getActivity(), imStoreManager.getFoodList()));
 
@@ -147,25 +177,30 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
 
     private void initView(View view) {
-        vp_ad = view.findViewById(R.id.vp_ad);
 
+
+        vp_ad = view.findViewById(R.id.vp_ad);
+        msv_search = view.findViewById(R.id.msv_search);
+        tv_location = view.findViewById(R.id.tv_location);
+        tv_moreFood = view.findViewById(R.id.tv_moreFood);
+        tv_moreRelax = view.findViewById(R.id.tv_moreRelax);
         vp_foodStore = view.findViewById(R.id.vp_foodStore);
+        vp_funne = view.findViewById(R.id.vp_funne);
+        ll_se = view.findViewById(R.id.ll_se);
+
+
         vp_foodStore.setPageMargin(-100);
         vp_foodStore.setOffscreenPageLimit(3);
 
-        vp_funne = view.findViewById(R.id.vp_funne);
         vp_funne.setPageMargin(-100);
         vp_funne.setOffscreenPageLimit(3);
 
-        tv_location = view.findViewById(R.id.tv_location);
-        tv_moreFood = view.findViewById(R.id.tv_moreFood);
-        tv_moreFood.setOnClickListener(this);
-        tv_moreRelax = view.findViewById(R.id.tv_moreRelax);
-        tv_moreRelax.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View v) {
+        System.out.println(v.getId());
         //获得父控件的对象，然后获得父控件的id
         switch (v.getId()) {
             case R.id.tv_moreFood:
@@ -178,6 +213,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
                 intent1.putExtra("tv_moreRelax", "Relax");
                 startActivity(intent1);
                 break;
+
         }
     }
 

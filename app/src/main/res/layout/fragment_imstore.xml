@@ -7,6 +7,12 @@
     android:orientation="vertical">
 
 
+    <com.lucky.sweet.views.GradualChangeLinearLayout
+        android:id="@+id/ll_se"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
     <LinearLayout
         android:id="@+id/title_contact"
         android:layout_width="wrap_content"
@@ -73,7 +79,11 @@
                     android:layout_marginRight="8dp"
                     android:layout_weight="6.6">
 
-                    <include layout="@layout/layout_search"/>
+                    <com.lucky.sweet.views.MySearchView
+                        android:id="@+id/msv_search"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
 
                 </LinearLayout>
 
