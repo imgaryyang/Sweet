@@ -21,7 +21,7 @@ import com.lucky.sweet.adapter.RecreationViewPagerAdapter;
 import com.lucky.sweet.moudel.ImStoreManager;
 import com.lucky.sweet.properties.Properties;
 import com.lucky.sweet.utility.HiddenAnimUtils;
-import com.lucky.sweet.utils.PanduanNet;
+import com.lucky.sweet.utility.PanduanNet;
 import com.lucky.sweet.viewpagerexpand.AdViewPagerTransformer;
 import com.lucky.sweet.views.GradualChangeLinearLayout;
 import com.lucky.sweet.views.MySearchView;

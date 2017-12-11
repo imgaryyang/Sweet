@@ -1,4 +1,4 @@
-package com.lucky.sweet.utils;
+package com.lucky.sweet.utility;
 
 import android.app.Activity;
 import android.content.Context;
