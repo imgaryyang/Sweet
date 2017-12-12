@@ -167,9 +167,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:layout_margin="15dp"
+                android:layout_height="180dp"
                 android:background="@color/white"
+                android:layout_marginTop="5dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -186,7 +186,7 @@
                         android:gravity="left|center"
                         android:text="美食"
                         android:textColor="@color/black"
-                        android:textSize="18dp"/>
+                        android:textSize="15dp"/>
 
                     <TextView
                         android:id="@+id/tv_moreFood"
@@ -203,7 +203,10 @@
                     android:id="@+id/vp_foodStore"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:clipChildren="false"/>
 
 
@@ -216,8 +219,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:layout_margin="15dp"
+                android:layout_height="180dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/white"
                 android:orientation="vertical">
 
@@ -235,7 +238,7 @@
                         android:gravity="left|center"
                         android:text="休闲"
                         android:textColor="@color/black"
-                        android:textSize="18dp"/>
+                        android:textSize="15dp"/>
 
                     <TextView
                         android:id="@+id/tv_moreRelax"
@@ -252,8 +255,10 @@
                     android:id="@+id/vp_funne"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="15dp"/>
-
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"/>
 
             </LinearLayout>
 

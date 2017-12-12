@@ -189,10 +189,10 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         ll_se = view.findViewById(R.id.ll_se);
 
 
-        vp_foodStore.setPageMargin(-100);
+        vp_foodStore.setPageMargin(-380);
         vp_foodStore.setOffscreenPageLimit(3);
 
-        vp_funne.setPageMargin(-100);
+        vp_funne.setPageMargin(-380);
         vp_funne.setOffscreenPageLimit(3);
 
 
