@@ -16,7 +16,7 @@
             android:orientation="vertical">
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="170dp">
+                android:layout_height="200dp">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -125,41 +125,49 @@
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/selector_item_click">
 
                     <ImageView
                         android:id="@+id/imv_ic1"
-                        android:layout_width="30dp"
-                        android:layout_height="35dp"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="30dp"
-                        android:src="@mipmap/ic_me_item"/>
-
-                    <TextView
-                        android:id="@+id/tv_count1"
+                        android:src="@mipmap/ic_mecomment"/>
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignTop="@id/imv_ic1"
-                        android:layout_marginLeft="11dp"
                         android:layout_toRightOf="@id/imv_ic1"
-                        android:text="4"
-                        android:textColor="@color/black"
-                        android:textSize="14dp"/>
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="5dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/tv_count1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@id/imv_ic1"
+                            android:layout_marginLeft="11dp"
+                            android:layout_toRightOf="@id/imv_ic1"
+                            android:text="4"
+                            android:textColor="@color/black"
+                            android:textSize="14dp"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@id/imv_ic1"
-                        android:layout_below="@id/tv_count1"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@id/imv_ic1"
-                        android:text="我的好友"
-                        android:textColor="@color/black"
-                        android:textSize="14dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@id/imv_ic1"
+                            android:layout_below="@id/tv_count1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toRightOf="@id/imv_ic1"
+                            android:text="我的评论"
+                            android:textColor="@color/black"
+                            android:textSize="14dp"/>
+
+                    </LinearLayout>
+
+
 
 
                 </RelativeLayout>
@@ -178,33 +186,42 @@
 
                     <ImageView
                         android:id="@+id/imv_ic"
-                        android:layout_width="30dp"
-                        android:layout_height="35dp"
-                        android:src="@mipmap/ic_me_item"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@mipmap/ic_mecard"
                         android:layout_marginLeft="30dp"
                         android:layout_centerVertical="true"/>
-
-                    <TextView
-                        android:id="@+id/tv_count"
-                        android:text="4"
-                        android:textSize="14dp"
-                        android:textColor="@color/black"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/imv_ic"
-                        android:layout_alignTop="@id/imv_ic"
-                        android:layout_marginLeft="11dp"/>
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="5dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/tv_count"
+                            android:text="4"
+                            android:textSize="14dp"
+                            android:textColor="@color/black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/imv_ic"
+                            android:layout_alignTop="@id/imv_ic"
+                            android:layout_marginLeft="11dp"/>
 
-                    <TextView
-                        android:text="我的好友"
-                        android:textSize="14dp"
-                        android:layout_alignBottom="@id/imv_ic"
-                        android:textColor="@color/black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_count"
-                        android:layout_toRightOf="@id/imv_ic"
-                        android:layout_marginLeft="10dp"/>
+                        <TextView
+                            android:text="会员卡"
+                            android:textSize="14dp"
+                            android:layout_alignBottom="@id/imv_ic"
+                            android:textColor="@color/black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tv_count"
+                            android:layout_toRightOf="@id/imv_ic"
+                            android:layout_marginLeft="10dp"/>
+                    </LinearLayout>
+
+
 
 
                 </RelativeLayout>
@@ -231,33 +248,43 @@
 
                     <ImageView
                         android:id="@+id/imv_ic4"
-                        android:layout_width="30dp"
-                        android:layout_height="35dp"
-                        android:src="@mipmap/ic_me_item"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@mipmap/ic_mecollect"
                         android:layout_marginLeft="30dp"
                         android:layout_centerVertical="true"/>
 
-                    <TextView
-                        android:id="@+id/tv_count4"
-                        android:text="4"
-                        android:textSize="14dp"
-                        android:textColor="@color/black"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/imv_ic4"
-                        android:layout_alignTop="@id/imv_ic4"
-                        android:layout_marginLeft="11dp"/>
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="5dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/tv_count4"
+                            android:text="4"
+                            android:textSize="14dp"
+                            android:textColor="@color/black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/imv_ic4"
+                            android:layout_alignTop="@id/imv_ic4"
+                            android:layout_marginLeft="11dp"/>
 
-                    <TextView
-                        android:text="我的好友"
-                        android:textSize="14dp"
-                        android:layout_alignBottom="@id/imv_ic4"
-                        android:textColor="@color/black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_count4"
-                        android:layout_toRightOf="@id/imv_ic4"
-                        android:layout_marginLeft="10dp"/>
+                        <TextView
+                            android:text="我的收藏"
+                            android:textSize="14dp"
+                            android:layout_alignBottom="@id/imv_ic4"
+                            android:textColor="@color/black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tv_count4"
+                            android:layout_toRightOf="@id/imv_ic4"
+                            android:layout_marginLeft="10dp"/>
+
+                    </LinearLayout>
+
 
 
                 </RelativeLayout>
@@ -276,33 +303,43 @@
 
                     <ImageView
                         android:id="@+id/imv_ic5"
-                        android:layout_width="30dp"
-                        android:layout_height="35dp"
-                        android:src="@mipmap/ic_me_item"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@mipmap/ic_melike"
                         android:layout_marginLeft="30dp"
                         android:layout_centerVertical="true"/>
-
-                    <TextView
-                        android:id="@+id/tv_count5"
-                        android:text="4"
-                        android:textSize="14dp"
-                        android:textColor="@color/black"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/imv_ic5"
-                        android:layout_alignTop="@id/imv_ic5"
-                        android:layout_marginLeft="11dp"/>
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="5dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/tv_count5"
+                            android:text="4"
+                            android:textSize="14dp"
+                            android:textColor="@color/black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/imv_ic5"
+                            android:layout_alignTop="@id/imv_ic5"
+                            android:layout_marginLeft="11dp"/>
 
-                    <TextView
-                        android:text="我的好友"
-                        android:textSize="14dp"
-                        android:layout_alignBottom="@id/imv_ic5"
-                        android:textColor="@color/black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_count5"
-                        android:layout_toRightOf="@id/imv_ic5"
-                        android:layout_marginLeft="10dp"/>
+                        <TextView
+                            android:text="我的赞"
+                            android:textSize="14dp"
+                            android:layout_alignBottom="@id/imv_ic5"
+                            android:textColor="@color/black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tv_count5"
+                            android:layout_toRightOf="@id/imv_ic5"
+                            android:layout_marginLeft="10dp"/>
+
+                    </LinearLayout>
+
+
 
 
                 </RelativeLayout>

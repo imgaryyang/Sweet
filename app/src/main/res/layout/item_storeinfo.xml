@@ -8,7 +8,7 @@
         android:id="@+id/imv_back"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="#000"/>
+        android:background="@mipmap/test_imvback"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -35,28 +35,28 @@
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_margin="16dp"
-            android:background="#000000"/>
+            android:background="@mipmap/test_one"/>
 
         <ImageView
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_margin="16dp"
-            android:background="#000000"/>
+            android:background="@mipmap/test_second"/>
 
         <ImageView
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_margin="16dp"
-            android:background="#000000"/>
+            android:background="@mipmap/test_third"/>
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:background="#AACF25"/>
+        android:layout_height="10dp"
+        android:background="#468c3f"/>
 
 
 </LinearLayout>

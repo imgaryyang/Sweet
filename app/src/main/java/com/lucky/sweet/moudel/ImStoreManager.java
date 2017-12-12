@@ -26,10 +26,10 @@ public class ImStoreManager {
 
     public ArrayList<Integer> getAdInfoList() {
         ArrayList<Integer> strings = new ArrayList<Integer>();
-        strings.add(R.mipmap.adtestone);
-        strings.add(R.mipmap.adtesttwo);
-        strings.add(R.mipmap.adtestthree);
-        strings.add(R.mipmap.adtestfour);
+        strings.add(R.mipmap.test_adone);
+        strings.add(R.mipmap.test_adtwo);
+        strings.add(R.mipmap.test_adthird);
+        strings.add(R.mipmap.test_adtwo);
         return strings;
     }
 
