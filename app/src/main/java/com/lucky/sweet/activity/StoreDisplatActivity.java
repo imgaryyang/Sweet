@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.SearchSpinnerAdapter;
 import com.lucky.sweet.adapter.ShowInfoListViewAdapter;
-import com.lucky.sweet.moudel.StoreDisplatManager;
+import com.lucky.sweet.moudel.storedisplay.StoreDisplatManager;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -47,6 +47,10 @@ public class StoreDisplatActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         storeDisplatManager = new StoreDisplatManager(this);
+
+        storeDisplatManager.getDisInfo();
+
+
 
         initViews();
 

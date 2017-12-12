@@ -24,5 +24,15 @@ public class ExampleInstrumentedTest {
         assertEquals("com.lucky.sweet", appContext.getPackageName());
     }
 
+    @Test
+    public void initializeWeatherTest() throws Exception {
+        // Context of the app under test.
+        Context appContext = InstrumentationRegistry.getTargetContext();
+
+        assertEquals("com.lucky.sweet", appContext.getPackageName());
+
+
+    }
+
 
 }

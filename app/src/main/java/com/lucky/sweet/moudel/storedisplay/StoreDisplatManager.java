@@ -1,11 +1,33 @@
-package com.lucky.sweet.moudel;
+package com.lucky.sweet.moudel.storedisplay;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Message;
+import android.widget.Toast;
 
 import com.lucky.sweet.entity.StoreShowInfo;
+import com.lucky.sweet.properties.Properties;
+import com.lucky.sweet.utility.PanduanNet;
+import com.tencent.map.geolocation.TencentLocation;
+import com.tencent.map.geolocation.TencentLocationListener;
+import com.tencent.map.geolocation.TencentLocationManager;
+import com.tencent.map.geolocation.TencentLocationRequest;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by c on 2017/12/10.
@@ -18,9 +40,9 @@ import java.util.List;
 public class StoreDisplatManager {
     private Context context;
 
-
     public StoreDisplatManager(Context context) {
         this.context = context;
+
     }
 
     public List<String> getBusinessAreaList() {
@@ -63,4 +85,30 @@ public class StoreDisplatManager {
         return data_list;
 
     }
+
+    public void getDisInfo() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                OkHttpClient client = new OkHttpClient();
+                Request request = new Request.Builder().url(Properties.STOREDISPLAYTPATH).build();
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String string = response.body().string();
+
+                    }
+                });
+            }
+        }).start();
+    }
+
+
+
+
 }
