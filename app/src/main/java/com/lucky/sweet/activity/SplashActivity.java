@@ -17,7 +17,7 @@ import com.lucky.sweet.widgets.ToolBar;
 // ( (oo) )  ( (oo) )  ( (oo) )
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
-public class SplashActivity extends BasicActivity {
+public class SplashActivity extends BaseActivity {
     private TextView tv_time;
     private MyCountDownTimer timer;
     private ToolBar toolBar;
@@ -27,21 +27,23 @@ public class SplashActivity extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firstactivity);
         initViews();
+
+        initializeSessionId();
     }
 
-    private void initViews(){
+    private void initViews() {
         toolBar = new ToolBar(this);
         toolBar.setImmersionBar();
 
-        tv_time = (TextView)findViewById(R.id.tv_time);
-        timer = new MyCountDownTimer(4000,1000);
+        tv_time = (TextView) findViewById(R.id.tv_time);
+        timer = new MyCountDownTimer(4000, 1000);
         timer.start();
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashActivity.this,MainActivity.class);
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
                 finish();
             }
@@ -49,8 +51,8 @@ public class SplashActivity extends BasicActivity {
     }
 
     class MyCountDownTimer extends CountDownTimer {
-        public MyCountDownTimer(long millisInFuture,long countDownInterval){
-            super(millisInFuture,countDownInterval);
+        public MyCountDownTimer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
         }
 
         @Override
@@ -60,7 +62,7 @@ public class SplashActivity extends BasicActivity {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            tv_time.setText("倒计时("+millisUntilFinished/1000+")");
+            tv_time.setText("倒计时(" + millisUntilFinished / 1000 + ")");
         }
     }
 

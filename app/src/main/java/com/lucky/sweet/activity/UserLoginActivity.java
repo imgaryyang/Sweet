@@ -11,7 +11,7 @@ import com.lucky.sweet.R;
 import com.lucky.sweet.moudel.loginregister.LoginRegisterManager;
 import com.lucky.sweet.widgets.ToolBar;
 
-public class UserLoginActivity extends BasicActivity {
+public class UserLoginActivity extends BaseActivity {
 
     private ToolBar toolBar;
     private EditText edt_userEmail;

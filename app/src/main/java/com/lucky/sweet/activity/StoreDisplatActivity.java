@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 // ( (oo) )  ( (oo) )  ( (oo) )
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
-public class StoreDisplatActivity extends BasicActivity {
+public class StoreDisplatActivity extends BaseActivity {
 
     private Title title = null;
     @Bind(R.id.sp_businessarea)

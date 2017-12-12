@@ -15,7 +15,7 @@ import com.lucky.sweet.widgets.Tab.TabContainerView;
 import com.lucky.sweet.widgets.Tab.TabFragmentAdapter;
 import com.lucky.sweet.widgets.ToolBar;
 
-public class MainActivity extends BasicActivity implements ViewPager.OnPageChangeListener {
+public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
 
     final ToolBar toolBar = new ToolBar(MainActivity.this);
     private TabContainerView mTabLayout;
@@ -26,7 +26,7 @@ public class MainActivity extends BasicActivity implements ViewPager.OnPageChang
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-
+        System.out.println(sessionId);
     }
 
     private final int ICONS_RES[][] = {
@@ -60,7 +60,7 @@ public class MainActivity extends BasicActivity implements ViewPager.OnPageChang
 
     private void initViews() {
         TabFragmentAdapter mAdapter = new TabFragmentAdapter(getSupportFragmentManager(), fragments);
-        ViewPager  mPager = (ViewPager) findViewById(R.id.tab_pager);
+        ViewPager mPager = (ViewPager) findViewById(R.id.tab_pager);
         //设置当前可见Item左右可见page数，次范围内不会被销毁
         mPager.setOffscreenPageLimit(1);
         mPager.setAdapter(mAdapter);

@@ -240,8 +240,8 @@ public class LoginRegisterHandler extends Handler {
 
     public boolean loginSucced(UserLoginInfo info, boolean flag) {
         edit.putBoolean("logined", true);
-        edit.putString("ID", info.getEmail());
-        edit.putString("PSW", info.getPsw());
+        edit.putString("Id", info.getEmail());
+        edit.putString("Psw", info.getPsw());
         if (flag) edit.putString("Session", info.getSession());
         return edit.commit();
     }

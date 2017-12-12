@@ -17,7 +17,7 @@ import com.lucky.sweet.widgets.ToolBar;
 
 import java.util.ArrayList;
 
-public class UserRegisterActivity extends BasicActivity {
+public class UserRegisterActivity extends BaseActivity {
     private Title title = null;
     private ToolBar toolBar;
     private LoginRegisterManager loginRegisterManager;

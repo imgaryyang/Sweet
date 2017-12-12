@@ -3,15 +3,16 @@ package com.lucky.sweet.activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 
-public class BasicActivity extends AppCompatActivity implements TencentLocationListener {
+public class BaseActivity extends AppCompatActivity implements TencentLocationListener {
 
-
+    public static String sessionId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,12 @@ public class BasicActivity extends AppCompatActivity implements TencentLocationL
 
     }
 
+    public void initializeSessionId() {
+        SharedPreferences config = getSharedPreferences("config", MODE_PRIVATE);
+        if (config.getBoolean("logined", false)) {
+            sessionId = config.getString("Session", "");
+        }
+    }
 
 
     public AlertDialog showDialogBaseAct(String title, String message,

@@ -22,7 +22,7 @@ import com.lucky.sweet.widgets.ToolBar;
 // ( (oo) )  ( (oo) )  ( (oo) )
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
-public class SetUserInfoActivity extends BasicActivity {
+public class SetUserInfoActivity extends BaseActivity {
 
     private Title title = null;
     private SharedPreferences config;

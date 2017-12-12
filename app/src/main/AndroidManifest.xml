@@ -32,7 +32,7 @@
 
         </activity>
         <activity
-            android:name=".activity.BasicActivity"
+            android:name=".activity.BaseActivity"
             android:label="@string/title_activity_basic"
             android:theme="@style/AppTheme">
         </activity>

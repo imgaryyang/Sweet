@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.activity.BasicActivity;
+import com.lucky.sweet.activity.BaseActivity;
 import com.lucky.sweet.moudel.loginregister.LoginRegisterManager;
 import com.lucky.sweet.utility.StringFormatUtility;
 
@@ -61,7 +61,7 @@ public class PassWordSubimitFragment extends Fragment {
                             loginRegisterManager.userForget(userEmail, psw);
                         }
                     } else {
-                        ((BasicActivity) getContext()).showDialogBaseAct
+                        ((BaseActivity) getContext()).showDialogBaseAct
                                 (null, "密码必须同时包含数字和字母。并且长度不小于6位", "确认", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {dialogInterface.cancel();}}, null, null, null, null, getContext());
