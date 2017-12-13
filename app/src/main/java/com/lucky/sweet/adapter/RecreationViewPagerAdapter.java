@@ -5,9 +5,11 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
-import com.lucky.sweet.entity.RecreationInfo;
+import com.lucky.sweet.entity.StoreShowInfo;
 
 import java.util.List;
 
@@ -20,10 +22,10 @@ import java.util.List;
  */
 
 public class RecreationViewPagerAdapter extends PagerAdapter {
-    private List<RecreationInfo> datas;
+    private List<StoreShowInfo.foodBean> datas;
     private Context context;
 
-    public RecreationViewPagerAdapter(Context context, List<RecreationInfo> datas) {
+    public RecreationViewPagerAdapter(Context context, List<StoreShowInfo.foodBean> datas) {
         this.datas = datas;
         this.context = context;
     }
@@ -36,6 +38,8 @@ public class RecreationViewPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_viewpager_foodinfo, null);
+        ImageView imv_photo = view.findViewById(R.id.imv_photo);
+        Glide.with(context).load(datas.get(position).getPho_url()).into(imv_photo);
         container.addView(view);
         return view;
     }

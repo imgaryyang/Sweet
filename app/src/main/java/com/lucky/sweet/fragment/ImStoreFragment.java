@@ -18,12 +18,15 @@ import com.lucky.sweet.activity.MainActivity;
 import com.lucky.sweet.activity.StoreDisplatActivity;
 import com.lucky.sweet.adapter.AdViewPagerAdapter;
 import com.lucky.sweet.adapter.RecreationViewPagerAdapter;
+import com.lucky.sweet.entity.StoreShowInfo;
 import com.lucky.sweet.moudel.imstore.ImStoreManager;
 import com.lucky.sweet.utility.HiddenAnimUtils;
 import com.lucky.sweet.viewpagerexpand.AdViewPagerTransformer;
 import com.lucky.sweet.views.GradualChangeLinearLayout;
 import com.lucky.sweet.views.MySearchView;
 import com.lucky.sweet.widgets.ToolBar;
+
+import java.util.List;
 
 /**
  * Created by Qiuyue on 2017/11/15.
@@ -54,6 +57,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
 
     private HiddenAnimUtils hiddenAnimUtils;
+    private List<StoreShowInfo.foodBean> showInfo;
 
 
     @Override
@@ -88,8 +92,8 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         vp_ad.setPageTransformer(true, new AdViewPagerTransformer());
 
         vp_ad.setAdapter(new AdViewPagerAdapter(getContext(), imStoreManager.getAdInfoList()));
-        vp_foodStore.setAdapter(new RecreationViewPagerAdapter(getActivity(), imStoreManager.getFoodList()));
-        vp_funne.setAdapter(new RecreationViewPagerAdapter(getActivity(), imStoreManager.getFoodList()));
+      /*  vp_foodStore.setAdapter(new RecreationViewPagerAdapter(getActivity(), imStoreManager.getFoodList()));*/
+       /* vp_funne.setAdapter(new RecreationViewPagerAdapter(getActivity(), imStoreManager.getFoodList()));*/
 
     }
 
@@ -168,5 +172,9 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
     }
 
 
+    public void setShowInfo(List<StoreShowInfo.foodBean> showInfo) {
+
+        vp_foodStore.setAdapter(new RecreationViewPagerAdapter(getContext(), showInfo));
+    }
 }
 

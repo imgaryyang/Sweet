@@ -1,12 +1,14 @@
 package com.lucky.sweet.moudel.imstore;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 
+import com.lucky.sweet.entity.StoreShowInfo;
 import com.lucky.sweet.entity.WeatherInfo;
 import com.lucky.sweet.fragment.ImStoreFragment;
+
+import java.util.List;
 
 /**
  * Created by c on 2017/12/13.
@@ -17,7 +19,11 @@ import com.lucky.sweet.fragment.ImStoreFragment;
  */
 
 public class ImStoreHandler extends Handler {
+
     public static final int UPDATAWEATHER = 1;
+
+    public static final int UPSHOWINFO = 2;
+
     private ImStoreFragment fragment;
     private Context context;
 
@@ -41,10 +47,12 @@ public class ImStoreHandler extends Handler {
                         weatherInfo.getHeWeather6().get(0).getNow().getCond_code(), "mipmap", context.getPackageName());
                 fragment.updataWeather(cond_txt, resId);
                 break;
-            case 3:
+            case UPSHOWINFO:
+                StoreShowInfo info = (StoreShowInfo) msg.obj;
+                List<StoreShowInfo.foodBean> food = info.getFood();
+                fragment.setShowInfo(food);
                 break;
-            case 2:
-                break;
+
 
             default:
                 break;

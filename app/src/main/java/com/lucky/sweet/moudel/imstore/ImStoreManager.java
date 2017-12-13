@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.RecreationInfo;
+import com.lucky.sweet.entity.StoreShowInfo;
 import com.lucky.sweet.entity.WeatherInfo;
 import com.lucky.sweet.fragment.ImStoreFragment;
 import com.lucky.sweet.properties.Properties;
@@ -45,6 +46,8 @@ public class ImStoreManager {
         context = ImStoreFragment.getContext();
         imStoreHandler = new ImStoreHandler(ImStoreFragment);
         initLocation();
+
+        initShopInfo();
     }
 
     public ArrayList<Integer> getAdInfoList() {
@@ -144,5 +147,35 @@ public class ImStoreManager {
             }
         }).start();
 
+    }
+
+    private void initShopInfo() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                HttpUtils.sendOkHttpRequest(Properties.MAINSHOWPLAYTPATH, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+
+                        Gson gson = new Gson();
+                        StoreShowInfo storeShowInfo = gson.fromJson(response.body
+                                ().string(), StoreShowInfo.class);
+                        Message message = new Message();
+                        message.what = ImStoreHandler.UPSHOWINFO;
+                        message.obj = storeShowInfo;
+                        imStoreHandler.sendMessage(message);
+
+                    }
+
+
+                });
+            }
+        }).start();
     }
 }
