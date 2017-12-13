@@ -8,9 +8,7 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.fragment.ImCircleFragment;
-import com.lucky.sweet.fragment.ImMeFragment;
-import com.lucky.sweet.fragment.ImStoreFragment;
+import com.lucky.sweet.fragment.MainAcivityFragmentFactory;
 import com.lucky.sweet.widgets.Tab.TabContainerView;
 import com.lucky.sweet.widgets.Tab.TabFragmentAdapter;
 import com.lucky.sweet.widgets.ToolBar;
@@ -25,7 +23,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         initViews();
+
         System.out.println(sessionId);
     }
 
@@ -52,20 +52,23 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             R.color.gray4,
             R.color.Myappcolor};
 
-    private Fragment[] fragments = {
-            new ImStoreFragment(),
-            new ImCircleFragment(),
-            new ImMeFragment()
-    };
+    private Fragment[] fragments  ;
 
     private void initViews() {
+        MainAcivityFragmentFactory factory = MainAcivityFragmentFactory
+                .getSingleFactoryInstance();
+
+        fragments = new Fragment[]{factory.getFragment(MainAcivityFragmentFactory.STORE),
+                factory.getFragment(MainAcivityFragmentFactory.CIRCLE),
+                factory.getFragment(MainAcivityFragmentFactory.ME)};
+
         TabFragmentAdapter mAdapter = new TabFragmentAdapter(getSupportFragmentManager(), fragments);
-        ViewPager mPager = (ViewPager) findViewById(R.id.tab_pager);
+        ViewPager mPager =   findViewById(R.id.tab_pager);
         //设置当前可见Item左右可见page数，次范围内不会被销毁
         mPager.setOffscreenPageLimit(1);
         mPager.setAdapter(mAdapter);
 
-        mTabLayout = (TabContainerView) findViewById(R.id.ll_tab_container);
+        mTabLayout =   findViewById(R.id.ll_tab_container);
         mTabLayout.setOnPageChangeListener(this);
 
         mTabLayout.initContainer(getResources().getStringArray(R.array.tab_name), ICONS_RES, TAB_COLORS, true);

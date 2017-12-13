@@ -29,6 +29,8 @@ public class ImMeFragment extends Fragment {
     private SharedPreferences.Editor edit;*/
     private Button btn_setUserInfo;
 
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

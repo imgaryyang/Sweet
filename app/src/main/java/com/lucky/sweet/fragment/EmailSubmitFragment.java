@@ -21,7 +21,7 @@ import com.lucky.sweet.utility.StringFormatUtility;
  * Use the {@link EmailSubmitFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EmailSubmitFragment extends Fragment {
+public class EmailSubmitFragment extends Fragment{
     private final Boolean isRegister;
 
     private LoginRegisterManager loginRegisterManager;

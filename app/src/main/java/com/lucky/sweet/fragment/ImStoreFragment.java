@@ -39,7 +39,6 @@ import java.util.List;
 
 public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
-
     private ViewPager vp_ad;
     private MySearchView msv_search;
     private ViewPager vp_funne;
@@ -55,10 +54,13 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
     private Context context;
 
 
-
     private HiddenAnimUtils hiddenAnimUtils;
     private List<StoreShowInfo.foodBean> showInfo;
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -78,13 +80,14 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         tv_location.setText(location);
     }
 
-    public void updataWeather(String tmp,int res){
+    public void updataWeather(String tmp, int res) {
         imv_weather.setImageResource(res);
         tv_weathertype.setText(tmp);
 
     }
 
     private void initData() {
+
         ImStoreManager imStoreManager = new ImStoreManager(this);
 
         hiddenAnimUtils = HiddenAnimUtils.newInstance(getContext(), ll_se, msv_search, 1600);
@@ -173,7 +176,6 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
 
     public void setShowInfo(List<StoreShowInfo.foodBean> showInfo) {
-
         vp_foodStore.setAdapter(new RecreationViewPagerAdapter(getContext(), showInfo));
     }
 }

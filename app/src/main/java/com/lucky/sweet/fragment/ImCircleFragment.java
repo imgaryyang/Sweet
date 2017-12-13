@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.widgets.ToolBar;
@@ -22,9 +21,6 @@ import com.lucky.sweet.widgets.ToolBar;
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
 public class ImCircleFragment extends Fragment {
-
-    private ListView lv_circle;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,9 +39,6 @@ public class ImCircleFragment extends Fragment {
         }
 
 
-
         return view;
     }
-
-
 }

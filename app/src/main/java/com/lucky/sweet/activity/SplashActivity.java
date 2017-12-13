@@ -29,9 +29,12 @@ public class SplashActivity extends BaseActivity {
         initViews();
 
         initializeSessionId();
+
     }
 
     private void initViews() {
+
+
         toolBar = new ToolBar(this);
         toolBar.setImmersionBar();
 

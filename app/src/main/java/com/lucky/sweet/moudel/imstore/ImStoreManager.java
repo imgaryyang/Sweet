@@ -43,11 +43,15 @@ public class ImStoreManager {
 
     public ImStoreManager(ImStoreFragment ImStoreFragment) {
         this.ImStoreFragment = ImStoreFragment;
+
+
         context = ImStoreFragment.getContext();
         imStoreHandler = new ImStoreHandler(ImStoreFragment);
+
         initLocation();
 
         initShopInfo();
+
     }
 
     public ArrayList<Integer> getAdInfoList() {
@@ -79,8 +83,7 @@ public class ImStoreManager {
             TencentLocationRequest request = TencentLocationRequest.create();
             request.setInterval(MAX_TIME);
             request.setRequestLevel(TencentLocationRequest.REQUEST_LEVEL_ADMIN_AREA);
-            int requestCode = locationManager.requestLocationUpdates(request,
-                    mListener);
+            int requestCode = locationManager.requestLocationUpdates(request, mListener);
             if (requestCode == 0) {
 
             }
@@ -136,6 +139,7 @@ public class ImStoreManager {
                         Gson gson = new Gson();
                         WeatherInfo weatherInfo = gson.fromJson(response.body().string(), WeatherInfo.class);
                         Message message = new Message();
+
                         message.what = ImStoreHandler.UPDATAWEATHER;
                         message.obj = weatherInfo;
                         imStoreHandler.sendMessage(message);

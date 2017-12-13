@@ -13,37 +13,63 @@ import android.support.v4.app.Fragment;
  */
 
 public class MainAcivityFragmentFactory {
-    private Context context;
-    private static ImMeFragment mMeFragment = new ImMeFragment();
-    private static ImStoreFragment mStoreFragment = new ImStoreFragment();
-    private static ImCircleFragment mCircleFragment = new ImCircleFragment();
+    private static ImMeFragment mMeFragment;
+    private static ImStoreFragment mStoreFragment;
+    private static ImCircleFragment mCircleFragment;
 
-    public static final int EM = 0;
+    private static MainAcivityFragmentFactory factory;
+
+    static {
+
+        mMeFragment = new ImMeFragment();
+
+        mStoreFragment = new ImStoreFragment();
+
+        mCircleFragment = new ImCircleFragment();
+
+    }
+
+    public static final int ME = 0;
     public static final int STORE = 1;
     public static final int CIRCLE = 2;
 
-//    public Fragment getFragment(int type) {
-//        switch (type) {
-//            case EM:
-//                ImMeFragment.instantiate()
-//                return mMeFragment;
-//
-//            break;
-//            case STORE:
-//
-//                return mStoreFragment;
-//
-//            break;
-//            case CIRCLE:
-//
-//                return mCircleFragment;
-//
-//            break;
-//
-//            default:
-//                break;
-//        }
-//        return null;
-//    }
+    private MainAcivityFragmentFactory() {
+
+    }
+
+    public static MainAcivityFragmentFactory getSingleFactoryInstance() {
+        if (factory == null) {
+            synchronized (MainAcivityFragmentFactory.class) {
+                if (factory == null) {
+                    factory = new MainAcivityFragmentFactory();
+                }
+            }
+        }
+        return factory;
+    }
+
+    public Fragment getFragment(int type) {
+
+        switch (type) {
+            case ME:
+
+                return mMeFragment;
+
+
+            case STORE:
+
+                return mStoreFragment;
+
+
+            case CIRCLE:
+
+                return mCircleFragment;
+
+
+            default:
+                break;
+        }
+        return null;
+    }
 
 }

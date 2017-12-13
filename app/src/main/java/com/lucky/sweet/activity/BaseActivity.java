@@ -7,10 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.tencent.map.geolocation.TencentLocation;
-import com.tencent.map.geolocation.TencentLocationListener;
-
-public class BaseActivity extends AppCompatActivity implements TencentLocationListener {
+public class BaseActivity extends AppCompatActivity {
 
     public static String sessionId = "";
 
@@ -51,20 +48,4 @@ public class BaseActivity extends AppCompatActivity implements TencentLocationLi
 
     }
 
-    @Override
-    public void onLocationChanged(TencentLocation tencentLocation, int i, String s) {
-      /*  if (requestCode == TencentLocation.ERROR_OK) {
-            city = tencentLocation.getName().toString().trim();
-        }
-        stopLocation();*/
-    }
-
-    @Override
-    public void onStatusUpdate(String s, int i, String s1) {
-
-    }
-
-    public void stopLocation() {
-        //locationManager.removeUpdates(this);
-    }
 }
