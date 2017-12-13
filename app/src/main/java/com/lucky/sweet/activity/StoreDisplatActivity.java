@@ -51,7 +51,6 @@ public class StoreDisplatActivity extends BaseActivity {
         storeDisplatManager.getDisInfo();
 
 
-
         initViews();
 
         initAdapter();
@@ -90,7 +89,7 @@ public class StoreDisplatActivity extends BaseActivity {
     }
 
     private void initViews() {
-        lv_storeInfo = (ListView) findViewById(R.id.lv_storeInfo);
+        lv_storeInfo = findViewById(R.id.lv_storeInfo);
 
     }
 
@@ -132,6 +131,14 @@ public class StoreDisplatActivity extends BaseActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+        lv_storeInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(StoreDisplatActivity.this, StoreParticularInfoActivity.class);
+                intent.putExtra("shopid", position);
+                startActivity(intent);
             }
         });
     }

@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.lucky.sweet.entity.StoreShowInfo;
 import com.lucky.sweet.properties.Properties;
+import com.lucky.sweet.utility.HttpUtils;
 import com.lucky.sweet.utility.PanduanNet;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
@@ -87,28 +88,25 @@ public class StoreDisplatManager {
     }
 
     public void getDisInfo() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                OkHttpClient client = new OkHttpClient();
-                Request request = new Request.Builder().url(Properties.STOREDISPLAYTPATH).build();
-                client.newCall(request).enqueue(new Callback() {
+        new Thread(
+                new Runnable() {
                     @Override
-                    public void onFailure(Call call, IOException e) {
+                    public void run() {
+                        HttpUtils.sendOkHttpRequest(Properties.STOREDISPLAYTPATH, new
+                                Callback() {
+                                    @Override
+                                    public void onFailure(Call call, IOException e) {
 
+                                    }
+
+                                    @Override
+                                    public void onResponse(Call call, Response response) throws IOException {
+                                        String string = response.body().string();
+                                    }
+                                });
                     }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        String string = response.body().string();
-
-                    }
-                });
-            }
-        }).start();
+                }).start();
     }
-
-
 
 
 }

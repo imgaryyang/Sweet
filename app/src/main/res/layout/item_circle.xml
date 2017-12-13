@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -19,29 +20,29 @@
         android:layout_gravity="center_horizontal"/>
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:src="@mipmap/circle_add"
             android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal"/>
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:src="@mipmap/circle_love"
             android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal"/>
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:src="@mipmap/circle_star"
             android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal"/>
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:src="@mipmap/circle_callout"
             android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal"/>
@@ -72,8 +73,8 @@
                 android:textSize="15dp"
                 android:text="我住隔壁我姓王"/>
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="37dp"
+                android:layout_height="18dp"
                 android:layout_marginLeft="15dp"
                 android:text="lv.11"
                 android:textSize="12dp"
@@ -101,17 +102,39 @@
             android:layout_marginRight="8dp"
             android:text="装修很不错，关顾着拍照了哈哈，不过菜品也很好吃的！"/>
 
-        <com.lucky.sweet.views.CircleGrideView
-            android:id="@+id/grv_circleimg"
-            android:layout_width="wrap_content"
+        <!--<com.lucky.sweet.views.CircleGrideView-->
+            <!--android:id="@+id/grv_circleimg"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:horizontalSpacing="3dp"-->
+            <!--android:numColumns="3"-->
+            <!--android:verticalSpacing="3dp"-->
+            <!--android:layout_marginTop="15dp"-->
+            <!--android:layout_marginLeft="8dp"-->
+            <!--android:layout_marginRight="8dp">-->
+        <!--</com.lucky.sweet.views.CircleGrideView>-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:horizontalSpacing="3dp"
-            android:numColumns="3"
-            android:verticalSpacing="3dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp">
-        </com.lucky.sweet.views.CircleGrideView>
+            android:layout_marginTop="15dp">
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="15dp"
+                android:src="@mipmap/test_one"/>
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="15dp"
+                android:src="@mipmap/test_one"/>
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_height="70dp"
+                android:src="@mipmap/test_one"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"

@@ -1,6 +1,7 @@
 package com.lucky.sweet.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
+import com.lucky.sweet.activity.StoreDisplatActivity;
+import com.lucky.sweet.activity.StoreParticularInfoActivity;
 import com.lucky.sweet.entity.StoreShowInfo;
 
 import java.util.List;
@@ -36,8 +39,17 @@ public class RecreationViewPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_viewpager_foodinfo, null);
+    public Object instantiateItem(final ViewGroup container, final int position) {
+        final View view = LayoutInflater.from(context).inflate(R.layout.item_viewpager_foodinfo, null);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, StoreParticularInfoActivity
+                        .class);
+                intent.putExtra("shopid", position);
+                context.startActivity(intent);
+            }
+        });
         ImageView imv_photo = view.findViewById(R.id.imv_photo);
         Glide.with(context).load(datas.get(position).getPho_url()).into(imv_photo);
         container.addView(view);

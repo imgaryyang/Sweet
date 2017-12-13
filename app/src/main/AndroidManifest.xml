@@ -44,6 +44,7 @@
         <activity android:name=".activity.UserRegisterActivity">
 
         </activity>
+        <activity android:name=".activity.StoreParticularInfoActivity"/>
 
         <meta-data
             android:name="TencentMapSDK"

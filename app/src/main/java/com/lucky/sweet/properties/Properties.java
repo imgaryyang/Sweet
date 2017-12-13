@@ -25,6 +25,8 @@ public class Properties {
             "http://thethreestooges.cn/consumer/bean/login/forget_validate.php";
     public static final String USERFORGETPATH =
             "http://thethreestooges.cn/consumer/bean/login/user_forget.php";
+
+
     public static final String STOREDISPLAYTPATH =
             "https://thethreestooges.cn/consumer/bean/nearby/nearby_mer.php";
     public static final String MAINSHOWPLAYTPATH =

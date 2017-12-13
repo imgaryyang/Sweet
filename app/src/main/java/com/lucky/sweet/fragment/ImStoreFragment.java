@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,7 +91,10 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
         ImStoreManager imStoreManager = new ImStoreManager(this);
 
-        hiddenAnimUtils = HiddenAnimUtils.newInstance(getContext(), ll_se, msv_search, 1600);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        hiddenAnimUtils = HiddenAnimUtils.newInstance(getContext(), ll_se,
+                msv_search, displayMetrics.heightPixels );
 
         vp_ad.setPageTransformer(true, new AdViewPagerTransformer());
 
@@ -157,7 +161,6 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        System.out.println(v.getId());
         //获得父控件的对象，然后获得父控件的id
         switch (v.getId()) {
             case R.id.tv_moreFood:
@@ -177,6 +180,8 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
     public void setShowInfo(List<StoreShowInfo.foodBean> showInfo) {
         vp_foodStore.setAdapter(new RecreationViewPagerAdapter(getContext(), showInfo));
+
+
     }
 }
 

@@ -25,7 +25,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_firstactivity);
+        setContentView(R.layout.activity_splashactivity);
         initViews();
 
         initializeSessionId();
@@ -38,8 +38,8 @@ public class SplashActivity extends BaseActivity {
         toolBar = new ToolBar(this);
         toolBar.setImmersionBar();
 
-        tv_time = (TextView) findViewById(R.id.tv_time);
-        timer = new MyCountDownTimer(4000, 1000);
+//        tv_time = (TextView) findViewById(R.id.tv_time);
+        timer = new MyCountDownTimer(2000, 1000);
         timer.start();
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
@@ -50,7 +50,7 @@ public class SplashActivity extends BaseActivity {
 
                 finish();
             }
-        }, 4000);
+        }, 2000);
     }
 
     class MyCountDownTimer extends CountDownTimer {
@@ -60,12 +60,12 @@ public class SplashActivity extends BaseActivity {
 
         @Override
         public void onFinish() {
-            tv_time.setText("进入Sweet!");
+//            tv_time.setText("进入Sweet!");
         }
 
         @Override
         public void onTick(long millisUntilFinished) {
-            tv_time.setText("倒计时(" + millisUntilFinished / 1000 + ")");
+//            tv_time.setText("倒计时(" + millisUntilFinished / 1000 + ")");
         }
     }
 
