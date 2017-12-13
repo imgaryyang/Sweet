@@ -22,28 +22,28 @@ public class MainAcivityFragmentFactory {
     public static final int STORE = 1;
     public static final int CIRCLE = 2;
 
-    public Fragment getFragment(int type) {
-        switch (type) {
-            case EM:
-                ImMeFragment.instantiate()
-                return mMeFragment;
-
-            break;
-            case STORE:
-
-                return mStoreFragment;
-
-            break;
-            case CIRCLE:
-
-                return mCircleFragment;
-
-            break;
-
-            default:
-                break;
-        }
-        return null;
-    }
+//    public Fragment getFragment(int type) {
+//        switch (type) {
+//            case EM:
+//                ImMeFragment.instantiate()
+//                return mMeFragment;
+//
+//            break;
+//            case STORE:
+//
+//                return mStoreFragment;
+//
+//            break;
+//            case CIRCLE:
+//
+//                return mCircleFragment;
+//
+//            break;
+//
+//            default:
+//                break;
+//        }
+//        return null;
+//    }
 
 }
