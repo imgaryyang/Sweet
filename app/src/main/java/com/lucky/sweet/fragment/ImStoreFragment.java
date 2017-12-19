@@ -180,8 +180,6 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
     public void setShowInfo(List<StoreShowInfo.foodBean> showInfo) {
         vp_foodStore.setAdapter(new RecreationViewPagerAdapter(getContext(), showInfo));
-
-
     }
 }
 
