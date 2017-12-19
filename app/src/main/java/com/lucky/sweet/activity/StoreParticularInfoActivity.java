@@ -3,13 +3,17 @@ package com.lucky.sweet.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
+import com.lucky.sweet.adapter.CircleListViewAdapter;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.moudel.particularinfo.ParticularInfoManager;
+
+import java.util.ArrayList;
 
 /**
  * Created by c on 2017/12/13.
@@ -31,6 +35,7 @@ public class StoreParticularInfoActivity extends BaseActivity  {
     private TextView tv_shop_int;
     private TextView tv_shop_worktime;
     private TextView tv_shop_des;
+    private ListView lv_circle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,14 @@ public class StoreParticularInfoActivity extends BaseActivity  {
         Intent intent = getIntent();
         int shopid = intent.getIntExtra("shopid", 0);
         Toast.makeText(this, "点击店铺ID：" + shopid, Toast.LENGTH_SHORT).show();
+        ArrayList<String> objects = new ArrayList<String>();
+        objects.add("");
+        objects.add("");
+        objects.add("");
+        objects.add("");
+        objects.add("");
+        objects.add("");
+        lv_circle.setAdapter(new CircleListViewAdapter(objects,StoreParticularInfoActivity.this));
     }
 
     public void upData(StoreDetailedInfo.MerinfoBean info) {
@@ -73,7 +86,7 @@ public class StoreParticularInfoActivity extends BaseActivity  {
         tv_shop_int = findViewById(R.id.tv_shop_int);
         tv_shop_worktime = findViewById(R.id.tv_shop_worktime);
         tv_shop_des = findViewById(R.id.tv_shop_des);
-
+        lv_circle = (ListView)findViewById(R.id.lv_circle);
 
     }
 
