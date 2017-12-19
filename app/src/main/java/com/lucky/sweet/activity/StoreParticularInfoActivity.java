@@ -2,6 +2,8 @@ package com.lucky.sweet.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -23,9 +25,7 @@ import java.util.ArrayList;
  * ┬─┬﻿ ノ( ゜-゜ノ) 算了，我不生气了！日子还得过老老实实敲吧~
  */
 
-public class StoreParticularInfoActivity extends BaseActivity  {
-
-
+public class StoreParticularInfoActivity extends BaseActivity{
 
     private ImageView imv_back;
     private ImageView imv_show_fir;
@@ -36,6 +36,7 @@ public class StoreParticularInfoActivity extends BaseActivity  {
     private TextView tv_shop_worktime;
     private TextView tv_shop_des;
     private ListView lv_circle;
+    private Button btn_order;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +88,17 @@ public class StoreParticularInfoActivity extends BaseActivity  {
         tv_shop_worktime = findViewById(R.id.tv_shop_worktime);
         tv_shop_des = findViewById(R.id.tv_shop_des);
         lv_circle = (ListView)findViewById(R.id.lv_circle);
-
+        btn_order = (Button)findViewById(R.id.btn_order);
+        btn_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(StoreParticularInfoActivity.this,OrderSeatActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
+
 
 
 }
