@@ -9,8 +9,9 @@ package com.lucky.sweet.entity;
  */
 
 public class StoreDetailedInfo {
+
     /**
-     * merinfo : {"mer_id":"1","name":"老板娘烤肉店","classify":"聚餐宴请 ","introduce":"我们不一样","phone":"15141433601","address":"辽宁省大连市旅顺口区旅顺盐场海鲜街45号（大连医科大学、大连外国语学院）","business_hours":"8：00-21：30","status":"营业中","reserve":"true","surface":"https://thethreestooges.cn/merchant/img/photo_mer/1/surface.jpg","Thumbnail_one":"https://thethreestooges.cn/merchant/img/photo_mer/1/Thumbnail_one.jpg","Thumbnail_three":"https://thethreestooges.cn/merchant/img/photo_mer/1/Thumbnail_three.jpg","Thumbnail_two":"https://thethreestooges.cn/merchant/img/photo_mer/1/Thumbnail_two.jpg"}
+     * merinfo : {"lat":"121.533662","lon":"38.862153","mer_id":"1","name":"老板娘烤肉店","classify":"聚餐宴请 ","introduce":"我们不一样","phone":"15141433601","address":"辽宁省大连市旅顺口区旅顺盐场海鲜街45号（大连医科大学、大连外国语学院）","business_hours":"8：00-21：30","status":"营业中","reserve":"true","surface":"https://thethreestooges.cn/merchant/img/photo_mer/1/surface.jpg","Thumbnail_one":"https://thethreestooges.cn/merchant/img/photo_mer/1/Thumbnail_one.jpg","Thumbnail_three":"https://thethreestooges.cn/merchant/img/photo_mer/1/Thumbnail_three.jpg","Thumbnail_two":"https://thethreestooges.cn/merchant/img/photo_mer/1/Thumbnail_two.jpg"}
      */
 
     private MerinfoBean merinfo;
@@ -25,6 +26,8 @@ public class StoreDetailedInfo {
 
     public static class MerinfoBean {
         /**
+         * lat : 121.533662
+         * lon : 38.862153
          * mer_id : 1
          * name : 老板娘烤肉店
          * classify : 聚餐宴请
@@ -40,6 +43,8 @@ public class StoreDetailedInfo {
          * Thumbnail_two : https://thethreestooges.cn/merchant/img/photo_mer/1/Thumbnail_two.jpg
          */
 
+        private String lat;
+        private String lon;
         private String mer_id;
         private String name;
         private String classify;
@@ -53,6 +58,22 @@ public class StoreDetailedInfo {
         private String Thumbnail_one;
         private String Thumbnail_three;
         private String Thumbnail_two;
+
+        public String getLat() {
+            return lat;
+        }
+
+        public void setLat(String lat) {
+            this.lat = lat;
+        }
+
+        public String getLon() {
+            return lon;
+        }
+
+        public void setLon(String lon) {
+            this.lon = lon;
+        }
 
         public String getMer_id() {
             return mer_id;

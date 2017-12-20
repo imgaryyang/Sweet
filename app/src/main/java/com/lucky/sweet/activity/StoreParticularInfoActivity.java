@@ -13,6 +13,11 @@ import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.moudel.particularinfo.ParticularInfoManager;
+import com.tencent.mapsdk.raster.model.LatLng;
+import com.tencent.mapsdk.raster.model.Marker;
+import com.tencent.mapsdk.raster.model.MarkerOptions;
+import com.tencent.tencentmap.mapsdk.map.MapView;
+import com.tencent.tencentmap.mapsdk.map.TencentMap;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -38,6 +43,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private TextView tv_shop_int;
     private TextView tv_shop_worktime;
     private TextView tv_shop_des;
+    private MapView map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +75,13 @@ public class StoreParticularInfoActivity extends BaseActivity {
         tv_shop_int.setText(info.getClassify());
         tv_shop_worktime.setText(info.getBusiness_hours());
         tv_shop_des.setText(info.getIntroduce());
-
+        LatLng latLng = new LatLng(Double.valueOf(info.getLat()),
+                Double.valueOf(info.getLon()));
+        TencentMap maps = map.getMap();
+        maps.setCenter(latLng);
+        Marker marker = this.map.addMarker(new MarkerOptions().title(info.getName()).anchor(0.5f,
+                0.5f).position(latLng));
+        marker.showInfoWindow();
     }
 
 
@@ -82,6 +94,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
         tv_shop_int = findViewById(R.id.tv_shop_int);
         tv_shop_worktime = findViewById(R.id.tv_shop_worktime);
         tv_shop_des = findViewById(R.id.tv_shop_des);
+        map = findViewById(R.id.map);
         findViewById(R.id.btn_order).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -156,25 +156,27 @@
                     android:layout_height="15dp"
                     android:background="@color/gray0"/>
 
-                <LinearLayout
+                <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="65dp"
-                    android:layout_margin="15dp"
-                    android:background="@color/white"
-                    android:clipChildren="false">
+                    android:layout_margin="15dp">
 
-                    <android.support.v4.view.ViewPager
-
-                        android:id="@+id/vp_otherad"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:clipChildren="false"
-                        android:orientation="horizontal"
-                        android:overScrollMode="never">
+                        android:background="@color/white"
+                        android:clipChildren="false">
 
-                    </android.support.v4.view.ViewPager>
+                        <GridView
+                            android:id="@+id/gv_ad_show"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:numColumns="auto_fit"
+                            android:stretchMode="spacingWidthUniform"/>
 
-                </LinearLayout>
+                    </LinearLayout>
+                </HorizontalScrollView>
 
                 <View
                     android:layout_width="match_parent"

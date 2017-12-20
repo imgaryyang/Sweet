@@ -11,12 +11,14 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.activity.MainActivity;
 import com.lucky.sweet.activity.StoreDisplatActivity;
+import com.lucky.sweet.adapter.AdGridViewAdapter;
 import com.lucky.sweet.adapter.AdViewPagerAdapter;
 import com.lucky.sweet.adapter.RecreationViewPagerAdapter;
 import com.lucky.sweet.entity.StoreShowInfo;
@@ -50,11 +52,11 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
     private TextView tv_moreFood;
     private ImageView imv_weather;
     private TextView tv_moreRelax;
+    private GridView gv_ad_show;
     private ViewPager vp_foodStore;
 
+
     private Context context;
-
-
     private HiddenAnimUtils hiddenAnimUtils;
     private List<StoreShowInfo.foodBean> showInfo;
 
@@ -99,6 +101,9 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         vp_ad.setPageTransformer(true, new AdViewPagerTransformer());
 
         vp_ad.setAdapter(new AdViewPagerAdapter(getContext(), imStoreManager.getAdInfoList()));
+
+
+        gv_ad_show.setAdapter(new AdGridViewAdapter(context));
       /*  vp_foodStore.setAdapter(new RecreationViewPagerAdapter(getActivity(), imStoreManager.getFoodList()));*/
        /* vp_funne.setAdapter(new RecreationViewPagerAdapter(getActivity(), imStoreManager.getFoodList()));*/
 
@@ -118,6 +123,8 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         vp_foodStore = view.findViewById(R.id.vp_foodStore);
         vp_funne = view.findViewById(R.id.vp_funne);
         ll_se = view.findViewById(R.id.ll_se);
+        gv_ad_show = view.findViewById(R.id.gv_ad_show);
+
 
 
         vp_foodStore.setPageMargin(-380);

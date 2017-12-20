@@ -28,7 +28,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
         initViews();
 
-        System.out.println(sessionId);
     }
 
     private final int ICONS_RES[][] = {
