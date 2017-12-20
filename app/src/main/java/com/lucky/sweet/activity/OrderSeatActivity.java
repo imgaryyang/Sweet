@@ -1,8 +1,12 @@
 package com.lucky.sweet.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.widgets.Title;
+import com.lucky.sweet.widgets.ToolBar;
 
 /**
  * Created by Qiuyue on 2017/12/19.
