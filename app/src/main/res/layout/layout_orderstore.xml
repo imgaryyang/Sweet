@@ -61,6 +61,6 @@
         android:layout_marginBottom="5dp"
         android:textColor="@color/white"
         android:text="预订"
-        android:background="@drawable/shape_btn_order"/>
+        android:background="@mipmap/btn_order_bg"/>
 
 </LinearLayout>

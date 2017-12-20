@@ -6,15 +6,16 @@
     android:orientation="vertical">
 
 
+
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
+            <include layout="@layout/layout_title"/>
             <ImageView
                 android:id="@+id/imv_back"
                 android:layout_width="match_parent"

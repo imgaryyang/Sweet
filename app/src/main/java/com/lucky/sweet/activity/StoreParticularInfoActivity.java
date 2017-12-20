@@ -13,6 +13,8 @@ import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.moudel.particularinfo.ParticularInfoManager;
+import com.lucky.sweet.widgets.Title;
+import com.lucky.sweet.widgets.ToolBar;
 
 import java.util.ArrayList;
 
@@ -25,6 +27,8 @@ import java.util.ArrayList;
  */
 
 public class StoreParticularInfoActivity extends BaseActivity {
+
+    private Title title = null;
 
     private ImageView imv_back;
     private ImageView imv_show_fir;
@@ -43,6 +47,8 @@ public class StoreParticularInfoActivity extends BaseActivity {
         initView();
 
         initData();
+
+        initTitle();
 
         ParticularInfoManager particularInfoManager = new ParticularInfoManager(this);
     }
@@ -93,6 +99,33 @@ public class StoreParticularInfoActivity extends BaseActivity {
         objects.add("");
         objects.add("");
         lv_circle.setAdapter(new CircleListViewAdapter(objects,this));
+
+    }
+
+    private void initTitle() {
+        ToolBar toolBar = new ToolBar(this);
+        toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
+        title = (Title) findViewById(R.id.title);
+        title.setTitleNameStr(" ");
+        Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
+                .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
+        Title.ButtonInfo buttonRight = new Title.ButtonInfo(true, Title
+                .BUTTON_RIGHT1, R.mipmap.circle_star, null);
+        title.setOnTitleButtonClickListener(new Title
+                .OnTitleButtonClickListener() {
+            @Override
+            public void onClick(int id, Title.ButtonViewHolder viewHolder) {
+                switch (id) {
+                    case Title.BUTTON_LEFT:
+                        hintInputKb();
+                        finish();
+                        break;
+
+                }
+            }
+        });
+        title.mSetButtonInfo(buttonLeft);
+        title.mSetButtonInfo(buttonRight);
 
     }
 
