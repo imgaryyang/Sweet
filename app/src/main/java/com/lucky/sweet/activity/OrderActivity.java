@@ -11,11 +11,15 @@ import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.LeftListAdapter;
 import com.lucky.sweet.adapter.MainSectionedAdapter;
 import com.lucky.sweet.views.PinnedHeaderListView;
+import com.lucky.sweet.widgets.Title;
+import com.lucky.sweet.widgets.ToolBar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class OrderActivity extends AppCompatActivity {
+
+    private Title title = null;
 
     @Bind(R.id.left_listview)
     ListView leftListview;
@@ -38,6 +42,7 @@ public class OrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
+        initTitle();
         ButterKnife.bind(this);
         pinnedListView = (PinnedHeaderListView) findViewById(R.id.pinnedListView);
         final MainSectionedAdapter sectionedAdapter = new MainSectionedAdapter(this, leftStr, rightStr);
@@ -67,6 +72,8 @@ public class OrderActivity extends AppCompatActivity {
             }
 
         });
+
+
 
         pinnedListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
@@ -130,6 +137,29 @@ public class OrderActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+    }
+
+    private void initTitle() {
+        ToolBar toolBar = new ToolBar(this);
+        toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
+        title = (Title) findViewById(R.id.title);
+        title.setTitleNameStr("点餐列表");
+        Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
+                .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
+        title.setOnTitleButtonClickListener(new Title
+                .OnTitleButtonClickListener() {
+            @Override
+            public void onClick(int id, Title.ButtonViewHolder viewHolder) {
+                switch (id) {
+                    case Title.BUTTON_LEFT:
+                        finish();
+                        break;
+
+                }
+            }
+        });
+        title.mSetButtonInfo(buttonLeft);
+
     }
 
 }

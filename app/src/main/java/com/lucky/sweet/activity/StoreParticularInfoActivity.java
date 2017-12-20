@@ -4,13 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
+import com.lucky.sweet.adapter.CircleListViewAdapter;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.moudel.particularinfo.ParticularInfoManager;
+
+import java.util.ArrayList;
 
 /**
  * Created by c on 2017/12/13.
@@ -21,7 +25,6 @@ import com.lucky.sweet.moudel.particularinfo.ParticularInfoManager;
  */
 
 public class StoreParticularInfoActivity extends BaseActivity {
-
 
     private ImageView imv_back;
     private ImageView imv_show_fir;
@@ -80,6 +83,16 @@ public class StoreParticularInfoActivity extends BaseActivity {
                         OrderSeatActivity.class));
             }
         });
+
+        ListView lv_circle = (ListView)findViewById(R.id.lv_circle);
+        ArrayList<String> objects = new ArrayList<String>();
+        objects.add("");
+        objects.add("");
+        objects.add("");
+        objects.add("");
+        objects.add("");
+        objects.add("");
+        lv_circle.setAdapter(new CircleListViewAdapter(objects,this));
 
     }
 

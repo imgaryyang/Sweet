@@ -3,6 +3,7 @@ package com.lucky.sweet.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.widgets.Title;
@@ -31,6 +32,7 @@ public class OrderSeatActivity extends BaseActivity {
                 startActivity(new Intent(OrderSeatActivity.this, OrderActivity.class));
             }
         });
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
     private void initTitle() {
