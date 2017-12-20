@@ -7,20 +7,21 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.activity.MainActivity;
 import com.lucky.sweet.activity.StoreDisplatActivity;
-import com.lucky.sweet.adapter.AdGridViewAdapter;
 import com.lucky.sweet.adapter.AdViewPagerAdapter;
-import com.lucky.sweet.adapter.RecreationViewPagerAdapter;
+import com.lucky.sweet.adapter.RecFoodRecommendAdapter;
+import com.lucky.sweet.adapter.RecminiAdAdapter;
 import com.lucky.sweet.entity.StoreShowInfo;
 import com.lucky.sweet.moudel.imstore.ImStoreManager;
 import com.lucky.sweet.utility.HiddenAnimUtils;
@@ -44,7 +45,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
     private ViewPager vp_ad;
     private MySearchView msv_search;
-    private ViewPager vp_funne;
+
     private TextView tv_location;
     private TextView tv_weathertype;
     private GradualChangeLinearLayout ll_se;
@@ -52,8 +53,9 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
     private TextView tv_moreFood;
     private ImageView imv_weather;
     private TextView tv_moreRelax;
-    private GridView gv_ad_show;
-    private ViewPager vp_foodStore;
+    private RecyclerView rec_ad_show;
+    private RecyclerView rec_foodStore;
+    private RecyclerView rec_funStore;
 
 
     private Context context;
@@ -96,22 +98,34 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         hiddenAnimUtils = HiddenAnimUtils.newInstance(getContext(), ll_se,
-                msv_search, displayMetrics.heightPixels );
+                msv_search, displayMetrics.heightPixels);
 
         vp_ad.setPageTransformer(true, new AdViewPagerTransformer());
 
         vp_ad.setAdapter(new AdViewPagerAdapter(getContext(), imStoreManager.getAdInfoList()));
 
 
-        gv_ad_show.setAdapter(new AdGridViewAdapter(context));
-      /*  vp_foodStore.setAdapter(new RecreationViewPagerAdapter(getActivity(), imStoreManager.getFoodList()));*/
-       /* vp_funne.setAdapter(new RecreationViewPagerAdapter(getActivity(), imStoreManager.getFoodList()));*/
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rec_ad_show.setLayoutManager(linearLayoutManager);
+
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rec_foodStore.setLayoutManager(linearLayoutManager);
+
+
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rec_funStore.setLayoutManager(linearLayoutManager);
+
+        rec_ad_show.setAdapter(new RecminiAdAdapter(context));
+        rec_foodStore.setAdapter(new RecFoodRecommendAdapter(context));
+        rec_funStore.setAdapter(new RecFoodRecommendAdapter(context));
 
     }
 
 
     private void initView(View view) {
-
 
         vp_ad = view.findViewById(R.id.vp_ad);
         imv_weather = view.findViewById(R.id.imv_weather);
@@ -120,18 +134,10 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         tv_location = view.findViewById(R.id.tv_location);
         tv_moreFood = view.findViewById(R.id.tv_moreFood);
         tv_moreRelax = view.findViewById(R.id.tv_moreRelax);
-        vp_foodStore = view.findViewById(R.id.vp_foodStore);
-        vp_funne = view.findViewById(R.id.vp_funne);
+        rec_foodStore = view.findViewById(R.id.rec_foodStore);
+        rec_funStore = view.findViewById(R.id.rec_funStore);
         ll_se = view.findViewById(R.id.ll_se);
-        gv_ad_show = view.findViewById(R.id.gv_ad_show);
-
-
-
-        vp_foodStore.setPageMargin(-380);
-        vp_foodStore.setOffscreenPageLimit(3);
-
-        vp_funne.setPageMargin(-380);
-        vp_funne.setOffscreenPageLimit(3);
+        rec_ad_show = view.findViewById(R.id.rec_ad_show);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ToolBar toolBar = new ToolBar(getActivity());
@@ -186,7 +192,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
 
     public void setShowInfo(List<StoreShowInfo.foodBean> showInfo) {
-        vp_foodStore.setAdapter(new RecreationViewPagerAdapter(getContext(), showInfo));
+       /* vp_foodStore.setAdapter(new RecreationViewPagerAdapter(getContext(), showInfo));*/
     }
 }
 
