@@ -28,7 +28,7 @@
     <color name="frameColor">#4c212121</color>
     <color name="frameColorwhite">#19EEEEEE</color>
 
-
+    <color name="gray_light">#EBEDF0</color>
 
 
 </resources>

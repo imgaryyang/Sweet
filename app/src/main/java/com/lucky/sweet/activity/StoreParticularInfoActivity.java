@@ -2,6 +2,7 @@ package com.lucky.sweet.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -10,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.moudel.particularinfo.ParticularInfoManager;
+import com.tencent.tencentmap.mapsdk.map.MapActivity;
 
 /**
  * Created by c on 2017/12/13.
@@ -19,9 +21,8 @@ import com.lucky.sweet.moudel.particularinfo.ParticularInfoManager;
  * ┬─┬﻿ ノ( ゜-゜ノ) 算了，我不生气了！日子还得过老老实实敲吧~
  */
 
-public class StoreParticularInfoActivity extends BaseActivity  {
-
-
+public class StoreParticularInfoActivity extends MapActivity {
+ 
 
     private ImageView imv_back;
     private ImageView imv_show_fir;
@@ -41,12 +42,13 @@ public class StoreParticularInfoActivity extends BaseActivity  {
 
         initData();
 
-        ParticularInfoManager particularInfoManager = new ParticularInfoManager(this);
+
     }
 
     private void initData() {
         Intent intent = getIntent();
         int shopid = intent.getIntExtra("shopid", 0);
+        ParticularInfoManager particularInfoManager = new ParticularInfoManager(this);
         Toast.makeText(this, "点击店铺ID：" + shopid, Toast.LENGTH_SHORT).show();
     }
 
@@ -56,7 +58,7 @@ public class StoreParticularInfoActivity extends BaseActivity  {
         Glide.with(this).load(info.getThumbnail_one()).into(imv_show_fir);
         Glide.with(this).load(info.getThumbnail_two()).into(imv_show_sec);
         Glide.with(this).load(info.getThumbnail_three()).into(imv_show_sed);
-        tv_shop_title.setText(info .getName());
+        tv_shop_title.setText(info.getName());
         tv_shop_int.setText(info.getClassify());
         tv_shop_worktime.setText(info.getBusiness_hours());
         tv_shop_des.setText(info.getIntroduce());
@@ -73,6 +75,15 @@ public class StoreParticularInfoActivity extends BaseActivity  {
         tv_shop_int = findViewById(R.id.tv_shop_int);
         tv_shop_worktime = findViewById(R.id.tv_shop_worktime);
         tv_shop_des = findViewById(R.id.tv_shop_des);
+        findViewById(R.id.btn_reserve)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(StoreParticularInfoActivity
+                                .this, OrderSeatActivity
+                                .class));
+                    }
+                });
 
 
     }

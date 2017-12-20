@@ -11,4 +11,5 @@
         <item>甜甜圈</item>
         <item>我的</item>
     </array>
+    <string name="title_activity_order">OrderActivity</string>
 </resources>

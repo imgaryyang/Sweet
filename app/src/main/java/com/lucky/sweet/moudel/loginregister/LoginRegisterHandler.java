@@ -115,9 +115,11 @@ public class LoginRegisterHandler extends Handler {
                         Toast.makeText(context, "登陆成功", Toast.LENGTH_SHORT).show();
                         UserLoginInfo info = (UserLoginInfo) msg.obj;
                         if (loginSucced(info, true)) {
-                            Intent intent = new Intent();
+              /*              Intent intent = new Intent();
                             intent.putExtra("login", true);
-                            context.startActivity(new Intent(context, MainActivity.class));
+                            context.startActivity(new Intent(context, MainActivity.class));*/
+                            ((Activity)context).finish();
+
                         }
                         break;
                     case PSWFAILD:
@@ -137,7 +139,7 @@ public class LoginRegisterHandler extends Handler {
                         Toast.makeText(context, "注册成功", Toast.LENGTH_SHORT).show();
                         UserLoginInfo info = (UserLoginInfo) msg.obj;
                         if (loginSucced(info, false)) {
-                            context.startActivity(new Intent(context, MainActivity.class));
+                            ((Activity)context).finish();
                         }
                         break;
                     case REGESTERFAIL:
