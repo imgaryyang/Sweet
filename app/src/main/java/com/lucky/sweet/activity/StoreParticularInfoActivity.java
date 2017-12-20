@@ -3,6 +3,7 @@ package com.lucky.sweet.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -112,7 +113,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
         objects.add("");
         objects.add("");
         lv_circle.setAdapter(new CircleListViewAdapter(objects,this));
-
+        setListViewHeightBasedOnChildren(lv_circle);
     }
 
     private void initTitle() {
@@ -140,6 +141,28 @@ public class StoreParticularInfoActivity extends BaseActivity {
         title.mSetButtonInfo(buttonLeft);
         title.mSetButtonInfo(buttonRight);
 
+    }
+
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        //获得adapter
+        CircleListViewAdapter adapter = (CircleListViewAdapter) listView.getAdapter();
+        if (adapter == null) {
+            return;
+        }
+
+        int totalHeight = 0;
+        for (int i = 0; i < adapter.getCount(); i++) {
+            View listItem = adapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            //计算总高度
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        //计算分割线高度
+        params.height = totalHeight + (listView.getDividerHeight() * (adapter.getCount() - 1));
+        //给listview设置高度
+        listView.setLayoutParams(params);
     }
 
 

@@ -24,18 +24,20 @@
 
         <com.sackcentury.shinebuttonlib.ShineButton
             android:id="@+id/po_image0"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:layout_centerInParent="true"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
             app:btn_color="@android:color/darker_gray"
             app:btn_fill_color="#999933"
             app:siShape="@raw/heart"/>
 
         <com.sackcentury.shinebuttonlib.ShineButton
             android:id="@+id/po_image1"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="15dp"
             android:layout_centerInParent="true"
             android:layout_marginLeft="20dp"
             android:src="@android:color/darker_gray"
@@ -55,10 +57,11 @@
 
         <com.sackcentury.shinebuttonlib.ShineButton
             android:id="@+id/po_image2"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:layout_centerInParent="true"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
             android:src="@android:color/darker_gray"
             app:allow_random_color="true"
             app:btn_color="@android:color/darker_gray"
@@ -67,10 +70,11 @@
 
         <com.sackcentury.shinebuttonlib.ShineButton
             android:id="@+id/po_image3"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:layout_centerInParent="true"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
             app:btn_color="@android:color/darker_gray"
             app:btn_fill_color="#996699"
             app:enable_flashing="true"
