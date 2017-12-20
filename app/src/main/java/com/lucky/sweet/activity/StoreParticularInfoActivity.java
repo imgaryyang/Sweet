@@ -2,6 +2,7 @@ package com.lucky.sweet.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,8 +20,7 @@ import com.lucky.sweet.moudel.particularinfo.ParticularInfoManager;
  * ┬─┬﻿ ノ( ゜-゜ノ) 算了，我不生气了！日子还得过老老实实敲吧~
  */
 
-public class StoreParticularInfoActivity extends BaseActivity  {
-
+public class StoreParticularInfoActivity extends BaseActivity {
 
 
     private ImageView imv_back;
@@ -56,7 +56,7 @@ public class StoreParticularInfoActivity extends BaseActivity  {
         Glide.with(this).load(info.getThumbnail_one()).into(imv_show_fir);
         Glide.with(this).load(info.getThumbnail_two()).into(imv_show_sec);
         Glide.with(this).load(info.getThumbnail_three()).into(imv_show_sed);
-        tv_shop_title.setText(info .getName());
+        tv_shop_title.setText(info.getName());
         tv_shop_int.setText(info.getClassify());
         tv_shop_worktime.setText(info.getBusiness_hours());
         tv_shop_des.setText(info.getIntroduce());
@@ -73,7 +73,13 @@ public class StoreParticularInfoActivity extends BaseActivity  {
         tv_shop_int = findViewById(R.id.tv_shop_int);
         tv_shop_worktime = findViewById(R.id.tv_shop_worktime);
         tv_shop_des = findViewById(R.id.tv_shop_des);
-
+        findViewById(R.id.btn_order).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(StoreParticularInfoActivity.this,
+                        OrderSeatActivity.class));
+            }
+        });
 
     }
 
