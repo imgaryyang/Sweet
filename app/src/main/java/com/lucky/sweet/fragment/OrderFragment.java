@@ -12,7 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.adapter.LeftListAdapter;
+import com.lucky.sweet.adapter.DisLeftListAdapter;
 import com.lucky.sweet.adapter.MainSectionedAdapter;
 import com.lucky.sweet.views.PinnedHeaderListView;
 import com.lucky.sweet.widgets.ToolBar;
@@ -32,7 +32,7 @@ public class OrderFragment extends Fragment {
 
     PinnedHeaderListView pinnedListView;
     private boolean isScroll = true;
-    private LeftListAdapter adapter;
+    private DisLeftListAdapter adapter;
 
     private String[] leftStr = new String[]{"面食类", "盖饭", "寿司", "烧烤", "酒水", "凉菜", "小吃", "粥", "休闲"};
     private boolean[] flagArray = {true, false, false, false, false, false, false, false, false};
@@ -72,7 +72,7 @@ public class OrderFragment extends Fragment {
         final MainSectionedAdapter sectionedAdapter = new
                 MainSectionedAdapter(getActivity(), leftStr, rightStr);
         pinnedListView.setAdapter(sectionedAdapter);
-        adapter = new LeftListAdapter(getActivity(), leftStr, flagArray);
+        adapter = new DisLeftListAdapter(getActivity(), leftStr, flagArray);
 
         leftListview.setAdapter(adapter);
         leftListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

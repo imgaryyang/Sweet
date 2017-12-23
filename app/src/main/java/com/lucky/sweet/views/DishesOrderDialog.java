@@ -27,14 +27,16 @@ public class DishesOrderDialog {
 
     int selectDate = -1;
     private AlertDialog dialog;
+    private OnDateSelectListener onDateSelectListener;
 
-    public DishesOrderDialog showDialog(final Context context, final String[]
+
+    public DishesOrderDialog (final Context context, final String[]
             leftStr, final String[][] rightStr) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View inflate = LayoutInflater.from(context).inflate(R.layout.dialog_dishes_order, null);
 
-        ListView lv_left = inflate.findViewById(R.id.lv_left);
+        final ListView lv_left = inflate.findViewById(R.id.lv_left);
         final ListView lv_right = inflate.findViewById(R.id.lv_right);
         final OrderTimeDialogListAdapater leftAdapater = new OrderTimeDialogListAdapater(leftStr, context);
         lv_left.setAdapter(leftAdapater);
@@ -45,6 +47,7 @@ public class DishesOrderDialog {
                 selectDate = position;
                 leftAdapater.setSelectedItem(position);
                 leftAdapater.notifyDataSetChanged();
+                lv_left.setSelection(position);
 
             }
         });
@@ -70,14 +73,13 @@ public class DishesOrderDialog {
         WindowManager.LayoutParams p = dialog.getWindow().getAttributes();
         p.width = d.getWidth();
         dialog.getWindow().setAttributes(p);
-        return this;
+
     }
 
     public interface OnDateSelectListener {
         void onDateSelected(String dates);
     }
 
-    private OnDateSelectListener onDateSelectListener;
 
     public void setDateSelectListener(OnDateSelectListener onDateSelectListener) {
 
