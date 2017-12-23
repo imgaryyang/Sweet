@@ -74,7 +74,6 @@ public class OrderActivity extends AppCompatActivity {
         });
 
 
-
         pinnedListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView arg0, int scrollState) {
@@ -146,6 +145,8 @@ public class OrderActivity extends AppCompatActivity {
         title.setTitleNameStr("点餐列表");
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
                 .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
+        Title.ButtonInfo buttonRigt = new Title.ButtonInfo(true, Title
+                .BUTTON_RIGHT1, R.drawable.ic_cart, null);
         title.setOnTitleButtonClickListener(new Title
                 .OnTitleButtonClickListener() {
             @Override
@@ -154,11 +155,17 @@ public class OrderActivity extends AppCompatActivity {
                     case Title.BUTTON_LEFT:
                         finish();
                         break;
+                    case Title.BUTTON_RIGHT1:
+                        break;
+                    
 
                 }
             }
         });
+
         title.mSetButtonInfo(buttonLeft);
+        title.mSetButtonInfo(buttonRigt);
+
 
     }
 
