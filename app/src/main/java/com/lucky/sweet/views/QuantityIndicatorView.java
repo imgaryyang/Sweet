@@ -24,6 +24,11 @@ import java.util.List;
  */
 
 public class QuantityIndicatorView extends LinearLayout {
+
+    private TextView tv_num;
+    private Button btn_subtract;
+
+
     public QuantityIndicatorView(Context context) {
         super(context);
         initView(context);
@@ -42,8 +47,9 @@ public class QuantityIndicatorView extends LinearLayout {
 
     private void initView(Context context) {
         LayoutInflater.from(context).inflate(R.layout.item_recorder_view, this, true);
-        final TextView tv_num = findViewById(R.id.tv_num);
-        final Button btn_subtract = findViewById(R.id.btn_subtract);
+        tv_num = findViewById(R.id.tv_num);
+        btn_subtract = findViewById(R.id.btn_subtract);
+
         Button btn_add = findViewById(R.id.btn_add);
 
         btn_add.setOnClickListener(new OnClickListener() {
@@ -58,6 +64,8 @@ public class QuantityIndicatorView extends LinearLayout {
                 }
                 String text = tv_num.getText().toString().trim();
                 text = Integer.parseInt(text) + 1 + "";
+                if (numberListener != null)
+                    numberListener.onDataChange(text);
                 tv_num.setText(text);
             }
         });
@@ -74,6 +82,8 @@ public class QuantityIndicatorView extends LinearLayout {
                 } else {
                     text = Integer.parseInt(text) + -1 + "";
                 }
+                if (numberListener != null)
+                    numberListener.onDataChange(text);
                 tv_num.setText(text);
             }
         });
@@ -89,5 +99,21 @@ public class QuantityIndicatorView extends LinearLayout {
             alphaAnimation.setDuration(300);
             view.setAnimation(alphaAnimation);
         }
+    }
+
+    public interface NumberListener {
+        void onDataChange(String num);
+    }
+
+    private NumberListener numberListener;
+
+    public void setNumberListener(NumberListener numberListener) {
+        this.numberListener = numberListener;
+    }
+
+    public void setNumber(int num){
+        tv_num.setText(num+"");
+        tv_num.setVisibility(VISIBLE);
+        btn_subtract.setVisibility(VISIBLE);
     }
 }
