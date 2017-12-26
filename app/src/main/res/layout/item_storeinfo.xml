@@ -16,6 +16,7 @@
         android:text="海边酒馆"
         android:textSize="25dp"
         android:textColor="#000000"
+        android:textStyle="bold"
         android:layout_gravity="center"
         android:layout_margin="13dp"/>
 

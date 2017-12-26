@@ -3,23 +3,33 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray0"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@mipmap/seat_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/title_detail"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
 
     <include layout="@layout/layout_title"/>
 
     <!--<View-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="37dp"/>-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="37dp"/>-->
 
     <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:layout_marginTop="30dp"-->
-    <!--android:text="2017-12-19"-->
-    <!--android:textColor="@color/black"-->
-    <!--android:textSize="18dp"/>-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginTop="30dp"-->
+        <!--android:text="2017-12-19"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textSize="18dp"/>-->
 
 
     <ScrollView
@@ -226,4 +236,5 @@
     </ScrollView>
 
 
+</LinearLayout>
 </LinearLayout>

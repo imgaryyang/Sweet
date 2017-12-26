@@ -3,6 +3,7 @@ package com.lucky.sweet.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 
@@ -85,12 +86,25 @@ public class OrderSeatActivity extends BaseActivity {
     }
 
     private void initTitle() {
+//
+
         ToolBar toolBar = new ToolBar(this);
-        toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
+        toolBar.setImmersionBar();
+        int statusBarHeight = toolBar.getStatusBarHeight(OrderSeatActivity.this);
+        View view_margin = findViewById(R.id.title_detail);
+        ViewGroup.LayoutParams lp;
+        lp = view_margin.getLayoutParams();
+        lp.height = statusBarHeight;
+        view_margin.setLayoutParams(lp);
+
+
         title = (Title) findViewById(R.id.title);
+        title.setTheme(Title.Theme.THEME_TRANSLATE_NODIVIDER);
         title.setTitleNameStr("预订座位");
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
                 .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
+        Title.ButtonInfo buttonRight = new Title.ButtonInfo(true, Title
+                .BUTTON_RIGHT1, R.drawable.selector_btn_titleback, null);
         title.setOnTitleButtonClickListener(new Title
                 .OnTitleButtonClickListener() {
             @Override

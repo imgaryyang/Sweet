@@ -223,7 +223,7 @@ public class Title extends RelativeLayout{
                 break;
             case THEME_TRANSLATE_NODIVIDER:
                 if(titleName != null){
-                    titleName.setTextColor(Color.WHITE);
+                    titleName.setTextColor(Color.BLACK);
                 }
                 /*buttonHolderLeft.text.setTextColor(Color.WHITE);
                 buttonHolderRight1.text.setTextColor(Color.WHITE);

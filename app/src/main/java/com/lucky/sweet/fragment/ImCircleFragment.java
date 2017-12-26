@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
+import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ import java.util.ArrayList;
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
 public class ImCircleFragment extends Fragment {
+//    private Title title = null;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,10 +43,13 @@ public class ImCircleFragment extends Fragment {
             lp = view_margin.getLayoutParams();
             lp.height = statusBarHeight;
             view_margin.setLayoutParams(lp);
-        } else {
         }
-
-
+//        title = view.findViewById(R.id.title);
+//        title.setTitleNameStr("甜甜圈");
+//        Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
+//                .BUTTON_LEFT,0,null);
+//
+//        title.mSetButtonInfo(buttonLeft);
         return view;
     }
 
@@ -58,4 +64,5 @@ public class ImCircleFragment extends Fragment {
         objects.add("");
         lv_circle.setAdapter(new CircleListViewAdapter(objects, getActivity()));
     }
+
 }
