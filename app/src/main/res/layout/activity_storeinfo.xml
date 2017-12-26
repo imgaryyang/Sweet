@@ -126,29 +126,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:id="@+id/imv_show_fir"
-                        android:layout_width="0dp"
-                        android:layout_height="80dp"
-                        android:layout_margin="16dp"
-                        android:layout_weight="1"
-                        android:background="@mipmap/test_one"/>
+                <ImageView
+                    android:id="@+id/imv_show_fir"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="16dp"
+                    android:layout_weight="1"
+                />
 
-                    <ImageView
-                        android:id="@+id/imv_show_sec"
-                        android:layout_width="0dp"
-                        android:layout_height="80dp"
-                        android:layout_margin="16dp"
-                        android:layout_weight="1"
-                        android:background="@mipmap/test_second"/>
+                <ImageView
+                    android:id="@+id/imv_show_sec"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="16dp"
+                    android:layout_weight="1"
+           />
 
-                    <ImageView
-                        android:id="@+id/imv_show_sed"
-                        android:layout_width="0dp"
-                        android:layout_height="80dp"
-                        android:layout_margin="16dp"
-                        android:layout_weight="1"
-                        android:background="@mipmap/test_third"/>
+                <ImageView
+                    android:id="@+id/imv_show_sed"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="16dp"
+                    android:layout_weight="1"
+               />
 
                 </LinearLayout>
 
@@ -300,7 +300,7 @@
             </LinearLayout>
 
 
-        </ScrollView>
+    </ScrollView>
 
 
 

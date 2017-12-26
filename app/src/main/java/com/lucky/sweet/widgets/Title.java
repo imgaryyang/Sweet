@@ -351,6 +351,7 @@ public class Title extends RelativeLayout{
                 @Override
                 public void onClick(View v) {
                     if(null != onTitleButtonClickListener){
+
                         onTitleButtonClickListener.onClick(buttonInfo.id, ButtonViewHolder.this);
                     }
                 }

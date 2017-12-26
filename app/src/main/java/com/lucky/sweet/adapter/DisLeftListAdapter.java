@@ -17,12 +17,12 @@ import com.lucky.sweet.R;
  * 创建时间：16/4/14
  * 邮箱：W489657152@GMAIL.COM
  */
-public class LeftListAdapter extends BaseAdapter {
+public class DisLeftListAdapter extends BaseAdapter {
     private String[] leftStr;
     boolean[] flagArray;
     private Context context;
 
-    public LeftListAdapter(Context context, String[] leftStr, boolean[] flagArray) {
+    public DisLeftListAdapter(Context context, String[] leftStr, boolean[] flagArray) {
         this.leftStr = leftStr;
         this.context = context;
         this.flagArray = flagArray;

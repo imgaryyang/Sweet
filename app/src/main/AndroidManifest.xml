@@ -49,17 +49,18 @@
         <activity android:name=".activity.StoreDisplatActivity"/>
         <activity android:name=".activity.SetUserInfoActivity"/>
         <activity android:name=".activity.SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".activity.OrderSeatActivity"/>
         <activity
             android:name=".activity.OrderActivity"
             android:label="@string/title_activity_order"
             android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
     </application>
 

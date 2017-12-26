@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.views.QuantityIndicatorView;
 
 
 /**
@@ -26,10 +27,12 @@ public class MainSectionedAdapter extends SectionedBaseAdapter {
     private String[] leftStr;
     private String[][] rightStr;
 
-    public MainSectionedAdapter(Context context, String[] leftStr, String[][] rightStr) {
+    public MainSectionedAdapter(Context context, String[] leftStr, String[][]
+            rightStr) {
         this.mContext = context;
         this.leftStr = leftStr;
         this.rightStr = rightStr;
+
     }
 
     @Override
@@ -53,22 +56,33 @@ public class MainSectionedAdapter extends SectionedBaseAdapter {
     }
 
     @Override
-    public View getItemView(final int section, final int position, View convertView, ViewGroup parent) {
+    public View getItemView(final int section, final int position, View
+            convertView, ViewGroup parent) {
         RelativeLayout layout = null;
         if (convertView == null) {
-            LayoutInflater inflator = (LayoutInflater) parent.getContext()
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflator = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             layout = (RelativeLayout) inflator.inflate(R.layout.item_right_list, null);
         } else {
             layout = (RelativeLayout) convertView;
         }
         ((TextView) layout.findViewById(R.id.textItem)).setText(rightStr[section][position]);
+        QuantityIndicatorView qi_con = layout.findViewById(R.id.qi_con);
+
+        qi_con.setNumberListener(new QuantityIndicatorView.NumberListener() {
+            @Override
+            public void onDataChange(String num) {
+                if (null != orderNumListener) {
+                    orderNumListener.onDataChange(section, position, Integer.parseInt(num));
+                }
+            }
+        });
         layout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 Toast.makeText(mContext, rightStr[section][position], Toast.LENGTH_SHORT).show();
             }
         });
+
         return layout;
     }
 
@@ -78,7 +92,8 @@ public class MainSectionedAdapter extends SectionedBaseAdapter {
         if (convertView == null) {
             LayoutInflater inflator = (LayoutInflater) parent.getContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            layout = (LinearLayout) inflator.inflate(R.layout.header_item, null);
+            layout = (LinearLayout) inflator.inflate(R.layout.header_item,
+                    null);
         } else {
             layout = (LinearLayout) convertView;
         }
@@ -87,4 +102,13 @@ public class MainSectionedAdapter extends SectionedBaseAdapter {
         return layout;
     }
 
+    public interface OrderNumListener {
+        void onDataChange(int section, int position, int num);
+    }
+
+    private OrderNumListener orderNumListener;
+
+    public void setOrderNumListener(OrderNumListener orderNumListener) {
+        this.orderNumListener = orderNumListener;
+    }
 }
