@@ -40,6 +40,7 @@ public class OrderActivity extends AppCompatActivity {
     private ArrayList<ShopCarInfo> shopCarInfoList = new ArrayList<>();
     private HashMap<String, Integer> menuDirectory = new HashMap<String, Integer>();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +48,11 @@ public class OrderActivity extends AppCompatActivity {
         initTitle();
         leftStr = OrderManager.getDishesType();
         rightStr = OrderManager.getDishesList();
+
         ButterKnife.bind(this);
         pinnedListView = (PinnedHeaderListView) findViewById(R.id.pinnedListView);
         final MainSectionedAdapter sectionedAdapter = new MainSectionedAdapter(this, leftStr, rightStr);
+
         pinnedListView.setAdapter(sectionedAdapter);
         sectionedAdapter.setOrderNumListener(new MainSectionedAdapter.OrderNumListener() {
             @Override
@@ -57,14 +60,14 @@ public class OrderActivity extends AppCompatActivity {
                 try {
                     Integer integer = menuDirectory.get(rightStr[section][position]);
                     if (integer == null) {
+
                         ShopCarInfo shopCarInfo = new ShopCarInfo(rightStr[section][position], num, 0);
                         shopCarInfoList.add(shopCarInfo);
-                        menuDirectory.put(rightStr[section][position],
-                                shopCarInfoList.size() - 1);
-                        System.out.println("添加新菜！" + shopCarInfoList);
+                        menuDirectory.put(rightStr[section][position], shopCarInfoList.size() - 1);
+
                     } else {
+
                         shopCarInfoList.get(integer).setNum(num);
-                        System.out.println("添加新菜！" + shopCarInfoList);
 
                     }
                 } catch (NullPointerException e) {
@@ -169,6 +172,7 @@ public class OrderActivity extends AppCompatActivity {
         toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
         title = (Title) findViewById(R.id.title);
         title.setTitleNameStr("点餐列表");
+
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
                 .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
         final Title.ButtonInfo buttonRigt = new Title.ButtonInfo(true, Title
@@ -185,7 +189,7 @@ public class OrderActivity extends AppCompatActivity {
 
                         System.out.println(viewHolder.image);
 
-                        new ShopCarPopWindow(OrderActivity.this, title, shopCarInfoList);
+                        new ShopCarPopWindow(OrderActivity.this, viewHolder.image, shopCarInfoList);
                         break;
 
 

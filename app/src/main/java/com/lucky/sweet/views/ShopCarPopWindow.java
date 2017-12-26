@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.ShopCarListAdapter;
+import com.lucky.sweet.entity.ShopCarInfo;
 
 import java.util.ArrayList;
 
@@ -28,9 +29,10 @@ import java.util.ArrayList;
 public class ShopCarPopWindow extends PopupWindow {
     private Context context;
     private View rootsview;
-    private ArrayList carInfoList;
+    private ArrayList<ShopCarInfo> carInfoList;
 
-    public ShopCarPopWindow(Context context, View view, ArrayList carInfoList) {
+    public ShopCarPopWindow(Context context, View view, ArrayList<ShopCarInfo>
+            carInfoList) {
         this.context = context;
         this.rootsview = view;
         this.carInfoList = carInfoList;
@@ -41,7 +43,25 @@ public class ShopCarPopWindow extends PopupWindow {
         View view = LayoutInflater.from(context).inflate(R.layout.pop_shop_car,
                 null);
         ListView lv_dick_recorder = view.findViewById(R.id.lv_dick_recorder);
-        lv_dick_recorder.setAdapter(new ShopCarListAdapter(carInfoList, context));
+        ShopCarListAdapter shopCarListAdapter = new ShopCarListAdapter(carInfoList, context);
+        shopCarListAdapter.setOnOrderNumChangedListener(new ShopCarListAdapter.OnOrderNumChanged() {
+            @Override
+            public void dataChanged(int position, String num) {
+                int number = Integer.parseInt(num);
+                if (number == 0) {
+
+                    carInfoList.remove(position);
+
+                } else {
+
+                    ShopCarInfo shopCarInfo = carInfoList.get(position);
+                    shopCarInfo.setNum(number);
+
+                }
+
+            }
+        });
+        lv_dick_recorder.setAdapter(shopCarListAdapter);
         TextView tv_li = view.findViewById(R.id.tv_li);
         tv_li.setText(carInfoList.size() + "");
         setContentView(view);
@@ -50,6 +70,7 @@ public class ShopCarPopWindow extends PopupWindow {
         setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
         setHeight(600);
         showAsDropDown(rootsview, 0, 0, Gravity.BOTTOM);
+        setAnimationStyle(R.style.AnimTools);
 
     }
 }

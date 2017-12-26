@@ -27,10 +27,12 @@ public class MainSectionedAdapter extends SectionedBaseAdapter {
     private String[] leftStr;
     private String[][] rightStr;
 
-    public MainSectionedAdapter(Context context, String[] leftStr, String[][] rightStr) {
+    public MainSectionedAdapter(Context context, String[] leftStr, String[][]
+            rightStr) {
         this.mContext = context;
         this.leftStr = leftStr;
         this.rightStr = rightStr;
+
     }
 
     @Override
@@ -54,7 +56,8 @@ public class MainSectionedAdapter extends SectionedBaseAdapter {
     }
 
     @Override
-    public View getItemView(final int section, final int position, View convertView, ViewGroup parent) {
+    public View getItemView(final int section, final int position, View
+            convertView, ViewGroup parent) {
         RelativeLayout layout = null;
         if (convertView == null) {
             LayoutInflater inflator = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -64,13 +67,13 @@ public class MainSectionedAdapter extends SectionedBaseAdapter {
         }
         ((TextView) layout.findViewById(R.id.textItem)).setText(rightStr[section][position]);
         QuantityIndicatorView qi_con = layout.findViewById(R.id.qi_con);
+
         qi_con.setNumberListener(new QuantityIndicatorView.NumberListener() {
             @Override
             public void onDataChange(String num) {
-                if (null != orderNumListener)
+                if (null != orderNumListener) {
                     orderNumListener.onDataChange(section, position, Integer.parseInt(num));
-                System.out.println(rightStr[section][position] + num);
-
+                }
             }
         });
         layout.setOnClickListener(new OnClickListener() {
@@ -79,6 +82,7 @@ public class MainSectionedAdapter extends SectionedBaseAdapter {
                 Toast.makeText(mContext, rightStr[section][position], Toast.LENGTH_SHORT).show();
             }
         });
+
         return layout;
     }
 

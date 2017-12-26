@@ -1,6 +1,7 @@
 package com.lucky.sweet.adapter;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -46,16 +47,14 @@ public class ShopCarListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = View.inflate(context, R.layout.item_list_shopcar, null);
-
             viewHolder.sale = convertView.findViewById(R.id.tv_sale);
             viewHolder.dishes = convertView.findViewById(R.id.tv_dishes);
             viewHolder.indicator = convertView.findViewById(R.id.qv_con);
-
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -64,6 +63,16 @@ public class ShopCarListAdapter extends BaseAdapter {
         viewHolder.sale.setText(shopCarInfo.getSale() + "");
         viewHolder.dishes.setText(shopCarInfo.getDishesName());
         viewHolder.indicator.setNumber(shopCarInfo.getNum());
+        viewHolder.indicator.setNumberListener(new QuantityIndicatorView.NumberListener() {
+            @Override
+            public void onDataChange(String num) {
+
+                if (null != onOrderNumChangedListener) {
+                    onOrderNumChangedListener.dataChanged(position, num);
+                }
+                notifyDataSetChanged();
+            }
+        });
         return convertView;
     }
 
@@ -71,6 +80,15 @@ public class ShopCarListAdapter extends BaseAdapter {
         TextView dishes;
         TextView sale;
         QuantityIndicatorView indicator;
+    }
 
+    public interface OnOrderNumChanged {
+        void dataChanged(int position, String num);
+    }
+
+    private OnOrderNumChanged onOrderNumChangedListener;
+
+    public void setOnOrderNumChangedListener(OnOrderNumChanged onOrderNumChangedListener) {
+        this.onOrderNumChangedListener = onOrderNumChangedListener;
     }
 }

@@ -77,7 +77,7 @@ public class QuantityIndicatorView extends LinearLayout {
                 String text = tv_num.getText().toString().trim();
                 if (text.equals("1")) {
                     tv_num.setVisibility(View.INVISIBLE);
-                    v.setVisibility(View.INVISIBLE);
+                    btn_subtract.setVisibility(View.INVISIBLE);
                     text = "0";
                 } else {
                     text = Integer.parseInt(text) + -1 + "";

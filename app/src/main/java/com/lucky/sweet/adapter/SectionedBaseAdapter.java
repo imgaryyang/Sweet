@@ -94,7 +94,8 @@ public abstract class SectionedBaseAdapter extends BaseAdapter implements Pinned
         if (isSectionHeader(position)) {
             return getSectionHeaderView(getSectionForPosition(position), convertView, parent);
         }
-        return getItemView(getSectionForPosition(position), getPositionInSectionForPosition(position), convertView, parent);
+        return getItemView(getSectionForPosition(position),
+                getPositionInSectionForPosition(position), convertView, parent);
     }
 
     @Override
@@ -186,7 +187,8 @@ public abstract class SectionedBaseAdapter extends BaseAdapter implements Pinned
 
     public abstract int getCountForSection(int section);
 
-    public abstract View getItemView(int section, int position, View convertView, ViewGroup parent);
+    public abstract View getItemView(int section, int position, View
+            convertView, ViewGroup parent);
 
     public abstract View getSectionHeaderView(int section, View convertView, ViewGroup parent);
 
