@@ -12,4 +12,7 @@
         <item>我的</item>
     </array>
     <string name="title_activity_order">OrderActivity</string>
+
+    <string name="scan_text">将二维码/条码放入框内, 即可自动扫描</string>
+
 </resources>

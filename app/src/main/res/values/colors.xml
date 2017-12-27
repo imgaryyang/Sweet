@@ -30,5 +30,10 @@
 
     <color name="gray_light">#EBEDF0</color>
 
+    <color name="result_view">#b0000000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="scan_text">#ffffff</color>
 
+    <color name="possible_result">#c004ff00</color>
 </resources>

@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.inputmethod.InputMethodManager;
 
+import com.lucky.sweet.views.SlidingLayoutView;
+
 public class BaseActivity extends AppCompatActivity {
 
     public static String sessionId = "";
@@ -15,8 +17,10 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
+        if (enableSliding()) {
+            SlidingLayoutView rootView = new SlidingLayoutView(this);
+            rootView.bindActivity(this);
+        }
     }
 
     public void initializeSessionId() {
@@ -60,4 +64,7 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    protected boolean enableSliding() {
+        return true;
+    }
 }

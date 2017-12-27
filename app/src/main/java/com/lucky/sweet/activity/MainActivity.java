@@ -30,6 +30,11 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     }
 
+    @Override
+    protected boolean enableSliding() {
+        return false;
+    }
+
     private final int ICONS_RES[][] = {
             {
                     R.mipmap.tab_store,

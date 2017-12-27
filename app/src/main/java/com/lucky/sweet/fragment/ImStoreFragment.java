@@ -13,6 +13,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -61,6 +62,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
     private Context context;
     private HiddenAnimUtils hiddenAnimUtils;
     private List<StoreShowInfo.foodBean> showInfo;
+    private Button btn_qrcodescan;
 
     @Override
     public void onAttach(Context context) {
@@ -138,6 +140,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         rec_funStore = view.findViewById(R.id.rec_funStore);
         ll_se = view.findViewById(R.id.ll_se);
         rec_ad_show = view.findViewById(R.id.rec_ad_show);
+        btn_qrcodescan = view.findViewById(R.id.btn_qrcodescan);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ToolBar toolBar = new ToolBar(getActivity());
@@ -154,6 +157,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
     private void initEvent() {
         tv_moreFood.setOnClickListener(this);
         tv_moreRelax.setOnClickListener(this);
+        btn_qrcodescan.setOnClickListener(this);
         ll_se.setOnSearchClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -186,7 +190,9 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
                 intent1.putExtra("tv_moreRelax", "Relax");
                 startActivity(intent1);
                 break;
-
+//            case R.id.btn_qrcodescan:
+//                startActivity(new Intent(getActivity(), QrCodeScanActivity.class));
+//                break;
         }
     }
 
