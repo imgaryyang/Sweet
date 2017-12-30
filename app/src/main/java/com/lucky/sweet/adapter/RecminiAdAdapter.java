@@ -45,7 +45,7 @@ public class RecminiAdAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 100;
+        return 4;
     }
 
     static class mViewHolder extends RecyclerView.ViewHolder {
