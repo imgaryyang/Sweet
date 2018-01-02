@@ -20,7 +20,6 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
     <!-- 访问手机当前状态, 需要某些信息用于网络定位 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
@@ -46,8 +45,7 @@
         </activity>
         <activity android:name=".activity.UserRegisterActivity">
         </activity>
-        <activity
-            android:name=".activity.StoreParticularInfoActivity"/>
+        <activity android:name=".activity.StoreParticularInfoActivity"/>
 
         <meta-data
             android:name="TencentMapSDK"
@@ -67,7 +65,8 @@
             android:name=".activity.OrderActivity"
             android:label="@string/title_activity_order"
             android:theme="@style/AppTheme">
-
+        </activity>
+        <activity android:name=".activity.MainSearchActiviy">
         </activity>
     </application>
 

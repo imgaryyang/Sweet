@@ -60,7 +60,5 @@ public class GradualChangeLinearLayout extends LinearLayout {
         super.onDraw(canvas);
     }
 
-    public void setOnSearchClick(View.OnClickListener onClickListener) {
-        msv_mysearch.setOnSearchClickListener(onClickListener);
-    }
+
 }

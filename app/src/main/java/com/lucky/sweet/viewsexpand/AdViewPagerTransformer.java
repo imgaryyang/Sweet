@@ -1,4 +1,4 @@
-package com.lucky.sweet.viewpagerexpand;
+package com.lucky.sweet.viewsexpand;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;

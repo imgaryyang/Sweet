@@ -16,9 +16,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.activity.MainSearchActiviy;
 import com.lucky.sweet.activity.StoreDisplatActivity;
 import com.lucky.sweet.adapter.AdViewPagerAdapter;
 import com.lucky.sweet.adapter.RecFoodRecommendAdapter;
@@ -26,9 +26,10 @@ import com.lucky.sweet.adapter.RecminiAdAdapter;
 import com.lucky.sweet.entity.StoreShowInfo;
 import com.lucky.sweet.moudel.imstore.ImStoreManager;
 import com.lucky.sweet.utility.HiddenAnimUtils;
-import com.lucky.sweet.viewpagerexpand.AdViewPagerTransformer;
 import com.lucky.sweet.views.GradualChangeLinearLayout;
 import com.lucky.sweet.views.MySearchView;
+import com.lucky.sweet.viewsexpand.AdRecyCleViewOnScrollState;
+import com.lucky.sweet.viewsexpand.AdViewPagerTransformer;
 import com.lucky.sweet.widgets.ToolBar;
 
 import java.util.List;
@@ -120,41 +121,19 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rec_funStore.setLayoutManager(linearLayoutManager);
 
-        initRecycleView(rec_ad_show, rec_foodStore, rec_funStore);
+
         rec_ad_show.setAdapter(new RecminiAdAdapter(context));
-        rec_foodStore.setAdapter(new RecFoodRecommendAdapter(context));
-        rec_funStore.setAdapter(new RecFoodRecommendAdapter(context));
+        rec_foodStore.setAdapter(new RecFoodRecommendAdapter(context,
+                RecFoodRecommendAdapter.FOOD));
+        rec_funStore.setAdapter(new RecFoodRecommendAdapter(context,
+                RecFoodRecommendAdapter.FUN));
 
-    }
+        rec_foodStore.addOnScrollListener(new AdRecyCleViewOnScrollState
+                (context, AdRecyCleViewOnScrollState.FOOD));
 
-    private void initRecycleView(RecyclerView... recyclerView) {
-        for (int i = 0; i < recyclerView.length; i++) {
-            final RecyclerView.LayoutManager layoutManager = recyclerView[i].getLayoutManager();
-            final LinearLayoutManager manager;
-            if (layoutManager instanceof LinearLayoutManager) {
-                manager = (LinearLayoutManager) layoutManager;
-            } else {
-                return;
+        rec_funStore.addOnScrollListener(new AdRecyCleViewOnScrollState
+                (context, AdRecyCleViewOnScrollState.FUN));
 
-            }
-            recyclerView[i].addOnScrollListener(new RecyclerView.OnScrollListener
-                    () {
-                boolean flag = false;
-
-                @Override
-                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                    super.onScrollStateChanged(recyclerView, newState);
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        int lastVisiblePosition = manager.findLastVisibleItemPosition();
-                        if (lastVisiblePosition >= manager
-                                .getItemCount() - 1)
-                            if (flag)
-                                Toast.makeText(context, "???", Toast.LENGTH_SHORT).show();
-                        flag = true;
-                    }
-                }
-            });
-        }
     }
 
 
@@ -169,7 +148,6 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         tv_moreRelax = view.findViewById(R.id.tv_moreRelax);
         rec_foodStore = view.findViewById(R.id.rec_foodStore);
         rec_funStore = view.findViewById(R.id.rec_funStore);
-        //ll_se = view.findViewById(R.id.ll_se);
         rec_ad_show = view.findViewById(R.id.rec_ad_show);
         btn_qrcodescan = view.findViewById(R.id.btn_qrcodescan);
 
@@ -189,42 +167,34 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         tv_moreFood.setOnClickListener(this);
         tv_moreRelax.setOnClickListener(this);
         btn_qrcodescan.setOnClickListener(this);
-    /*    ll_se.setOnSearchClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                hiddenAnimUtils.toggle(((MainActivity) getActivity()).getTabView());
-            }
-        });
         msv_search.setOnSearchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                hiddenAnimUtils.toggle(((MainActivity) getActivity()).getTabView());
-
+                Intent intent = new Intent(getActivity(), MainSearchActiviy.class);
+                startActivity(intent);
             }
-        });*/
+        });
     }
 
 
     @Override
     public void onClick(View v) {
         //获得父控件的对象，然后获得父控件的id
+        Intent intent;
         switch (v.getId()) {
             case R.id.tv_moreFood:
-                Intent intent = new Intent(getActivity(), StoreDisplatActivity.class);
+                intent = new Intent(getActivity(), StoreDisplatActivity.class);
                 intent.putExtra("tv_moreFood", "Food");
                 startActivity(intent);
                 break;
             case R.id.tv_moreRelax:
-                Intent intent1 = new Intent(getActivity(), StoreDisplatActivity.class);
-                intent1.putExtra("tv_moreRelax", "Relax");
-                startActivity(intent1);
+                intent = new Intent(getActivity(), StoreDisplatActivity.class);
+                intent.putExtra("tv_moreRelax", "Relax");
+                startActivity(intent);
                 break;
-//            case R.id.btn_qrcodescan:
-//                startActivity(new Intent(getActivity(), QrCodeScanActivity.class));
-//                break;
+
         }
+
     }
 
 

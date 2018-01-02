@@ -21,16 +21,32 @@ import com.lucky.sweet.R;
 public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
     private Context context;
     private final LayoutInflater inflater;
+    private int type;
 
-    public RecFoodRecommendAdapter(Context context) {
+    public final static int FOOD = 0;
+    public final static int FUN = 1;
+
+
+    public RecFoodRecommendAdapter(Context context, int type) {
         this.context = context;
+        this.type = type;
         inflater = LayoutInflater.from(context);
 
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public int getItemViewType(int position) {
 
+        return position;
+
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == 4) {
+            return new mMoreHolder(inflater.inflate(R.layout.item_recycle_more, parent,
+                    false));
+        }
         return new mViewHolder(inflater.inflate(R.layout.item_viewpager_foodinfo, parent, false));
     }
 
@@ -41,7 +57,7 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 4;
+        return 5;
     }
 
     static class mViewHolder extends RecyclerView.ViewHolder {
@@ -59,6 +75,13 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
             tv_comment = itemView.findViewById(R.id.tv_comment);
             tv_recreation = itemView.findViewById(R.id.tv_recreation);
             tv_dis = itemView.findViewById(R.id.tv_dis);
+        }
+    }
+    static class mMoreHolder extends RecyclerView.ViewHolder {
+
+        public mMoreHolder(View itemView) {
+            super(itemView);
+
         }
     }
 }
