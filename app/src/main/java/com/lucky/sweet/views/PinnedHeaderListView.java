@@ -124,7 +124,7 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
 
         View view = mAdapter.getSectionHeaderView(section, oldView, this);
         if (shouldLayout) {
-            // a new section, thus a new header. We should lay it out again
+            // test new section, thus test new header. We should lay it out again
             ensurePinnedHeaderLayout(view);
             mCurrentSection = section;
         }

@@ -1,6 +1,6 @@
 package com.lucky.sweet;
 
-import com.lucky.sweet.moudel.loginregister.LoginRegisterManager;
+import com.lucky.sweet.model.loginregister.LoginRegisterManager;
 
 import org.junit.Test;
 
@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
  * Example local unit test, which will execute on the development machine
  * (host).
  *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * @see <test href="http://d.android.com/tools/testing">Testing documentation</test>
  */
 public class ExampleUnitTest {
     @Test

@@ -69,6 +69,7 @@
             android:theme="@style/AppTheme">
 
         </activity>
+        <activity android:name=".activity.MerchantActivity"/>
     </application>
 
 </manifest>

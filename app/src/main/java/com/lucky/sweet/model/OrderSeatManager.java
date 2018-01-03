@@ -1,4 +1,4 @@
-package com.lucky.sweet.moudel;
+package com.lucky.sweet.model;
 
 import java.util.ArrayList;
 import java.util.List;

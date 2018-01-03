@@ -24,7 +24,7 @@ import com.lucky.sweet.adapter.AdViewPagerAdapter;
 import com.lucky.sweet.adapter.RecFoodRecommendAdapter;
 import com.lucky.sweet.adapter.RecminiAdAdapter;
 import com.lucky.sweet.entity.StoreShowInfo;
-import com.lucky.sweet.moudel.imstore.ImStoreManager;
+import com.lucky.sweet.model.imstore.ImStoreManager;
 import com.lucky.sweet.utility.HiddenAnimUtils;
 import com.lucky.sweet.viewpagerexpand.AdViewPagerTransformer;
 import com.lucky.sweet.views.GradualChangeLinearLayout;

@@ -1,4 +1,4 @@
-package com.lucky.sweet.moudel.particularinfo;
+package com.lucky.sweet.model.particularinfo;
 
 import com.google.gson.Gson;
 import com.lucky.sweet.activity.StoreParticularInfoActivity;
