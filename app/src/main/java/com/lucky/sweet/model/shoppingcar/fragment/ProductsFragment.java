@@ -2,6 +2,7 @@ package com.lucky.sweet.model.shoppingcar.fragment;
 
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -29,9 +30,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.activity.OrderSeatActivity;
 import com.lucky.sweet.model.shoppingcar.DoubleUtil;
 import com.lucky.sweet.model.shoppingcar.adapter.ShopAdapter;
 import com.lucky.sweet.model.shoppingcar.adapter.TestSectionedAdapter;
@@ -40,6 +43,7 @@ import com.lucky.sweet.model.shoppingcar.assistant.onCallBackListener;
 import com.lucky.sweet.model.shoppingcar.mode.ProductType;
 import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
 import com.lucky.sweet.model.shoppingcar.view.PinnedHeaderListView;
+import com.lucky.sweet.views.SlidingLayoutView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -131,6 +135,7 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
             }
         }
     };
+    private Button btn_back;
 
 
     @Override
@@ -144,6 +149,8 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
+        SlidingLayoutView rootView = new SlidingLayoutView(getActivity());
+        rootView.bindActivity(getActivity());
     }
 
     public List<ProductType> getData() {
@@ -182,6 +189,7 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         cardLayout = (FrameLayout)  getView().findViewById(R.id.cardLayout);
         cardShopLayout = (LinearLayout)  getView().findViewById(R.id.cardShopLayout);
         bg_layout =  getView().findViewById(R.id.bg_layout);
+        btn_back = (Button)getView().findViewById(R.id.btn_back);
         initData();
     }
 
@@ -268,7 +276,14 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
             }
         });
 
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), OrderSeatActivity.class);
+                startActivity(intent);
 
+            }
+        });
 
         bg_layout.setOnClickListener(this);
         settlement.setOnClickListener(this);

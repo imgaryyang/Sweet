@@ -173,16 +173,16 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         rec_ad_show = view.findViewById(R.id.rec_ad_show);
         btn_qrcodescan = view.findViewById(R.id.btn_qrcodescan);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ToolBar toolBar = new ToolBar(getActivity());
-            toolBar.setStatusBarDarkMode();
-            int statusBarHeight = toolBar.getStatusBarHeight(getActivity());
-            View view_margin = view.findViewById(R.id.view_margin);
-            ViewGroup.LayoutParams lp;
-            lp = view_margin.getLayoutParams();
-            lp.height = statusBarHeight;
-            view_margin.setLayoutParams(lp);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            ToolBar toolBar = new ToolBar(getActivity());
+//            toolBar.setStatusBarDarkMode();
+//            int statusBarHeight = toolBar.getStatusBarHeight(getActivity());
+//            View view_margin = view.findViewById(R.id.view_margin);
+//            ViewGroup.LayoutParams lp;
+//            lp = view_margin.getLayoutParams();
+//            lp.height = statusBarHeight;
+//            view_margin.setLayoutParams(lp);
+//        }
     }
 
     private void initEvent() {
