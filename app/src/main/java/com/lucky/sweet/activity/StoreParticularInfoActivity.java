@@ -14,13 +14,14 @@ import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.model.particularinfo.ParticularInfoManager;
+import com.lucky.sweet.widgets.Title;
+import com.lucky.sweet.widgets.ToolBar;
 import com.tencent.mapsdk.raster.model.LatLng;
 import com.tencent.mapsdk.raster.model.Marker;
 import com.tencent.mapsdk.raster.model.MarkerOptions;
 import com.tencent.tencentmap.mapsdk.map.MapView;
 import com.tencent.tencentmap.mapsdk.map.TencentMap;
-import com.lucky.sweet.widgets.Title;
-import com.lucky.sweet.widgets.ToolBar;
+import com.tencent.tencentmap.mapsdk.map.UiSettings;
 
 import java.util.ArrayList;
 
@@ -79,6 +80,9 @@ public class StoreParticularInfoActivity extends BaseActivity {
         LatLng latLng = new LatLng(Double.valueOf(info.getLat()),
                 Double.valueOf(info.getLon()));
         TencentMap maps = map.getMap();
+        UiSettings uiSettings = map.getUiSettings();
+        uiSettings.setScrollGesturesEnabled(false);
+        uiSettings.setZoomGesturesEnabled(false);
         maps.setCenter(latLng);
         Marker marker = this.map.addMarker(new MarkerOptions().title(info.getName()).anchor(0.5f,
                 0.5f).position(latLng));
@@ -104,7 +108,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
             }
         });
 
-        ListView lv_circle = (ListView)findViewById(R.id.lv_circle);
+        ListView lv_circle = (ListView) findViewById(R.id.lv_circle);
         ArrayList<String> objects = new ArrayList<String>();
         objects.add("");
         objects.add("");
@@ -112,7 +116,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
         objects.add("");
         objects.add("");
         objects.add("");
-        lv_circle.setAdapter(new CircleListViewAdapter(objects,this));
+        lv_circle.setAdapter(new CircleListViewAdapter(objects, this));
         setListViewHeightBasedOnChildren(lv_circle);
     }
 
