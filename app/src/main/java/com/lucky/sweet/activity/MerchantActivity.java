@@ -16,7 +16,9 @@ import android.widget.RadioGroup;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.model.shoppingcar.fragment.ProductsFragment;
+import com.lucky.sweet.views.SlidingLayoutView;
 import com.lucky.sweet.widgets.Title;
+import com.lucky.sweet.widgets.ToolBar;
 
 import java.util.ArrayList;
 
@@ -77,6 +79,10 @@ public class MerchantActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant);
+        ToolBar toolBar = new ToolBar(this);
+        toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
+        SlidingLayoutView rootView = new SlidingLayoutView(this);
+        rootView.bindActivity(this);
         initView();
     }
 
