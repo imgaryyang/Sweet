@@ -149,8 +149,8 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
-        SlidingLayoutView rootView = new SlidingLayoutView(getActivity());
-        rootView.bindActivity(getActivity());
+//        SlidingLayoutView rootView = new SlidingLayoutView(getActivity());
+//        rootView.bindActivity(getActivity());
     }
 
     public List<ProductType> getData() {

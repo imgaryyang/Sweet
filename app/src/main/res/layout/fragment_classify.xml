@@ -27,6 +27,72 @@
             android:layout_gravity="bottom"
             android:orientation="horizontal">
 
+            <!--<RelativeLayout-->
+                <!--android:layout_width="@dimen/dimen_0_dp"-->
+                <!--android:layout_height="47dp"-->
+                <!--android:layout_weight="2"-->
+                <!--android:background="@color/white"-->
+                <!--android:padding="@dimen/dimen_5_dp">-->
+
+                <!--&lt;!&ndash;<Button&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:id="@+id/btn_back"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_width="22dp"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_height="22dp"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_margin="5dp"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:background="@drawable/selector_btn_titleback"/>&ndash;&gt;-->
+
+                <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:text="点餐列表"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:textColor="@color/black"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:textSize="18dp"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_centerInParent="true"/>&ndash;&gt;-->
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/shopping_cart"-->
+                    <!--android:layout_width="22dp"-->
+                    <!--android:layout_height="22dp"-->
+                    <!--android:layout_alignParentLeft="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_margin="5dp"-->
+                    <!--android:background="@drawable/ic_cart" />-->
+                <!--<TextView-->
+                    <!--android:visibility="gone"-->
+                    <!--android:id="@+id/shoppingNum"-->
+                    <!--android:layout_toRightOf="@id/shopping_cart"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:background="@drawable/shape_shopping_cart"-->
+                    <!--android:gravity="center"-->
+                    <!--android:textColor="@color/white"-->
+                    <!--android:textSize="@dimen/dimen_8_dp" />-->
+                <!--<TextView-->
+                    <!--android:visibility="gone"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignRight="@+id/shopping_cart"-->
+                    <!--android:layout_alignTop="@+id/shopping_cart"-->
+                    <!--android:background="@drawable/shape_shopping_cart"-->
+                    <!--android:gravity="center"-->
+                    <!--android:textColor="@color/white"-->
+                    <!--android:textSize="@dimen/dimen_8_dp" />-->
+
+
+
+               <!--&lt;!&ndash; <TextView-->
+                    <!--android:id="@+id/shoppingPrise"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginLeft="@dimen/dimen_30_dp"-->
+                    <!--android:layout_toRightOf="@+id/shopping_cart"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--android:text="1"-->
+                    <!--android:textSize="@dimen/dimen_18_dp" />&ndash;&gt;-->
+
+            <!--</RelativeLayout>-->
+
             <RelativeLayout
                 android:layout_width="@dimen/dimen_0_dp"
                 android:layout_height="47dp"
@@ -80,20 +146,18 @@
 
 
 
-               <!-- <TextView
-                    android:id="@+id/shoppingPrise"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dimen_30_dp"
-                    android:layout_toRightOf="@+id/shopping_cart"
-                    android:textColor="@color/black"
-                    android:text="1"
-                    android:textSize="@dimen/dimen_18_dp" />-->
+                <!-- <TextView
+                     android:id="@+id/shoppingPrise"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_centerVertical="true"
+                     android:layout_marginLeft="@dimen/dimen_30_dp"
+                     android:layout_toRightOf="@+id/shopping_cart"
+                     android:textColor="@color/black"
+                     android:text="1"
+                     android:textSize="@dimen/dimen_18_dp" />-->
 
             </RelativeLayout>
-
-
 
             <!--<TextView
                 android:id="@+id/settlement"
