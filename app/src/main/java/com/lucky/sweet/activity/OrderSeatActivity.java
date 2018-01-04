@@ -4,10 +4,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.telephony.PhoneNumberUtils;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.model.OrderSeatManager;
@@ -15,6 +20,9 @@ import com.lucky.sweet.views.DishesOrderDialog;
 import com.lucky.sweet.views.PeopleNumOrderDialog;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Qiuyue on 2017/12/19.
@@ -29,6 +37,7 @@ public class OrderSeatActivity extends BaseActivity {
     private Title title = null;
     private TextView tv_timeSelect;
     private TextView tv_num;
+    private EditText et_input_phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +53,7 @@ public class OrderSeatActivity extends BaseActivity {
     private void initView() {
         tv_timeSelect = findViewById(R.id.tv_timeSelect);
         tv_num = findViewById(R.id.tv_num);
+        et_input_phone = (EditText)findViewById(R.id.et_input_phone);
         getWindow().setSoftInputMode(WindowManager.LayoutParams
                 .SOFT_INPUT_ADJUST_PAN);
         initTitle();
@@ -87,32 +97,38 @@ public class OrderSeatActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-//                startActivity(new Intent(OrderSeatActivity.this,
-// OrderActivity.class));
-
-                AlertDialog dialog = new AlertDialog.Builder(OrderSeatActivity.this)
+                String phone = et_input_phone.getText().toString().trim();
+                boolean result=isPhoneNumber(phone);
+                if (result==true){
+                    AlertDialog dialog = new AlertDialog.Builder(OrderSeatActivity.this)
 //                        .setTitle("标题")
-                        .setMessage("需要提前点菜吗？")
-                        .setNegativeButton("直接订座", new DialogInterface
-                                .OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int
-                                    which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setPositiveButton("提前点菜", new DialogInterface
-                                .OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int
-                                    which) {
-                                startActivity(new Intent(OrderSeatActivity
-                                        .this, MerchantActivity.class));
+                            .setMessage("需要提前点菜吗？")
+                            .setNegativeButton("直接订座", new DialogInterface
+                                    .OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int
+                                        which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setPositiveButton("提前点菜", new DialogInterface
+                                    .OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int
+                                        which) {
+                                    startActivity(new Intent(OrderSeatActivity
+                                            .this, MerchantActivity.class));
 
-                            }
-                        })
-                        .create();
-                dialog.show();
+                                }
+                            })
+                            .create();
+                    dialog.show();
+                }else {
+                    Toast.makeText(getApplication(),"手机号不对哦，请重新输入",Toast.LENGTH_SHORT).show();
+                }
+
+
+
 
             }
         });
@@ -155,4 +171,27 @@ public class OrderSeatActivity extends BaseActivity {
         title.mSetButtonInfo(buttonLeft);
 
     }
+
+    public static boolean isPhoneNumber(String phoneNo) {
+        if (TextUtils.isEmpty(phoneNo)) {
+            return false;
+        }
+        if (phoneNo.length() == 11) {
+            for (int i = 0; i < 11; i++) {
+                if (!PhoneNumberUtils.isISODigit(phoneNo.charAt(i))) {
+                    return false;
+                }
+            }
+            Pattern p = Pattern.compile("^((13[^4,\\D])" + "|(134[^9,\\D])" +
+                    "|(14[5,7])" +
+                    "|(15[^4,\\D])" +
+                    "|(17[3,6-8])" +
+                    "|(18[0-9]))\\d{8}$");
+            Matcher m = p.matcher(phoneNo);
+            return m.matches();
+        }
+        return false;
+    }
+
+
 }

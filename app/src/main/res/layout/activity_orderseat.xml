@@ -182,7 +182,6 @@
                     android:background="@drawable/shape_orderseatcontent">
 
                     <EditText
-                        android:inputType="number"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="15dp"
