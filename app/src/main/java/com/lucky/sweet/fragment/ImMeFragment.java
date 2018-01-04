@@ -39,7 +39,7 @@ public class ImMeFragment extends Fragment {
 //        initData();
 
         initView(view);
-
+//aa
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ToolBar toolBar = new ToolBar(getActivity());
             toolBar.setStatusBarDarkMode();
