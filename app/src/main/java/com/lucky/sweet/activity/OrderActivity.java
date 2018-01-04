@@ -11,7 +11,7 @@ import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.DisLeftListAdapter;
 import com.lucky.sweet.adapter.MainSectionedAdapter;
 import com.lucky.sweet.entity.ShopCarInfo;
-import com.lucky.sweet.moudel.OrderManager;
+import com.lucky.sweet.model.OrderManager;
 import com.lucky.sweet.views.PinnedHeaderListView;
 import com.lucky.sweet.views.ShopCarPopWindow;
 import com.lucky.sweet.widgets.Title;

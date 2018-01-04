@@ -1,4 +1,4 @@
-package com.lucky.sweet.moudel.loginregister;
+package com.lucky.sweet.model.loginregister;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
 
-import com.lucky.sweet.activity.MainActivity;
 import com.lucky.sweet.activity.UserLoginActivity;
 import com.lucky.sweet.activity.UserRegisterActivity;
 import com.lucky.sweet.entity.UserLoginInfo;

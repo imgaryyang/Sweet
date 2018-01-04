@@ -1,4 +1,4 @@
-package com.lucky.sweet.moudel.loginregister;
+package com.lucky.sweet.model.loginregister;
 
 import android.content.Context;
 import android.os.Message;

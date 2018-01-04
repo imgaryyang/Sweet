@@ -1,14 +1,16 @@
 package com.lucky.sweet.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.moudel.OrderSeatManager;
+import com.lucky.sweet.model.OrderSeatManager;
 import com.lucky.sweet.views.DishesOrderDialog;
 import com.lucky.sweet.views.PeopleNumOrderDialog;
 import com.lucky.sweet.widgets.Title;
@@ -42,7 +44,8 @@ public class OrderSeatActivity extends BaseActivity {
     private void initView() {
         tv_timeSelect = findViewById(R.id.tv_timeSelect);
         tv_num = findViewById(R.id.tv_num);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams
+                .SOFT_INPUT_ADJUST_PAN);
         initTitle();
 
     }
@@ -52,22 +55,24 @@ public class OrderSeatActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                DishesOrderDialog dishesOrderDialog = new DishesOrderDialog(OrderSeatActivity.this,
+                DishesOrderDialog dishesOrderDialog = new DishesOrderDialog
+                        (OrderSeatActivity.this,
                         OrderSeatManager.getDate(), OrderSeatManager.getTime());
                 dishesOrderDialog.setDateSelectListener
-                                (new DishesOrderDialog.OnDateSelectListener() {
-                                    @Override
-                                    public void onDateSelected(String dates) {
-                                        tv_timeSelect.setText(dates);
-                                    }
-                                });
+                        (new DishesOrderDialog.OnDateSelectListener() {
+                            @Override
+                            public void onDateSelected(String dates) {
+                                tv_timeSelect.setText(dates);
+                            }
+                        });
 
             }
         });
         tv_num.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PeopleNumOrderDialog peopleNumOrderDialog = new PeopleNumOrderDialog(OrderSeatActivity.this,
+                PeopleNumOrderDialog peopleNumOrderDialog = new
+                        PeopleNumOrderDialog(OrderSeatActivity.this,
                         OrderSeatManager.getPeopleNum());
                 peopleNumOrderDialog.setDateSelectListener(new PeopleNumOrderDialog.OnNumelectListener() {
                     @Override
@@ -77,10 +82,38 @@ public class OrderSeatActivity extends BaseActivity {
                 });
             }
         });
-        findViewById(R.id.btn_order_commit).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_order_commit).setOnClickListener(new View
+                .OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(OrderSeatActivity.this, OrderActivity.class));
+
+//                startActivity(new Intent(OrderSeatActivity.this,
+// OrderActivity.class));
+
+                AlertDialog dialog = new AlertDialog.Builder(OrderSeatActivity.this)
+//                        .setTitle("标题")
+                        .setMessage("需要提前点菜吗？")
+                        .setNegativeButton("直接订座", new DialogInterface
+                                .OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int
+                                    which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton("提前点菜", new DialogInterface
+                                .OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int
+                                    which) {
+                                startActivity(new Intent(OrderSeatActivity
+                                        .this, MerchantActivity.class));
+
+                            }
+                        })
+                        .create();
+                dialog.show();
+
             }
         });
     }
@@ -90,7 +123,8 @@ public class OrderSeatActivity extends BaseActivity {
 
         ToolBar toolBar = new ToolBar(this);
         toolBar.setImmersionBar();
-        int statusBarHeight = toolBar.getStatusBarHeight(OrderSeatActivity.this);
+        int statusBarHeight = toolBar.getStatusBarHeight(OrderSeatActivity
+                .this);
         View view_margin = findViewById(R.id.title_detail);
         ViewGroup.LayoutParams lp;
         lp = view_margin.getLayoutParams();

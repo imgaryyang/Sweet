@@ -303,7 +303,7 @@ public class TabContainerView extends LinearLayout {
     }
 
     /**
-     * This function returns the calculated in-between value for a color
+     * This function returns the calculated in-between value for test color
      * given integers that represent the start and end values in the four
      * bytes of the 32-bit int. Each channel is separately linearly interpolated
      * and the resulting calculated values are recombined into the return value.

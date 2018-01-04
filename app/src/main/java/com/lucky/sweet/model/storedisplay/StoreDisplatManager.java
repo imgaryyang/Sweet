@@ -1,33 +1,17 @@
-package com.lucky.sweet.moudel.storedisplay;
+package com.lucky.sweet.model.storedisplay;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Message;
-import android.widget.Toast;
 
 import com.lucky.sweet.entity.StoreShowInfo;
 import com.lucky.sweet.properties.Properties;
 import com.lucky.sweet.utility.HttpUtils;
-import com.lucky.sweet.utility.PanduanNet;
-import com.tencent.map.geolocation.TencentLocation;
-import com.tencent.map.geolocation.TencentLocationListener;
-import com.tencent.map.geolocation.TencentLocationManager;
-import com.tencent.map.geolocation.TencentLocationRequest;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.Response;
 
 /**

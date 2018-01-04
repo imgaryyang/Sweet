@@ -1,4 +1,4 @@
-package com.lucky.sweet.moudel;
+package com.lucky.sweet.model;
 
 /**
  * Created by chn on 2017/12/23.

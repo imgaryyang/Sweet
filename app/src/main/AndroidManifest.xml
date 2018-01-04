@@ -68,6 +68,7 @@
         </activity>
         <activity android:name=".activity.MainSearchActiviy">
         </activity>
+        <activity android:name=".activity.MerchantActivity"/>
     </application>
 
 </manifest>

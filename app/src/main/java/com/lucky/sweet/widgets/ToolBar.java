@@ -70,7 +70,7 @@ public class ToolBar {
         } else if (type == HINT) {
             setHintBar(activity);
         } else {
-            throw new NullPointerException("you must set a correct type");
+            throw new NullPointerException("you must set test correct type");
         }
     }
 

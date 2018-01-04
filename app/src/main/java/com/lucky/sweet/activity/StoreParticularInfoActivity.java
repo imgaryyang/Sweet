@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
 import com.lucky.sweet.entity.StoreDetailedInfo;
-import com.lucky.sweet.moudel.particularinfo.ParticularInfoManager;
+import com.lucky.sweet.model.particularinfo.ParticularInfoManager;
 import com.tencent.mapsdk.raster.model.LatLng;
 import com.tencent.mapsdk.raster.model.Marker;
 import com.tencent.mapsdk.raster.model.MarkerOptions;
