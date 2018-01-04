@@ -13,11 +13,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.lucky.sweet.R;
 import com.lucky.sweet.model.OrderSeatManager;
 import com.lucky.sweet.views.DishesOrderDialog;
-import com.lucky.sweet.views.PeopleNumOrderDialog;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -36,7 +34,7 @@ import java.util.regex.Pattern;
 public class OrderSeatActivity extends BaseActivity {
     private Title title = null;
     private TextView tv_timeSelect;
-    private TextView tv_num;
+    private TextView edt_num;
     private EditText et_input_phone;
 
     @Override
@@ -52,7 +50,7 @@ public class OrderSeatActivity extends BaseActivity {
 
     private void initView() {
         tv_timeSelect = findViewById(R.id.tv_timeSelect);
-        tv_num = findViewById(R.id.tv_num);
+        edt_num = findViewById(R.id.edt_num);
         et_input_phone = (EditText)findViewById(R.id.et_input_phone);
         getWindow().setSoftInputMode(WindowManager.LayoutParams
                 .SOFT_INPUT_ADJUST_PAN);
@@ -78,20 +76,7 @@ public class OrderSeatActivity extends BaseActivity {
 
             }
         });
-        tv_num.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PeopleNumOrderDialog peopleNumOrderDialog = new
-                        PeopleNumOrderDialog(OrderSeatActivity.this,
-                        OrderSeatManager.getPeopleNum());
-                peopleNumOrderDialog.setDateSelectListener(new PeopleNumOrderDialog.OnNumelectListener() {
-                    @Override
-                    public void onNumSelected(String nums) {
-                        tv_num.setText(nums);
-                    }
-                });
-            }
-        });
+
         findViewById(R.id.btn_order_commit).setOnClickListener(new View
                 .OnClickListener() {
             @Override

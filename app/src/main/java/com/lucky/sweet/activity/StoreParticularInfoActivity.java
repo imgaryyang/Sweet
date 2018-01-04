@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,7 +22,6 @@ import com.tencent.mapsdk.raster.model.Marker;
 import com.tencent.mapsdk.raster.model.MarkerOptions;
 import com.tencent.tencentmap.mapsdk.map.MapView;
 import com.tencent.tencentmap.mapsdk.map.TencentMap;
-import com.tencent.tencentmap.mapsdk.map.UiSettings;
 
 import java.util.ArrayList;
 
@@ -46,6 +46,9 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private TextView tv_shop_worktime;
     private TextView tv_shop_des;
     private MapView map;
+    private Button btn_map_position;
+    private TencentMap maps;
+    private LatLng latLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +59,20 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
         initData();
 
+        initEvent();
+
         initTitle();
 
         ParticularInfoManager particularInfoManager = new ParticularInfoManager(this);
+    }
+
+    private void initEvent() {
+        btn_map_position.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                maps.setCenter(latLng);
+            }
+        });
     }
 
     private void initData() {
@@ -77,12 +91,11 @@ public class StoreParticularInfoActivity extends BaseActivity {
         tv_shop_int.setText(info.getClassify());
         tv_shop_worktime.setText(info.getBusiness_hours());
         tv_shop_des.setText(info.getIntroduce());
-        LatLng latLng = new LatLng(Double.valueOf(info.getLat()),
+        latLng = new LatLng(Double.valueOf(info.getLat()),
                 Double.valueOf(info.getLon()));
-        TencentMap maps = map.getMap();
-        UiSettings uiSettings = map.getUiSettings();
-        uiSettings.setScrollGesturesEnabled(false);
-        uiSettings.setZoomGesturesEnabled(false);
+        maps = map.getMap();
+
+
         maps.setCenter(latLng);
         Marker marker = this.map.addMarker(new MarkerOptions().title(info.getName()).anchor(0.5f,
                 0.5f).position(latLng));
@@ -99,6 +112,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
         tv_shop_int = findViewById(R.id.tv_shop_int);
         tv_shop_worktime = findViewById(R.id.tv_shop_worktime);
         tv_shop_des = findViewById(R.id.tv_shop_des);
+        btn_map_position = findViewById(R.id.btn_map_position);
         map = findViewById(R.id.map);
         findViewById(R.id.btn_order).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -123,8 +123,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
         rec_ad_show.setAdapter(new RecminiAdAdapter(context));
         RecFoodRecommendAdapter foodAdapter = new RecFoodRecommendAdapter
-                (context,
-                        RecFoodRecommendAdapter.FOOD);
+                (context, RecFoodRecommendAdapter.FOOD);
         foodAdapter.setOnItemClickListener(new RecFoodRecommendAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(int position, int shopId) {
@@ -141,8 +140,6 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
                 Intent intent = new Intent(getActivity(), StoreParticularInfoActivity.class);
                 intent.putExtra("shopid",position);
                 startActivity(intent);
-
-
             }
         });
         rec_foodStore.setAdapter(foodAdapter);
