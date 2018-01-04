@@ -182,12 +182,14 @@
                     android:background="@drawable/shape_orderseatcontent">
 
                     <EditText
+                        android:id="@+id/et_input_phone"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
                         android:background="@null"
                         android:singleLine="true"
+                        android:maxLength="11"
                         android:textSize="15dp"/>
                 </LinearLayout>
 
