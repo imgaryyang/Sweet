@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lucky.sweet.R;
@@ -51,8 +52,18 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        if (holder instanceof mViewHolder) {
+            mViewHolder mViewHolder = (mViewHolder) holder;
+            mViewHolder.ll_cover.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (null != onItemClickListener) {
+                        onItemClickListener.onItemClickListener(position, 0);
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -66,7 +77,7 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
         TextView tv_comment;
         TextView tv_recreation;
         TextView tv_dis;
-
+        LinearLayout ll_cover;
 
         public mViewHolder(View itemView) {
             super(itemView);
@@ -75,13 +86,25 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
             tv_comment = itemView.findViewById(R.id.tv_comment);
             tv_recreation = itemView.findViewById(R.id.tv_recreation);
             tv_dis = itemView.findViewById(R.id.tv_dis);
+            ll_cover = itemView.findViewById(R.id.ll_cover);
         }
     }
+
     static class mMoreHolder extends RecyclerView.ViewHolder {
 
         public mMoreHolder(View itemView) {
             super(itemView);
 
         }
+    }
+
+  public   interface OnItemClickListener {
+         void onItemClickListener(int position, int shopId);
+    }
+
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 }

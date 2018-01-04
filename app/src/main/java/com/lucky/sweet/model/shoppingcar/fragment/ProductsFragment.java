@@ -2,7 +2,6 @@ package com.lucky.sweet.model.shoppingcar.fragment;
 
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -30,11 +29,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.activity.OrderSeatActivity;
 import com.lucky.sweet.model.shoppingcar.DoubleUtil;
 import com.lucky.sweet.model.shoppingcar.adapter.ShopAdapter;
 import com.lucky.sweet.model.shoppingcar.adapter.TestSectionedAdapter;
@@ -279,9 +275,7 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), OrderSeatActivity.class);
-                startActivity(intent);
-
+                getActivity().finish();
             }
         });
 
@@ -498,7 +492,7 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         view.setAlpha(0.6f);
 
         int[] end_location = new int[2];
-        settlement.getLocationInWindow(end_location);
+        shopping_cart.getLocationInWindow(end_location);
 
         // 计算位移
         int endX = 0 - start_location[0] + 40;// 动画位移的X坐标

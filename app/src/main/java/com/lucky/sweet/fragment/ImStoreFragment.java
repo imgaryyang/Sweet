@@ -2,7 +2,6 @@ package com.lucky.sweet.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,6 +19,7 @@ import android.widget.TextView;
 import com.lucky.sweet.R;
 import com.lucky.sweet.activity.MainSearchActiviy;
 import com.lucky.sweet.activity.StoreDisplatActivity;
+import com.lucky.sweet.activity.StoreParticularInfoActivity;
 import com.lucky.sweet.adapter.AdViewPagerAdapter;
 import com.lucky.sweet.adapter.RecFoodRecommendAdapter;
 import com.lucky.sweet.adapter.RecminiAdAdapter;
@@ -30,7 +30,6 @@ import com.lucky.sweet.views.GradualChangeLinearLayout;
 import com.lucky.sweet.views.MySearchView;
 import com.lucky.sweet.viewsexpand.AdRecyCleViewOnScrollState;
 import com.lucky.sweet.viewsexpand.AdViewPagerTransformer;
-import com.lucky.sweet.widgets.ToolBar;
 
 import java.util.List;
 
@@ -123,10 +122,31 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
 
         rec_ad_show.setAdapter(new RecminiAdAdapter(context));
-        rec_foodStore.setAdapter(new RecFoodRecommendAdapter(context,
-                RecFoodRecommendAdapter.FOOD));
-        rec_funStore.setAdapter(new RecFoodRecommendAdapter(context,
-                RecFoodRecommendAdapter.FUN));
+        RecFoodRecommendAdapter foodAdapter = new RecFoodRecommendAdapter
+                (context,
+                        RecFoodRecommendAdapter.FOOD);
+        foodAdapter.setOnItemClickListener(new RecFoodRecommendAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClickListener(int position, int shopId) {
+                Intent intent = new Intent(getActivity(), StoreParticularInfoActivity.class);
+                intent.putExtra("shopid",position);
+                startActivity(intent);
+
+            }
+        });
+        RecFoodRecommendAdapter funAdapter = new RecFoodRecommendAdapter(context, RecFoodRecommendAdapter.FUN);
+        funAdapter.setOnItemClickListener(new RecFoodRecommendAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClickListener(int position, int shopId) {
+                Intent intent = new Intent(getActivity(), StoreParticularInfoActivity.class);
+                intent.putExtra("shopid",position);
+                startActivity(intent);
+
+
+            }
+        });
+        rec_foodStore.setAdapter(foodAdapter);
+        rec_funStore.setAdapter(funAdapter);
 
         rec_foodStore.addOnScrollListener(new AdRecyCleViewOnScrollState
                 (context, AdRecyCleViewOnScrollState.FOOD));
