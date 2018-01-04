@@ -495,7 +495,7 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         shopping_cart.getLocationInWindow(end_location);
 
         // 计算位移
-        int endX = 0 - start_location[0] + 40;// 动画位移的X坐标
+        int endX = end_location[0] - start_location[0];// 动画位移的X坐标
         int endY = end_location[1] - start_location[1];// 动画位移的y坐标
         TranslateAnimation translateAnimationX = new TranslateAnimation(0,
                 endX, 0, 0);
