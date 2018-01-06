@@ -15,6 +15,7 @@ import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.model.particularinfo.ParticularInfoManager;
+import com.lucky.sweet.views.StarLevelIndicatorView;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 import com.tencent.mapsdk.raster.model.LatLng;
@@ -113,6 +114,8 @@ public class StoreParticularInfoActivity extends BaseActivity {
         tv_shop_worktime = findViewById(R.id.tv_shop_worktime);
         tv_shop_des = findViewById(R.id.tv_shop_des);
         btn_map_position = findViewById(R.id.btn_map_position);
+        StarLevelIndicatorView startIndicator = findViewById(R.id.startIndicator);
+        startIndicator.initStarNumber(4);
         map = findViewById(R.id.map);
         findViewById(R.id.btn_order).setOnClickListener(new View.OnClickListener() {
             @Override
