@@ -10,14 +10,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.ShopCarSingleInformation;
 import com.lucky.sweet.model.shoppingcar.fragment.ProductsFragment;
 import com.lucky.sweet.views.SlidingLayoutView;
-import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
 import java.util.ArrayList;
@@ -102,6 +101,17 @@ public class MerchantActivity extends FragmentActivity {
 
         fragments = new ArrayList<Fragment>();
         productsFragment = new ProductsFragment();
+        productsFragment.setOnClickListener(new ProductsFragment.OnClickListener() {
+            @Override
+            public void onClickSubimt(ShopCarSingleInformation shopCarSingleInformation) {
+                Intent intent = new Intent(MerchantActivity.this,
+                        OrderSubmitActivity.class);
+                intent.putExtra("data", shopCarSingleInformation);
+                startActivity(intent);
+            }
+
+
+        });
 //        businessFragment = new BusinessFragment();
 //        businessCommentListFragment = new BusinessCommentListFragment();
         fragments.add(productsFragment);

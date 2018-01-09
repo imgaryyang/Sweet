@@ -1,9 +1,11 @@
 package com.lucky.sweet.model.shoppingcar.mode;
 
+import java.io.Serializable;
+
 /**
  * 小区商圈商品属性
  */
-public class ShopProduct {
+public class ShopProduct implements Serializable {
     private int id;
     private String shopName;//店名
     private String price;//单价

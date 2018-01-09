@@ -110,10 +110,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
                     android:text="点餐列表"
                     android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:layout_centerInParent="true"/>
+                    android:textSize="18dp"/>
 
                 <ImageView
                     android:id="@+id/shopping_cart"
@@ -122,19 +122,20 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_margin="5dp"
-                    android:background="@drawable/ic_cart" />
+                    android:background="@drawable/ic_cart"/>
+
                 <TextView
-                    android:visibility="gone"
                     android:id="@+id/shoppingNum"
-                    android:layout_toRightOf="@id/shopping_cart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/shopping_cart"
                     android:background="@drawable/shape_shopping_cart"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dimen_8_dp" />
+                    android:textSize="@dimen/dimen_8_dp"
+                    android:visibility="gone"/>
+
                 <TextView
-                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignRight="@+id/shopping_cart"
@@ -142,8 +143,8 @@
                     android:background="@drawable/shape_shopping_cart"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dimen_8_dp" />
-
+                    android:textSize="@dimen/dimen_8_dp"
+                    android:visibility="gone"/>
 
 
                 <!-- <TextView
@@ -371,7 +372,8 @@
 
         </RelativeLayout>
 
-        <TextView
+        <Button
+            android:clickable="true"
             android:id="@+id/settlement1"
             android:layout_width="@dimen/dimen_0_dp"
             android:layout_height="match_parent"

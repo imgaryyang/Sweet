@@ -164,7 +164,7 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
     public interface HolderClickListener{
         public void onHolderClick(Drawable drawable, int[] start_location);
     }
-    
+
 
     @Override
     public View getSectionHeaderView(int section, View convertView, ViewGroup parent) {

@@ -354,7 +354,6 @@
     <color name="edit_underline_blue">#52A1E6</color>
 
 
-
     <!--惠生活风格色-->
     <color name="benefit_style">#EB6100</color>
     <color name="shopping_cart_bg">#DC5914</color>
@@ -385,5 +384,7 @@
     <!--<color name="viewfinder_mask">#60000000</color>-->
     <!--<color name="possible_result_points">#c0ffff00</color>-->
     <color name="scan_bg">#7f000000</color>
+    <!--订单字体色-->
+    <color name="order_font_color">#bebebe</color>
 
 </resources>

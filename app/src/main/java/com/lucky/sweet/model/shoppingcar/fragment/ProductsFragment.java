@@ -29,8 +29,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.ShopCarSingleInformation;
 import com.lucky.sweet.model.shoppingcar.DoubleUtil;
 import com.lucky.sweet.model.shoppingcar.adapter.ShopAdapter;
 import com.lucky.sweet.model.shoppingcar.adapter.TestSectionedAdapter;
@@ -39,7 +41,6 @@ import com.lucky.sweet.model.shoppingcar.assistant.onCallBackListener;
 import com.lucky.sweet.model.shoppingcar.mode.ProductType;
 import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
 import com.lucky.sweet.model.shoppingcar.view.PinnedHeaderListView;
-import com.lucky.sweet.views.SlidingLayoutView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ import java.util.List;
 /**
  * 服务商品列表
  */
-public class ProductsFragment extends Fragment implements View.OnClickListener, onCallBackListener,ShopToDetailListener {
+public class ProductsFragment extends Fragment implements View.OnClickListener, onCallBackListener, ShopToDetailListener {
     private boolean isScroll = true;
     private ListView mainlist;
     private PinnedHeaderListView morelist;
@@ -100,6 +101,10 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
     private RelativeLayout parentLayout;
 
     private TextView noData;
+    /**
+     * 确认按键
+     */
+    private TextView settlement1;
 
     /**
      * 分类列表
@@ -172,24 +177,25 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         getData();
         animation_viewGroup = createAnimLayout();
         noData = (TextView) getView().findViewById(R.id.noData);
-        parentLayout = (RelativeLayout)  getView().findViewById(R.id.parentLayout);
-        shoppingPrise = (TextView)  getView().findViewById(R.id.shoppingPrise);
+        settlement1 = (TextView) getView().findViewById(R.id.settlement1);
+        parentLayout = (RelativeLayout) getView().findViewById(R.id.parentLayout);
+        shoppingPrise = (TextView) getView().findViewById(R.id.shoppingPrise);
         shoppingNum = (TextView) getView().findViewById(R.id.shoppingNum);
-        settlement = (TextView)  getView().findViewById(R.id.settlement);
-        mainlist = (ListView)  getView().findViewById(R.id.classify_mainlist);
+        settlement = (TextView) getView().findViewById(R.id.settlement);
+        mainlist = (ListView) getView().findViewById(R.id.classify_mainlist);
         morelist = (PinnedHeaderListView) getView().findViewById(R.id.classify_morelist);
-        shopping_cart = (ImageView)  getView().findViewById(R.id.shopping_cart);
-        defaultText = (TextView)  getView().findViewById(R.id.defaultText);
+        shopping_cart = (ImageView) getView().findViewById(R.id.shopping_cart);
+        defaultText = (TextView) getView().findViewById(R.id.defaultText);
 //        shoppingList = (LinearLayout) getView().findViewById(R.id.shoppingList);
-        shoppingListView = (ListView)  getView().findViewById(R.id.shopproductListView);
-        cardLayout = (FrameLayout)  getView().findViewById(R.id.cardLayout);
-        cardShopLayout = (LinearLayout)  getView().findViewById(R.id.cardShopLayout);
-        bg_layout =  getView().findViewById(R.id.bg_layout);
-        btn_back = (Button)getView().findViewById(R.id.btn_back);
+        shoppingListView = (ListView) getView().findViewById(R.id.shopproductListView);
+        cardLayout = (FrameLayout) getView().findViewById(R.id.cardLayout);
+        cardShopLayout = (LinearLayout) getView().findViewById(R.id.cardShopLayout);
+        bg_layout = getView().findViewById(R.id.bg_layout);
+        btn_back = (Button) getView().findViewById(R.id.btn_back);
         initData();
     }
 
-    public void initData(){
+    public void initData() {
         productList = new ArrayList<>();
         strings = new ArrayList<>();
         sectionedAdapter = new TestSectionedAdapter(getActivity(), productCategorizes);
@@ -203,7 +209,7 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
 
         });
 
-        for(ProductType type :productCategorizes){
+        for (ProductType type : productCategorizes) {
             strings.add(type.getType());
         }
         morelist.setAdapter(sectionedAdapter);
@@ -211,7 +217,7 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         mainlist.setAdapter(new ArrayAdapter<String>(getActivity(),
                 R.layout.categorize_item, strings));
 
-        shopAdapter = new ShopAdapter(getActivity(),productList);
+        shopAdapter = new ShopAdapter(getActivity(), productList);
         shoppingListView.setAdapter(shopAdapter);
         shopAdapter.setShopToDetailListener(this);
 
@@ -282,6 +288,8 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         bg_layout.setOnClickListener(this);
         settlement.setOnClickListener(this);
         shopping_cart.setOnClickListener(this);
+        settlement1.setOnClickListener(this);
+
     }
 
     /**
@@ -293,22 +301,22 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void updateProduct(ShopProduct product, String type) {
         if (type.equals("1")) {
-            if(!productList.contains(product)){
+            if (!productList.contains(product)) {
                 productList.add(product);
-            }else {
-                for (ShopProduct shopProduct:productList){
-                    if(product.getId()==shopProduct.getId()){
+            } else {
+                for (ShopProduct shopProduct : productList) {
+                    if (product.getId() == shopProduct.getId()) {
                         shopProduct.setNumber(shopProduct.getNumber());
                     }
                 }
             }
         } else if (type.equals("2")) {
-            if(productList.contains(product)){
-                if(product.getNumber()==0){
+            if (productList.contains(product)) {
+                if (product.getNumber() == 0) {
                     productList.remove(product);
-                }else {
-                    for (ShopProduct shopProduct:productList){
-                        if(product.getId()==shopProduct.getId()){
+                } else {
+                    for (ShopProduct shopProduct : productList) {
+                        if (product.getId() == shopProduct.getId()) {
                             shopProduct.setNumber(shopProduct.getNumber());
                         }
                     }
@@ -323,19 +331,19 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onUpdateDetailList(ShopProduct product, String type) {
         if (type.equals("1")) {
-            for (int i =0;i<productCategorizes.size();i++){
+            for (int i = 0; i < productCategorizes.size(); i++) {
                 shopProductsAll = productCategorizes.get(i).getProduct();
-                for(ShopProduct shopProduct :shopProductsAll){
-                    if(product.getId()==shopProduct.getId()){
+                for (ShopProduct shopProduct : shopProductsAll) {
+                    if (product.getId() == shopProduct.getId()) {
                         shopProduct.setNumber(product.getNumber());
                     }
                 }
             }
         } else if (type.equals("2")) {
-            for (int i =0;i<productCategorizes.size();i++){
+            for (int i = 0; i < productCategorizes.size(); i++) {
                 shopProductsAll = productCategorizes.get(i).getProduct();
-                for(ShopProduct shopProduct :shopProductsAll){
-                    if(product.getId()==shopProduct.getId()){
+                for (ShopProduct shopProduct : shopProductsAll) {
+                    if (product.getId() == shopProduct.getId()) {
                         shopProduct.setNumber(product.getNumber());
                     }
                 }
@@ -347,10 +355,10 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onRemovePriduct(ShopProduct product) {
-        for (int i =0;i<productCategorizes.size();i++){
+        for (int i = 0; i < productCategorizes.size(); i++) {
             shopProductsAll = productCategorizes.get(i).getProduct();
-            for(ShopProduct shopProduct :shopProductsAll){
-                if(product.getId()==shopProduct.getId()){
+            for (ShopProduct shopProduct : shopProductsAll) {
+                if (product.getId() == shopProduct.getId()) {
                     productList.remove(product);
                     shopAdapter.notifyDataSetChanged();
                     shopProduct.setNumber(shopProduct.getNumber());
@@ -367,21 +375,21 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
      * 更新购物车价格
      */
     public void setPrise() {
-        double sum = 0;
-        int shopNum = 0;
+        float sum = 0;
+        float shopNum = 0;
         for (ShopProduct pro : productList) {
 //            sum = sum + (pro.getNumber() * Double.parseDouble(pro.getPrice()));
-            sum = DoubleUtil.sum(sum, DoubleUtil.mul((double) pro.getNumber(), Double.parseDouble(pro.getPrice())));
+            sum = (float) DoubleUtil.sum(sum, DoubleUtil.mul((double) pro.getNumber(), Double.parseDouble(pro.getPrice())));
             shopNum = shopNum + pro.getNumber();
         }
-        if(shopNum>0){
+        if (shopNum > 0) {
             shoppingNum.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             shoppingNum.setVisibility(View.GONE);
         }
-        if(sum>0){
+        if (sum > 0) {
             shoppingPrise.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             shoppingPrise.setVisibility(View.GONE);
         }
         shoppingPrise.setText("¥" + " " + (new DecimalFormat("0.00")).format(sum));
@@ -416,7 +424,7 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
                 break;
 
             case R.id.settlement:
-                if(productList==null){
+                if (productList == null) {
                     return;
                 }
 //                Intent intent = new Intent(getActivity(), SettlementActivity.class);
@@ -430,9 +438,19 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
                 bg_layout.setVisibility(View.GONE);
                 cardShopLayout.setVisibility(View.GONE);
                 break;
+            case R.id.settlement1:
+                if (onClickListener != null) {
+                    if (shoppingNum.getVisibility() == View.GONE) {
+                        Toast.makeText(getActivity(), "请添加菜品", Toast
+                                .LENGTH_SHORT).show();
+                        return;
+                    }
+                    onClickListener.onClickSubimt(new ShopCarSingleInformation(shoppingPrise.getText()
+                            .toString(), "aaaaa", "1", productList));
+                }
+                break;
         }
     }
-
 
 
     /**
@@ -589,10 +607,22 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
     }
 
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+
+    public interface OnClickListener {
+        void onClickSubimt(ShopCarSingleInformation shopCarSingleInformation);
+    }
+
+    private OnClickListener onClickListener;
+
+    public void setOnClickListener(OnClickListener onClickListener) {
+
+        this.onClickListener = onClickListener;
+
     }
 
 }
