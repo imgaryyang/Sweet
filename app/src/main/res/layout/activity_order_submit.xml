@@ -111,7 +111,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
-                    android:background="@color/black"/>
+                    android:background="@color/gray2"/>
 
                 <LinearLayout
                     android:id="@+id/ll_order_list"
@@ -122,7 +122,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
-                    android:background="@color/black"/>
+                    android:background="@color/gray2"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"

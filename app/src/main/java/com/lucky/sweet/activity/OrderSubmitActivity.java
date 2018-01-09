@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.InternetTime;
 import com.lucky.sweet.entity.ShopCarSingleInformation;
 import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
 import com.lucky.sweet.properties.Properties;
@@ -39,6 +41,7 @@ public class OrderSubmitActivity extends AppCompatActivity {
         initData();
 
 
+
     }
 
     private void initData() {
@@ -61,7 +64,15 @@ public class OrderSubmitActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                            tv_now_time.setText(response.body().string());
+                            Gson gson = new Gson();
+                            InternetTime internetTime = gson.fromJson(response.body().string(),
+                                    InternetTime.class);
+                            String sysTimeFormatTwo = internetTime.getSysTimeFormatTwo();
+                            sysTimeFormatTwo = sysTimeFormatTwo.substring(0,
+                                    sysTimeFormatTwo.length() - 3);
+                            sysTimeFormatTwo = sysTimeFormatTwo.replace
+                                    ("-", ".");
+                            tv_now_time.setText(sysTimeFormatTwo);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -79,8 +90,8 @@ public class OrderSubmitActivity extends AppCompatActivity {
             int salePrice = Integer.parseInt(productList.get(i).getPrice()) *
                     number;
             tv_dishes_name.setText(productList.get(i).getGoods());
-            tv_dishes_price.setText("  "+salePrice);
-            tv_dishes_num.setText("  "+number);
+            tv_dishes_price.setText("  " + salePrice);
+            tv_dishes_num.setText("  " + number);
             ll_order_list.addView(inflate);
         }
     }
