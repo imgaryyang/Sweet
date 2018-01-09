@@ -9,10 +9,12 @@ import android.widget.TextView;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.ShopCarSingleInformation;
+import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
 import com.lucky.sweet.properties.Properties;
 import com.lucky.sweet.utility.HttpUtils;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -67,7 +69,7 @@ public class OrderSubmitActivity extends AppCompatActivity {
                 });
             }
         });
-        /*List<ShopProduct> productList = data.getProductList();
+        List<ShopProduct> productList = data.getProductList();
         for (int i = 0; i < productList.size(); i++) {
             View inflate = View.inflate(this, R.layout.item_orderlist, null);
             TextView tv_dishes_num = inflate.findViewById(R.id.tv_dishes_num);
@@ -80,12 +82,7 @@ public class OrderSubmitActivity extends AppCompatActivity {
             tv_dishes_price.setText("  "+salePrice);
             tv_dishes_num.setText("  "+number);
             ll_order_list.addView(inflate);
-        }*/
-        for (int i = 0; i < 20; i++) {
-            View inflate = View.inflate(this, R.layout.item_orderlist, null);
-            ll_order_list.addView(inflate);
         }
-
     }
 
     private void initView() {
