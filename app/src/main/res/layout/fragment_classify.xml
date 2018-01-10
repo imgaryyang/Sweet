@@ -130,6 +130,7 @@
                     android:layout_alignTop="@+id/btn_back"
                     android:background="@drawable/bg_shopcar_num"
                     android:gravity="center"
+                    android:textColor="@color/white"
                     android:textSize="8dp"
                     android:visibility="gone"/>
 
