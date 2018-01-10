@@ -137,6 +137,7 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         }
     };
     private Button btn_back;
+    private TextView tv_shopcar_int;
 
 
     @Override
@@ -177,6 +178,7 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         getData();
         animation_viewGroup = createAnimLayout();
         noData = (TextView) getView().findViewById(R.id.noData);
+        tv_shopcar_int = getView().findViewById(R.id.tv_shopcar_int);
         settlement1 = (TextView) getView().findViewById(R.id.settlement1);
         parentLayout = (RelativeLayout) getView().findViewById(R.id.parentLayout);
         shoppingPrise = (TextView) getView().findViewById(R.id.shoppingPrise);
@@ -376,12 +378,24 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
      */
     public void setPrise() {
         float sum = 0;
-        float shopNum = 0;
+        int shopNum = 0;
         for (ShopProduct pro : productList) {
 //            sum = sum + (pro.getNumber() * Double.parseDouble(pro.getPrice()));
             sum = (float) DoubleUtil.sum(sum, DoubleUtil.mul((double) pro.getNumber(), Double.parseDouble(pro.getPrice())));
             shopNum = shopNum + pro.getNumber();
         }
+
+        if (shopNum != 0) {
+            if (tv_shopcar_int.getVisibility() == View.GONE) {
+                tv_shopcar_int.setVisibility(View.VISIBLE);
+            }
+            tv_shopcar_int.setText(shopNum + "");
+        } else {
+            if (tv_shopcar_int.getVisibility() == View.VISIBLE) {
+                tv_shopcar_int.setVisibility(View.GONE);
+            }
+        }
+
         if (shopNum > 0) {
             shoppingNum.setVisibility(View.VISIBLE);
         } else {

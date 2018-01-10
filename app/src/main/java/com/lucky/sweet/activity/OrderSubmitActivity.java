@@ -14,6 +14,7 @@ import com.lucky.sweet.entity.ShopCarSingleInformation;
 import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
 import com.lucky.sweet.properties.Properties;
 import com.lucky.sweet.utility.HttpUtils;
+import com.lucky.sweet.widgets.Title;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,6 +30,7 @@ public class OrderSubmitActivity extends AppCompatActivity {
     private TextView tv_now_time;
     private TextView tv_shop_name;
     private TextView tv_seat_num;
+    private Title title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +42,29 @@ public class OrderSubmitActivity extends AppCompatActivity {
 
         initData();
 
+        initEvent();
 
+    }
 
+    private void initEvent() {
+        findViewById(R.id.btn_submit_order).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(OrderSubmitActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+            }
+        });
     }
 
     private void initData() {
         Intent intent = getIntent();
         ShopCarSingleInformation data = (ShopCarSingleInformation) intent.getSerializableExtra("data");
+
+
+        final Title.ButtonInfo buttonRigt = new Title.ButtonInfo(true, Title
+                .BUTTON_RIGHT1, R.mipmap.share, null);
+        title.setTitleNameStr("确认订单");
+        title.mSetButtonInfo(buttonRigt);
 
         tv_seat_num.setText(data.getSeatNum());
         tv_shop_name.setText(data.getShopName());
@@ -102,6 +120,9 @@ public class OrderSubmitActivity extends AppCompatActivity {
         tv_now_time = findViewById(R.id.tv_now_time);
         tv_cost_num = findViewById(R.id.tv_cost_num);
         ll_order_list = findViewById(R.id.ll_order_list);
+        title = findViewById(R.id.title);
+
+
     }
 
 }

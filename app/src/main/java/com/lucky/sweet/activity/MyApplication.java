@@ -33,15 +33,13 @@ public class MyApplication extends Application {
             public void onNetChange(int netMobile) {
                 switch (netMobile) {
                     case NetBroadcastReceiver.NETWORK_MOBILE:
-                        Toast.makeText(context, "4G", Toast.LENGTH_SHORT)
-                                .show();
+
                         break;
                     case NetBroadcastReceiver.NETWORK_NONE:
                         Toast.makeText(context, "暂无网络", Toast.LENGTH_SHORT).show();
                         break;
                     case NetBroadcastReceiver.NETWORK_WIFI:
-                        Toast.makeText(context, "WI-FI", Toast.LENGTH_SHORT)
-                                .show();
+
                         break;
 
                     default:
