@@ -30,15 +30,20 @@ public class AdRecyCleViewOnScrollState extends RecyclerView.OnScrollListener {
 
     @Override
     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-        super.onScrollStateChanged(recyclerView, newState);
         LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        // 当不滚动时
         if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-            int lastVisiblePosition = manager.findLastVisibleItemPosition();
-            if (lastVisiblePosition >= manager
-                    .getItemCount() - 1)
-                if (flag) {
-                    Intent intent;
+            //获取最后一个完全显示的ItemPosition
+            int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
+            int totalItemCount = manager.getItemCount();
 
+            // 判断是否滚动到底部，并且是向右滚动
+            if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
+                //加载更多功能的代码
+
+                if (flag) {
+                    flag = false;
+                    Intent intent;
                     switch (type) {
                         case FOOD:
                             intent = new Intent(context, StoreDisplatActivity.class);
@@ -51,10 +56,28 @@ public class AdRecyCleViewOnScrollState extends RecyclerView.OnScrollListener {
                             context.startActivity(intent);
                             break;
                     }
-                    flag = false;
+
                     return;
                 }
-            flag = true;
+                flag = true;
+            }
         }
     }
+
+    boolean isSlidingToLast;
+
+    @Override
+    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+        super.onScrolled(recyclerView, dx, dy);
+        //dx用来判断横向滑动方向，dy用来判断纵向滑动方向
+        if (dx > 0 || dy > 0) {
+            //大于0表示，正在向右滚动
+            isSlidingToLast = true;
+        } else {
+            //小于等于0 表示停止或向左滚动
+            isSlidingToLast = false;
+        }
+
+    }
+
 }

@@ -22,7 +22,6 @@ import com.lucky.sweet.activity.StoreDisplatActivity;
 import com.lucky.sweet.activity.StoreParticularInfoActivity;
 import com.lucky.sweet.adapter.AdViewPagerAdapter;
 import com.lucky.sweet.adapter.RecFoodRecommendAdapter;
-import com.lucky.sweet.adapter.RecminiAdAdapter;
 import com.lucky.sweet.entity.StoreShowInfo;
 import com.lucky.sweet.model.imstore.ImStoreManager;
 import com.lucky.sweet.utility.HiddenAnimUtils;
@@ -54,7 +53,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
     private TextView tv_moreFood;
     private ImageView imv_weather;
     private TextView tv_moreRelax;
-    private RecyclerView rec_ad_show;
+    /*    private RecyclerView rec_ad_show;*/
     private RecyclerView rec_foodStore;
     private RecyclerView rec_funStore;
 
@@ -109,7 +108,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        rec_ad_show.setLayoutManager(linearLayoutManager);
+        // rec_ad_show.setLayoutManager(linearLayoutManager);
 
         linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -121,14 +120,14 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         rec_funStore.setLayoutManager(linearLayoutManager);
 
 
-        rec_ad_show.setAdapter(new RecminiAdAdapter(context));
+        // rec_ad_show.setAdapter(new RecminiAdAdapter(context));
         RecFoodRecommendAdapter foodAdapter = new RecFoodRecommendAdapter
                 (context, RecFoodRecommendAdapter.FOOD);
         foodAdapter.setOnItemClickListener(new RecFoodRecommendAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(int position, int shopId) {
                 Intent intent = new Intent(getActivity(), StoreParticularInfoActivity.class);
-                intent.putExtra("shopid",position);
+                intent.putExtra("shopid", position);
                 startActivity(intent);
 
             }
@@ -138,7 +137,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemClickListener(int position, int shopId) {
                 Intent intent = new Intent(getActivity(), StoreParticularInfoActivity.class);
-                intent.putExtra("shopid",position);
+                intent.putExtra("shopid", position);
                 startActivity(intent);
             }
         });
@@ -165,7 +164,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         tv_moreRelax = view.findViewById(R.id.tv_moreRelax);
         rec_foodStore = view.findViewById(R.id.rec_foodStore);
         rec_funStore = view.findViewById(R.id.rec_funStore);
-        rec_ad_show = view.findViewById(R.id.rec_ad_show);
+        //rec_ad_show = view.findViewById(R.id.rec_ad_show);
         btn_qrcodescan = view.findViewById(R.id.btn_qrcodescan);
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
