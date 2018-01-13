@@ -13,9 +13,20 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:background="@drawable/shape_search_bg"
-        android:gravity="center"
-        >
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="@dimen/dimen_20_dp"
+            android:layout_height="@dimen/dimen_20_dp"
+            android:layout_marginTop="5dp"
+            android:background="@mipmap/back_button"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/btn_back"
+            android:background="@drawable/shape_search_bg"/>
 
         <ImageView
             android:id="@+id/imv_search"
@@ -23,7 +34,7 @@
             android:layout_height="12dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="120dp"
+            android:layout_marginStart="130dp"
             android:clickable="false"
             android:focusable="false"
             android:src="@mipmap/ic_search"/>
@@ -34,12 +45,23 @@
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/btn_back"
             android:background="@null"
             android:gravity="center"
             android:hint=" 在Sweet上搜索..."
-
             android:textSize="12dp"/>
 
+        <Button
+            android:id="@+id/btn_clear_search"
+            android:layout_width="@dimen/dimen_20_dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:background="@mipmap/clear_content"
+            android:gravity="center_vertical"/>
     </RelativeLayout>
 
     <View

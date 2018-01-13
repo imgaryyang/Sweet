@@ -45,7 +45,7 @@ public class SetUserInfoActivity extends BaseActivity {
         title = findViewById(R.id.title);
         title.setTitleNameStr("设置");
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
-                .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
+                .BUTTON_LEFT, R.mipmap.back_button, null);
         title.setOnTitleButtonClickListener(new Title
                 .OnTitleButtonClickListener() {
             @Override
