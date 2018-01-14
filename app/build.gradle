@@ -50,6 +50,5 @@ dependencies {
     compile 'cn.bingoogolapple:bga-qrcodecore:1.0.7@aar'
     compile 'cn.bingoogolapple:bga-zxing:1.0.7@aar'
     compile 'com.android.support:support-annotations:27.0.2'
-
-
+    compile 'com.forward.androids:androids:1.1.7.1'
 }

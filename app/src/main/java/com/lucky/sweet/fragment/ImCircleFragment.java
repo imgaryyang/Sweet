@@ -11,10 +11,12 @@ import android.widget.ListView;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
-import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import cn.forward.androids.views.StringScrollPicker;
 
 /**
  * Created by Qiuyue on 2017/11/15.
@@ -26,7 +28,8 @@ import java.util.ArrayList;
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
 public class ImCircleFragment extends Fragment {
-//    private Title title = null;
+    //    private Title title = null;
+    private static final String[] title = {"朋友", "今日", "广场"};
 
     @Nullable
     @Override
@@ -54,7 +57,10 @@ public class ImCircleFragment extends Fragment {
     }
 
     private void initView(View view) {
+
         ListView lv_circle = view.findViewById(R.id.lv_circle);
+        StringScrollPicker sc_picker = view.findViewById(R.id.sc_picker);
+        sc_picker.setData(new ArrayList<CharSequence>(Arrays.asList(title)));
         ArrayList<String> objects = new ArrayList<String>();
         objects.add("");
         objects.add("");
