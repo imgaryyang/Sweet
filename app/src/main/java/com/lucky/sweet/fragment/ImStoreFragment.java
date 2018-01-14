@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.activity.CaptureActivity;
 import com.lucky.sweet.activity.MainSearchActiviy;
 import com.lucky.sweet.activity.StoreDisplatActivity;
 import com.lucky.sweet.activity.StoreParticularInfoActivity;
@@ -183,10 +184,10 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         tv_moreFood.setOnClickListener(this);
         tv_moreRelax.setOnClickListener(this);
         btn_qrcodescan.setOnClickListener(this);
-        msv_search.setOnSearchClickListener(new View.OnClickListener() {
+        btn_qrcodescan.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MainSearchActiviy.class);
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CaptureActivity.class);
                 startActivity(intent);
             }
         });

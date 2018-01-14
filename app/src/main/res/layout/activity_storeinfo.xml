@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,10 +8,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <ScrollView
+            android:id="@+id/sv_storeInfo"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="5"
@@ -255,12 +256,7 @@
 
                 </LinearLayout>
 
-                <!--<com.tencent.tencentmap.mapsdk.map.MapView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="200dp"-->
-                <!--android:layout_marginLeft="15dp"-->
-                <!--android:layout_marginRight="15dp"-->
-                <!--android:layout_marginTop="15dp"/>-->
+
                 <com.tencent.tencentmap.mapsdk.map.MapView
                     android:id="@+id/map"
                     android:layout_width="match_parent"
@@ -311,14 +307,14 @@
 
                 </LinearLayout>
 
-                <ListView
+                <com.lucky.sweet.views.MyListView
                     android:id="@+id/lv_circle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
                     android:divider="#00000000">
 
-                </ListView>
+                </com.lucky.sweet.views.MyListView>
 
 
             </LinearLayout>
@@ -349,4 +345,4 @@
     </LinearLayout>
 
 
-</FrameLayout>
+</LinearLayout>

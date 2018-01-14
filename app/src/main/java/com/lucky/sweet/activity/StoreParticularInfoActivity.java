@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private LatLng latLng;
     private TextView tv_moreFood;
     private TextView tv_moreevr;
+    private ScrollView sv_storeInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +136,8 @@ public class StoreParticularInfoActivity extends BaseActivity {
         tv_shop_worktime = findViewById(R.id.tv_shop_worktime);
         tv_shop_des = findViewById(R.id.tv_shop_des);
         btn_map_position = findViewById(R.id.btn_map_position);
+        sv_storeInfo = (ScrollView)findViewById(R.id.sv_storeInfo);
+        sv_storeInfo.smoothScrollTo(0, 0);
         StarLevelIndicatorView startIndicator = findViewById(R.id.startIndicator);
         startIndicator.initStarNumber(4);
         map = findViewById(R.id.map);
