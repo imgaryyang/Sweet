@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ParallaxView">
-        <attr name="speed" format="dimension" />
-        <attr name="src" format="reference" />
-        <attr name="sceneLength" format="integer" />
-        <attr name="randomness" format="reference" />
+        <attr name="speed" format="dimension"/>
+        <attr name="src" format="reference"/>
+        <attr name="sceneLength" format="integer"/>
+        <attr name="randomness" format="reference"/>
         <attr name="initialState" format="enum">
-            <enum name="started" value="0" />
-            <enum name="stopped" value="1" />
+            <enum name="started" value="0"/>
+            <enum name="stopped" value="1"/>
         </attr>
     </declare-styleable>
 
     <declare-styleable name="ImageViewExtend">
-        <attr name="shape" format="integer" />
+        <attr name="shape" format="integer"/>
 
-        <attr name="border" format="boolean" />
-        <attr name="border_width" format="dimension" />
-        <attr name="border_color" format="color" />
-        <attr name="rect_roundcorner" format="dimension" />
+        <attr name="border" format="boolean"/>
+        <attr name="border_width" format="dimension"/>
+        <attr name="border_color" format="color"/>
+        <attr name="rect_roundcorner" format="dimension"/>
 
-        <attr name="shadow" format="boolean" />
-        <attr name="shadow_width" format="dimension" />
-        <attr name="shadow_color_star" format="color" />
-        <attr name="shadow_color_midd" format="color" />
-        <attr name="shadow_color_end" format="color" />
+        <attr name="shadow" format="boolean"/>
+        <attr name="shadow_width" format="dimension"/>
+        <attr name="shadow_color_star" format="color"/>
+        <attr name="shadow_color_midd" format="color"/>
+        <attr name="shadow_color_end" format="color"/>
 
     </declare-styleable>
+
 </resources>

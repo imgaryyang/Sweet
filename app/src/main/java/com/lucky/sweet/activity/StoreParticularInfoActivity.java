@@ -50,6 +50,8 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private Button btn_map_position;
     private TencentMap maps;
     private LatLng latLng;
+    private TextView tv_moreFood;
+    private TextView tv_moreevr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,22 @@ public class StoreParticularInfoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 maps.setCenter(latLng);
+            }
+        });
+        tv_moreFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StoreParticularInfoActivity.this,
+                        RecruitmentDisplayActivity.class);
+                startActivity(intent);
+            }
+        });
+        tv_moreevr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StoreParticularInfoActivity.this,
+                        RecruitmentDisplayActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -107,6 +125,8 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private void initView() {
         imv_back = findViewById(R.id.imv_back);
         imv_show_fir = findViewById(R.id.imv_show_fir);
+        tv_moreFood = findViewById(R.id.tv_moreFood);
+        tv_moreevr = findViewById(R.id.tv_moreevr);
         imv_show_sec = findViewById(R.id.imv_show_sec);
         imv_show_sed = findViewById(R.id.imv_show_sed);
         tv_shop_title = findViewById(R.id.tv_shop_title);
