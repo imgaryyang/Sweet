@@ -3,14 +3,16 @@ package com.lucky.sweet.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.views.PictureDisplay;
+import com.lucky.sweet.views.PictureDisplayLayout;
+
+import java.util.ArrayList;
 
 public class RecruitmentDisplayActivity extends AppCompatActivity {
 
-    private LinearLayout photo_show;
+    private PictureDisplayLayout photo_show;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +26,13 @@ public class RecruitmentDisplayActivity extends AppCompatActivity {
 
     private void initView() {
         photo_show = findViewById(R.id.ll_cover_photo_show);
-        photo_show.addView(new PictureDisplay(this));
-        photo_show.addView(new PictureDisplay(this));
-        photo_show.addView(new PictureDisplay(this));
+    
+        ArrayList<String> strings = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            strings.add("");
+        }
+        photo_show.initDatas(strings);
+
     }
 
     private void initEvent() {
@@ -36,5 +42,8 @@ public class RecruitmentDisplayActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
+
+
 }

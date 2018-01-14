@@ -7,7 +7,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.RecreationInfo;
-import com.lucky.sweet.entity.StoreShowInfo;
+import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.WeatherInfo;
 import com.lucky.sweet.fragment.ImStoreFragment;
 import com.lucky.sweet.properties.Properties;
@@ -43,8 +43,6 @@ public class ImStoreManager {
 
     public ImStoreManager(ImStoreFragment ImStoreFragment) {
         this.ImStoreFragment = ImStoreFragment;
-
-
         context = ImStoreFragment.getContext();
         imStoreHandler = new ImStoreHandler(ImStoreFragment);
 
@@ -169,11 +167,11 @@ public class ImStoreManager {
 
                         Gson gson = new Gson();
 
-                        StoreShowInfo storeShowInfo = gson.fromJson(response.body
-                                ().string(), StoreShowInfo.class);
+                        MainStoreInfo mainStoreInfo = gson.fromJson(response.body
+                                ().string(), MainStoreInfo.class);
                         Message message = new Message();
                         message.what = ImStoreHandler.UPSHOWINFO;
-                        message.obj = storeShowInfo;
+                        message.obj = mainStoreInfo;
                         imStoreHandler.sendMessage(message);
 
                     }

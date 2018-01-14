@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 
-import com.lucky.sweet.entity.StoreShowInfo;
+import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.WeatherInfo;
 import com.lucky.sweet.fragment.ImStoreFragment;
 
@@ -48,9 +48,9 @@ public class ImStoreHandler extends Handler {
                 fragment.updataWeather(cond_txt, resId);
                 break;
             case UPSHOWINFO:
-                StoreShowInfo info = (StoreShowInfo) msg.obj;
-                List<StoreShowInfo.foodBean> food = info.getFood();
-                fragment.setShowInfo(food);
+                MainStoreInfo info = (MainStoreInfo) msg.obj;
+
+                //fragment.setShowInfo();
                 break;
 
 

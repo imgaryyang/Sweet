@@ -1,0 +1,109 @@
+package com.lucky.sweet.views;
+
+import android.content.Context;
+import android.support.annotation.Nullable;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.lucky.sweet.R;
+
+import java.util.ArrayList;
+
+
+/**
+ * Created by chn on 2018/1/14.
+ * (╯°□°）╯︵ ┻━┻ MMP好气啊！
+ * (╯‵□′)╯︵┻━┻ 老子怒掀桌子！
+ * ┻━┻︵╰(‵□′)╯︵┻━┻老子双手掀桌！
+ * ┬─┬﻿ ノ( ゜-゜ノ) 算了，我不生气了！日子还得过老老实实敲吧~
+ */
+
+public class TitleIndicatorView extends LinearLayout implements View.OnClickListener {
+
+    private ArrayList<TextView> arrayList = new ArrayList<>();
+
+    private static final int FIRST_ITEM = 1;
+    private static final int SECOND_ITEM = 2;
+    private static final int THIRD_ITEM = 3;
+
+    private static final int CURRENT_ITEM = 25;
+    private static final int OTHER_ITEM = 15;
+
+    public TitleIndicatorView(Context context) {
+        super(context);
+        initView(context);
+    }
+
+    public TitleIndicatorView(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        initView(context);
+
+
+    }
+
+
+    public TitleIndicatorView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initView(context);
+    }
+
+
+    private void initView(Context context) {
+        LayoutInflater.from(context).inflate(R.layout
+                .item_title_indicator_view, this);
+        TextView tv_dishes_title = findViewById(R.id.tv_dishes_title);
+        TextView tv_dishes_over = findViewById(R.id.tv_dishes_over);
+        TextView tv_other = findViewById(R.id.tv_other);
+
+        tv_dishes_title.getPaint().setFakeBoldText(true);
+
+        tv_dishes_title.setTag(FIRST_ITEM);
+        tv_dishes_over.setTag(SECOND_ITEM);
+        tv_other.setTag(THIRD_ITEM);
+
+        tv_dishes_title.setOnClickListener(this);
+        tv_dishes_over.setOnClickListener(this);
+        tv_other.setOnClickListener(this);
+
+        arrayList.add(tv_dishes_title);
+        arrayList.add(tv_dishes_over);
+        arrayList.add(tv_other);
+
+    }
+
+    public interface OnTitleListener {
+        void onCurrentTitleChange(int type);
+    }
+
+    private OnTitleListener onTitleListener;
+
+    public void setOnTitleListener(OnTitleListener onTitleListener) {
+        this.onTitleListener = onTitleListener;
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        for (TextView textview : arrayList) {
+            if (textview.getTag() == v.getTag()) {
+
+                textview.getPaint().setFakeBoldText(true);
+                textview.setTextSize(CURRENT_ITEM);
+
+            } else {
+
+                textview.getPaint().setFakeBoldText(false);
+                textview.setTextSize(OTHER_ITEM);
+
+            }
+            if (onTitleListener != null) {
+                onTitleListener.onCurrentTitleChange((Integer) v.getTag());
+            }
+
+        }
+
+    }
+}

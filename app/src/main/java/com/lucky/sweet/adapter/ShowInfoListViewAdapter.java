@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.entity.StoreShowInfo;
+import com.lucky.sweet.entity.MainStoreInfo;
 
 import java.util.List;
 
@@ -20,10 +20,10 @@ import java.util.List;
  */
 
 public class ShowInfoListViewAdapter extends BaseAdapter {
-    private List<StoreShowInfo> datas;
+    private List<MainStoreInfo> datas;
     private Context context;
 
-    public ShowInfoListViewAdapter(List<StoreShowInfo> datas, Context context) {
+    public ShowInfoListViewAdapter(List<MainStoreInfo> datas, Context context) {
         this.datas = datas;
         this.context = context;
     }

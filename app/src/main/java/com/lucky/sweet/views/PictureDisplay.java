@@ -20,7 +20,9 @@ import java.util.ArrayList;
  */
 
 public class PictureDisplay extends LinearLayout {
+
     private ArrayList<ImageView> imageViews = new ArrayList<ImageView>();
+    public static final int MAX_SIZE = 6;
 
     public PictureDisplay(Context context) {
         super(context);
@@ -40,12 +42,20 @@ public class PictureDisplay extends LinearLayout {
         imageViews.add((ImageView) findViewById(R.id.imv_shop_more_fir));
         imageViews.add((ImageView) findViewById(R.id.imv_shop_more_sec));
         imageViews.add((ImageView) findViewById(R.id.imv_shop_more_thr));
-        imageViews.add((ImageView) findViewById(R.id.imv_shop_more_fir));
+        imageViews.add((ImageView) findViewById(R.id.imv_shop_more_for));
         imageViews.add((ImageView) findViewById(R.id.imv_shop_more_fiv));
         imageViews.add((ImageView) findViewById(R.id.imv_shop_more_six));
     }
 
-    public void initImagePah(ArrayList<String> path) {
+    public void initDatas(ArrayList<String> countList) {
+
+        for (int i = 0; i < MAX_SIZE; i++) {
+            if (countList.size() <= i) {
+                imageViews.get(i).setVisibility(GONE);
+                continue;
+            }
+            System.out.println("部署图片");
+        }
 
     }
 }

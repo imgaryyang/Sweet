@@ -2,7 +2,7 @@ package com.lucky.sweet.model.storedisplay;
 
 import android.content.Context;
 
-import com.lucky.sweet.entity.StoreShowInfo;
+import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.properties.Properties;
 import com.lucky.sweet.utility.HttpUtils;
 
@@ -60,13 +60,13 @@ public class StoreDisplatManager {
         return data_list;
     }
 
-    public List<StoreShowInfo> getStoreShowInfo() {
-        List<StoreShowInfo> data_list = new ArrayList<>();
-        data_list.add(new StoreShowInfo());
-        data_list.add(new StoreShowInfo());
-        data_list.add(new StoreShowInfo());
-        data_list.add(new StoreShowInfo());
-        data_list.add(new StoreShowInfo());
+    public List<MainStoreInfo> getStoreShowInfo() {
+        List<MainStoreInfo> data_list = new ArrayList<>();
+        data_list.add(new MainStoreInfo());
+        data_list.add(new MainStoreInfo());
+        data_list.add(new MainStoreInfo());
+        data_list.add(new MainStoreInfo());
+        data_list.add(new MainStoreInfo());
         return data_list;
 
     }

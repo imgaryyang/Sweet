@@ -22,7 +22,7 @@ import com.lucky.sweet.activity.StoreDisplatActivity;
 import com.lucky.sweet.activity.StoreParticularInfoActivity;
 import com.lucky.sweet.adapter.AdViewPagerAdapter;
 import com.lucky.sweet.adapter.RecFoodRecommendAdapter;
-import com.lucky.sweet.entity.StoreShowInfo;
+import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.model.imstore.ImStoreManager;
 import com.lucky.sweet.utility.HiddenAnimUtils;
 import com.lucky.sweet.views.GradualChangeLinearLayout;
@@ -60,7 +60,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
     private Context context;
     private HiddenAnimUtils hiddenAnimUtils;
-    private List<StoreShowInfo.foodBean> showInfo;
+   // private List<MainStoreInfo.foodBean> showInfo;
     private Button btn_qrcodescan;
 
     @Override
@@ -214,7 +214,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    public void setShowInfo(List<StoreShowInfo.foodBean> showInfo) {
+    public void setShowInfo(List<MainStoreInfo> showInfo) {
        /* vp_foodStore.setAdapter(new RecreationViewPagerAdapter(getContext(), showInfo));*/
     }
 }
