@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.activity.SetUserInfoActivity;
+import com.lucky.sweet.activity.VipCardActiviry;
 import com.lucky.sweet.widgets.ToolBar;
 
 /**
@@ -28,7 +29,6 @@ public class ImMeFragment extends Fragment {
     private SharedPreferences config;
     private SharedPreferences.Editor edit;*/
     private Button btn_setUserInfo;
-
 
 
     @Nullable
@@ -59,6 +59,12 @@ public class ImMeFragment extends Fragment {
     private void initView(View view) {
 
         btn_setUserInfo = view.findViewById(R.id.btn_setUserInfo);
+        view.findViewById(R.id.rl_vipcard).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), VipCardActiviry.class));
+            }
+        });
         btn_setUserInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

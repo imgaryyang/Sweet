@@ -389,4 +389,11 @@
     <!--    指示器-->
     <color name="bg_indicator_point_normal">#D8D8D8</color>
     <color name="bg_indicator_point_selected">#A6A6A6</color>
+    <!--    会员卡颜色-->
+    <color name="bg_vip_card_color_first">#ccd68f</color>
+    <color name="bg_vip_card_color_sec">#4b4e2f</color>
+    <color name="bg_vip_card_color_third">#90a250</color>
+    <color name="bg_vip_card_color_fourth">#506031</color>
+    <color name="bg_vip_card_color_fifth">#333242</color>
+
 </resources>
