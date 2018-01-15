@@ -1,12 +1,16 @@
 package com.lucky.sweet.views;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -14,6 +18,8 @@ import android.widget.ListView;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.OrderTimeDialogListAdapater;
+
+import static com.lucky.sweet.activity.MyApplication.getContext;
 
 /**
  * Created by chn on 2017/12/23.
@@ -63,11 +69,14 @@ public class DishesOrderDialog {
         });
 
 
+
+
+
         builder.setView(inflate);
         dialog = builder.show();
         Window window = dialog.getWindow();
         window.setGravity(Gravity.BOTTOM);
-
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,700);
         WindowManager m = ((Activity) context).getWindowManager();
         Display d = m.getDefaultDisplay();
         WindowManager.LayoutParams p = dialog.getWindow().getAttributes();
@@ -86,4 +95,5 @@ public class DishesOrderDialog {
         this.onDateSelectListener = onDateSelectListener;
 
     }
+
 }
