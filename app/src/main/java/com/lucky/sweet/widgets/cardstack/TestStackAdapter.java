@@ -8,13 +8,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.VipCardInfo;
 import com.lucky.sweet.views.CircleImageView;
 
 import java.util.ArrayList;
 
-public class TestStackAdapter extends StackAdapter<Integer> {
+public class TestStackAdapter extends
+        StackAdapter<TestStackAdapter.viewHolder> {
 
-    private ArrayList arrayList;
+    private ArrayList<VipCardInfo> arrayList;
 
     public static Integer[] TEST_DATAS = new Integer[]{
             R.color.bg_vip_card_color_first,
@@ -24,7 +26,7 @@ public class TestStackAdapter extends StackAdapter<Integer> {
             R.color.bg_vip_card_color_fifth,
     };
 
-    public TestStackAdapter(Context context, ArrayList arrayList) {
+    public TestStackAdapter(Context context, ArrayList<VipCardInfo> arrayList) {
         super(context);
         this.arrayList = arrayList;
         updateData(arrayList.size());

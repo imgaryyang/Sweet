@@ -3,6 +3,7 @@ package com.lucky.sweet.activity;
 import android.os.Bundle;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.VipCardInfo;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.cardstack.CardStackView;
 import com.lucky.sweet.widgets.cardstack.TestStackAdapter;
@@ -47,14 +48,12 @@ public class VipCardActiviry extends BaseActivity {
     private void initView() {
 
         cardStackView = findViewById(R.id.stackview_vip_card);
-        ArrayList<Object> objects = new ArrayList<>();
-        for (int i = 0; i < 20;
-             i++) {
-            objects.add("");
+        ArrayList<VipCardInfo> objects = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            objects.add(new VipCardInfo());
         }
 
-        final TestStackAdapter objectStackAdapter = new TestStackAdapter
-                (this, objects);
+        final TestStackAdapter objectStackAdapter = new TestStackAdapter(this, objects);
         cardStackView.setAdapter(objectStackAdapter);
         cardStackView.setItemExpendListener(new CardStackView.ItemExpendListener() {
             @Override
