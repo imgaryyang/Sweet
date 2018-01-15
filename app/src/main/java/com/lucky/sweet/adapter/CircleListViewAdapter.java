@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.views.ImageViewExtend;
+import com.lucky.sweet.views.CircleImageView;
 
 import java.util.List;
 
@@ -57,14 +57,14 @@ public class CircleListViewAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.imv_head.setmDrawShapeType(ImageViewExtend.SHAPE_CIRCLE);
+        viewHolder.imv_head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
 
         return convertView;
     }
 
     static public class ViewHolder {
         TextView type;
-        ImageViewExtend imv_head;
+        CircleImageView imv_head;
     }
 
 }

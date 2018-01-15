@@ -31,14 +31,14 @@
                     android:layout_gravity="center"
                     android:orientation="vertical">
 
-                    <com.lucky.sweet.views.ImageViewExtend
+                    <com.lucky.sweet.views.CircleImageView
                         android:id="@+id/img_head"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:layout_gravity="center"
                         android:onClick="onButtonClick"
                         android:src="@mipmap/test_header">
-                    </com.lucky.sweet.views.ImageViewExtend>
+                    </com.lucky.sweet.views.CircleImageView>
 
                     <LinearLayout
                         android:layout_width="wrap_content"

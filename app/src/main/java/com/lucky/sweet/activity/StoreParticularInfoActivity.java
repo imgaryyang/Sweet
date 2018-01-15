@@ -16,7 +16,7 @@ import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.model.particularinfo.ParticularInfoManager;
-import com.lucky.sweet.views.ImageViewExtend;
+
 import com.lucky.sweet.views.StarLevelIndicatorView;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;

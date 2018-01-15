@@ -11,7 +11,7 @@
         </attr>
     </declare-styleable>
 
-    <declare-styleable name="ImageViewExtend">
+    <declare-styleable name="CircleImageView">
         <attr name="shape" format="integer"/>
 
         <attr name="border" format="boolean"/>

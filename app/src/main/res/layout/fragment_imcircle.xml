@@ -57,7 +57,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_below="@+id/sc_picker"/>
 
-            <com.lucky.sweet.views.ImageViewExtend
+            <com.lucky.sweet.views.CircleImageView
                 android:id="@+id/imv_head"
                 android:layout_width="38dp"
                 android:layout_height="38dp"

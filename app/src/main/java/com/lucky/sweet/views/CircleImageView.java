@@ -28,7 +28,7 @@ import com.lucky.sweet.R;
 // ( (oo) )  ( (oo) )  ( (oo) )
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
-public class ImageViewExtend extends ImageView {
+public class CircleImageView extends ImageView {
     private static final Xfermode MASK_XFERMODE;
     public static final int SHAPE_NONE   = 0;
     public static final int SHAPE_CIRCLE = 1;
@@ -53,37 +53,37 @@ public class ImageViewExtend extends ImageView {
         MASK_XFERMODE = new PorterDuffXfermode(localMode);
     }
 
-    public ImageViewExtend(Context context) {
+    public CircleImageView(Context context) {
         super(context);
     }
 
-    public ImageViewExtend(Context context, AttributeSet attributeSet) {
+    public CircleImageView(Context context, AttributeSet attributeSet) {
         this(context, attributeSet, 0);
         readCustomAttribute(context, attributeSet);
     }
 
-    public ImageViewExtend(Context context, AttributeSet attributeSet, int defStyleAttr) {
+    public CircleImageView(Context context, AttributeSet attributeSet, int defStyleAttr) {
         super(context, attributeSet, defStyleAttr);
         readCustomAttribute(context, attributeSet);
     }
 
     public void readCustomAttribute(Context context, AttributeSet attributeSet){
         try {
-            TypedArray a = context.obtainStyledAttributes(attributeSet, R.styleable.ImageViewExtend);
+            TypedArray a = context.obtainStyledAttributes(attributeSet, R.styleable.CircleImageView);
 
-            mDrawShapeType = a.getInt(R.styleable.ImageViewExtend_shape, mDrawShapeType);
+            mDrawShapeType = a.getInt(R.styleable.CircleImageView_shape, mDrawShapeType);
 
-            mIsDrawBoarder = a.getBoolean(R.styleable.ImageViewExtend_shadow, mIsDrawBoarder);
-            mBorderColor = a.getColor(R.styleable.ImageViewExtend_border_color, mBorderColor);
+            mIsDrawBoarder = a.getBoolean(R.styleable.CircleImageView_shadow, mIsDrawBoarder);
+            mBorderColor = a.getColor(R.styleable.CircleImageView_border_color, mBorderColor);
             final int defalut = (int) (2 * context.getResources().getDisplayMetrics().density + 0.5f);
-            mBorderWidth = a.getDimensionPixelOffset(R.styleable.ImageViewExtend_border_width, defalut);
-            mRectRound = a.getDimensionPixelOffset(R.styleable.ImageViewExtend_rect_roundcorner, mRectRound);
+            mBorderWidth = a.getDimensionPixelOffset(R.styleable.CircleImageView_border_width, defalut);
+            mRectRound = a.getDimensionPixelOffset(R.styleable.CircleImageView_rect_roundcorner, mRectRound);
 
-            mIsDrawShadow = a.getBoolean(R.styleable.ImageViewExtend_shadow, mIsDrawShadow);
-            mShadowWidth = a.getDimensionPixelOffset(R.styleable.ImageViewExtend_shadow_width, defalut);
-            mShadowColorStart = a.getColor(R.styleable.ImageViewExtend_shadow_color_star, mShadowColorStart);
-            mShadowColorMiddle = a.getColor(R.styleable.ImageViewExtend_shadow_color_star, mShadowColorMiddle);
-            mShadowColorEnd = a.getColor(R.styleable.ImageViewExtend_shadow_color_star, mShadowColorEnd);
+            mIsDrawShadow = a.getBoolean(R.styleable.CircleImageView_shadow, mIsDrawShadow);
+            mShadowWidth = a.getDimensionPixelOffset(R.styleable.CircleImageView_shadow_width, defalut);
+            mShadowColorStart = a.getColor(R.styleable.CircleImageView_shadow_color_star, mShadowColorStart);
+            mShadowColorMiddle = a.getColor(R.styleable.CircleImageView_shadow_color_star, mShadowColorMiddle);
+            mShadowColorEnd = a.getColor(R.styleable.CircleImageView_shadow_color_star, mShadowColorEnd);
 
             a.recycle();
         }catch (Exception e){

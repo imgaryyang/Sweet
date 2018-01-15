@@ -4,8 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.lucky.sweet.activity.VipCardActiviry"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.lucky.sweet.activity.VipCardActiviry">
+
+    <include layout="@layout/layout_title"/>
+
     <com.lucky.sweet.widgets.cardstack.CardStackView
         android:id="@+id/stackview_vip_card"
         android:layout_width="match_parent"

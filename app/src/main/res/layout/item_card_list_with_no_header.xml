@@ -2,29 +2,83 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linear_list_card_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     app:stackHeaderHeight="160dp">
 
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/frame_list_card_item"
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:background="@drawable/shape_vip_card_with_radius">
 
+
+
+        <com.lucky.sweet.views.CircleImageView
+            android:id="@+id/imv_list_card_title"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/shoptitle"/>
+
         <TextView
-            android:id="@+id/text_list_card_title"
+            android:id="@+id/tv_list_card_shopname"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignTop="@+id/imv_list_card_title"
+            android:layout_toEndOf="@+id/imv_list_card_title"
+            android:gravity="center_vertical"
+            android:text="鲜芋仙"
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tv_list_card_shoplocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_alignBaseline="@+id/tv_list_card_shopname"
+            android:layout_alignBottom="@+id/tv_list_card_shopname"
+            android:layout_marginStart="14dp"
+            android:layout_toEndOf="@+id/tv_list_card_shopname"
+            android:text="（高新区 万达店）"
             android:textColor="@android:color/white"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            tools:text="12"/>
-    </FrameLayout>
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tv_list_card_userlevel"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/imv_list_card_title"
+            android:layout_below="@+id/imv_list_card_title"
+            android:gravity="center"
+            android:text="VIP1"
+            android:textColor="@android:color/white"/>
+
+        <TextView
+            android:id="@+id/tv_list_card_user_levelname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imv_list_card_title"
+            android:layout_toEndOf="@+id/imv_list_card_title"
+            android:text="会员用户"
+            android:textColor="@android:color/white"/>
+
+        <TextView
+            android:id="@+id/tv_list_card_user_id"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tv_list_card_userlevel"
+            android:layout_below="@+id/tv_list_card_userlevel"
+            android:layout_marginTop="20dp"
+            android:text="2003  8945"
+            android:textSize="@dimen/dimen_18_dp"
+            android:textColor="@android:color/white"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/container_list_content"

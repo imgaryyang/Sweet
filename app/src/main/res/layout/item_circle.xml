@@ -14,7 +14,7 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <com.lucky.sweet.views.ImageViewExtend
+        <com.lucky.sweet.views.CircleImageView
             android:id="@+id/imv_head"
             android:layout_width="38dp"
             android:layout_height="38dp"
