@@ -16,6 +16,7 @@ import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.model.particularinfo.ParticularInfoManager;
+import com.lucky.sweet.views.ImageViewExtend;
 import com.lucky.sweet.views.StarLevelIndicatorView;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
@@ -54,6 +55,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private TextView tv_moreFood;
     private TextView tv_moreevr;
     private ScrollView sv_storeInfo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +140,8 @@ public class StoreParticularInfoActivity extends BaseActivity {
         btn_map_position = findViewById(R.id.btn_map_position);
         sv_storeInfo = (ScrollView)findViewById(R.id.sv_storeInfo);
         sv_storeInfo.smoothScrollTo(0, 0);
+
+
         StarLevelIndicatorView startIndicator = findViewById(R.id.startIndicator);
         startIndicator.initStarNumber(4);
         map = findViewById(R.id.map);

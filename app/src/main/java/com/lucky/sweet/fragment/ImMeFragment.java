@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.activity.SetUserInfoActivity;
+import com.lucky.sweet.views.ImageViewExtend;
 import com.lucky.sweet.widgets.ToolBar;
 
 /**
@@ -28,6 +29,7 @@ public class ImMeFragment extends Fragment {
     private SharedPreferences config;
     private SharedPreferences.Editor edit;*/
     private Button btn_setUserInfo;
+    private ImageViewExtend imv_head;
 
 
 
@@ -66,5 +68,8 @@ public class ImMeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        imv_head = (ImageViewExtend)view.findViewById(R.id.imv_head);
+        imv_head.setmDrawShapeType(ImageViewExtend.SHAPE_CIRCLE);
     }
 }

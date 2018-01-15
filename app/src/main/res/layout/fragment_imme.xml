@@ -30,11 +30,11 @@
                     android:layout_gravity="center"
                     android:orientation="vertical">
                     <com.lucky.sweet.views.ImageViewExtend
-                        android:id="@+id/img_head"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
+                        android:id="@+id/imv_head"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:onClick="onButtonClick"
-                        android:src="@mipmap/test_header"
+                        android:src="@mipmap/test_head"
                         android:layout_gravity="center">
                     </com.lucky.sweet.views.ImageViewExtend>
 

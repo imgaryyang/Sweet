@@ -15,8 +15,9 @@
         android:orientation="vertical">
 
         <com.lucky.sweet.views.ImageViewExtend
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:id="@+id/imv_head"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
             android:layout_gravity="center_horizontal"
             android:src="@mipmap/test_head"/>
 
