@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
+import com.lucky.sweet.views.ImageViewExtend;
 import com.lucky.sweet.views.IndicatorView;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -33,12 +34,16 @@ import cn.forward.androids.views.StringScrollPicker;
 public class ImCircleFragment extends Fragment {
     //    private Title title = null;
     private static final String[] title = {"朋友", "今日", "广场"};
+    private ImageViewExtend imv_head;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_imcircle, container, false);
+        imv_head = (ImageViewExtend)view.findViewById(R.id.imv_head);
+        imv_head.setmDrawShapeType(ImageViewExtend.SHAPE_CIRCLE);
+
         initView(view);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ToolBar toolBar = new ToolBar(getActivity());
@@ -56,6 +61,7 @@ public class ImCircleFragment extends Fragment {
 //                .BUTTON_LEFT,0,null);
 //
 //        title.mSetButtonInfo(buttonLeft);
+
         return view;
     }
 

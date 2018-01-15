@@ -2,7 +2,6 @@ package com.lucky.sweet.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,6 +14,7 @@ import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
 import com.lucky.sweet.properties.Properties;
 import com.lucky.sweet.utility.HttpUtils;
 import com.lucky.sweet.widgets.Title;
+import com.lucky.sweet.widgets.ToolBar;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,7 +23,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class OrderSubmitActivity extends AppCompatActivity {
+public class OrderSubmitActivity extends BaseActivity {
 
     private LinearLayout ll_order_list;
     private TextView tv_cost_num;
@@ -36,6 +36,8 @@ public class OrderSubmitActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_submit);
+        ToolBar toolBar = new ToolBar(this);
+        toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
 
 
         initView();
@@ -62,9 +64,24 @@ public class OrderSubmitActivity extends AppCompatActivity {
 
 
         final Title.ButtonInfo buttonRigt = new Title.ButtonInfo(true, Title
-                .BUTTON_RIGHT1, R.mipmap.share, null);
+                .BUTTON_RIGHT1, R.mipmap.ic_share, null);
+        Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
+                .BUTTON_LEFT,R.drawable.selector_btn_titleback, null);
+        title.setOnTitleButtonClickListener(new Title
+                .OnTitleButtonClickListener() {
+            @Override
+            public void onClick(int id, Title.ButtonViewHolder viewHolder) {
+                switch (id) {
+                    case Title.BUTTON_LEFT:
+                        Intent intent1=new Intent(OrderSubmitActivity.this,MainActivity.class);
+                        startActivity(intent1);
+                        break;
+                }
+            }
+        });
         title.setTitleNameStr("确认订单");
         title.mSetButtonInfo(buttonRigt);
+        title.mSetButtonInfo(buttonLeft);
 
         tv_seat_num.setText(data.getSeatNum());
         tv_shop_name.setText(data.getShopName());

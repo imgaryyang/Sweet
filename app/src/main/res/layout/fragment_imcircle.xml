@@ -57,12 +57,14 @@
                 android:layout_marginTop="10dp"
                 android:layout_below="@+id/sc_picker"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <com.lucky.sweet.views.ImageViewExtend
+                android:id="@+id/imv_head"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:background="@mipmap/test_header"/>
+                android:src="@mipmap/test_head"/>
+
 
         </RelativeLayout>
 

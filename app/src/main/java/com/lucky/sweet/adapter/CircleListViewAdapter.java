@@ -7,6 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.views.ImageViewExtend;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class CircleListViewAdapter extends BaseAdapter {
         this.context = context;
     }
 
+
     @Override
     public int getCount() {
         return datas.size();
@@ -44,19 +46,25 @@ public class CircleListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
+        ViewHolder viewHolder = null;
         if (convertView == null) {
             convertView = View.inflate(context, R.layout.item_circle, null);
             viewHolder = new ViewHolder();
+            viewHolder.imv_head=convertView.findViewById(R.id.imv_head);
 
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+
+        viewHolder.imv_head.setmDrawShapeType(ImageViewExtend.SHAPE_CIRCLE);
+
         return convertView;
     }
 
     static public class ViewHolder {
         TextView type;
+        ImageViewExtend imv_head;
     }
+
 }
