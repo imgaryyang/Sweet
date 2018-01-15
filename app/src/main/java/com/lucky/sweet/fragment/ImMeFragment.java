@@ -70,6 +70,8 @@ public class ImMeFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), SetUserInfoActivity.class);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+
             }
         });
     }

@@ -461,6 +461,17 @@
                 android:layout_height="1px"
                 android:background="@color/grayDividerDark"/>
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/btn_send"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:text="发布我的圈"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="17dp"/>
+
         </LinearLayout>
 
     </com.lucky.sweet.widgets.ZoomInScrollView>

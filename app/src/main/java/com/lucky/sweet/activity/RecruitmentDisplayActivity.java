@@ -6,10 +6,11 @@ import android.view.View;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.views.PictureDisplayLayout;
+import com.lucky.sweet.widgets.ToolBar;
 
 import java.util.ArrayList;
 
-public class RecruitmentDisplayActivity extends AppCompatActivity {
+public class RecruitmentDisplayActivity extends BaseActivity {
 
     private PictureDisplayLayout photo_show;
 
@@ -18,6 +19,8 @@ public class RecruitmentDisplayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recruitment_display);
+        ToolBar toolBar = new ToolBar(this);
+        toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
 
         initView();
 
@@ -40,6 +43,7 @@ public class RecruitmentDisplayActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                goDownAnim();
             }
         });
 

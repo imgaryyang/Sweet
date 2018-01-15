@@ -284,6 +284,8 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
             @Override
             public void onClick(View view) {
                 getActivity().finish();
+                getActivity().overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
             }
         });
 

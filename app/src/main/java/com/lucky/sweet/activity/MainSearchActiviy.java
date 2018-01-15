@@ -11,8 +11,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.widgets.ToolBar;
 
-public class MainSearchActiviy extends AppCompatActivity {
+public class MainSearchActiviy extends BaseActivity {
 
     private ImageView imv_search;
     private EditText edt_search;
@@ -22,9 +23,9 @@ public class MainSearchActiviy extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main_search_activiy);
-
+        ToolBar toolBar = new ToolBar(this);
+        toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
         initView();
 
         initEvent();
@@ -48,7 +49,8 @@ public class MainSearchActiviy extends AppCompatActivity {
                 if (s.length() != 0 || s.equals("")) {
                     if (edt_search.getGravity() == Gravity.CENTER) {
                         edt_search.setGravity(Gravity.LEFT);
-                        edt_search.setTextSize(20);
+                        edt_search.setPadding(40,10,0,0);
+                        edt_search.setTextSize(16);
                     }
                     if (imv_search.getVisibility() == View.VISIBLE) {
                         imv_search.setVisibility(View.GONE);
@@ -70,6 +72,7 @@ public class MainSearchActiviy extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                goUpAnim();
             }
         });
     }

@@ -103,6 +103,7 @@ public class OrderSeatActivity extends BaseActivity {
                                         which) {
                                     startActivity(new Intent(OrderSeatActivity
                                             .this, MerchantActivity.class));
+                                    goNextAnim();
 
                                 }
                             })
@@ -146,6 +147,7 @@ public class OrderSeatActivity extends BaseActivity {
                     case Title.BUTTON_LEFT:
                         hintInputKb();
                         finish();
+                        goPreAnim();
                         break;
 
                 }

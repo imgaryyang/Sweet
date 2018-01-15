@@ -54,6 +54,7 @@ public class OrderSubmitActivity extends BaseActivity {
             public void onClick(View v) {
 
                 startActivity(new Intent(OrderSubmitActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                goFadeAnim();
             }
         });
     }
@@ -75,6 +76,7 @@ public class OrderSubmitActivity extends BaseActivity {
                     case Title.BUTTON_LEFT:
                         Intent intent1=new Intent(OrderSubmitActivity.this,MainActivity.class);
                         startActivity(intent1);
+                        goFadeAnim();
                         break;
                 }
             }

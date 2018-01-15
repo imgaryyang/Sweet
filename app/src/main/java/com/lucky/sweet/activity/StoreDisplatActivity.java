@@ -81,6 +81,7 @@ public class StoreDisplatActivity extends BaseActivity {
                 switch (id) {
                     case Title.BUTTON_LEFT:
                         finish();
+                        goPreAnim();
                         break;
                 }
             }
@@ -139,6 +140,7 @@ public class StoreDisplatActivity extends BaseActivity {
                 Intent intent = new Intent(StoreDisplatActivity.this, StoreParticularInfoActivity.class);
                 intent.putExtra("shopid", position);
                 startActivity(intent);
+                goNextAnim();
             }
         });
     }

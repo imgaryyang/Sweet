@@ -164,6 +164,8 @@ public class ScanningQR extends Fragment {
             public void onClick(View view) {
                 if (null != backOnClickListener)
                     backOnClickListener.setonBackClickListener(view);
+                getActivity().overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
             }
         });
     }

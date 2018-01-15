@@ -108,6 +108,8 @@ public class MerchantActivity extends FragmentActivity {
                         OrderSubmitActivity.class);
                 intent.putExtra("data", shopCarSingleInformation);
                 startActivity(intent);
+                overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+
             }
 
 

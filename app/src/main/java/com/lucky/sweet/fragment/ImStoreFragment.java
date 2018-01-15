@@ -130,6 +130,8 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
                 Intent intent = new Intent(getActivity(), StoreParticularInfoActivity.class);
                 intent.putExtra("shopid", position);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+
 
             }
         });
@@ -140,6 +142,8 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
                 Intent intent = new Intent(getActivity(), StoreParticularInfoActivity.class);
                 intent.putExtra("shopid", position);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+
             }
         });
         rec_foodStore.setAdapter(foodAdapter);
@@ -189,6 +193,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CaptureActivity.class);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
             }
         });
         msv_search.setOnSearchClickListener(new View.OnClickListener() {
@@ -196,6 +201,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MainSearchActiviy.class);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.act_up,R.anim.act_down);
             }
         });
 
@@ -211,11 +217,13 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
                 intent = new Intent(getActivity(), StoreDisplatActivity.class);
                 intent.putExtra("tv_moreFood", "Food");
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
                 break;
             case R.id.tv_moreRelax:
                 intent = new Intent(getActivity(), StoreDisplatActivity.class);
                 intent.putExtra("tv_moreRelax", "Relax");
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
                 break;
 
         }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.inputmethod.InputMethodManager;
 
+import com.lucky.sweet.R;
 import com.lucky.sweet.views.SlidingLayoutView;
 
 public class BaseActivity extends AppCompatActivity {
@@ -64,6 +65,33 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     * 启动下一个Activity的动画
+     */
+    public void goNextAnim() {
+        overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+    }
+
+    /**
+     * 返回上一个Activity的动画
+     */
+    public void goPreAnim() {
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
+    /*淡入淡出动画*/
+    public void goFadeAnim(){
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+    }
+    /*从下至上动画*/
+    public void goUpAnim(){
+        overridePendingTransition(R.anim.act_up_in,R.anim.act_down_out);
+    }
+    /*从上至下动画*/
+    public void goDownAnim(){
+        overridePendingTransition(R.anim.act_up,R.anim.act_down);
+    }
+    /*关闭侧滑手势*/
     protected boolean enableSliding() {
         return true;
     }

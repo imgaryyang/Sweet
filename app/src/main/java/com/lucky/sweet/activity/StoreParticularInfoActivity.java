@@ -86,6 +86,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
                 Intent intent = new Intent(StoreParticularInfoActivity.this,
                         RecruitmentDisplayActivity.class);
                 startActivity(intent);
+                goUpAnim();
             }
         });
         tv_moreevr.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +95,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
                 Intent intent = new Intent(StoreParticularInfoActivity.this,
                         RecruitmentDisplayActivity.class);
                 startActivity(intent);
+                goUpAnim();
             }
         });
     }
@@ -150,6 +152,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
             public void onClick(View v) {
                 startActivity(new Intent(StoreParticularInfoActivity.this,
                         OrderSeatActivity.class));
+                goNextAnim();
             }
         });
 
@@ -182,6 +185,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
                     case Title.BUTTON_LEFT:
                         hintInputKb();
                         finish();
+                        goPreAnim();
                         break;
 
                 }
