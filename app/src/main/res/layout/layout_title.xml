@@ -27,8 +27,8 @@
 
         <ImageView
             android:id="@+id/titleBackImg"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_margin="5dp"
             android:src="@drawable/selector_btn_titleback"/>
 
@@ -62,8 +62,8 @@
 
             <ImageView
                 android:id="@+id/titleRightImg2"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_margin="5dp"
                 android:src="@drawable/selector_btn_titleback"/>
 
@@ -97,8 +97,8 @@
 
             <ImageView
                 android:id="@+id/titleRightImg"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_margin="5dp"
                 android:visibility="gone"
                 android:src="@drawable/selector_btn_titleback"/>

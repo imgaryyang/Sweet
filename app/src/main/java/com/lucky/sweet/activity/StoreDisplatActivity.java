@@ -73,7 +73,7 @@ public class StoreDisplatActivity extends BaseActivity {
             title.setTitleNameStr("休闲");
         }
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
-                .BUTTON_LEFT, R.mipmap.back_button, null);
+                .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
         title.setOnTitleButtonClickListener(new Title
                 .OnTitleButtonClickListener() {
             @Override

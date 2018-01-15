@@ -174,7 +174,7 @@ public class OrderActivity extends AppCompatActivity {
         title.setTitleNameStr("点餐列表");
 
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
-                .BUTTON_LEFT,R.mipmap.back_button, null);
+                .BUTTON_LEFT,R.drawable.selector_btn_titleback, null);
         final Title.ButtonInfo buttonRigt = new Title.ButtonInfo(true, Title
                 .BUTTON_RIGHT1, R.mipmap.shop_car, null);
         title.setOnTitleButtonClickListener(new Title

@@ -137,9 +137,7 @@ public class OrderSeatActivity extends BaseActivity {
         title.setTheme(Title.Theme.THEME_TRANSLATE_NODIVIDER);
         title.setTitleNameStr("预订座位");
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
-                .BUTTON_LEFT, R.mipmap.back_button, null);
-        Title.ButtonInfo buttonRight = new Title.ButtonInfo(true, Title
-                .BUTTON_RIGHT1,R.mipmap.back_button, null);
+                .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
         title.setOnTitleButtonClickListener(new Title
                 .OnTitleButtonClickListener() {
             @Override

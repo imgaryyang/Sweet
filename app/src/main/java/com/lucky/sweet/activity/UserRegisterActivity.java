@@ -69,7 +69,7 @@ public class UserRegisterActivity extends BaseActivity {
         title.setTheme(Title.Theme.THEME_TRANSLATE_NODIVIDER);
 //        Title.ButtonInfo buttonLeft=new Title.ButtonInfo(true,Title.BUTTON_LEFT,0,"立即注册");
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
-                .BUTTON_LEFT, R.mipmap.back_button, null);
+                .BUTTON_LEFT,R.drawable.selector_btn_titleback, null);
         title.setOnTitleButtonClickListener(new Title
                 .OnTitleButtonClickListener() {
             @Override

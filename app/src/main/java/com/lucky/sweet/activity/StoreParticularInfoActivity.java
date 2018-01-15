@@ -167,7 +167,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
         title = (Title) findViewById(R.id.title);
         title.setTitleNameStr(" ");
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
-                .BUTTON_LEFT, R.mipmap.back_button, null);
+                .BUTTON_LEFT,R.drawable.selector_btn_titleback, null);
         Title.ButtonInfo buttonRight = new Title.ButtonInfo(true, Title
                 .BUTTON_RIGHT1, R.mipmap.circle_star, null);
         title.setOnTitleButtonClickListener(new Title
