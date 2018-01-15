@@ -191,6 +191,14 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
             }
         });
+        msv_search.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MainSearchActiviy.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
 

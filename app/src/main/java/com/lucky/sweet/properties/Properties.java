@@ -30,7 +30,7 @@ public class Properties {
     public static final String STOREDISPLAYTPATH =
             "https://thethreestooges.cn/consumer/bean/nearby/nearby_mer.php";
     public static final String MAINSHOWPLAYTPATH =
-            "https://thethreestooges.cn/consumer/bean/home_page/recommend.php";
+            "https://thethreestooges.cn/merchant/static/file/home_page.json";
     public static final String STOREDETAILEDPATH =
             "https://thethreestooges.cn/consumer/bean/mer_info/mer_info.php";
 
