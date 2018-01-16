@@ -88,6 +88,7 @@
         <activity android:name=".activity.CaptureActivity"/>
         <activity android:name=".activity.VipCardActiviry">
         </activity>
+        <activity android:name=".activity.PersonalCircleActivity"/>
     </application>
 
 </manifest>

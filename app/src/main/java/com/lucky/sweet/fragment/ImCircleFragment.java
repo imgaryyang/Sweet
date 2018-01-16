@@ -1,5 +1,6 @@
 package com.lucky.sweet.fragment;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,9 +9,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.activity.PersonalCircleActivity;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
 import com.lucky.sweet.views.CircleImageView;
 import com.lucky.sweet.views.IndicatorView;
@@ -89,6 +92,16 @@ public class ImCircleFragment extends Fragment {
         objects.add("");
         objects.add("");
         lv_circle.setAdapter(new CircleListViewAdapter(objects, getActivity()));
+
+        lv_circle.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view,
+                                    int i, long l) {
+                Intent intent=new Intent(getActivity(),PersonalCircleActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+            }
+        });
     }
 
 }
