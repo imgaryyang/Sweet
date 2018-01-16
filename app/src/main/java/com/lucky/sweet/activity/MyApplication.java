@@ -2,10 +2,12 @@ package com.lucky.sweet.activity;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.widget.Toast;
 
+import com.lucky.sweet.CommunicationService;
 import com.lucky.sweet.broadcastreceiver.NetBroadcastReceiver;
 
 /**
@@ -24,6 +26,16 @@ public class MyApplication extends Application {
         super.onCreate();
         context = getApplicationContext();
 
+        startService();
+
+        initBroadCastReceiver();
+    }
+
+    private void startService() {
+        startService(new Intent(context, CommunicationService.class));
+    }
+
+    private void initBroadCastReceiver() {
         NetBroadcastReceiver netBroadcastReceiver = new NetBroadcastReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);

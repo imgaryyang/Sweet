@@ -2,24 +2,22 @@ package com.lucky.sweet.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.ShopCarSingleInformation;
 import com.lucky.sweet.model.shoppingcar.fragment.ProductsFragment;
+import com.lucky.sweet.model.shoppingcar.mode.ProductType;
+import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
+import com.lucky.sweet.model.wholedishes.lib.fragments.ExpandingFragment;
+import com.lucky.sweet.model.wholedishes.model.Travel;
 import com.lucky.sweet.views.SlidingLayoutView;
 import com.lucky.sweet.widgets.ToolBar;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Qiuyue on 2018/1/3.
@@ -30,78 +28,67 @@ import java.util.ArrayList;
 // ( (oo) )  ( (oo) )  ( (oo) )
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
-public class MerchantActivity extends FragmentActivity {
-    private RadioGroup discount_layout;
-    /**
-     * 团优惠
-     */
-    private RadioButton group_rb;
-    /**
-     * 优惠活动
-     */
-    private RadioButton preferential_rb;
-    /**
-     * 优惠券
-     */
-    private RadioButton coupon_rb;
-    /**
-     * 下划线标记
-     */
-    private View group_line, preferential_line, coupon_line;
-    /**
-     * 服务产品
-     */
-    private ProductsFragment productsFragment;
-    /**
-     * 商家信息
-     */
-//    private BusinessFragment businessFragment;
-    /**
-     * 商家评论
-     */
-//    private BusinessCommentListFragment businessCommentListFragment;
+public class MerchantActivity extends FragmentActivity implements ExpandingFragment.OnExpandingClickListener {
 
-    private ViewPager pager;
 
-    //上门服务Fragment
-    private ArrayList<Fragment> fragments;
-
-    /**
-     * 标题名集合
-     */
-    private RadioButton[] titleText = null;
-
-//    private Commercial commercial;
-
+    private ProductsFragment fg_shop_car;
+    private ViewPager vp_dishes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant);
-        ToolBar toolBar = new ToolBar(this);
-        toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
-        SlidingLayoutView rootView = new SlidingLayoutView(this);
-        rootView.bindActivity(this);
+
+        initToolBar();
+
         initView();
+
+        initData();
+
+        initEvent();
+
     }
 
-    private void initView() {
-        pager = (ViewPager) findViewById(R.id.pager);
-//        discount_layout = (RadioGroup) findViewById(R.id.discount_layout);
-//        group_rb = (RadioButton) findViewById(R.id.group_rb);
-//        preferential_rb = (RadioButton) findViewById(R.id.preferential_rb);
-//        coupon_rb = (RadioButton) findViewById(R.id.coupon_rb);
-//        group_line = findViewById(R.id.group_line);
-//        preferential_line = findViewById(R.id.preferential_line);
-//        coupon_line = findViewById(R.id.coupon_line);
+    private List<Travel> generateTravelList() {
+        List<Travel> travels = new ArrayList<>();
+        for (int i = 0; i < 5; ++i) {
+            travels.add(new Travel("Seychelles", R.mipmap.test_product));
+            travels.add(new Travel("Shang Hai", R.mipmap.test_product));
+            travels.add(new Travel("New York", R.mipmap.test_product));
+            travels.add(new Travel("castle", R.mipmap.test_product));
+        }
+        return travels;
+    }
 
+    private ArrayList<ProductType> getShopCarInfo() {
+        ArrayList<ProductType> productCategorizes = new ArrayList<>();
+        for (int i = 1; i < 5; i++) {
+            ProductType productCategorize = new ProductType();
+            productCategorize.setType("分类信息" + i);
+            ArrayList shopProductsAll = new ArrayList<>();
+            for (int j = 1; j < 6; j++) {
+                ShopProduct product = new ShopProduct();
+                product.setId(154788 + i + j);
+                product.setGoods("衬衫" + i);
+                product.setPrice(18 + "");
+                shopProductsAll.add(product);
+            }
+            productCategorize.setProduct(shopProductsAll);
+            productCategorizes.add(productCategorize);
+        }
+        return productCategorizes;
+    }
 
-        titleText = new RadioButton[]{group_rb, preferential_rb, coupon_rb};
-//        discount_layout.setOnCheckedChangeListener(listener);
+    private void initData() {
+/*        TravelViewPagerAdapter adapter = new TravelViewPagerAdapter(getSupportFragmentManager());
+        adapter.addAll(generateTravelList());*/
+        fg_shop_car.initData(getShopCarInfo());
+/*        vp_dishes.setAdapter(adapter);
+        ExpandingPagerFactory.setupViewPager(vp_dishes);*/
+    }
 
-        fragments = new ArrayList<Fragment>();
-        productsFragment = new ProductsFragment();
-        productsFragment.setOnClickListener(new ProductsFragment.OnClickListener() {
+    private void initEvent() {
+        fg_shop_car.setOnClickListener(new ProductsFragment.OnClickListener() {
             @Override
             public void onClickSubimt(ShopCarSingleInformation shopCarSingleInformation) {
                 Intent intent = new Intent(MerchantActivity.this,
@@ -109,151 +96,53 @@ public class MerchantActivity extends FragmentActivity {
                 intent.putExtra("data", shopCarSingleInformation);
                 startActivity(intent);
                 overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
-
             }
 
-
+            @Override
+            public void onItemClick() {
+                //  vp_dishes.setVisibility(View.VISIBLE);
+            }
         });
-//        businessFragment = new BusinessFragment();
-//        businessCommentListFragment = new BusinessCommentListFragment();
-        fragments.add(productsFragment);
-//        fragments.add(businessFragment);
-//        fragments.add(businessCommentListFragment);
-
-        MyFragmentPagerAdapter fragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), fragments);
-        pager.setAdapter(fragmentPagerAdapter);
-        fragmentPagerAdapter.setFragments(fragments);
-        pager.setOnPageChangeListener(new MyOnPageChangeListener());
-        // 第一次启动时选中第0个tab
-        pager.setCurrentItem(0);
-        pager.setOffscreenPageLimit(2);
-    }
-
-//    private RadioGroup.OnCheckedChangeListener listener = new RadioGroup.OnCheckedChangeListener() {
-//        @Override
-//        public void onCheckedChanged(RadioGroup radioGroup, int i) {
-//            switch (i) {
-//                case R.id.group_rb:
-//                    pager.setCurrentItem(0);
-//                    break;
-//                case R.id.preferential_rb:
-//                    pager.setCurrentItem(1);
-//                    break;
-//                case R.id.coupon_rb:
-//                    pager.setCurrentItem(2);
-//                    break;
-//            }
-//        }
-//    };
-
-
-    /**
-     * 切换更换下划线状态
-     *
-     * @param position
-     */
-    private void setVisible(int position) {
-        switch (position) {
-            case 0:
-                group_line.setVisibility(View.VISIBLE);
-                preferential_line.setVisibility(View.INVISIBLE);
-                coupon_line.setVisibility(View.INVISIBLE);
-                break;
-            case 1:
-                group_line.setVisibility(View.INVISIBLE);
-                preferential_line.setVisibility(View.VISIBLE);
-                coupon_line.setVisibility(View.INVISIBLE);
-                break;
-            case 2:
-                group_line.setVisibility(View.INVISIBLE);
-                preferential_line.setVisibility(View.INVISIBLE);
-                coupon_line.setVisibility(View.VISIBLE);
-                break;
-        }
-    }
-
-    /**
-     * 设置选中图标的文字颜色与
-     * 下划线可见
-     *
-     * @param index
-     */
-    private void chingeIndexView(int index) {
-        for (int i = 0; i < titleText.length; i++) {
-            titleText[i].setChecked(false);
-        }
-        if (index < titleText.length) {
-            titleText[index].setChecked(true);
-        }
-
-    }
-
-
-    private class MyFragmentPagerAdapter extends FragmentStatePagerAdapter {
-        private ArrayList<Fragment> fragments;
-        private FragmentManager fm;
-
-        public MyFragmentPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments) {
-            super(fm);
-            this.fm = fm;
-            this.fragments = fragments;
-        }
-
-        @Override
-        public int getCount() {
-            return fragments.size();
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return fragments.get(position);
-        }
-
-        @Override
-        public int getItemPosition(Object object) {
-            return POSITION_NONE;
-        }
-
-
-        public void setFragments(ArrayList<Fragment> fragments) {
-            if (this.fragments != null) {
-                FragmentTransaction ft = fm.beginTransaction();
-                for (Fragment f : this.fragments) {
-                    ft.remove(f);
+        /*vp_dishes.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                ExpandingFragment expandingFragment = ExpandingPagerFactory.getCurrentFragment(vp_dishes);
+                if (expandingFragment != null && expandingFragment.isOpenend()) {
+                    expandingFragment.close();
                 }
-                ft.commit();
-                ft = null;
-                fm.executePendingTransactions();
             }
-            this.fragments = fragments;
-            notifyDataSetChanged();
-        }
 
+            @Override
+            public void onPageSelected(int position) {
+            }
 
-        @Override
-        public Object instantiateItem(ViewGroup container, final int position) {
-            Object obj = super.instantiateItem(container, position);
-            return obj;
-        }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });*/
 
     }
 
-    public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
-
-        @Override
-        public void onPageSelected(int position) {
-            chingeIndexView(position);
-            setVisible(position);
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
-
-        @Override
-        public void onPageScrolled(int position, float positionOffset,
-                                   int positionOffsetPixels) {
-        }
+    private void initToolBar() {
+        ToolBar toolBar = new ToolBar(this);
+        toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
+        SlidingLayoutView rootView = new SlidingLayoutView(this);
+        rootView.bindActivity(this);
     }
+
+    private void initView() {
+
+       // vp_dishes = findViewById(R.id.vp_dishes);
+        fg_shop_car = (ProductsFragment) getSupportFragmentManager().findFragmentById(R.id.fg_shop_car);
+
+    }
+
+
+    @Override
+    public void onExpandingClick(View v) {
+
+    }
+
+
 }

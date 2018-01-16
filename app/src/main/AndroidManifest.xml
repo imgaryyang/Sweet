@@ -88,6 +88,12 @@
         <activity android:name=".activity.CaptureActivity"/>
         <activity android:name=".activity.VipCardActiviry">
         </activity>
+
+        <service
+            android:name=".CommunicationService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
     </application>
 
 </manifest>

@@ -86,8 +86,6 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
      */
     private ImageView shopping_cart;
     // 动画时间
-    private int AnimationDuration = 500;
-    // 正在执行的动画数量
     private int number = 0;
     // 是否完成清理
     private boolean isClean = false;
@@ -151,31 +149,17 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
-//        SlidingLayoutView rootView = new SlidingLayoutView(getActivity());
-//        rootView.bindActivity(getActivity());
+
     }
 
-    public List<ProductType> getData() {
-        productCategorizes = new ArrayList<>();
-        for (int i = 1; i < 5; i++) {
-            ProductType productCategorize = new ProductType();
-            productCategorize.setType("分类信息" + i);
-            shopProductsAll = new ArrayList<>();
-            for (int j = 1; j < 6; j++) {
-                ShopProduct product = new ShopProduct();
-                product.setId(154788 + i + j);
-                product.setGoods("衬衫" + i);
-                product.setPrice(18 + "");
-                shopProductsAll.add(product);
-            }
-            productCategorize.setProduct(shopProductsAll);
-            productCategorizes.add(productCategorize);
-        }
-        return productCategorizes;
+    public void initData(ArrayList<ProductType> data) {
+        productCategorizes = data;
+
+        initView();
     }
 
     private void initView() {
-        getData();
+
         animation_viewGroup = createAnimLayout();
         noData = (TextView) getView().findViewById(R.id.noData);
         tv_shopcar_int = getView().findViewById(R.id.tv_shopcar_int);
@@ -197,7 +181,7 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         initData();
     }
 
-    public void initData() {
+    private void initData() {
         productList = new ArrayList<>();
         strings = new ArrayList<>();
         sectionedAdapter = new TestSectionedAdapter(getActivity(), productCategorizes);
@@ -214,7 +198,23 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         for (ProductType type : productCategorizes) {
             strings.add(type.getType());
         }
+
         morelist.setAdapter(sectionedAdapter);
+        morelist.setOnItemClickListener(new PinnedHeaderListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int section, int position, long id) {
+                if (onClickListener != null) {
+                    onClickListener.onItemClick();
+                }
+                Toast.makeText(getContext(), "section:" + section + "position" + position, Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onSectionClick(AdapterView<?> adapterView, View view, int section, long id) {
+
+            }
+        });
         sectionedAdapter.setCallBackListener(this);
         mainlist.setAdapter(new ArrayAdapter<String>(getActivity(),
                 R.layout.categorize_item, strings));
@@ -382,7 +382,6 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         float sum = 0;
         int shopNum = 0;
         for (ShopProduct pro : productList) {
-//            sum = sum + (pro.getNumber() * Double.parseDouble(pro.getPrice()));
             sum = (float) DoubleUtil.sum(sum, DoubleUtil.mul((double) pro.getNumber(), Double.parseDouble(pro.getPrice())));
             shopNum = shopNum + pro.getNumber();
         }
@@ -631,6 +630,8 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
 
     public interface OnClickListener {
         void onClickSubimt(ShopCarSingleInformation shopCarSingleInformation);
+
+        void onItemClick();
     }
 
     private OnClickListener onClickListener;
@@ -640,5 +641,6 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         this.onClickListener = onClickListener;
 
     }
+
 
 }

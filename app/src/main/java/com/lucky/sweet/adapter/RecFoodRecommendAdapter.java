@@ -65,7 +65,7 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == 4) {
+        if (viewType == AdapterSize-1) {
             return new mMoreHolder(inflater.inflate(R.layout.item_recycle_more, parent,
                     false));
         }
@@ -148,7 +148,6 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
             tv_recreation.setText(foodBean.getClassify());
             tv_comment.setText(foodBean.getGrade() + "条评论");
             tv_dis.setText(foodBean.getDis() + "公里");
-
         }
 
         public static class FoodBean {
