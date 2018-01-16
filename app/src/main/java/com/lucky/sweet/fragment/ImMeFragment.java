@@ -13,6 +13,7 @@ import android.widget.Button;
 import com.lucky.sweet.R;
 import com.lucky.sweet.activity.SetUserInfoActivity;
 import com.lucky.sweet.activity.VipCardActiviry;
+import com.lucky.sweet.views.CircleImageView;
 import com.lucky.sweet.widgets.ToolBar;
 
 /**
@@ -29,6 +30,7 @@ public class ImMeFragment extends Fragment {
     private SharedPreferences config;
     private SharedPreferences.Editor edit;*/
     private Button btn_setUserInfo;
+    private CircleImageView imv_head;
 
 
     @Nullable
@@ -63,6 +65,8 @@ public class ImMeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), VipCardActiviry.class));
+                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+
             }
         });
         btn_setUserInfo.setOnClickListener(new View.OnClickListener() {
@@ -74,5 +78,8 @@ public class ImMeFragment extends Fragment {
 
             }
         });
+
+        imv_head = view.findViewById(R.id.imv_head);
+        imv_head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
     }
 }

@@ -16,7 +16,7 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsingToolbarLayout"
             android:layout_width="match_parent"
-            android:layout_height="97dp"
+            android:layout_height="100dp"
             app:collapsedTitleGravity="left|center_vertical"
             app:collapsedTitleTextAppearance="@style/CollapsingText"
             app:contentScrim="#499607"

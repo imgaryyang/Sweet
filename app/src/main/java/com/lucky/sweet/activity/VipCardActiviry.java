@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.VipCardInfo;
 import com.lucky.sweet.widgets.Title;
+import com.lucky.sweet.widgets.ToolBar;
 import com.lucky.sweet.widgets.cardstack.CardStackView;
 import com.lucky.sweet.widgets.cardstack.TestStackAdapter;
 
@@ -38,6 +39,7 @@ public class VipCardActiviry extends BaseActivity {
                 switch (id) {
                     case Title.BUTTON_LEFT:
                         finish();
+                        goPreAnim();
                         break;
                 }
             }
@@ -46,7 +48,8 @@ public class VipCardActiviry extends BaseActivity {
     }
 
     private void initView() {
-
+        ToolBar toolBar = new ToolBar(this);
+        toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
         cardStackView = findViewById(R.id.stackview_vip_card);
         ArrayList<VipCardInfo> objects = new ArrayList<>();
         for (int i = 0; i < 20; i++) {

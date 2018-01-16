@@ -1,9 +1,11 @@
 package com.lucky.sweet.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -63,6 +65,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
     private HiddenAnimUtils hiddenAnimUtils;
    // private List<MainStoreInfo.foodBean> showInfo;
     private Button btn_qrcodescan;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
 
     @Override
     public void onAttach(Context context) {
@@ -72,7 +75,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_imstore, container, false);
-        context = getContext();
+        context = getActivity();
 
         initView(view);
 
@@ -149,11 +152,12 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         rec_foodStore.setAdapter(foodAdapter);
         rec_funStore.setAdapter(funAdapter);
 
+
         rec_foodStore.addOnScrollListener(new AdRecyCleViewOnScrollState
                 (context, AdRecyCleViewOnScrollState.FOOD));
-
-        rec_funStore.addOnScrollListener(new AdRecyCleViewOnScrollState
+        rec_funStore .addOnScrollListener(new AdRecyCleViewOnScrollState
                 (context, AdRecyCleViewOnScrollState.FUN));
+
 
     }
 
@@ -171,6 +175,8 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         rec_funStore = view.findViewById(R.id.rec_funStore);
         //rec_ad_show = view.findViewById(R.id.rec_ad_show);
         btn_qrcodescan = view.findViewById(R.id.btn_qrcodescan);
+        collapsingToolbarLayout=view.findViewById(R.id.collapsingToolbarLayout);
+        collapsingToolbarLayout.setContentScrim(getResources().getDrawable(R.drawable.search_bg));
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            ToolBar toolBar = new ToolBar(getActivity());

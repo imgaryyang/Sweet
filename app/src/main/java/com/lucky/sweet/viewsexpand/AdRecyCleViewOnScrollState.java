@@ -1,11 +1,17 @@
 package com.lucky.sweet.viewsexpand;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.lucky.sweet.R;
+import com.lucky.sweet.activity.BaseActivity;
 import com.lucky.sweet.activity.StoreDisplatActivity;
+import com.lucky.sweet.fragment.ImStoreFragment;
 
 /**
  * Created by chn on 2018/1/1.
@@ -49,11 +55,13 @@ public class AdRecyCleViewOnScrollState extends RecyclerView.OnScrollListener {
                             intent = new Intent(context, StoreDisplatActivity.class);
                             intent.putExtra("tv_moreFood", "Food");
                             context.startActivity(intent);
+                            ((Activity)context).overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
                             break;
                         case FUN:
                             intent = new Intent(context, StoreDisplatActivity.class);
                             intent.putExtra("tv_moreRelax", "Relax");
                             context.startActivity(intent);
+                            ((Activity)context).overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
                             break;
                     }
 

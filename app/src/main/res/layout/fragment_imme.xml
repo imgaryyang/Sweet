@@ -22,7 +22,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/Myappcolor"
+                    android:background="@mipmap/me_bg"
                     android:scaleType="centerCrop"/>
 
                 <LinearLayout
@@ -32,12 +32,12 @@
                     android:orientation="vertical">
 
                     <com.lucky.sweet.views.CircleImageView
-                        android:id="@+id/img_head"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
+                        android:id="@+id/imv_head"
+                        android:layout_width="58dp"
+                        android:layout_height="58dp"
                         android:layout_gravity="center"
                         android:onClick="onButtonClick"
-                        android:src="@mipmap/test_header">
+                        android:src="@mipmap/test_head">
                     </com.lucky.sweet.views.CircleImageView>
 
                     <LinearLayout
@@ -51,7 +51,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="邱悦"
-                            android:textColor="@color/white"
+                            android:textColor="@color/black"
                             android:textSize="14dp"/>
 
                         <TextView
@@ -59,7 +59,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:text="Lv7"
-                            android:textColor="@color/white"
+                            android:textColor="@color/black"
                             android:textSize="12dp"/>
                     </LinearLayout>
 
@@ -77,7 +77,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="关注："
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="14dp"/>
 
                     <TextView
@@ -85,7 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="20"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="18dp"/>
 
                     <ImageView
@@ -99,7 +99,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="粉丝："
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="14dp"/>
 
                     <TextView
@@ -107,7 +107,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="78"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="18dp"/>
                 </LinearLayout>
 
