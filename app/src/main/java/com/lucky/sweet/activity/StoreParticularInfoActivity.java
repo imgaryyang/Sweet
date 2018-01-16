@@ -122,6 +122,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
 
         maps.setCenter(latLng);
+        maps.setZoom(75);
         Marker marker = this.map.addMarker(new MarkerOptions().title(info.getName()).anchor(0.5f,
                 0.5f).position(latLng));
         marker.showInfoWindow();

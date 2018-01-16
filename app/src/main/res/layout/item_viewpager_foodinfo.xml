@@ -28,6 +28,8 @@
             android:layout_marginLeft="15dp"
             android:layout_weight="1"
             android:text="107烤羊腿"
+            android:maxEms="4"
+            android:singleLine="true"
             android:textColor="@color/Myappcolor"/>
 
         <TextView
