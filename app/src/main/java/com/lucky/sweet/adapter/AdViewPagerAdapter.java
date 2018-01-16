@@ -6,13 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.MainStoreInfo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,12 +23,12 @@ import java.util.List;
  */
 
 public class AdViewPagerAdapter extends PagerAdapter {
-    List<Integer> datas;
-    Context context;
+    private List<MainStoreInfo.AdvertisingBean> data;
+    private Context context;
 
-    public AdViewPagerAdapter(Context context, List<Integer> datas) {
+    public AdViewPagerAdapter(Context context, List<MainStoreInfo.AdvertisingBean> data) {
         this.context = context;
-        this.datas = datas;
+        this.data = data;
     }
 
     @Override
@@ -37,7 +36,7 @@ public class AdViewPagerAdapter extends PagerAdapter {
         View view = LayoutInflater.from(context).inflate(R.layout
                 .iitem_viewpager_ad, null);
         ImageView imv_ab = view.findViewById(R.id.imv_ab);
-        Glide.with(context).load(datas.get(position)).diskCacheStrategy
+        Glide.with(context).load(data.get(position).getUrl()).diskCacheStrategy
                 (DiskCacheStrategy.ALL).into(imv_ab);
         container.addView(view);
         return view;
@@ -45,7 +44,7 @@ public class AdViewPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return datas.size();
+        return data.size();
     }
 
     @Override

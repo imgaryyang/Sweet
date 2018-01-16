@@ -8,8 +8,6 @@ import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.WeatherInfo;
 import com.lucky.sweet.fragment.ImStoreFragment;
 
-import java.util.List;
-
 /**
  * Created by c on 2017/12/13.
  * (╯°□°）╯︵ ┻━┻ MMP好气啊！
@@ -23,6 +21,7 @@ public class ImStoreHandler extends Handler {
     public static final int UPDATAWEATHER = 1;
 
     public static final int UPSHOWINFO = 2;
+
 
     private ImStoreFragment fragment;
     private Context context;
@@ -50,7 +49,7 @@ public class ImStoreHandler extends Handler {
             case UPSHOWINFO:
                 MainStoreInfo info = (MainStoreInfo) msg.obj;
 
-                //fragment.setShowInfo();
+                fragment.setShowInfo(info);
                 break;
 
 

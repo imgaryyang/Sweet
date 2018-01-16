@@ -12,85 +12,66 @@ import java.util.List;
 
 public class MainStoreInfo {
 
+    private List<FoodBean> food;
+    private List<RecreationBean> recreation;
+    private List<AdvertisingBean> advertising;
 
-    /**
-     * advertising : {"advertising_one":"https://thethreestooges.cn/merchant/img/photo_mer/1/surface.jpg","advertising_two":"https://thethreestooges.cn/merchant/img/photo_mer/1/surface.jpg","advertising_three":"https://thethreestooges.cn/merchant/img/photo_mer/1/surface.jpg","advertising_four":"https://thethreestooges.cn/merchant/img/photo_mer/1/surface.jpg"}
-     * classify : [{"name":"美食","info":[{"shop_id":"1","pho_url":"https://thethreestooges.cn/merchant/img/photo_mer/1/surface.jpg","name":"老板娘烤肉店","classify":"聚餐宴请 ","pho_type":"美食","comment":"100","distance":"1"},{"shop_id":"2","pho_url":"https://thethreestooges.cn/merchant/img/photo_mer/2/surface.jpg","name":"张亮麻辣烫","classify":"聚餐宴请 ","pho_type":"美食","comment":"100","distance":"1"},{"shop_id":"3","pho_url":"https://thethreestooges.cn/merchant/img/photo_mer/3/surface.jpg","name":"玛西雅比萨炸鸡","classify":"聚餐宴请 ","pho_type":"美食","comment":"100","distance":"1"},{"shop_id":"4","pho_url":"https://thethreestooges.cn/merchant/img/photo_mer/4/surface.jpg","name":"连顺吉饭店","classify":"聚餐宴请 ","pho_type":"美食","comment":"100","distance":"1"},{"shop_id":"5","pho_url":"https://thethreestooges.cn/merchant/img/photo_mer/5/surface.jpg","name":"莲惠饭店","classify":"聚餐宴请 ","pho_type":"美食","comment":"100","distance":"1"}]},{"name":"娱乐","info":[{"shop_id":"6","pho_url":"https://thethreestooges.cn/merchant/img/photo_mer/1/surface.jpg","name":"老板娘ktv","classify":"休闲娱乐 ","pho_type":"娱乐","comment":"100","distance":"1"},{"shop_id":"7","pho_url":"https://thethreestooges.cn/merchant/img/photo_mer/2/surface.jpg","name":"乐音城音乐广场","classify":"休闲娱乐 ","pho_type":"娱乐","comment":"100","distance":"1"},{"shop_id":"8","pho_url":"https://thethreestooges.cn/merchant/img/photo_mer/3/surface.jpg","name":"弘扬量贩KTV","classify":"休闲娱乐 ","pho_type":"娱乐","comment":"100","distance":"1"},{"shop_id":"9","pho_url":"https://thethreestooges.cn/merchant/img/photo_mer/4/surface.jpg","name":"金苹果量贩ktv","classify":"休闲娱乐 ","pho_type":"娱乐","comment":"100","distance":"1"},{"shop_id":"10","pho_url":"https://thethreestooges.cn/merchant/img/photo_mer/5/surface.jpg","name":"梦幻又一ktv","classify":"休闲娱乐 ","pho_type":"娱乐","comment":"100","distance":"1"}]}]
-     */
+    public List<FoodBean> getFood() {
+        return food;
+    }
 
-    private AdvertisingBean advertising;
-    private List<ClassifyBean> classify;
+    public void setFood(List<FoodBean> food) {
+        this.food = food;
+    }
 
-    public AdvertisingBean getAdvertising() {
+    public List<RecreationBean> getRecreation() {
+        return recreation;
+    }
+
+    public void setRecreation(List<RecreationBean> recreation) {
+        this.recreation = recreation;
+    }
+
+    public List<AdvertisingBean> getAdvertising() {
         return advertising;
     }
 
-    public void setAdvertising(AdvertisingBean advertising) {
+    public void setAdvertising(List<AdvertisingBean> advertising) {
         this.advertising = advertising;
     }
 
-    public List<ClassifyBean> getClassify() {
-        return classify;
-    }
-
-    public void setClassify(List<ClassifyBean> classify) {
-        this.classify = classify;
-    }
-
-    public static class AdvertisingBean {
+    public static class FoodBean {
         /**
-         * advertising_one : https://thethreestooges.cn/merchant/img/photo_mer/1/surface.jpg
-         * advertising_two : https://thethreestooges.cn/merchant/img/photo_mer/1/surface.jpg
-         * advertising_three : https://thethreestooges.cn/merchant/img/photo_mer/1/surface.jpg
-         * advertising_four : https://thethreestooges.cn/merchant/img/photo_mer/1/surface.jpg
+         * mer_id : 6
+         * name : 动感新天地
+         * classify : KTV
+         * time : 2
+         * grade : 7
+         * longitude : 121.309904
+         * latitude : 38.812218
+         * pho_url : https://thethreestooges.cn/merchant/img/photo_mer/6/surface.png
+         * stars : 3
+         * distance : 0.96
          */
 
-        private String advertising_one;
-        private String advertising_two;
-        private String advertising_three;
-        private String advertising_four;
-
-        public String getAdvertising_one() {
-            return advertising_one;
-        }
-
-        public void setAdvertising_one(String advertising_one) {
-            this.advertising_one = advertising_one;
-        }
-
-        public String getAdvertising_two() {
-            return advertising_two;
-        }
-
-        public void setAdvertising_two(String advertising_two) {
-            this.advertising_two = advertising_two;
-        }
-
-        public String getAdvertising_three() {
-            return advertising_three;
-        }
-
-        public void setAdvertising_three(String advertising_three) {
-            this.advertising_three = advertising_three;
-        }
-
-        public String getAdvertising_four() {
-            return advertising_four;
-        }
-
-        public void setAdvertising_four(String advertising_four) {
-            this.advertising_four = advertising_four;
-        }
-    }
-
-    public static class ClassifyBean {
-        /**
-         * name : 美食
-         * info : [{"shop_id":"1","pho_url":"https://thethreestooges.cn/merchant/img/photo_mer/1/surface.jpg","name":"老板娘烤肉店","classify":"聚餐宴请 ","pho_type":"美食","comment":"100","distance":"1"},{"shop_id":"2","pho_url":"https://thethreestooges.cn/merchant/img/photo_mer/2/surface.jpg","name":"张亮麻辣烫","classify":"聚餐宴请 ","pho_type":"美食","comment":"100","distance":"1"},{"shop_id":"3","pho_url":"https://thethreestooges.cn/merchant/img/photo_mer/3/surface.jpg","name":"玛西雅比萨炸鸡","classify":"聚餐宴请 ","pho_type":"美食","comment":"100","distance":"1"},{"shop_id":"4","pho_url":"https://thethreestooges.cn/merchant/img/photo_mer/4/surface.jpg","name":"连顺吉饭店","classify":"聚餐宴请 ","pho_type":"美食","comment":"100","distance":"1"},{"shop_id":"5","pho_url":"https://thethreestooges.cn/merchant/img/photo_mer/5/surface.jpg","name":"莲惠饭店","classify":"聚餐宴请 ","pho_type":"美食","comment":"100","distance":"1"}]
-         */
-
+        private String mer_id;
         private String name;
-        private List<InfoBean> info;
+        private String classify;
+        private String time;
+        private String grade;
+        private String longitude;
+        private String latitude;
+        private String pho_url;
+        private int stars;
+        private double distance;
+
+        public String getMer_id() {
+            return mer_id;
+        }
+
+        public void setMer_id(String mer_id) {
+            this.mer_id = mer_id;
+        }
 
         public String getName() {
             return name;
@@ -100,88 +81,190 @@ public class MainStoreInfo {
             this.name = name;
         }
 
-        public List<InfoBean> getInfo() {
-            return info;
+        public String getClassify() {
+            return classify;
         }
 
-        public void setInfo(List<InfoBean> info) {
-            this.info = info;
+        public void setClassify(String classify) {
+            this.classify = classify;
         }
 
-        public static class InfoBean {
-            /**
-             * shop_id : 1
-             * pho_url : https://thethreestooges.cn/merchant/img/photo_mer/1/surface.jpg
-             * name : 老板娘烤肉店
-             * classify : 聚餐宴请
-             * pho_type : 美食
-             * comment : 100
-             * distance : 1
-             */
+        public String getTime() {
+            return time;
+        }
 
-            private String shop_id;
-            private String pho_url;
-            private String name;
-            private String classify;
-            private String pho_type;
-            private String comment;
-            private String distance;
+        public void setTime(String time) {
+            this.time = time;
+        }
 
-            public String getShop_id() {
-                return shop_id;
-            }
+        public String getGrade() {
+            return grade;
+        }
 
-            public void setShop_id(String shop_id) {
-                this.shop_id = shop_id;
-            }
+        public void setGrade(String grade) {
+            this.grade = grade;
+        }
 
-            public String getPho_url() {
-                return pho_url;
-            }
+        public String getLongitude() {
+            return longitude;
+        }
 
-            public void setPho_url(String pho_url) {
-                this.pho_url = pho_url;
-            }
+        public void setLongitude(String longitude) {
+            this.longitude = longitude;
+        }
 
-            public String getName() {
-                return name;
-            }
+        public String getLatitude() {
+            return latitude;
+        }
 
-            public void setName(String name) {
-                this.name = name;
-            }
+        public void setLatitude(String latitude) {
+            this.latitude = latitude;
+        }
 
-            public String getClassify() {
-                return classify;
-            }
+        public String getPho_url() {
+            return pho_url;
+        }
 
-            public void setClassify(String classify) {
-                this.classify = classify;
-            }
+        public void setPho_url(String pho_url) {
+            this.pho_url = pho_url;
+        }
 
-            public String getPho_type() {
-                return pho_type;
-            }
+        public int getStars() {
+            return stars;
+        }
 
-            public void setPho_type(String pho_type) {
-                this.pho_type = pho_type;
-            }
+        public void setStars(int stars) {
+            this.stars = stars;
+        }
 
-            public String getComment() {
-                return comment;
-            }
+        public double getDistance() {
+            return distance;
+        }
 
-            public void setComment(String comment) {
-                this.comment = comment;
-            }
+        public void setDistance(double distance) {
+            this.distance = distance;
+        }
+    }
 
-            public String getDistance() {
-                return distance;
-            }
+    public static class RecreationBean {
+        /**
+         * mer_id : 1
+         * name : 老板娘烤肉店
+         * classify : 聚餐宴请
+         * time : 2
+         * grade : 7
+         * longitude : 121.309904
+         * latitude : 38.812218
+         * pho_url : https://thethreestooges.cn/merchant/img/photo_mer/1/surface.jpg
+         * stars : 3
+         * distance : 0.96
+         */
 
-            public void setDistance(String distance) {
-                this.distance = distance;
-            }
+        private String mer_id;
+        private String name;
+        private String classify;
+        private String time;
+        private String grade;
+        private String longitude;
+        private String latitude;
+        private String pho_url;
+        private int stars;
+        private double distance;
+
+        public String getMer_id() {
+            return mer_id;
+        }
+
+        public void setMer_id(String mer_id) {
+            this.mer_id = mer_id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getClassify() {
+            return classify;
+        }
+
+        public void setClassify(String classify) {
+            this.classify = classify;
+        }
+
+        public String getTime() {
+            return time;
+        }
+
+        public void setTime(String time) {
+            this.time = time;
+        }
+
+        public String getGrade() {
+            return grade;
+        }
+
+        public void setGrade(String grade) {
+            this.grade = grade;
+        }
+
+        public String getLongitude() {
+            return longitude;
+        }
+
+        public void setLongitude(String longitude) {
+            this.longitude = longitude;
+        }
+
+        public String getLatitude() {
+            return latitude;
+        }
+
+        public void setLatitude(String latitude) {
+            this.latitude = latitude;
+        }
+
+        public String getPho_url() {
+            return pho_url;
+        }
+
+        public void setPho_url(String pho_url) {
+            this.pho_url = pho_url;
+        }
+
+        public int getStars() {
+            return stars;
+        }
+
+        public void setStars(int stars) {
+            this.stars = stars;
+        }
+
+        public double getDistance() {
+            return distance;
+        }
+
+        public void setDistance(double distance) {
+            this.distance = distance;
+        }
+    }
+
+    public static class AdvertisingBean {
+        /**
+         * url : https://thethreestooges.cn/merchant/img/photo_mer/advertising/ad_one.png
+         */
+
+        private String url;
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
         }
     }
 }

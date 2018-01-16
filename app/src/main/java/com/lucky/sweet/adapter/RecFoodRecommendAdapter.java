@@ -9,7 +9,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.MainStoreInfo;
+
+import java.text.DecimalFormat;
+import java.util.List;
 
 /**
  * Created by chn on 2017/12/20.
@@ -24,16 +30,31 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
     private final LayoutInflater inflater;
     private int type;
 
+    private List<MainStoreInfo.FoodBean> food;
+    private List<MainStoreInfo.RecreationBean> recreation;
+    private int AdapterSize;
+
     public final static int FOOD = 0;
     public final static int FUN = 1;
 
 
-    public RecFoodRecommendAdapter(Context context, int type) {
+    public RecFoodRecommendAdapter(Context context, int type, List data) {
         this.context = context;
         this.type = type;
+        switch (type) {
+            case FOOD:
+                food = (List<MainStoreInfo.FoodBean>) data;
+                break;
+            case FUN:
+                recreation = (List<MainStoreInfo.RecreationBean>) data;
+                break;
+            default:
+                break;
+        }
+        AdapterSize = data.size();
         inflater = LayoutInflater.from(context);
-
     }
+
 
     @Override
     public int getItemViewType(int position) {
@@ -54,21 +75,52 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof mViewHolder) {
+
+            mViewHolder.FoodBean info = new mViewHolder.FoodBean();
+            int mer_id = 0;
+            switch (type) {
+                case FOOD:
+                    MainStoreInfo.FoodBean foodBean = food.get(position);
+                    mer_id = Integer.parseInt(foodBean.getMer_id());
+                    info.setClassify(foodBean.getClassify());
+                    info.setGrade(foodBean.getGrade());
+                    info.setDis(foodBean.getDistance());
+                    info.setName(foodBean.getName());
+                    info.setPho_url(foodBean.getPho_url());
+                    break;
+                case FUN:
+                    MainStoreInfo.RecreationBean recreationBean = recreation.get(position);
+                    mer_id = Integer.parseInt(recreationBean.getMer_id());
+                    info.setClassify(recreationBean.getClassify());
+                    info.setGrade(recreationBean.getGrade());
+                    info.setDis(recreationBean.getDistance());
+                    info.setName(recreationBean.getName());
+                    info.setPho_url(recreationBean.getPho_url());
+                    break;
+                default:
+                    break;
+            }
+
             mViewHolder mViewHolder = (mViewHolder) holder;
+
+
+            final int finalMer_id = mer_id;
+            mViewHolder.bindData(info, context);
             mViewHolder.ll_cover.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (null != onItemClickListener) {
-                        onItemClickListener.onItemClickListener(position, 0);
+                        onItemClickListener.onItemClickListener(position, finalMer_id);
                     }
                 }
             });
         }
     }
 
+
     @Override
     public int getItemCount() {
-        return 5;
+        return AdapterSize;
     }
 
     static class mViewHolder extends RecyclerView.ViewHolder {
@@ -88,18 +140,78 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
             tv_dis = itemView.findViewById(R.id.tv_dis);
             ll_cover = itemView.findViewById(R.id.ll_cover);
         }
+
+        public void bindData(FoodBean foodBean, Context context) {
+            Glide.with(context).load(foodBean.getPho_url()).diskCacheStrategy
+                    (DiskCacheStrategy.ALL).into(imv_photo);
+            tv_info.setText(foodBean.getName());
+            tv_recreation.setText(foodBean.getClassify());
+            tv_comment.setText(foodBean.getGrade() + "条评论");
+            tv_dis.setText(foodBean.getDis() + "公里");
+
+        }
+
+        public static class FoodBean {
+            private String dis;
+            private String name;
+            private String classify;
+            private String grade;
+            private String pho_url;
+
+            public String getDis() {
+                return dis;
+            }
+
+            public void setDis(double dis) {
+
+                this.dis = String.format("%.2f",dis);
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getClassify() {
+                return classify;
+            }
+
+            public void setClassify(String classify) {
+                this.classify = classify;
+            }
+
+
+            public String getGrade() {
+                return grade;
+            }
+
+            public void setGrade(String grade) {
+                this.grade = grade;
+            }
+
+
+            public String getPho_url() {
+                return pho_url;
+            }
+
+            public void setPho_url(String pho_url) {
+                this.pho_url = pho_url;
+            }
+        }
     }
 
     static class mMoreHolder extends RecyclerView.ViewHolder {
 
         public mMoreHolder(View itemView) {
             super(itemView);
-
         }
     }
 
-  public   interface OnItemClickListener {
-         void onItemClickListener(int position, int shopId);
+    public interface OnItemClickListener {
+        void onItemClickListener(int position, int shopId);
     }
 
     private OnItemClickListener onItemClickListener;

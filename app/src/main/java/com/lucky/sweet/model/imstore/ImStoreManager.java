@@ -20,6 +20,7 @@ import com.tencent.map.geolocation.TencentLocationRequest;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.Call;
@@ -47,9 +48,6 @@ public class ImStoreManager {
         imStoreHandler = new ImStoreHandler(ImStoreFragment);
 
         initLocation();
-
-        //initShopInfo();
-
     }
 
     public ArrayList<Integer> getAdInfoList() {
@@ -104,8 +102,11 @@ public class ImStoreManager {
                             initWeather(city.substring(0, city.length() - 1));
 
                         System.out.println("纬度" + tencentLocation.getLatitude() + "经度" + tencentLocation.getLongitude());
+                        initShopInfo(tencentLocation.getLatitude(),
+                                tencentLocation.getLongitude());
                     }
                     stopLocation();
+
                 }
 
                 @Override
@@ -136,8 +137,8 @@ public class ImStoreManager {
 
                         Gson gson = new Gson();
                         WeatherInfo weatherInfo = gson.fromJson(response.body().string(), WeatherInfo.class);
-                        Message message = new Message();
 
+                        Message message = new Message();
                         message.what = ImStoreHandler.UPDATAWEATHER;
                         message.obj = weatherInfo;
                         imStoreHandler.sendMessage(message);
@@ -151,35 +152,35 @@ public class ImStoreManager {
 
     }
 
-    private void initShopInfo() {
-        new Thread(new Runnable() {
+    private void initShopInfo(final double lat, final double lon) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("long", String.valueOf(lon));
+        map.put("lat", String.valueOf(lat));
+        HttpUtils.sendOkHttpRequest(Properties.MAINSHOWPLAYTPATH, new com.zhy.http.okhttp.callback.Callback() {
             @Override
-            public void run() {
+            public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
 
-                HttpUtils.sendOkHttpRequest(Properties.MAINSHOWPLAYTPATH, new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
+                Gson gson = new Gson();
+                MainStoreInfo mainStoreInfo = gson.fromJson(response.body().string(), MainStoreInfo.class);
 
-                    }
+                Message message = new Message();
+                message.what = ImStoreHandler.UPSHOWINFO;
+                message.obj = mainStoreInfo;
+                imStoreHandler.sendMessage(message);
 
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-
-                        Gson gson = new Gson();
-
-                        MainStoreInfo mainStoreInfo = gson.fromJson(response.body
-                                ().string(), MainStoreInfo.class);
-                        System.out.println(mainStoreInfo.getClassify().size());
-                      /*  Message message = new Message();
-                        message.what = ImStoreHandler.UPSHOWINFO;
-                        message.obj = mainStoreInfo;
-                        imStoreHandler.sendMessage(message);*/
-
-                    }
-
-
-                });
+                return null;
             }
-        }).start();
+
+            @Override
+            public void onError(com.squareup.okhttp.Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Object response) {
+
+            }
+        }, map);
+
     }
 }
