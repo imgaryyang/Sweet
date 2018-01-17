@@ -15,8 +15,6 @@ import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
 import com.lucky.sweet.entity.StoreDetailedInfo;
-import com.lucky.sweet.model.particularinfo.ParticularInfoManager;
-
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.views.StarLevelIndicatorView;
 import com.lucky.sweet.widgets.Title;
@@ -28,6 +26,7 @@ import com.tencent.tencentmap.mapsdk.map.MapView;
 import com.tencent.tencentmap.mapsdk.map.TencentMap;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by c on 2017/12/13.
@@ -45,6 +44,11 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private ImageView imv_show_fir;
     private ImageView imv_show_sec;
     private ImageView imv_show_sed;
+
+    private ImageView imv_shop_one;
+    private ImageView imv_shop_two;
+    private ImageView imv_shop_three;
+
     private TextView tv_shop_title;
     private TextView tv_shop_int;
     private TextView tv_shop_worktime;
@@ -65,19 +69,21 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
         initView();
 
-        initData();
-
         initEvent();
 
         initTitle();
 
-        ParticularInfoManager particularInfoManager = new ParticularInfoManager(this);
+        /*ParticularInfoManager particularInfoManager = new ParticularInfoManager(this);*/
     }
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
-
+        Intent intent = getIntent();
+        String mer_id = intent.getStringExtra("shopid");
+        Toast.makeText(this, "点击店铺ID：" + mer_id, Toast.LENGTH_SHORT).show();
+        myBinder.requestShopDisplay(this, mer_id);
     }
+
 
     private void initEvent() {
         btn_map_position.setOnClickListener(new View.OnClickListener() {
@@ -106,31 +112,45 @@ public class StoreParticularInfoActivity extends BaseActivity {
         });
     }
 
-    private void initData() {
-        Intent intent = getIntent();
-        int shopid = intent.getIntExtra("shopid", 0);
-        Toast.makeText(this, "点击店铺ID：" + shopid, Toast.LENGTH_SHORT).show();
+    public void upData(StoreDetailedInfo info) {
+        initShopDesInfo(info.getInfo());
     }
 
-    public void upData(StoreDetailedInfo.MerinfoBean info) {
+    private void initShopDesInfo(StoreDetailedInfo.InfoBean info) {
 
         Glide.with(this).load(info.getSurface()).into(imv_back);
-        Glide.with(this).load(info.getThumbnail_one()).into(imv_show_fir);
-        Glide.with(this).load(info.getThumbnail_two()).into(imv_show_sec);
-        Glide.with(this).load(info.getThumbnail_three()).into(imv_show_sed);
-        tv_shop_title.setText(info.getName());
-        tv_shop_int.setText(info.getClassify());
-        tv_shop_worktime.setText(info.getBusiness_hours());
-        tv_shop_des.setText(info.getIntroduce());
-        latLng = new LatLng(Double.valueOf(info.getLat()),
-                Double.valueOf(info.getLon()));
-        maps = map.getMap();
 
+        List<String> environment = info.getEnvironment();
+
+        Glide.with(this).load(environment.get(0)).into
+                (imv_show_fir);
+        Glide.with(this).load(environment.get(1)).into
+                (imv_show_sec);
+        Glide.with(this).load(environment.get(2)).into
+                (imv_show_sed);
+        List<String> recommend = info.getRecommend();
+        Glide.with(this).load(recommend.get(0)).into
+                (imv_shop_one);
+        Glide.with(this).load(recommend.get(1)).into
+                (imv_shop_two);
+        Glide.with(this).load(recommend.get(2)).into
+                (imv_shop_three);
+
+
+        StoreDetailedInfo.InfoBean.ShopdesBean shopdes = info.getShopdes();
+
+
+        tv_shop_title.setText(shopdes.getName());
+        tv_shop_int.setText(shopdes.getIntroduce());
+        tv_shop_worktime.setText(shopdes.getBusiness_hours());
+        //tv_shop_des.setText(shopdes.get);
+        latLng = new LatLng(Double.valueOf(shopdes.getLatitude()),
+                Double.valueOf(shopdes.getLongitude()));
+        maps = map.getMap();
 
         maps.setCenter(latLng);
         maps.setZoom(75);
-        Marker marker = this.map.addMarker(new MarkerOptions().title(info.getName()).anchor(0.5f,
-                0.5f).position(latLng));
+        Marker marker = this.map.addMarker(new MarkerOptions().title(shopdes.getName()).anchor(0.5f, 0.5f).position(latLng));
         marker.showInfoWindow();
     }
 
@@ -147,9 +167,12 @@ public class StoreParticularInfoActivity extends BaseActivity {
         tv_shop_worktime = findViewById(R.id.tv_shop_worktime);
         tv_shop_des = findViewById(R.id.tv_shop_des);
         btn_map_position = findViewById(R.id.btn_map_position);
-        sv_storeInfo = (ScrollView)findViewById(R.id.sv_storeInfo);
+        sv_storeInfo = (ScrollView) findViewById(R.id.sv_storeInfo);
         sv_storeInfo.smoothScrollTo(0, 0);
 
+        imv_shop_one = findViewById(R.id.imv_shop_one);
+        imv_shop_two = findViewById(R.id.imv_shop_two);
+        imv_shop_three = findViewById(R.id.imv_shop_three);
 
         StarLevelIndicatorView startIndicator = findViewById(R.id.startIndicator);
         startIndicator.initStarNumber(4);
@@ -181,7 +204,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
         title = (Title) findViewById(R.id.title);
         title.setTitleNameStr(" ");
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
-                .BUTTON_LEFT,R.drawable.selector_btn_titleback, null);
+                .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
         Title.ButtonInfo buttonRight = new Title.ButtonInfo(true, Title
                 .BUTTON_RIGHT1, R.mipmap.circle_star, null);
         title.setOnTitleButtonClickListener(new Title

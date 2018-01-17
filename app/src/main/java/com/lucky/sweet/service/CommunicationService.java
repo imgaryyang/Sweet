@@ -6,17 +6,20 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.lucky.sweet.activity.StoreParticularInfoActivity;
 import com.lucky.sweet.entity.MainStoreInfo;
+import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.entity.WeatherInfo;
 import com.lucky.sweet.fragment.ImStoreFragment;
+import com.lucky.sweet.model.StoreParticularInfoHandler;
 import com.lucky.sweet.model.imstore.ImStoreHandler;
 import com.lucky.sweet.properties.Properties;
 import com.lucky.sweet.utility.HttpUtils;
 import com.lucky.sweet.utility.PanduanNet;
+import com.squareup.okhttp.Request;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
@@ -43,7 +46,6 @@ public class CommunicationService extends Service {
     private TencentLocationManager locationManager;
     private OnMainDsplay onMainDsplay;
 
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return new MyBinder();
@@ -84,7 +86,22 @@ public class CommunicationService extends Service {
         }
 
 
+        public void requestShopDisplay(final StoreParticularInfoActivity
+                                               activity, String mer_id) {
 
+            final StoreParticularInfoHandler storeParticularInfoHandler = new StoreParticularInfoHandler(activity);
+
+            CommunicationService.this.getParticularInfo(mer_id, new
+                    OnParticularDis() {
+                        @Override
+                        public void upDataInfo(StoreDetailedInfo storeDetailedInfo) {
+                            Message message = new Message();
+                            message.what = StoreParticularInfoHandler.UPDATA;
+                            message.obj = storeDetailedInfo;
+                            storeParticularInfoHandler.sendMessage(message);
+                        }
+                    });
+        }
     }
 
 
@@ -207,5 +224,43 @@ public class CommunicationService extends Service {
 
     private void stopLocation() {
         locationManager.removeUpdates(mListener);
+    }
+
+
+    private void getParticularInfo(String shopid, final OnParticularDis
+            onParticularDis) {
+        final HashMap<String, String> map = new HashMap<>();
+        map.put("mer_id", shopid);
+        new Thread() {
+            @Override
+            public void run() {
+                HttpUtils.sendOkHttpRequest(Properties.STOREDETAILEDPATH, new
+                        com.zhy.http.okhttp.callback.Callback() {
+                            @Override
+                            public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
+                                String string = response.body().string();
+                                Gson gson = new Gson();
+                                StoreDetailedInfo storeDetailedInfo = gson.fromJson(string, StoreDetailedInfo.class);
+                                onParticularDis.upDataInfo(storeDetailedInfo);
+                                return null;
+                            }
+
+                            @Override
+                            public void onError(Request request, Exception e) {
+
+                            }
+
+                            @Override
+                            public void onResponse(Object response) {
+
+                            }
+                        }, map);
+            }
+        }.start();
+
+    }
+
+    public interface OnParticularDis {
+        void upDataInfo(StoreDetailedInfo storeDetailedInfo);
     }
 }

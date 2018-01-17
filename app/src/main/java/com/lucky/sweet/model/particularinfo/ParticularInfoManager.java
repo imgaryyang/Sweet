@@ -24,7 +24,7 @@ public class ParticularInfoManager {
 
     public ParticularInfoManager(StoreParticularInfoActivity activity) {
         this.activity = activity;
-        getParticularInfo();
+       // getParticularInfo();
     }
 
     private void getParticularInfo() {
@@ -43,7 +43,7 @@ public class ParticularInfoManager {
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                activity.upData(storeDetailedInfo.getMerinfo());
+                             /*   activity.upData(storeDetailedInfo.getMerinfo());*/
                             }
                         });
                     }

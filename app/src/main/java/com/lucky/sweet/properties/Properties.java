@@ -32,8 +32,7 @@ public class Properties {
     public static final String MAINSHOWPLAYTPATH =
                 "https://thethreestooges.cn/consumer/bean/home_page/home_page_show.php";
     public static final String STOREDETAILEDPATH =
-            "https://thethreestooges.cn/consumer/bean/mer_info/mer_info.php";
-
+            "https://thethreestooges.cn/consumer/bean/mer_info/mer_info_show.php";
 
     public static final String WEATHERREQUESTBODY = "https://free-api.heweather.com/s6/weather/now?key=e14dc2b9f04d4a84b467f7f43e3137f2&location=";
 

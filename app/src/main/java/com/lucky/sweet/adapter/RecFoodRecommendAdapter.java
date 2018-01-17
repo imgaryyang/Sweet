@@ -76,11 +76,11 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
         if (holder instanceof mViewHolder) {
 
             mViewHolder.FoodBean info = new mViewHolder.FoodBean();
-            int mer_id = 0;
+            String  mer_id="" ;
             switch (type) {
                 case FOOD:
                     MainStoreInfo.FoodBean foodBean = food.get(position);
-                    mer_id = Integer.parseInt(foodBean.getMer_id());
+                    mer_id = foodBean.getMer_id();
                     info.setClassify(foodBean.getClassify());
                     info.setGrade(foodBean.getGrade());
                     info.setDis(foodBean.getDistance());
@@ -89,7 +89,7 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
                     break;
                 case FUN:
                     MainStoreInfo.RecreationBean recreationBean = recreation.get(position);
-                    mer_id = Integer.parseInt(recreationBean.getMer_id());
+                    mer_id = recreationBean.getMer_id();
                     info.setClassify(recreationBean.getClassify());
                     info.setGrade(recreationBean.getGrade());
                     info.setDis(recreationBean.getDistance());
@@ -103,8 +103,10 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
             mViewHolder mViewHolder = (mViewHolder) holder;
 
 
-            final int finalMer_id = mer_id;
+
             mViewHolder.bindData(info, context);
+            final String finalMer_id = mer_id;
+
             mViewHolder.ll_cover.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -209,7 +211,7 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
     }
 
     public interface OnItemClickListener {
-        void onItemClickListener(int shopId);
+        void onItemClickListener(String  shopId);
     }
 
     private OnItemClickListener onItemClickListener;

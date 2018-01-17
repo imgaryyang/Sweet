@@ -183,8 +183,6 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
     public void setShowInfo(MainStoreInfo showInfo) {
 
 
-
-
         vp_ad.setAdapter(new AdViewPagerAdapter(getContext(), showInfo
                 .getAdvertising()));
 
@@ -195,7 +193,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
         foodAdapter.setOnItemClickListener(new RecFoodRecommendAdapter.OnItemClickListener() {
             @Override
-            public void onItemClickListener( int shopId) {
+            public void onItemClickListener(String shopId) {
                 Intent intent = new Intent(getActivity(), StoreParticularInfoActivity.class);
                 intent.putExtra("shopid", shopId);
                 startActivity(intent);
@@ -204,7 +202,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         });
         funAdapter.setOnItemClickListener(new RecFoodRecommendAdapter.OnItemClickListener() {
             @Override
-            public void onItemClickListener( int shopId) {
+            public void onItemClickListener(String shopId) {
                 Intent intent = new Intent(getActivity(), StoreParticularInfoActivity.class);
                 intent.putExtra("shopid", shopId);
                 startActivity(intent);
