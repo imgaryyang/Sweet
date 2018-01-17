@@ -277,10 +277,10 @@
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="160dp"
+                                android:layout_height="170dp"
                                 android:layout_marginLeft="30dp"
                                 android:layout_marginRight="30dp"
-                                android:layout_marginTop="40dp"
+                                android:layout_marginTop="60dp"
                                 android:background="@drawable/shape_carpop_bg">
 
                                 <ListView
@@ -300,13 +300,13 @@
 
                             </LinearLayout>
 
-                            <LinearLayout
+                           <!-- <LinearLayout
                                 android:layout_width="230dp"
                                 android:layout_height="40dp"
                                 android:layout_marginTop="11dp"
                                 android:layout_gravity="center"
                                 android:background="@drawable/shape_btn_order"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal">-->
 
                                 <!--<TextView-->
                                 <!--android:layout_width="wrap_content"-->
@@ -318,7 +318,7 @@
                                 <!--android:text="@string/shopping_cart"-->
                                 <!--android:textColor="@color/black"/>-->
 
-                                <TextView
+                                <!--<TextView
                                     android:id="@+id/settlement"
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
@@ -327,8 +327,8 @@
                                     android:gravity="center"
                                     android:text="@string/settlement"
                                     android:textColor="@color/black"
-                                    android:textSize="@dimen/dimen_16_dp"/>
-                            </LinearLayout>
+                                    android:textSize="@dimen/dimen_16_dp"/>-->
+                            <!--</LinearLayout>-->
 
                         </LinearLayout>
 

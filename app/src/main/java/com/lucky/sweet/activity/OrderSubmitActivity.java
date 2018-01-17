@@ -72,9 +72,9 @@ public class OrderSubmitActivity extends BaseActivity {
 
         final Title.ButtonInfo buttonRigt = new Title.ButtonInfo(true, Title
                 .BUTTON_RIGHT1, R.mipmap.ic_share, null);
-        Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
-                .BUTTON_LEFT,R.drawable.selector_btn_titleback, null);
-        title.setOnTitleButtonClickListener(new Title
+        /*Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
+                .BUTTON_LEFT,R.drawable.selector_btn_titleback, null);*/
+        /*title.setOnTitleButtonClickListener(new Title
                 .OnTitleButtonClickListener() {
             @Override
             public void onClick(int id, Title.ButtonViewHolder viewHolder) {
@@ -86,10 +86,10 @@ public class OrderSubmitActivity extends BaseActivity {
                         break;
                 }
             }
-        });
+        });*/
         title.setTitleNameStr("确认订单");
         title.mSetButtonInfo(buttonRigt);
-        title.mSetButtonInfo(buttonLeft);
+//        title.mSetButtonInfo(buttonLeft);
 
         tv_seat_num.setText(data.getSeatNum());
         tv_shop_name.setText(data.getShopName());

@@ -369,6 +369,7 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
+                    android:id="@+id/rl_orderform"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -401,7 +402,7 @@
                         android:layout_below="@id/tv_count7"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/imv_ic7"
-                        android:text="我的好友"
+                        android:text="我的订单"
                         android:textColor="@color/black"
                         android:textSize="14dp"/>
 
