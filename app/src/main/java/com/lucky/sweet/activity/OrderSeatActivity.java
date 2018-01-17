@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.model.OrderSeatManager;
+import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.views.DishesOrderDialog;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
@@ -45,6 +46,11 @@ public class OrderSeatActivity extends BaseActivity {
         initView();
 
         initEvent();
+
+    }
+
+    @Override
+    void onServiceBind(CommunicationService.MyBinder myBinder) {
 
     }
 

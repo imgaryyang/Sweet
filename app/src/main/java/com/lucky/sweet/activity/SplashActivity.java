@@ -6,6 +6,7 @@ import android.os.CountDownTimer;
 import android.widget.TextView;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.ToolBar;
 
 /**
@@ -29,6 +30,11 @@ public class SplashActivity extends BaseActivity {
         initViews();
 
         initializeSessionId();
+
+    }
+
+    @Override
+    void onServiceBind(CommunicationService.MyBinder myBinder) {
 
     }
 

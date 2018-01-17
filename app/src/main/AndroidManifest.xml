@@ -90,11 +90,7 @@
         </activity>
         <activity android:name=".activity.PersonalCircleActivity"/>
 
-        <service
-            android:name=".CommunicationService"
-            android:enabled="true"
-            android:exported="true">
-        </service>
+        <service android:name=".service.CommunicationService"/>
     </application>
 
 </manifest>

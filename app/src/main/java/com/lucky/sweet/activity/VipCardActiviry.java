@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.VipCardInfo;
+import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 import com.lucky.sweet.widgets.cardstack.CardStackView;
@@ -24,6 +25,11 @@ public class VipCardActiviry extends BaseActivity {
         initTitle();
 
         initView();
+
+    }
+
+    @Override
+    void onServiceBind(CommunicationService.MyBinder myBinder) {
 
     }
 

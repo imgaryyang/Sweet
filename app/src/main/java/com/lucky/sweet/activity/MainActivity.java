@@ -5,30 +5,40 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
-import android.view.View;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.fragment.ImCircleFragment;
 import com.lucky.sweet.fragment.ImMeFragment;
 import com.lucky.sweet.fragment.ImStoreFragment;
+import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.Tab.TabContainerView;
 import com.lucky.sweet.widgets.Tab.TabFragmentAdapter;
 import com.lucky.sweet.widgets.ToolBar;
 
-public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
+public class MainActivity extends BaseActivity {
 
     final ToolBar toolBar = new ToolBar(MainActivity.this);
     private TabContainerView mTabLayout;
-
+    private CommunicationService.MyBinder myBinder = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initViews();
 
+        initViews();
     }
+
+    @Override
+    void onServiceBind(CommunicationService.MyBinder myBinder) {
+        if (this.myBinder == null) {
+            myBinder.requestImStoreInfo(MainActivity.this, (ImStoreFragment) fragments[0]);
+        } else {
+            this.myBinder = myBinder;
+        }
+    }
+
 
     @Override
     protected boolean enableSliding() {
@@ -70,7 +80,24 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mPager.setAdapter(mAdapter);
 
         mTabLayout = findViewById(R.id.ll_tab_container);
-        mTabLayout.setOnPageChangeListener(this);
+        mTabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                for (int index = 0, len = fragments.length; index < len; index++) {
+                    fragments[index].onHiddenChanged(index != position);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         mTabLayout.initContainer(getResources().getStringArray(R.array.tab_name), ICONS_RES, TAB_COLORS, true);
 
@@ -81,27 +108,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mPager.setCurrentItem(getIntent().getIntExtra("tab", 0));
     }
 
-    public View getTabView() {
-        return mTabLayout;
-
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        for (int index = 0, len = fragments.length; index < len; index++) {
-            fragments[index].onHiddenChanged(index != position);
-        }
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
 
     @Override
     protected void onNewIntent(Intent intent) {

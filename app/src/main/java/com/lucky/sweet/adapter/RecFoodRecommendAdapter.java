@@ -14,7 +14,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.MainStoreInfo;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -65,7 +64,7 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == AdapterSize-1) {
+        if (viewType == AdapterSize - 1) {
             return new mMoreHolder(inflater.inflate(R.layout.item_recycle_more, parent,
                     false));
         }
@@ -110,7 +109,7 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     if (null != onItemClickListener) {
-                        onItemClickListener.onItemClickListener(position, finalMer_id);
+                        onItemClickListener.onItemClickListener(finalMer_id);
                     }
                 }
             });
@@ -163,7 +162,7 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
 
             public void setDis(double dis) {
 
-                this.dis = String.format("%.2f",dis);
+                this.dis = String.format("%.2f", dis);
             }
 
             public String getName() {
@@ -210,7 +209,7 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
     }
 
     public interface OnItemClickListener {
-        void onItemClickListener(int position, int shopId);
+        void onItemClickListener(int shopId);
     }
 
     private OnItemClickListener onItemClickListener;

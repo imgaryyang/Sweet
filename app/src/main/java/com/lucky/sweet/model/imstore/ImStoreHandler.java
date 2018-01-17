@@ -18,6 +18,8 @@ import com.lucky.sweet.fragment.ImStoreFragment;
 
 public class ImStoreHandler extends Handler {
 
+    public static final int UPDATALOCATION = 0;
+
     public static final int UPDATAWEATHER = 1;
 
     public static final int UPSHOWINFO = 2;
@@ -50,6 +52,10 @@ public class ImStoreHandler extends Handler {
                 MainStoreInfo info = (MainStoreInfo) msg.obj;
 
                 fragment.setShowInfo(info);
+                break;
+            case UPDATALOCATION:
+                String location = (String) msg.obj;
+                fragment.updataLocation(location);
                 break;
 
 

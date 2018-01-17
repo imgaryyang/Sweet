@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.model.loginregister.LoginRegisterManager;
+import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.ToolBar;
 
 public class UserLoginActivity extends BaseActivity {
@@ -29,6 +30,11 @@ public class UserLoginActivity extends BaseActivity {
         initView();
 
 
+
+    }
+
+    @Override
+    void onServiceBind(CommunicationService.MyBinder myBinder) {
 
     }
 

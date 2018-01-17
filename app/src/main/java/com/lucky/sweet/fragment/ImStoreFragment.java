@@ -25,7 +25,6 @@ import com.lucky.sweet.activity.StoreParticularInfoActivity;
 import com.lucky.sweet.adapter.AdViewPagerAdapter;
 import com.lucky.sweet.adapter.RecFoodRecommendAdapter;
 import com.lucky.sweet.entity.MainStoreInfo;
-import com.lucky.sweet.model.imstore.ImStoreManager;
 import com.lucky.sweet.utility.HiddenAnimUtils;
 import com.lucky.sweet.views.GradualChangeLinearLayout;
 import com.lucky.sweet.views.MySearchView;
@@ -60,7 +59,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
     private Context context;
     private HiddenAnimUtils hiddenAnimUtils;
-   // private List<MainStoreInfo.foodBean> showInfo;
+    // private List<MainStoreInfo.foodBean> showInfo;
     private Button btn_qrcodescan;
     private CollapsingToolbarLayout collapsingToolbarLayout;
 
@@ -95,7 +94,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
     private void initData() {
 
-        ImStoreManager imStoreManager = new ImStoreManager(this);
+        //ImStoreManager imStoreManager = new ImStoreManager(this);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -122,7 +121,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
         rec_foodStore.addOnScrollListener(new AdRecyCleViewOnScrollState
                 (context, AdRecyCleViewOnScrollState.FOOD));
-        rec_funStore .addOnScrollListener(new AdRecyCleViewOnScrollState
+        rec_funStore.addOnScrollListener(new AdRecyCleViewOnScrollState
                 (context, AdRecyCleViewOnScrollState.FUN));
 
 
@@ -142,7 +141,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         rec_funStore = view.findViewById(R.id.rec_funStore);
         //rec_ad_show = view.findViewById(R.id.rec_ad_show);
         btn_qrcodescan = view.findViewById(R.id.btn_qrcodescan);
-        collapsingToolbarLayout=view.findViewById(R.id.collapsingToolbarLayout);
+        collapsingToolbarLayout = view.findViewById(R.id.collapsingToolbarLayout);
         collapsingToolbarLayout.setContentScrim(getResources().getDrawable(R.drawable.search_bg));
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -174,7 +173,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MainSearchActiviy.class);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.act_up,R.anim.act_down);
+                getActivity().overridePendingTransition(R.anim.act_up, R.anim.act_down);
             }
         });
 
@@ -182,6 +181,9 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
 
     public void setShowInfo(MainStoreInfo showInfo) {
+
+
+
 
         vp_ad.setAdapter(new AdViewPagerAdapter(getContext(), showInfo
                 .getAdvertising()));
@@ -193,18 +195,18 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
         foodAdapter.setOnItemClickListener(new RecFoodRecommendAdapter.OnItemClickListener() {
             @Override
-            public void onItemClickListener(int position, int shopId) {
+            public void onItemClickListener( int shopId) {
                 Intent intent = new Intent(getActivity(), StoreParticularInfoActivity.class);
-                intent.putExtra("shopid", position);
+                intent.putExtra("shopid", shopId);
                 startActivity(intent);
 
             }
         });
         funAdapter.setOnItemClickListener(new RecFoodRecommendAdapter.OnItemClickListener() {
             @Override
-            public void onItemClickListener(int position, int shopId) {
+            public void onItemClickListener( int shopId) {
                 Intent intent = new Intent(getActivity(), StoreParticularInfoActivity.class);
-                intent.putExtra("shopid", position);
+                intent.putExtra("shopid", shopId);
                 startActivity(intent);
             }
         });

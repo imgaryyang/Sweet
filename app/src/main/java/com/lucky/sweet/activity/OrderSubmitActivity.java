@@ -12,6 +12,7 @@ import com.lucky.sweet.entity.InternetTime;
 import com.lucky.sweet.entity.ShopCarSingleInformation;
 import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
 import com.lucky.sweet.properties.Properties;
+import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.utility.HttpUtils;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
@@ -45,6 +46,11 @@ public class OrderSubmitActivity extends BaseActivity {
         initData();
 
         initEvent();
+
+    }
+
+    @Override
+    void onServiceBind(CommunicationService.MyBinder myBinder) {
 
     }
 

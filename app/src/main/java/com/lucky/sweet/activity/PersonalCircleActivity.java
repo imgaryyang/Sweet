@@ -3,8 +3,8 @@ package com.lucky.sweet.activity;
 import android.os.Bundle;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.views.CircleImageView;
-import com.lucky.sweet.views.ShopCarPopWindow;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -28,6 +28,11 @@ public class PersonalCircleActivity extends BaseActivity {
         setContentView(R.layout.activity_personal_circle);
         initTitle();
         initViews();
+    }
+
+    @Override
+    void onServiceBind(CommunicationService.MyBinder myBinder) {
+
     }
 
     private void initViews() {

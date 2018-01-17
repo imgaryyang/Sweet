@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -36,6 +37,11 @@ public class SetUserInfoActivity extends BaseActivity {
         initTitle();
         initData();
         initViews();
+    }
+
+    @Override
+    void onServiceBind(CommunicationService.MyBinder myBinder) {
+
     }
 
     private void initTitle() {

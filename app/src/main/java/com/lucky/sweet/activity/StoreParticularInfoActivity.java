@@ -17,6 +17,7 @@ import com.lucky.sweet.adapter.CircleListViewAdapter;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.model.particularinfo.ParticularInfoManager;
 
+import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.views.StarLevelIndicatorView;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
@@ -71,6 +72,11 @@ public class StoreParticularInfoActivity extends BaseActivity {
         initTitle();
 
         ParticularInfoManager particularInfoManager = new ParticularInfoManager(this);
+    }
+
+    @Override
+    void onServiceBind(CommunicationService.MyBinder myBinder) {
+
     }
 
     private void initEvent() {

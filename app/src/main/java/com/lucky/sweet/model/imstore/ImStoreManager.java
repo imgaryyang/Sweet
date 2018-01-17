@@ -50,25 +50,6 @@ public class ImStoreManager {
         initLocation();
     }
 
-    public ArrayList<Integer> getAdInfoList() {
-        ArrayList<Integer> strings = new ArrayList<Integer>();
-        strings.add(R.mipmap.adtestone);
-        strings.add(R.mipmap.adtesttwo);
-        strings.add(R.mipmap.adtestthree);
-        strings.add(R.mipmap.adtestfour);
-        return strings;
-    }
-
-
-    public List<RecreationInfo> getFoodList() {
-        List<RecreationInfo> recreationInfos = new ArrayList<>();
-        recreationInfos.add(new RecreationInfo());
-        recreationInfos.add(new RecreationInfo());
-        recreationInfos.add(new RecreationInfo());
-        recreationInfos.add(new RecreationInfo());
-        return recreationInfos;
-    }
-
     private void initLocation() {
         boolean networkState = PanduanNet.detect(ImStoreFragment.getActivity());
         if (!networkState) {

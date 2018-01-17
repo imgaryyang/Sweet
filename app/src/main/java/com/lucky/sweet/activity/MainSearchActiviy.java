@@ -1,7 +1,6 @@
 package com.lucky.sweet.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -11,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.ToolBar;
 
 public class MainSearchActiviy extends BaseActivity {
@@ -29,6 +29,11 @@ public class MainSearchActiviy extends BaseActivity {
         initView();
 
         initEvent();
+    }
+
+    @Override
+    void onServiceBind(CommunicationService.MyBinder myBinder) {
+
     }
 
     private void initEvent() {

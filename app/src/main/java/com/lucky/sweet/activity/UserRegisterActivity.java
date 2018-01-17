@@ -12,6 +12,7 @@ import com.lucky.sweet.model.loginregister.LoginRegisterManager;
 import com.lucky.sweet.noscrollview.DepthPageTransformer;
 import com.lucky.sweet.noscrollview.FragAdapter;
 import com.lucky.sweet.noscrollview.NoScrollViewPager;
+import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -39,6 +40,11 @@ public class UserRegisterActivity extends BaseActivity {
         initTitle();
 
         initData();
+
+    }
+
+    @Override
+    void onServiceBind(CommunicationService.MyBinder myBinder) {
 
     }
 

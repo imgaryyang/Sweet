@@ -1,10 +1,10 @@
 package com.lucky.sweet.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.views.PictureDisplayLayout;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -25,6 +25,11 @@ public class RecruitmentDisplayActivity extends BaseActivity {
         initView();
 
         initEvent();
+    }
+
+    @Override
+    void onServiceBind(CommunicationService.MyBinder myBinder) {
+
     }
 
     private void initView() {
