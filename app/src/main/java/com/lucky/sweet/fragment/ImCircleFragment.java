@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.activity.PersonalCircleActivity;
+import com.lucky.sweet.activity.SendCircleActivity;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
 import com.lucky.sweet.views.CircleImageView;
 import com.lucky.sweet.views.IndicatorView;
@@ -46,8 +47,17 @@ public class ImCircleFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_imcircle, container, false);
         imv_head = (CircleImageView)view.findViewById(R.id.imv_head);
         imv_head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
+        imv_head.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(), SendCircleActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+            }
+        });
 
         initView(view);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ToolBar toolBar = new ToolBar(getActivity());
             toolBar.setStatusBarDarkMode();
