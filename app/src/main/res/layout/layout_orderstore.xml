@@ -53,8 +53,7 @@
                 android:id="@+id/startIndicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                />
+                android:layout_marginLeft="30dp"/>
 
         </LinearLayout>
     </LinearLayout>
@@ -64,8 +63,9 @@
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:layout_marginBottom="5dp"
-        android:layout_marginLeft="50dp"
         android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_gravity="right|center_vertical"
         android:background="@mipmap/btn_order_bg"
         android:text="预订"
         android:textColor="@color/white"/>

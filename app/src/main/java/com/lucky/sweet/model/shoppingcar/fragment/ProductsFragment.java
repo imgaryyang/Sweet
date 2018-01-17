@@ -183,7 +183,7 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         parentLayout = (RelativeLayout) getView().findViewById(R.id.parentLayout);
         shoppingPrise = (TextView) getView().findViewById(R.id.shoppingPrise);
         shoppingNum = (TextView) getView().findViewById(R.id.shoppingNum);
-        settlement = (TextView) getView().findViewById(R.id.settlement);
+//        settlement = (TextView) getView().findViewById(R.id.settlement);
         mainlist = (ListView) getView().findViewById(R.id.classify_mainlist);
         morelist = (PinnedHeaderListView) getView().findViewById(R.id.classify_morelist);
         shopping_cart = (ImageView) getView().findViewById(R.id.shopping_cart);
@@ -290,7 +290,7 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         });
 
         bg_layout.setOnClickListener(this);
-        settlement.setOnClickListener(this);
+//        settlement.setOnClickListener(this);
         shopping_cart.setOnClickListener(this);
         settlement1.setOnClickListener(this);
 
@@ -439,15 +439,15 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
                 }
                 break;
 
-            case R.id.settlement:
-                if (productList == null) {
-                    return;
-                }
+//            case R.id.settlement:
+//                if (productList == null) {
+//                    return;
+//                }
 //                Intent intent = new Intent(getActivity(), SettlementActivity.class);
 //                IntentObjectPool.putObjectExtra(intent, CommonParameter.SETTLEMENT_DETAILS, productList);
 //                IntentObjectPool.putStringExtra(intent,"shopId",shopId);
 //                startActivity(intent);
-                break;
+//                break;
 
             case R.id.bg_layout:
                 cardLayout.setVisibility(View.GONE);

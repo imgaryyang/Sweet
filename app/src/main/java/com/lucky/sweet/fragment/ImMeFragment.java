@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.activity.OrderSubmitActivity;
 import com.lucky.sweet.activity.SetUserInfoActivity;
 import com.lucky.sweet.activity.VipCardActiviry;
 import com.lucky.sweet.views.CircleImageView;

@@ -96,7 +96,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="本店会员消费满188元享8.8折，每消费1元积分加1，积分可对换礼品，会员生日当天进店消费有礼品赠送，会员优惠最终解释权归店铺所有。"
+        android:text="本店会员消费满188元享8.8折，积分可对换礼品，会员生日当天进店消费有礼品赠送，会员优惠最终解释权归店铺所有。"
         android:textColor="@color/black"
         android:layout_marginTop="35dp"
         android:layout_marginLeft="15dp"
