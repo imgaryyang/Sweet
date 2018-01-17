@@ -99,6 +99,13 @@ public class MerchantActivity extends FragmentActivity implements ExpandingFragm
         ExpandingPagerFactory.setupViewPager(vp_dishes);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (!ExpandingPagerFactory.onBackPressed(vp_dishes)) {
+            super.onBackPressed();
+        }
+    }
+
     private void initEvent() {
         fg_shop_car.setOnClickListener(new ProductsFragment.OnClickListener() {
             @Override
@@ -112,7 +119,7 @@ public class MerchantActivity extends FragmentActivity implements ExpandingFragm
 
             @Override
             public void onItemClick(int position) {
-                vp_dishes.setCurrentItem(position,false);
+                vp_dishes.setCurrentItem(position, false);
                 if (vv_back.getVisibility() == View.GONE) {
                     vp_dishes.setVisibility(View.VISIBLE);
                     vv_back.setVisibility(View.VISIBLE);
@@ -167,7 +174,7 @@ public class MerchantActivity extends FragmentActivity implements ExpandingFragm
 
     @Override
     public void onExpandingClick(View v) {
-
+        startActivity(new Intent(MerchantActivity.this, DetailedDishesActivity.class));
     }
 
 

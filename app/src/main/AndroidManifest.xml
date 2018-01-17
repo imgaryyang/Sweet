@@ -91,8 +91,10 @@
         <activity android:name=".activity.PersonalCircleActivity"/>
 
         <service android:name=".service.CommunicationService"/>
-        <activity android:name=".activity.SendCircleActivity"/>
 
+        <activity android:name=".activity.SendCircleActivity"/>
+        <activity android:name=".activity.DetailedDishesActivity">
+        </activity>
     </application>
 
 </manifest>
