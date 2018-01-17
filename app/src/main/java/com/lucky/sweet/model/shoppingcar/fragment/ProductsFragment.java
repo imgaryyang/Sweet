@@ -181,6 +181,29 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         initData();
     }
 
+    private static int calculateListPositon(int section, int position, ArrayList<ProductType> data) {
+
+        if (section == 0)
+            return position;
+
+        int count = 0;
+        for (int i = 0; i < section; i++) {
+            if (i == section) {
+                for (int a = 0; a < position; a++) {
+                    count++;
+                }
+                continue;
+            }
+            List<ShopProduct> product = data.get(i).getProduct();
+            for (int a = 0; a < product.size(); a++) {
+                count++;
+            }
+
+        }
+
+        return count;
+    }
+
     private void initData() {
         productList = new ArrayList<>();
         strings = new ArrayList<>();
@@ -203,10 +226,11 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         morelist.setOnItemClickListener(new PinnedHeaderListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int section, int position, long id) {
-                if (onClickListener != null) {
-                    onClickListener.onItemClick();
-                }
                 Toast.makeText(getContext(), "section:" + section + "position" + position, Toast.LENGTH_SHORT).show();
+                if (onClickListener != null) {
+                    onClickListener.onItemClick(calculateListPositon(section,
+                            position, (ArrayList<ProductType>) productCategorizes));
+                }
 
             }
 
@@ -631,7 +655,7 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
     public interface OnClickListener {
         void onClickSubimt(ShopCarSingleInformation shopCarSingleInformation);
 
-        void onItemClick();
+        void onItemClick(int positon);
     }
 
     private OnClickListener onClickListener;

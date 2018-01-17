@@ -11,6 +11,8 @@ import com.lucky.sweet.entity.ShopCarSingleInformation;
 import com.lucky.sweet.model.shoppingcar.fragment.ProductsFragment;
 import com.lucky.sweet.model.shoppingcar.mode.ProductType;
 import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
+import com.lucky.sweet.model.wholedishes.adapter.TravelViewPagerAdapter;
+import com.lucky.sweet.model.wholedishes.lib.ExpandingPagerFactory;
 import com.lucky.sweet.model.wholedishes.lib.fragments.ExpandingFragment;
 import com.lucky.sweet.model.wholedishes.model.Travel;
 import com.lucky.sweet.views.SlidingLayoutView;
@@ -33,6 +35,7 @@ public class MerchantActivity extends FragmentActivity implements ExpandingFragm
 
     private ProductsFragment fg_shop_car;
     private ViewPager vp_dishes;
+    private View vv_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,14 +52,23 @@ public class MerchantActivity extends FragmentActivity implements ExpandingFragm
 
     }
 
-    private List<Travel> generateTravelList() {
-        List<Travel> travels = new ArrayList<>();
-        for (int i = 0; i < 5; ++i) {
-            travels.add(new Travel("Seychelles", R.mipmap.test_product));
-            travels.add(new Travel("Shang Hai", R.mipmap.test_product));
-            travels.add(new Travel("New York", R.mipmap.test_product));
-            travels.add(new Travel("castle", R.mipmap.test_product));
+    private List<Travel> generateTravelList(ArrayList<ProductType> data) {
+        int count = 0;
+        for (ProductType list : data) {
+            List<ShopProduct> product = list.getProduct();
+            for (int i = 0; i < product.size(); i++) {
+                count++;
+            }
+
         }
+        List<Travel> travels = new ArrayList<>();
+        for (int i = 0; i < count; ++i) {
+            travels.add(new Travel("Seychelles", R.mipmap.test_product));
+  /*          travels.add(new Travel("Shang Hai", R.mipmap.test_product));
+            travels.add(new Travel("New York", R.mipmap.test_product));
+            travels.add(new Travel("castle", R.mipmap.test_product));*/
+        }
+        System.out.println("Seychelles：" + travels.size());
         return travels;
     }
 
@@ -80,11 +92,11 @@ public class MerchantActivity extends FragmentActivity implements ExpandingFragm
     }
 
     private void initData() {
-/*        TravelViewPagerAdapter adapter = new TravelViewPagerAdapter(getSupportFragmentManager());
-        adapter.addAll(generateTravelList());*/
+        TravelViewPagerAdapter adapter = new TravelViewPagerAdapter(getSupportFragmentManager());
         fg_shop_car.initData(getShopCarInfo());
-/*        vp_dishes.setAdapter(adapter);
-        ExpandingPagerFactory.setupViewPager(vp_dishes);*/
+        adapter.addAll(generateTravelList(getShopCarInfo()));
+        vp_dishes.setAdapter(adapter);
+        ExpandingPagerFactory.setupViewPager(vp_dishes);
     }
 
     private void initEvent() {
@@ -99,11 +111,25 @@ public class MerchantActivity extends FragmentActivity implements ExpandingFragm
             }
 
             @Override
-            public void onItemClick() {
-                //  vp_dishes.setVisibility(View.VISIBLE);
+            public void onItemClick(int position) {
+                vp_dishes.setCurrentItem(position,false);
+                if (vv_back.getVisibility() == View.GONE) {
+                    vp_dishes.setVisibility(View.VISIBLE);
+                    vv_back.setVisibility(View.VISIBLE);
+                }
+
             }
         });
-        /*vp_dishes.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        vv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (vv_back.getVisibility() == View.VISIBLE) {
+                    vv_back.setVisibility(View.GONE);
+                    vp_dishes.setVisibility(View.GONE);
+                }
+            }
+        });
+        vp_dishes.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 ExpandingFragment expandingFragment = ExpandingPagerFactory.getCurrentFragment(vp_dishes);
@@ -120,7 +146,7 @@ public class MerchantActivity extends FragmentActivity implements ExpandingFragm
             public void onPageScrollStateChanged(int state) {
 
             }
-        });*/
+        });
 
     }
 
@@ -132,8 +158,8 @@ public class MerchantActivity extends FragmentActivity implements ExpandingFragm
     }
 
     private void initView() {
-
-       // vp_dishes = findViewById(R.id.vp_dishes);
+        vv_back = findViewById(R.id.vv_back);
+        vp_dishes = findViewById(R.id.vp_dishes);
         fg_shop_car = (ProductsFragment) getSupportFragmentManager().findFragmentById(R.id.fg_shop_car);
 
     }

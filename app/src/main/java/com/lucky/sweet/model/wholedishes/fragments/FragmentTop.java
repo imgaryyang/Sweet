@@ -6,24 +6,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.model.wholedishes.model.Travel;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 public class FragmentTop extends Fragment {
 
     static final String ARG_TRAVEL = "ARG_TRAVEL";
-    Travel travel;
-
-    @Bind(R.id.image)
-    ImageView image;
-    @Bind(R.id.title)
-    TextView title;
 
     public static FragmentTop newInstance(Travel travel) {
         Bundle args = new Bundle();
@@ -38,7 +27,7 @@ public class FragmentTop extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
-            travel = args.getParcelable(ARG_TRAVEL);
+
         }
     }
 
@@ -50,23 +39,7 @@ public class FragmentTop extends Fragment {
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
-
-        if (travel != null) {
-            image.setImageResource(travel.getImage());
-            title.setText(travel.getName());
-        }
 
     }
 
-   /* @SuppressWarnings("unchecked")
-    private void startInfoActivity(View view, Travel travel) {
-        FragmentActivity activity = getActivity();
-        ActivityCompat.startActivity(activity,
-            InfoActivity.newInstance(activity, travel),
-            ActivityOptionsCompat.makeSceneTransitionAnimation(
-                activity,
-                new Pair<>(view, getString(R.string.transition_image)))
-                .toBundle());
-    }*/
 }
