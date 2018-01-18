@@ -180,6 +180,7 @@ public class MerchantActivity extends FragmentActivity implements ExpandingFragm
     @Override
     public void onExpandingClick(View v) {
         startActivity(new Intent(MerchantActivity.this, DetailedDishesActivity.class));
+        overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
     }
 
     protected boolean enableSliding() {
