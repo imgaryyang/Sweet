@@ -52,4 +52,5 @@ dependencies {
     compile 'com.android.support:support-annotations:27.0.2'
     compile 'com.forward.androids:androids:1.1.7.1'
     compile 'com.zhy:okhttputils:2.0.0'
+    compile 'com.nex3z:flow-layout:1.1.0'
 }
