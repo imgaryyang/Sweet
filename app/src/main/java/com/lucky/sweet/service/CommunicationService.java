@@ -102,17 +102,17 @@ public class CommunicationService extends Service {
                         }
                     });
         }
-    }
+
+}
 
 
-    private interface OnMainDsplay {
-        void upDataLocation(String city);
+private interface OnMainDsplay {
+    void upDataLocation(String city);
 
-        void upDataWeather(WeatherInfo weatherInfo);
+    void upDataWeather(WeatherInfo weatherInfo);
 
-        void upDataShowInfo(MainStoreInfo mainStoreInfo);
-    }
-
+    void upDataShowInfo(MainStoreInfo mainStoreInfo);
+}
     private void initShopInfo(final double lat, final double lon) {
         HashMap<String, String> map = new HashMap<>();
         map.put("long", String.valueOf(lon));

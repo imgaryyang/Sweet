@@ -64,6 +64,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder
                 iBinder) {
+
             CommunicationService.MyBinder myBinder = (CommunicationService.MyBinder) iBinder;
             onServiceBind(myBinder);
 

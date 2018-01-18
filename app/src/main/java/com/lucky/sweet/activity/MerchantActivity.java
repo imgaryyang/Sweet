@@ -64,9 +64,6 @@ public class MerchantActivity extends FragmentActivity implements ExpandingFragm
         List<Travel> travels = new ArrayList<>();
         for (int i = 0; i < count; ++i) {
             travels.add(new Travel("Seychelles", R.mipmap.test_product));
-  /*          travels.add(new Travel("Shang Hai", R.mipmap.test_product));
-            travels.add(new Travel("New York", R.mipmap.test_product));
-            travels.add(new Travel("castle", R.mipmap.test_product));*/
         }
         System.out.println("Seychelles：" + travels.size());
         return travels;

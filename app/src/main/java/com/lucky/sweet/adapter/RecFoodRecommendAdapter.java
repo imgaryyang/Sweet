@@ -35,6 +35,7 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
 
     public final static int FOOD = 0;
     public final static int FUN = 1;
+    private mMoreHolder moreHolder;
 
 
     public RecFoodRecommendAdapter(Context context, int type, List data) {
@@ -76,7 +77,7 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
         if (holder instanceof mViewHolder) {
 
             mViewHolder.FoodBean info = new mViewHolder.FoodBean();
-            String  mer_id="" ;
+            String mer_id = "";
             switch (type) {
                 case FOOD:
                     MainStoreInfo.FoodBean foodBean = food.get(position);
@@ -103,7 +104,6 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
             mViewHolder mViewHolder = (mViewHolder) holder;
 
 
-
             mViewHolder.bindData(info, context);
             final String finalMer_id = mer_id;
 
@@ -115,9 +115,14 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
                     }
                 }
             });
+        } else {
+            moreHolder = (mMoreHolder) holder;
         }
     }
 
+    public void nowLoading() {
+          moreHolder.loadingMore();
+    }
 
     @Override
     public int getItemCount() {
@@ -204,14 +209,20 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
     }
 
     static class mMoreHolder extends RecyclerView.ViewHolder {
+        View view;
 
         public mMoreHolder(View itemView) {
             super(itemView);
+              view = itemView.findViewById(R.id.pb_main_loading);
+        }
+
+        public void loadingMore() {
+            view.setVisibility(View.VISIBLE);
         }
     }
 
     public interface OnItemClickListener {
-        void onItemClickListener(String  shopId);
+        void onItemClickListener(String shopId);
     }
 
     private OnItemClickListener onItemClickListener;

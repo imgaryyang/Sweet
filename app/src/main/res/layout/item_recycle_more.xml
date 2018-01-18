@@ -9,4 +9,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="滑动查看更多"/>
+
+    <ProgressBar
+        android:visibility="invisible"
+        android:id="@+id/pb_main_loading"
+        android:layout_gravity="center_vertical"
+        android:layout_width="@dimen/dimen_20_dp"
+        android:layout_height="@dimen/dimen_20_dp"/>
 </LinearLayout>

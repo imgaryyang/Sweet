@@ -26,6 +26,7 @@ public class MainSearchActiviy extends BaseActivity {
         setContentView(R.layout.activity_main_search_activiy);
         ToolBar toolBar = new ToolBar(this);
         toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
+
         initView();
 
         initEvent();

@@ -143,8 +143,9 @@ public class StoreDisplatActivity extends BaseActivity {
         lv_storeInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Intent intent = new Intent(StoreDisplatActivity.this, StoreParticularInfoActivity.class);
-                intent.putExtra("shopid", position);
+                intent.putExtra("shopid", ""+position);
                 startActivity(intent);
                 goNextAnim();
             }
