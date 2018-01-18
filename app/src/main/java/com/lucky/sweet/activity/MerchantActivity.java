@@ -1,10 +1,14 @@
 package com.lucky.sweet.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.ShopCarSingleInformation;
@@ -36,6 +40,7 @@ public class MerchantActivity extends FragmentActivity implements ExpandingFragm
     private ProductsFragment fg_shop_car;
     private ViewPager vp_dishes;
     private View vv_back;
+    private Button btn_cancle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,16 +125,19 @@ public class MerchantActivity extends FragmentActivity implements ExpandingFragm
                 if (vv_back.getVisibility() == View.GONE) {
                     vp_dishes.setVisibility(View.VISIBLE);
                     vv_back.setVisibility(View.VISIBLE);
+                    btn_cancle.setVisibility(View.VISIBLE);
                 }
 
             }
         });
-        vv_back.setOnClickListener(new View.OnClickListener() {
+        btn_cancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (vv_back.getVisibility() == View.VISIBLE) {
                     vv_back.setVisibility(View.GONE);
                     vp_dishes.setVisibility(View.GONE);
+                    btn_cancle.setVisibility(View.GONE);
+
                 }
             }
         });
@@ -156,22 +164,26 @@ public class MerchantActivity extends FragmentActivity implements ExpandingFragm
 
     private void initToolBar() {
         ToolBar toolBar = new ToolBar(this);
-        toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
-        SlidingLayoutView rootView = new SlidingLayoutView(this);
-        rootView.bindActivity(this);
+        toolBar.setStatusBarDarkMode();
+        /*SlidingLayoutView rootView = new SlidingLayoutView(this);
+        rootView.bindActivity(this);*/
     }
 
     private void initView() {
         vv_back = findViewById(R.id.vv_back);
         vp_dishes = findViewById(R.id.vp_dishes);
         fg_shop_car = (ProductsFragment) getSupportFragmentManager().findFragmentById(R.id.fg_shop_car);
-
+        btn_cancle = (Button)findViewById(R.id.btn_cancle);
     }
 
 
     @Override
     public void onExpandingClick(View v) {
         startActivity(new Intent(MerchantActivity.this, DetailedDishesActivity.class));
+    }
+
+    protected boolean enableSliding() {
+        return true;
     }
 
 
