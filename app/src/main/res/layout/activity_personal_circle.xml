@@ -3,8 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@mipmap/theme_bg"
     android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/title_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/view_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"/>
+    </LinearLayout>
 
     <include layout="@layout/layout_title"/>
 
@@ -40,17 +51,16 @@
             android:gravity="center"
             android:text="+关注"
             android:textColor="@color/gray3"
-            android:layout_toRightOf="@id/imv_head"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/tv_name"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="115dp"
             android:textSize="12dp"/>
-
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/tv_level"
+            android:layout_marginTop="25dp"
+            android:layout_toRightOf="@id/imv_head"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_marginLeft="15dp"
@@ -62,7 +72,7 @@
             android:layout_height="wrap_content"
             android:text="装修很不错，光顾着拍照了，不过菜品也很好吃,装修很不错，光顾着拍照了，不过菜品也很好吃"
             android:textColor="@color/black"
-            android:layout_below="@id/tv_name"
+            android:layout_below="@id/tv_level"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"/>

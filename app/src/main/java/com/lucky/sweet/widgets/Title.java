@@ -180,7 +180,7 @@ public class Title extends RelativeLayout{
         switch (theme){
             case THEME_TRANSLATE:
                 if(titleName != null){
-                    titleName.setTextColor(Color.WHITE);
+                    titleName.setTextColor(Color.BLACK);
                 }
                 /*buttonHolderLeft.text.setTextColor(Color.WHITE);
                 buttonHolderRight1.text.setTextColor(Color.WHITE);
