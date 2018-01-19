@@ -1,6 +1,6 @@
 package com.lucky.sweet;
 
-import com.lucky.sweet.model.loginregister.LoginRegisterManager;
+import com.lucky.sweet.model.LoginRegisterManager;
 
 import org.junit.Test;
 

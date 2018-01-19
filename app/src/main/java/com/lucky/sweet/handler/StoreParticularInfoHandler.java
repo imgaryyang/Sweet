@@ -1,4 +1,4 @@
-package com.lucky.sweet.model;
+package com.lucky.sweet.handler;
 
 import android.os.Handler;
 import android.os.Message;

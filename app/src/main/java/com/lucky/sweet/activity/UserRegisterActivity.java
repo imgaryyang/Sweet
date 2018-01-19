@@ -8,7 +8,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.lucky.sweet.R;
 import com.lucky.sweet.fragment.EmailSubmitFragment;
 import com.lucky.sweet.fragment.PassWordSubimitFragment;
-import com.lucky.sweet.model.loginregister.LoginRegisterManager;
+import com.lucky.sweet.model.LoginRegisterManager;
 import com.lucky.sweet.noscrollview.DepthPageTransformer;
 import com.lucky.sweet.noscrollview.FragAdapter;
 import com.lucky.sweet.noscrollview.NoScrollViewPager;

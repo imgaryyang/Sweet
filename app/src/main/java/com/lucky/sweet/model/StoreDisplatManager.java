@@ -1,4 +1,4 @@
-package com.lucky.sweet.model.storedisplay;
+package com.lucky.sweet.model;
 
 import android.content.Context;
 

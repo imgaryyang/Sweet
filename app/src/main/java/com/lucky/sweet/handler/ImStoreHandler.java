@@ -1,4 +1,4 @@
-package com.lucky.sweet.model.imstore;
+package com.lucky.sweet.handler;
 
 import android.content.Context;
 import android.os.Handler;

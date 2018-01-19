@@ -1,4 +1,4 @@
-package com.lucky.sweet.model.loginregister;
+package com.lucky.sweet.model;
 
 import android.content.Context;
 import android.os.Message;
@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.lucky.sweet.entity.UserLoginInfo;
+import com.lucky.sweet.handler.LoginRegisterHandler;
 import com.lucky.sweet.properties.Properties;
 
 import java.io.IOException;

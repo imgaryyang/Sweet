@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.activity.BaseActivity;
-import com.lucky.sweet.model.loginregister.LoginRegisterManager;
+import com.lucky.sweet.model.LoginRegisterManager;
 import com.lucky.sweet.utility.StringFormatUtility;
 
 /**

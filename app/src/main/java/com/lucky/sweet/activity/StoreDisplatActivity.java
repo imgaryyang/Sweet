@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.SearchSpinnerAdapter;
 import com.lucky.sweet.adapter.ShowInfoListViewAdapter;
-import com.lucky.sweet.model.storedisplay.StoreDisplatManager;
+import com.lucky.sweet.model.StoreDisplatManager;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
