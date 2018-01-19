@@ -62,6 +62,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private ScrollView sv_storeInfo;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,11 +140,11 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
         StoreDetailedInfo.InfoBean.ShopdesBean shopdes = info.getShopdes();
 
-
+        tv_shop_int.setText(shopdes.getClassify());
         tv_shop_title.setText(shopdes.getName());
-        tv_shop_int.setText(shopdes.getIntroduce());
+        tv_shop_des.setText(shopdes.getIntroduce());
         tv_shop_worktime.setText(shopdes.getBusiness_hours());
-        //tv_shop_des.setText(shopdes.get);
+
         latLng = new LatLng(Double.valueOf(shopdes.getLatitude()),
                 Double.valueOf(shopdes.getLongitude()));
         maps = map.getMap();

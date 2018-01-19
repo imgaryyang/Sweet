@@ -27,6 +27,7 @@ import com.lucky.sweet.adapter.RecFoodRecommendAdapter;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.utility.HiddenAnimUtils;
 import com.lucky.sweet.views.GradualChangeLinearLayout;
+import com.lucky.sweet.views.IndicatorView;
 import com.lucky.sweet.views.MySearchView;
 import com.lucky.sweet.viewsexpand.AdRecyCleViewOnScrollState;
 import com.lucky.sweet.viewsexpand.AdViewPagerTransformer;
@@ -61,7 +62,10 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
     private HiddenAnimUtils hiddenAnimUtils;
     // private List<MainStoreInfo.foodBean> showInfo;
     private Button btn_qrcodescan;
+
+
     private CollapsingToolbarLayout collapsingToolbarLayout;
+    private IndicatorView in_vp_ad;
 
     @Override
     public void onAttach(Context context) {
@@ -142,6 +146,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         //rec_ad_show = view.findViewById(R.id.rec_ad_show);
         btn_qrcodescan = view.findViewById(R.id.btn_qrcodescan);
         collapsingToolbarLayout = view.findViewById(R.id.collapsingToolbarLayout);
+        in_vp_ad = view.findViewById(R.id.in_vp_ad);
         collapsingToolbarLayout.setContentScrim(getResources().getDrawable(R.drawable.search_bg));
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -176,7 +181,25 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
                 getActivity().overridePendingTransition(R.anim.act_up, R.anim.act_down);
             }
         });
+        vp_ad.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                in_vp_ad.playByStartPointToNext(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
 
@@ -185,7 +208,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
         vp_ad.setAdapter(new AdViewPagerAdapter(getContext(), showInfo
                 .getAdvertising()));
-
+        in_vp_ad.initIndicator(showInfo.getAdvertising().size());
         RecFoodRecommendAdapter foodAdapter = new RecFoodRecommendAdapter
                 (context, RecFoodRecommendAdapter.FOOD, showInfo.getFood());
         RecFoodRecommendAdapter funAdapter = new RecFoodRecommendAdapter

@@ -9,6 +9,7 @@
     tools:context="com.lucky.sweet.activity.DetailedDishesActivity">
 
     <com.lucky.sweet.widgets.ZoomInScrollView
+        android:id="@+id/sc_zoom"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -148,9 +149,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:divider="#00000000">
-
-            </com.lucky.sweet.views.MyListView>
+                android:divider="#00000000"/>
 
         </LinearLayout>
     </com.lucky.sweet.widgets.ZoomInScrollView>
