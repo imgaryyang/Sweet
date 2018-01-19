@@ -1,25 +1,15 @@
 package com.lucky.sweet.activity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.ShopCarSingleInformation;
 import com.lucky.sweet.model.shoppingcar.fragment.ProductsFragment;
 import com.lucky.sweet.model.shoppingcar.mode.ProductType;
 import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
-import com.lucky.sweet.model.wholedishes.adapter.TravelViewPagerAdapter;
-import com.lucky.sweet.model.wholedishes.lib.ExpandingPagerFactory;
-import com.lucky.sweet.model.wholedishes.lib.fragments.ExpandingFragment;
 import com.lucky.sweet.model.wholedishes.model.Travel;
-import com.lucky.sweet.views.SlidingLayoutView;
 import com.lucky.sweet.widgets.ToolBar;
 
 import java.util.ArrayList;
@@ -34,13 +24,11 @@ import java.util.List;
 // ( (oo) )  ( (oo) )  ( (oo) )
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
-public class MerchantActivity extends FragmentActivity implements ExpandingFragment.OnExpandingClickListener {
+public class MerchantActivity extends FragmentActivity {
 
 
     private ProductsFragment fg_shop_car;
-    private ViewPager vp_dishes;
-    private View vv_back;
-    private Button btn_cancle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,19 +82,9 @@ public class MerchantActivity extends FragmentActivity implements ExpandingFragm
     }
 
     private void initData() {
-        TravelViewPagerAdapter adapter = new TravelViewPagerAdapter(getSupportFragmentManager());
         fg_shop_car.initData(getShopCarInfo());
-        adapter.addAll(generateTravelList(getShopCarInfo()));
-        vp_dishes.setAdapter(adapter);
-        ExpandingPagerFactory.setupViewPager(vp_dishes);
     }
 
-    @Override
-    public void onBackPressed() {
-        if (!ExpandingPagerFactory.onBackPressed(vp_dishes)) {
-            super.onBackPressed();
-        }
-    }
 
     private void initEvent() {
         fg_shop_car.setOnClickListener(new ProductsFragment.OnClickListener() {
@@ -121,44 +99,13 @@ public class MerchantActivity extends FragmentActivity implements ExpandingFragm
 
             @Override
             public void onItemClick(int position) {
-                vp_dishes.setCurrentItem(position, false);
-                if (vv_back.getVisibility() == View.GONE) {
-                    vp_dishes.setVisibility(View.VISIBLE);
-                    vv_back.setVisibility(View.VISIBLE);
-                    btn_cancle.setVisibility(View.VISIBLE);
-                }
-
+                Intent intent = new Intent(MerchantActivity.this,
+                        DischesViewShowActivity.class);
+                intent.putExtra("POSITON", position);
+                startActivity(intent);
             }
         });
-        btn_cancle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (vv_back.getVisibility() == View.VISIBLE) {
-                    vv_back.setVisibility(View.GONE);
-                    vp_dishes.setVisibility(View.GONE);
-                    btn_cancle.setVisibility(View.GONE);
 
-                }
-            }
-        });
-        vp_dishes.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                ExpandingFragment expandingFragment = ExpandingPagerFactory.getCurrentFragment(vp_dishes);
-                if (expandingFragment != null && expandingFragment.isOpenend()) {
-                    expandingFragment.close();
-                }
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
     }
 
@@ -170,21 +117,9 @@ public class MerchantActivity extends FragmentActivity implements ExpandingFragm
     }
 
     private void initView() {
-        vv_back = findViewById(R.id.vv_back);
-        vp_dishes = findViewById(R.id.vp_dishes);
+
         fg_shop_car = (ProductsFragment) getSupportFragmentManager().findFragmentById(R.id.fg_shop_car);
-        btn_cancle = (Button)findViewById(R.id.btn_cancle);
-    }
 
-
-    @Override
-    public void onExpandingClick(View v) {
-        startActivity(new Intent(MerchantActivity.this, DetailedDishesActivity.class));
-        overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
-    }
-
-    protected boolean enableSliding() {
-        return true;
     }
 
 
