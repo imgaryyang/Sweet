@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.model.OrderSeatManager;
+import com.lucky.sweet.entity.PerdetermingEntity;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.views.DishesOrderDialog;
 import com.lucky.sweet.widgets.Title;
@@ -37,6 +37,8 @@ public class OrderSeatActivity extends BaseActivity {
     private TextView tv_timeSelect;
     private TextView edt_num;
     private EditText et_input_phone;
+    private String[] data;
+    private String[][] time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,19 +51,25 @@ public class OrderSeatActivity extends BaseActivity {
 
     }
 
+    private CommunicationService.MyBinder myBinder;
+
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
-
+        this.myBinder = myBinder;
+        myBinder.requestPerdeterming(this);
     }
 
     private void initView() {
         tv_timeSelect = findViewById(R.id.tv_timeSelect);
         edt_num = findViewById(R.id.edt_num);
-        et_input_phone = (EditText)findViewById(R.id.et_input_phone);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams
-                .SOFT_INPUT_ADJUST_PAN);
+        et_input_phone = findViewById(R.id.et_input_phone);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         initTitle();
+    }
 
+    public void upDateRequest(PerdetermingEntity entity) {
+        data = entity.getData();
+        time = entity.getTime();
     }
 
     private void initEvent() {
@@ -71,7 +79,7 @@ public class OrderSeatActivity extends BaseActivity {
 
                 DishesOrderDialog dishesOrderDialog = new DishesOrderDialog
                         (OrderSeatActivity.this,
-                        OrderSeatManager.getDate(), OrderSeatManager.getTime());
+                                data, time);
                 dishesOrderDialog.setDateSelectListener
                         (new DishesOrderDialog.OnDateSelectListener() {
                             @Override
@@ -89,8 +97,8 @@ public class OrderSeatActivity extends BaseActivity {
             public void onClick(View v) {
 
                 String phone = et_input_phone.getText().toString().trim();
-                boolean result=isPhoneNumber(phone);
-                if (result==true){
+                boolean result = isPhoneNumber(phone);
+                if (result == true) {
                     AlertDialog dialog = new AlertDialog.Builder(OrderSeatActivity.this)
 //                        .setTitle("标题")
                             .setMessage("需要提前点菜吗？")
@@ -115,11 +123,9 @@ public class OrderSeatActivity extends BaseActivity {
                             })
                             .create();
                     dialog.show();
-                }else {
-                    Toast.makeText(getApplication(),"手机号不对哦，请重新输入",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplication(), "手机号不对哦，请重新输入", Toast.LENGTH_SHORT).show();
                 }
-
-
 
 
             }

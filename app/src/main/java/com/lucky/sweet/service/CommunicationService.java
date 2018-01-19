@@ -9,13 +9,16 @@ import android.os.Message;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.lucky.sweet.activity.OrderSeatActivity;
 import com.lucky.sweet.activity.StoreParticularInfoActivity;
 import com.lucky.sweet.entity.MainStoreInfo;
+import com.lucky.sweet.entity.PerdetermingEntity;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.entity.WeatherInfo;
 import com.lucky.sweet.fragment.ImStoreFragment;
-import com.lucky.sweet.handler.StoreParticularInfoHandler;
 import com.lucky.sweet.handler.ImStoreHandler;
+import com.lucky.sweet.handler.OrderSeatHandler;
+import com.lucky.sweet.handler.StoreParticularInfoHandler;
 import com.lucky.sweet.properties.Properties;
 import com.lucky.sweet.utility.HttpUtils;
 import com.lucky.sweet.utility.PanduanNet;
@@ -103,16 +106,64 @@ public class CommunicationService extends Service {
                     });
         }
 
-}
+        public void requestPerdeterming(OrderSeatActivity activity) {
+            final OrderSeatHandler orderSeatHandler = new OrderSeatHandler(activity);
+            CommunicationService.this.requestPredetermined(new PerdetermingRequest() {
+                @Override
+                public void getIt(PerdetermingEntity entitys) {
+
+                    Message msg = new Message();
+                    msg.obj = entitys;
+                    msg.what = OrderSeatHandler.UPDATE_DIALOGDAT;
+                    orderSeatHandler.sendMessage(msg);
+                }
 
 
-private interface OnMainDsplay {
-    void upDataLocation(String city);
+            });
+        }
 
-    void upDataWeather(WeatherInfo weatherInfo);
+    }
 
-    void upDataShowInfo(MainStoreInfo mainStoreInfo);
-}
+    private interface PerdetermingRequest {
+        void getIt(PerdetermingEntity entitys);
+    }
+
+    private void requestPredetermined(PerdetermingRequest request) {
+        String[] data = {"一月十九", "一月二十", "一月二十一", "一月二十二", "一月二十三",
+                "一月二十四"};
+        String[][] time = {
+                {
+                        "1", "2", "3", "4", "5", "6"
+                },
+                {
+                        "?", "?"
+                },
+                {
+                        "aaa", "bbbb", "cccc", "dddd", "eee"
+                },
+                {
+                        "aaaaa", "cccc"
+                },
+                {
+                        "1", "2", "3", "4", "5", "6"
+                },
+                {
+                        "?", "?"
+                }
+        };
+        request.getIt(new PerdetermingEntity().setData(data).setTime(time));
+    }
+
+
+    private interface OnMainDsplay {
+
+        void upDataLocation(String city);
+
+        void upDataWeather(WeatherInfo weatherInfo);
+
+        void upDataShowInfo(MainStoreInfo mainStoreInfo);
+    }
+
     private void initShopInfo(final double lat, final double lon) {
         HashMap<String, String> map = new HashMap<>();
         map.put("long", String.valueOf(lon));

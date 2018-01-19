@@ -27,12 +27,12 @@
         android:focusable="false"
         android:src="@mipmap/logo_user_register"/>
 
-    <com.lucky.sweet.noscrollview.NoScrollViewPager
+    <com.lucky.sweet.widgets.noscrollview.NoScrollViewPager
         android:id="@+id/vp_reg"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </com.lucky.sweet.noscrollview.NoScrollViewPager>
+    </com.lucky.sweet.widgets.noscrollview.NoScrollViewPager>
 
 
 </LinearLayout>

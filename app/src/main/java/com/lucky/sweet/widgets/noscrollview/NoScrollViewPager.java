@@ -1,4 +1,4 @@
-package com.lucky.sweet.noscrollview;
+package com.lucky.sweet.widgets.noscrollview;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

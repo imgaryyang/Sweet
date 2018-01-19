@@ -11,7 +11,7 @@
         android:background="@android:color/white"
         android:orientation="vertical">
 
-        <com.lucky.sweet.noscrollview.NoScrollViewPager
+        <com.lucky.sweet.widgets.noscrollview.NoScrollViewPager
 
             android:id="@+id/tab_pager"
             android:layout_width="match_parent"

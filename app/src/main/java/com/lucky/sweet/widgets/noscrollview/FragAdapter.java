@@ -1,4 +1,4 @@
-package com.lucky.sweet.noscrollview;
+package com.lucky.sweet.widgets.noscrollview;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
