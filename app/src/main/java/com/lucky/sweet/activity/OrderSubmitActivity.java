@@ -58,8 +58,8 @@ public class OrderSubmitActivity extends BaseActivity {
         findViewById(R.id.btn_submit_order).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                startActivity(new Intent(OrderSubmitActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                startActivity(new Intent(OrderSubmitActivity.this,
+                        SettlementActivity.class));
                 goFadeAnim();
             }
         });

@@ -56,10 +56,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="桌号："
-                        android:textSize="20dp"
                         android:layout_marginLeft="10dp"
+                        android:text="桌号："
                         android:textColor="@color/black"
+                        android:textSize="20dp"
                         android:textStyle="bold"/>
 
                     <TextView
@@ -67,8 +67,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="8"
-                        android:textSize="20dp"
                         android:textColor="@color/black"
+                        android:textSize="20dp"
                         android:textStyle="bold"/>
                 </LinearLayout>
 
@@ -76,8 +76,8 @@
                     android:id="@+id/tv_shop_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
                     android:text="101烤羊腿（旅顺南路店）"
                     android:textColor="@color/black"/>
 
@@ -89,9 +89,9 @@
                     android:layout_marginTop="30dp">
 
                     <TextView
-                        android:layout_marginLeft="15dp"
                         android:layout_width="@dimen/dimen_0_dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
                         android:layout_weight="2"
                         android:text=" 名称"
                         android:textColor="@color/black"/>
@@ -104,11 +104,11 @@
                         android:textColor="@color/black"/>
 
                     <TextView
-                        android:layout_marginRight="15dp"
-                        android:gravity="right"
                         android:layout_width="@dimen/dimen_0_dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
                         android:layout_weight="1"
+                        android:gravity="right"
                         android:text="价格"
                         android:textColor="@color/black"/>
                 </LinearLayout>
@@ -116,8 +116,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:background="@color/gray3"/>
 
                 <LinearLayout
@@ -129,8 +129,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:background="@color/gray3"/>
 
                 <RelativeLayout
@@ -142,8 +142,8 @@
                         android:id="@+id/tv_now_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
                         android:text="2017.12.18 23:11"
                         android:textColor="@color/black"/>
 
@@ -161,11 +161,11 @@
 
                     <TextView
                         android:id="@+id/tv_cost_num"
-                        android:layout_marginRight="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_below="@+id/tv_cos_title"
+                        android:layout_marginRight="10dp"
                         android:gravity="right"
                         android:text="￥ 1111.00"
                         android:textColor="@color/black"
@@ -188,7 +188,7 @@
         android:layout_marginRight="45dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/bg_button_submitorder"
-        android:text="确认"
+        android:text="确认付款"
         android:textColor="@color/white"/>
 
 </RelativeLayout>

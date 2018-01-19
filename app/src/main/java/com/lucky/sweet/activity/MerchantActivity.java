@@ -9,11 +9,9 @@ import com.lucky.sweet.entity.ShopCarSingleInformation;
 import com.lucky.sweet.model.shoppingcar.fragment.ProductsFragment;
 import com.lucky.sweet.model.shoppingcar.mode.ProductType;
 import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
-import com.lucky.sweet.model.wholedishes.model.Travel;
 import com.lucky.sweet.widgets.ToolBar;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Qiuyue on 2018/1/3.
@@ -45,22 +43,6 @@ public class MerchantActivity extends FragmentActivity {
 
     }
 
-    private List<Travel> generateTravelList(ArrayList<ProductType> data) {
-        int count = 0;
-        for (ProductType list : data) {
-            List<ShopProduct> product = list.getProduct();
-            for (int i = 0; i < product.size(); i++) {
-                count++;
-            }
-
-        }
-        List<Travel> travels = new ArrayList<>();
-        for (int i = 0; i < count; ++i) {
-            travels.add(new Travel("Seychelles", R.mipmap.test_product));
-        }
-        System.out.println("Seychelles：" + travels.size());
-        return travels;
-    }
 
     private ArrayList<ProductType> getShopCarInfo() {
         ArrayList<ProductType> productCategorizes = new ArrayList<>();
@@ -112,8 +94,7 @@ public class MerchantActivity extends FragmentActivity {
     private void initToolBar() {
         ToolBar toolBar = new ToolBar(this);
         toolBar.setStatusBarDarkMode();
-        /*SlidingLayoutView rootView = new SlidingLayoutView(this);
-        rootView.bindActivity(this);*/
+
     }
 
     private void initView() {

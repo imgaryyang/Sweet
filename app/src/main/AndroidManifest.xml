@@ -97,6 +97,8 @@
         </activity>
         <activity android:name=".activity.DischesViewShowActivity">
         </activity>
+        <activity android:name=".activity.SettlementActivity">
+        </activity>
     </application>
 
 </manifest>
