@@ -2,10 +2,13 @@ package com.lucky.sweet.service;
 
 import android.app.Activity;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Message;
+import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -14,9 +17,11 @@ import com.lucky.sweet.activity.StoreParticularInfoActivity;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.PerdetermingEntity;
 import com.lucky.sweet.entity.StoreDetailedInfo;
+import com.lucky.sweet.entity.UserLoginInfo;
 import com.lucky.sweet.entity.WeatherInfo;
 import com.lucky.sweet.fragment.ImStoreFragment;
 import com.lucky.sweet.handler.ImStoreHandler;
+import com.lucky.sweet.handler.LoginRegisterHandler;
 import com.lucky.sweet.handler.OrderSeatHandler;
 import com.lucky.sweet.handler.StoreParticularInfoHandler;
 import com.lucky.sweet.properties.Properties;
@@ -33,6 +38,8 @@ import java.util.HashMap;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 
@@ -55,6 +62,85 @@ public class CommunicationService extends Service {
     }
 
     public class MyBinder extends Binder {
+        /**
+         * 用户登陆
+         *
+         * @param email    用户邮箱
+         * @param password 密码
+         */
+        public void userLogin(Context context, String email, String password) {
+
+            sendLoginRegesiterRequest(context, USERLOGIN, email, password);
+
+        }
+
+        /**
+         * 请求验证码
+         *
+         * @param email 邮箱字符串
+         */
+        public void checkOutEmail(Context context, String email) {
+
+            sendLoginRegesiterRequest(context, CHECKOUTEMAIL, email, null);
+
+        }
+
+        /**
+         * 提交验证码和邮件地址
+         *
+         * @param email       邮件地址
+         * @param verPassword 验证码
+         * @return
+         */
+        public void emailVer(Context context, String email, String verPassword) {
+
+            sendLoginRegesiterRequest(context, EMAILVER, email, verPassword);
+
+        }
+
+        /**
+         * 提交邮箱和密码
+         *
+         * @param email    邮箱
+         * @param password 密码
+         */
+        public void userRegister(Context context, String email, String password) {
+
+            sendLoginRegesiterRequest(context, USERREGISTER, email, password);
+
+        }
+
+        /**
+         * 忘记密码确认邮箱
+         *
+         * @param email
+         */
+        public void forgetSubmit(Context context, String email) {
+
+            sendLoginRegesiterRequest(context, FORGETSUBMIT, email, null);
+
+        }
+
+
+        public void forgetValidate(Context context, String email, String
+                verPassword) {
+
+            sendLoginRegesiterRequest(context, FORGETVALIDATE, email,
+                    verPassword);
+
+        }
+
+        public void userForget(Context context, String email, String password) {
+
+            sendLoginRegesiterRequest(context, USERFORGET, email, password);
+
+        }
+
+        private void sendLoginRegesiterRequest(Context context, final int type, final String email, @Nullable final String password) {
+            LoginRegisterHandler handler = new LoginRegisterHandler(context);
+            CommunicationService.this.requestLoginRegister(type, email, password, handler);
+
+        }
 
         public void requestImStoreInfo(Activity activity, final ImStoreFragment fragment) {
             CommunicationService.this.initLocation(activity, new OnMainDsplay() {
@@ -121,6 +207,7 @@ public class CommunicationService extends Service {
 
             });
         }
+
 
     }
 
@@ -314,4 +401,102 @@ public class CommunicationService extends Service {
     public interface OnParticularDis {
         void upDataInfo(StoreDetailedInfo storeDetailedInfo);
     }
+
+    private Boolean isLogin = false;
+    private Context context;
+    /**
+     * USERLOGIN ：用户登陆
+     */
+    public final static int USERLOGIN = 1;
+    /**
+     * CHECKOUTEMAIL ：邮箱检测
+     * EMAILVER ：确认验证码
+     * USERREGISTER ：用户注册
+     */
+    public final static int CHECKOUTEMAIL = 2;
+    public final static int EMAILVER = 3;
+    public final static int USERREGISTER = 4;
+    /**
+     * FORGETSUBMIT:找回密码确认邮箱
+     * FORGETVALIDATE：验证邮箱和对应邮箱验证码
+     * USERFORGET：修改密码
+     */
+    public final static int FORGETSUBMIT = 5;
+    public final static int FORGETVALIDATE = 6;
+    public final static int USERFORGET = 7;
+
+    /**
+     * 发送数据请求
+     *
+     * @param type     数据请求类型
+     * @param email    邮箱
+     * @param password 密码
+     */
+    private void requestLoginRegister(final int type, final String email, @Nullable final
+    String password, final LoginRegisterHandler handler) {
+        new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    okhttp3.Request request = null;
+                    switch (type) {
+                        case USERLOGIN:
+                            isLogin = true;
+                            request = new okhttp3.Request.Builder().url(Properties.LOGINPATH).post(new FormBody.Builder().add("username", email).add("password", password).build()).build();
+                            break;
+                        case CHECKOUTEMAIL:
+                            request = new okhttp3.Request.Builder().url(Properties.MAILSUBMITPATH).post(new FormBody.Builder().add("mail_address", email).build()).build();
+                            break;
+                        case EMAILVER:
+                            request = new okhttp3.Request.Builder().url(Properties.MAILVALIDATEPATH).post(new FormBody.Builder().add("mail_address", email).add(" mail_ver", password).build()).build();
+                            break;
+                        case USERREGISTER:
+                            request = new okhttp3.Request.Builder().url(Properties.USERWRITEPATH).post(new FormBody.Builder().add("mail_address", email).add(" password", password).build()).build();
+                            break;
+                        case FORGETSUBMIT:
+                            request = new okhttp3.Request.Builder().url(Properties.FORGETSUBMITPATH).post(new FormBody.Builder().add("mail_address", email).build()).build();
+                            break;
+                        case FORGETVALIDATE:
+                            request = new okhttp3.Request.Builder().url(Properties.FORGETVALIDATEPATH).post(new FormBody.Builder().add("mail_address", email).add(" mail_ver", password).build()).build();
+                            break;
+                        case USERFORGET:
+                            request = new okhttp3.Request.Builder().url(Properties.USERFORGETPATH).post(new FormBody.Builder().add("mail_address", email).add(" password", password).build()).build();
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    Response response = client.newCall(request).execute();
+
+                    if (response.isSuccessful()) {
+                        int responseType = -1;
+                        String str = response.body().string();
+                        Log.i("ServerBackCode:", str);
+                        UserLoginInfo info = new UserLoginInfo(email, password);
+                        Message message = new Message();
+                        message.what = type;
+                        try {
+                            responseType = Integer.parseInt(str);
+                        } catch (NumberFormatException e) {
+                            info.setSession(str);
+                            responseType = LoginRegisterHandler.LOGINSSUCCEED;
+                            isLogin = false;
+                        }
+                        message.arg1 = responseType;
+                        message.obj = info;
+                        handler.sendMessage(message);
+                    } else {
+                        System.out.println("发送失败");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+
 }

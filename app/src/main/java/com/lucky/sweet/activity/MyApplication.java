@@ -3,10 +3,19 @@ package com.lucky.sweet.activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.widget.Toast;
 
 import com.lucky.sweet.broadcastreceiver.NetBroadcastReceiver;
+import com.lucky.sweet.properties.Properties;
+
+import java.io.IOException;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by chn on 2018/1/10.
@@ -17,7 +26,10 @@ import com.lucky.sweet.broadcastreceiver.NetBroadcastReceiver;
  */
 
 public class MyApplication extends Application {
+
     private static Context context;
+
+    public static String sessionId = "";
 
     @Override
     public void onCreate() {
@@ -63,4 +75,39 @@ public class MyApplication extends Application {
         return context;
     }
 
+    public static void setSessionID(String id) {
+        sessionId = id;
+    }
+
+    public static void initSession() {
+        final SharedPreferences config = context.getSharedPreferences("config",
+                MODE_PRIVATE);
+        if (config.getBoolean("logined", false)) {
+            final String id = config.getString("Id", "");
+            final String psw = config.getString("Psw", "");
+            new Thread() {
+                @Override
+                public void run() {
+
+                    try {
+                        OkHttpClient client = new OkHttpClient();
+                        Request request = new Request.Builder().url
+                                (Properties.LOGINPATH).post(new FormBody
+                                .Builder().add("username", id).add
+                                ("password", psw).build()).build();
+                        Response response = client.newCall(request).execute();
+                        if (response.isSuccessful()) {
+                            sessionId = response.body().string();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }.start();
+
+        }
+
+
+    }
 }

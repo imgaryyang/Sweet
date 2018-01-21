@@ -1,14 +1,12 @@
 package com.lucky.sweet.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.model.LoginRegisterManager;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -17,30 +15,22 @@ public class UserLoginActivity extends BaseActivity {
     private ToolBar toolBar;
     private EditText edt_userEmail;
     private EditText edt_password;
-    private LoginRegisterManager loginRegisterManager;
-    private SharedPreferences.Editor edit;
+
+    private CommunicationService.MyBinder myBinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
 
-        initData();
-
         initView();
-
 
 
     }
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
-
-    }
-
-    private void initData() {
-        loginRegisterManager = new LoginRegisterManager(this);
-
+        this.myBinder = myBinder;
     }
 
 
@@ -56,7 +46,7 @@ public class UserLoginActivity extends BaseActivity {
         String userID = edt_userEmail.getText().toString().trim();
         String password = edt_password.getText().toString().trim();
         if (!userID.isEmpty() && !password.isEmpty()) {
-            loginRegisterManager.userLogin(userID, password);
+            myBinder.userLogin(this, userID, password);
         } else {
             Toast.makeText(this, "请输入账号或者密码", Toast.LENGTH_SHORT).show();
         }

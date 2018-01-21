@@ -8,10 +8,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
 
+import com.lucky.sweet.activity.MyApplication;
 import com.lucky.sweet.activity.UserLoginActivity;
 import com.lucky.sweet.activity.UserRegisterActivity;
 import com.lucky.sweet.entity.UserLoginInfo;
-import com.lucky.sweet.model.LoginRegisterManager;
+import com.lucky.sweet.properties.UserLoginProperties;
 
 /**
  * Created by c on 2017/11/20.
@@ -94,7 +95,7 @@ public class LoginRegisterHandler extends Handler {
     @Override
     public void handleMessage(Message msg) {
         switch (msg.what) {
-            case LoginRegisterManager.CHECKOUTEMAIL:
+            case UserLoginProperties.CHECKOUTEMAIL:
                 switch (msg.arg1) {
                     case SUBMITSUCCESSFUL:
                         Toast.makeText(context, "请等待邮件", Toast.LENGTH_SHORT).show();
@@ -109,7 +110,7 @@ public class LoginRegisterHandler extends Handler {
                         break;
                 }
                 break;
-            case LoginRegisterManager.USERLOGIN:
+            case UserLoginProperties.USERLOGIN:
                 switch (msg.arg1) {
                     case LOGINSSUCCEED:
                         Toast.makeText(context, "登陆成功", Toast.LENGTH_SHORT).show();
@@ -118,7 +119,7 @@ public class LoginRegisterHandler extends Handler {
               /*              Intent intent = new Intent();
                             intent.putExtra("login", true);
                             context.startActivity(new Intent(context, MainActivity.class));*/
-                            ((Activity)context).finish();
+                            ((Activity) context).finish();
 
                         }
                         break;
@@ -133,13 +134,13 @@ public class LoginRegisterHandler extends Handler {
                 }
 
                 break;
-            case LoginRegisterManager.USERREGISTER:
+            case UserLoginProperties.USERREGISTER:
                 switch (msg.arg1) {
                     case REGESTERSCUSS:
                         Toast.makeText(context, "注册成功", Toast.LENGTH_SHORT).show();
                         UserLoginInfo info = (UserLoginInfo) msg.obj;
                         if (loginSucced(info, false)) {
-                            ((Activity)context).finish();
+                            ((Activity) context).finish();
                         }
                         break;
                     case REGESTERFAIL:
@@ -151,7 +152,7 @@ public class LoginRegisterHandler extends Handler {
                 }
 
                 break;
-            case LoginRegisterManager.EMAILVER:
+            case UserLoginProperties.EMAILVER:
                 switch (msg.arg1) {
                     case VERSSUCCEED:
                         if (context instanceof UserRegisterActivity) {
@@ -173,7 +174,7 @@ public class LoginRegisterHandler extends Handler {
                 }
                 break;
 
-            case LoginRegisterManager.FORGETSUBMIT:
+            case UserLoginProperties.FORGETSUBMIT:
                 switch (msg.arg1) {
                     case FORGETSUCCESS:
                         Toast.makeText(context, "发送成功请稍等", Toast.LENGTH_SHORT)
@@ -195,7 +196,7 @@ public class LoginRegisterHandler extends Handler {
                         break;
                 }
                 break;
-            case LoginRegisterManager.FORGETVALIDATE:
+            case UserLoginProperties.FORGETVALIDATE:
                 switch (msg.arg1) {
                     case FORGETVERSUCCESS:
                         if (context instanceof UserRegisterActivity) {
@@ -219,7 +220,7 @@ public class LoginRegisterHandler extends Handler {
                         break;
                 }
                 break;
-            case LoginRegisterManager.USERFORGET:
+            case UserLoginProperties.USERFORGET:
                 switch (msg.arg1) {
                     case FORGETCHANGESUCCESS:
                         Toast.makeText(context, "修改成功 ", Toast.LENGTH_SHORT)
@@ -244,7 +245,8 @@ public class LoginRegisterHandler extends Handler {
         edit.putBoolean("logined", true);
         edit.putString("Id", info.getEmail());
         edit.putString("Psw", info.getPsw());
-        if (flag) edit.putString("Session", info.getSession());
+
+        if (flag) MyApplication.setSessionID(info.getSession());
         return edit.commit();
     }
 }

@@ -8,24 +8,24 @@ import android.view.inputmethod.InputMethodManager;
 import com.lucky.sweet.R;
 import com.lucky.sweet.fragment.EmailSubmitFragment;
 import com.lucky.sweet.fragment.PassWordSubimitFragment;
-import com.lucky.sweet.model.LoginRegisterManager;
-import com.lucky.sweet.widgets.noscrollview.DepthPageTransformer;
-import com.lucky.sweet.widgets.noscrollview.FragAdapter;
-import com.lucky.sweet.widgets.noscrollview.NoScrollViewPager;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
+import com.lucky.sweet.widgets.noscrollview.DepthPageTransformer;
+import com.lucky.sweet.widgets.noscrollview.FragAdapter;
+import com.lucky.sweet.widgets.noscrollview.NoScrollViewPager;
 
 import java.util.ArrayList;
 
 public class UserRegisterActivity extends BaseActivity {
     private Title title = null;
     private ToolBar toolBar;
-    private LoginRegisterManager loginRegisterManager;
+
     private NoScrollViewPager vp_reg;
     private PassWordSubimitFragment passWordSubimitFragment;
     private EmailSubmitFragment emailSubmitFragment;
     private Boolean isRegister;
+    private CommunicationService.MyBinder myBinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class UserRegisterActivity extends BaseActivity {
         setContentView(R.layout.activity_user_register);
 
         isRegister = getIntent().getBooleanExtra("isRegister", true);
-        loginRegisterManager = new LoginRegisterManager(this);
+
 
         initView();
 
@@ -41,11 +41,13 @@ public class UserRegisterActivity extends BaseActivity {
 
         initData();
 
+        initEvent();
+
     }
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
-
+        this.myBinder = myBinder;
     }
 
     private void initData() {
@@ -62,8 +64,9 @@ public class UserRegisterActivity extends BaseActivity {
         toolBar.setImmersionBar();
         vp_reg = findViewById(R.id.vp_reg);
 
-        emailSubmitFragment = new EmailSubmitFragment(loginRegisterManager, isRegister);
-        passWordSubimitFragment = new PassWordSubimitFragment(loginRegisterManager, isRegister);
+        emailSubmitFragment = new EmailSubmitFragment(isRegister);
+        passWordSubimitFragment = new PassWordSubimitFragment(isRegister);
+
     }
 
     private void initTitle() {
@@ -75,7 +78,7 @@ public class UserRegisterActivity extends BaseActivity {
         title.setTheme(Title.Theme.THEME_TRANSLATE_NODIVIDER);
 //        Title.ButtonInfo buttonLeft=new Title.ButtonInfo(true,Title.BUTTON_LEFT,0,"立即注册");
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
-                .BUTTON_LEFT,R.drawable.selector_btn_titleback, null);
+                .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
         title.setOnTitleButtonClickListener(new Title
                 .OnTitleButtonClickListener() {
             @Override
@@ -96,6 +99,42 @@ public class UserRegisterActivity extends BaseActivity {
         });
         title.mSetButtonInfo(buttonLeft);
 
+    }
+
+    private void initEvent() {
+        emailSubmitFragment.setOnEmailVer(new EmailSubmitFragment.OnEmailVer() {
+            @Override
+            public void onEmailVer(String email, String verPsw) {
+                myBinder.emailVer(UserRegisterActivity.this, email, verPsw);
+            }
+
+            @Override
+            public void onGetValidate(String email, String verPsw) {
+                myBinder.forgetValidate(UserRegisterActivity.this, email, verPsw);
+            }
+
+            @Override
+            public void checkOutEmail(String email) {
+                myBinder.checkOutEmail(UserRegisterActivity.this, email);
+            }
+
+            @Override
+            public void forgetSubmit(String email) {
+                myBinder.forgetSubmit(UserRegisterActivity.this, email);
+            }
+        });
+        passWordSubimitFragment.setOnUserUpdataInfo(new PassWordSubimitFragment.OnUserUpdataInfo() {
+            @Override
+            public void onUserRegister(String email, String psw) {
+                myBinder.userRegister(UserRegisterActivity.this, email, psw);
+            }
+
+            @Override
+            public void onUserForget(String email, String psw) {
+                myBinder.userRegister(UserRegisterActivity.this, email, psw);
+
+            }
+        });
     }
 
     protected void hintInputKb() {

@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.model.LoginRegisterManager;
 import com.lucky.sweet.utility.StringFormatUtility;
 
 /**
@@ -21,18 +20,17 @@ import com.lucky.sweet.utility.StringFormatUtility;
  * Use the {@link EmailSubmitFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EmailSubmitFragment extends Fragment{
-    private final Boolean isRegister;
+public class EmailSubmitFragment extends Fragment {
 
-    private LoginRegisterManager loginRegisterManager;
+    private final Boolean isRegister;
     private EditText edt_userEmail;
     private EditText edt_verPassword;
     private Button btn_delete;
     private Button btn_nextStep;
     private Button btn_verCode;
 
-    public EmailSubmitFragment(LoginRegisterManager loginRegisterManager, Boolean isRegister) {
-        this.loginRegisterManager = loginRegisterManager;
+    public EmailSubmitFragment(Boolean isRegister) {
+
         this.isRegister = isRegister;
     }
 
@@ -52,10 +50,15 @@ public class EmailSubmitFragment extends Fragment{
                 String email = edt_userEmail.getText().toString().trim();
                 if (!email.isEmpty()) {
                     if (StringFormatUtility.checkoutEmail(email)) {
-                        if (isRegister)
-                            loginRegisterManager.checkOutEmail(email);
-                        else
-                            loginRegisterManager.forgetSubmit(email);
+                        if (isRegister) {
+                            if (onEmailVer != null) {
+                                onEmailVer.checkOutEmail(email);
+                            }
+                        } else {
+                            if (onEmailVer != null) {
+                                onEmailVer.forgetSubmit(email);
+                            }
+                        }
                     } else
                         Toast.makeText(getActivity(), "请输入正确邮箱", Toast.LENGTH_SHORT).show();
                 } else
@@ -76,14 +79,34 @@ public class EmailSubmitFragment extends Fragment{
                 String verPsw = edt_verPassword.getText().toString().trim();
                 if (!email.isEmpty() && !verPsw.isEmpty()) {
                     if (isRegister) {
-                        loginRegisterManager.emailVer(email, verPsw);
+                        if (onEmailVer != null) {
+                            onEmailVer.onEmailVer(email, verPsw);
+                        }
                     } else {
-                        loginRegisterManager.forgetValidate(email, verPsw);
+                        if (onEmailVer != null) {
+                            onEmailVer.onGetValidate(email, verPsw);
+                        }
                     }
                 } else
                     Toast.makeText(getActivity(), "请填写完整信息", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public interface OnEmailVer {
+        void onEmailVer(String email, String verPsw);
+
+        void onGetValidate(String email, String verPsw);
+
+        void checkOutEmail(String email);
+
+        void forgetSubmit(String email);
+    }
+
+    private OnEmailVer onEmailVer;
+
+    public void setOnEmailVer(OnEmailVer onEmailVer) {
+        this.onEmailVer = onEmailVer;
     }
 
     private void initView(View inflate) {

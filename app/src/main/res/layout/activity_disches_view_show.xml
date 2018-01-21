@@ -12,10 +12,10 @@
         android:id="@+id/vp_dishes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:clipChildren="false"
-        android:overScrollMode="never"
-        />
+        android:overScrollMode="never"/>
 
 
     <Button

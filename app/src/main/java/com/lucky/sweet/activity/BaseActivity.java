@@ -22,7 +22,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private MyConn conn = new MyConn();
 
-    public CommunicationService.MyBinder serviceBinder;
+
 
 
     @Override

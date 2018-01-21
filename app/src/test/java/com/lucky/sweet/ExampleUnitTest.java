@@ -1,7 +1,5 @@
 package com.lucky.sweet;
 
-import com.lucky.sweet.model.LoginRegisterManager;
-
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -41,9 +39,5 @@ public class ExampleUnitTest {
         assertEquals(0, LoginRegisterManager.RegestUser
                 ("chinn96@163.com", "aaaaaa"));
     }   */
-    @Test
-    public void DeleteTable() throws Exception {
-        LoginRegisterManager.deleteTable();
 
-    }
 }

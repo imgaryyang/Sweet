@@ -29,7 +29,7 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splashactivity);
         initViews();
 
-        initializeSessionId();
+        MyApplication.initSession();
 
     }
 

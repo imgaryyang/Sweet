@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.activity.BaseActivity;
-import com.lucky.sweet.model.LoginRegisterManager;
 import com.lucky.sweet.utility.StringFormatUtility;
 
 /**
@@ -24,7 +23,6 @@ public class PassWordSubimitFragment extends Fragment {
 
     private final Boolean isRegister;
     private String userEmail;
-    private LoginRegisterManager loginRegisterManager;
     private EditText edt_psw;
     private EditText edt_verifypsw;
     private Button btn_submit_regerist;
@@ -41,11 +39,21 @@ public class PassWordSubimitFragment extends Fragment {
 
     }
 
-    public PassWordSubimitFragment(LoginRegisterManager loginRegisterManager, Boolean isRegister) {
-        this.loginRegisterManager = loginRegisterManager;
+    public PassWordSubimitFragment(Boolean isRegister) {
         this.isRegister = isRegister;
     }
 
+    public interface OnUserUpdataInfo {
+        void onUserRegister(String email, String psw);
+
+        void onUserForget(String email, String psw);
+    }
+
+    private OnUserUpdataInfo onUserUpdataInfo;
+
+    public void setOnUserUpdataInfo(OnUserUpdataInfo onUserUpdataInfo) {
+        this.onUserUpdataInfo = onUserUpdataInfo;
+    }
 
     private void initEvent() {
         btn_submit_regerist.setOnClickListener(new View.OnClickListener() {
@@ -56,15 +64,22 @@ public class PassWordSubimitFragment extends Fragment {
                 if (psw.equals(verifypsw)) {
                     if (psw.length() >= 6 && StringFormatUtility.checkOutPSW(psw)) {
                         if (isRegister) {
-                            loginRegisterManager.userRegister(userEmail, psw);
+                            if (onUserUpdataInfo != null) {
+                                onUserUpdataInfo.onUserRegister(userEmail, psw);
+                            }
                         } else {
-                            loginRegisterManager.userForget(userEmail, psw);
+                            if (onUserUpdataInfo != null) {
+                                onUserUpdataInfo.onUserForget(userEmail, psw);
+                            }
                         }
                     } else {
                         ((BaseActivity) getContext()).showDialogBaseAct
                                 (null, "密码必须同时包含数字和字母。并且长度不小于6位", "确认", new DialogInterface.OnClickListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {dialogInterface.cancel();}}, null, null, null, null, getContext());
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.cancel();
+                                    }
+                                }, null, null, null, null, getContext());
                     }
                 } else {
                     Toast.makeText(getActivity(), "两次密码不同", Toast.LENGTH_SHORT).show();
