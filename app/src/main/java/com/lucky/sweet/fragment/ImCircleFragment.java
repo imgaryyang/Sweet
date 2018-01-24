@@ -93,6 +93,7 @@ public class ImCircleFragment extends Fragment {
         objects.add("");
         lv_circle.setAdapter(new CircleListViewAdapter(objects, getActivity()));
 
+
         lv_circle.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view,

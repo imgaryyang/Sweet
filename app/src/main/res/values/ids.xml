@@ -12,4 +12,14 @@
   <item type="id" name="return_scan_result"/>
   <item type="id" name="search_book_contents_failed"/>
   <item type="id" name="search_book_contents_succeeded"/>
+  <item name="image_orientation" type="id"/>
+
+  <item name="state_origin" type="id"/>
+  <item name="state_default" type="id"/>
+  <item name="state_current" type="id"/>
+  <item name="state_thumb" type="id"/>
+  <item name="state_temp" type="id"/>
+  <item name="state_touch_down" type="id"/>
+  <item name="state_touch_drag" type="id"/>
+  <item name="state_touch_scale_rotate" type="id"/>
 </resources>

@@ -85,6 +85,7 @@ public class MerchantActivity extends FragmentActivity {
                         DischesViewShowActivity.class);
                 intent.putExtra("POSITON", position);
                 startActivity(intent);
+                overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
             }
         });
 

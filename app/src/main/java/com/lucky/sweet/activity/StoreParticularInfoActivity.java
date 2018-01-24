@@ -203,7 +203,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
         ToolBar toolBar = new ToolBar(this);
         toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
         title = (Title) findViewById(R.id.title);
-        title.setTitleNameStr(" ");
+        title.setTitleNameStr("");
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
                 .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
         Title.ButtonInfo buttonRight = new Title.ButtonInfo(true, Title

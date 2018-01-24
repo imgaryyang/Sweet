@@ -246,9 +246,9 @@
                     <!--购物车-->
                     <LinearLayout
                         android:id="@+id/cardShopLayout"
-                        android:layout_width="match_parent"
+                        android:layout_width="360dp"
                         android:layout_height="260dp"
-                        android:layout_gravity="top"
+                        android:layout_gravity="top|center"
                         android:layout_weight="1"
                         android:background="@mipmap/popbackground"
                         android:gravity="top"

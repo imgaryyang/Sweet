@@ -12,6 +12,8 @@
         android:id="@+id/sc_zoom"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,7 +43,7 @@
                         android:layout_width="28dp"
                         android:layout_height="28dp"
                         android:layout_gravity="center"
-                        android:background="@mipmap/back_white"/>
+                        android:background="@mipmap/btn_back_white"/>
 
                 </FrameLayout>
 
@@ -152,6 +154,7 @@
                 android:divider="#00000000"/>
 
         </LinearLayout>
+
     </com.lucky.sweet.widgets.ZoomInScrollView>
 
 </LinearLayout>

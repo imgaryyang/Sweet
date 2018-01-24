@@ -41,9 +41,6 @@ public class DetailedDishesActivity extends BaseActivity {
         objects.add("");
         objects.add("");
         objects.add("");
-        objects.add("");
-        objects.add("");
-        objects.add("");
         lv_productcoment.setAdapter(new ProductComentAdapter(objects, this,
                 lv_productcoment));
 
