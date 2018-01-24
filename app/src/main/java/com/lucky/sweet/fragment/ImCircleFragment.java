@@ -17,13 +17,11 @@ import com.lucky.sweet.activity.PersonalCircleActivity;
 import com.lucky.sweet.activity.SendCircleActivity;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
 import com.lucky.sweet.views.CircleImageView;
-import com.lucky.sweet.views.IndicatorView;
 import com.lucky.sweet.widgets.ToolBar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import cn.forward.androids.views.ScrollPickerView;
 import cn.forward.androids.views.StringScrollPicker;
 
 /**
@@ -45,12 +43,12 @@ public class ImCircleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_imcircle, container, false);
-        imv_head = (CircleImageView)view.findViewById(R.id.imv_head);
+        imv_head = view.findViewById(R.id.imv_head);
         imv_head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
         imv_head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getActivity(), SendCircleActivity.class);
+                Intent intent = new Intent(getActivity(), SendCircleActivity.class);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
             }
@@ -83,17 +81,9 @@ public class ImCircleFragment extends Fragment {
 
         ListView lv_circle = view.findViewById(R.id.lv_circle);
         final StringScrollPicker sc_picker = view.findViewById(R.id.sc_picker);
-        final IndicatorView indicator = view.findViewById(R.id.indicator);
         final ArrayList<CharSequence> charSequences = new ArrayList<CharSequence>(Arrays.asList(title));
-        sc_picker.setOnSelectedListener(new ScrollPickerView.OnSelectedListener() {
-            @Override
-            public void onSelected(ScrollPickerView scrollPickerView, int position) {
-                indicator.playByStartPointToNext(position);
-            }
-        });
 
         sc_picker.setData(charSequences);
-        indicator.initIndicator(charSequences.size());
         ArrayList<String> objects = new ArrayList<String>();
         objects.add("");
         objects.add("");
@@ -107,7 +97,7 @@ public class ImCircleFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view,
                                     int i, long l) {
-                Intent intent=new Intent(getActivity(),PersonalCircleActivity.class);
+                Intent intent = new Intent(getActivity(), PersonalCircleActivity.class);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
             }

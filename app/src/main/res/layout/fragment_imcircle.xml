@@ -49,13 +49,6 @@
                 app:spv_orientation="horizontal"
                 />
 
-            <com.lucky.sweet.views.IndicatorView
-                android:layout_marginLeft="15dp"
-                android:layout_width="50dp"
-                android:layout_height="15dp"
-                android:id="@+id/indicator"
-                android:layout_marginTop="10dp"
-                android:layout_below="@+id/sc_picker"/>
 
             <com.lucky.sweet.views.CircleImageView
                 android:id="@+id/imv_head"
