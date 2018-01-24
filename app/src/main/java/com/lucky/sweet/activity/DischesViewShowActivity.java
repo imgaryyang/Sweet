@@ -12,6 +12,7 @@ import com.lucky.sweet.model.wholedishes.lib.ExpandingPagerFactory;
 import com.lucky.sweet.model.wholedishes.lib.fragments.ExpandingFragment;
 import com.lucky.sweet.model.wholedishes.model.Travel;
 import com.lucky.sweet.service.CommunicationService;
+import com.lucky.sweet.widgets.ToolBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,9 @@ public class DischesViewShowActivity extends BaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_disches_view_show);
+
+        ToolBar toolBar = new ToolBar(this);
+        toolBar.setStatusBarDarkMode();
 
         initView();
 

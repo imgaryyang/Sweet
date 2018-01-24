@@ -1,14 +1,20 @@
 package com.lucky.sweet.model.shoppingcar.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.activity.DischesViewShowActivity;
+import com.lucky.sweet.activity.MerchantActivity;
 import com.lucky.sweet.model.shoppingcar.assistant.ShopToDetailListener;
 import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
 
@@ -21,6 +27,8 @@ import java.util.List;
 public class ShopAdapter extends BaseAdapter {
 
     private ShopToDetailListener shopToDetailListener;
+    private Context context;
+
 
     public void setShopToDetailListener(ShopToDetailListener callBackListener) {
         this.shopToDetailListener = callBackListener;
@@ -29,6 +37,7 @@ public class ShopAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     public ShopAdapter(Context context, List<ShopProduct> shopProducts) {
         this.shopProducts = shopProducts;
+        this.context=context;
         mInflater = LayoutInflater.from(context);
     }
 
@@ -59,6 +68,9 @@ public class ShopAdapter extends BaseAdapter {
             viewHolder.increase = (TextView)  convertView.findViewById(R.id.increase);
             viewHolder.reduce = (TextView)  convertView.findViewById(R.id.reduce);
             viewHolder.shoppingNum = (TextView)  convertView.findViewById(R.id.shoppingNum);
+//            viewHolder.ll_productInfo = (LinearLayout)  convertView.findViewById(R.id.ll_productInfo);
+
+
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -67,6 +79,15 @@ public class ShopAdapter extends BaseAdapter {
         viewHolder.commodityPrise.setText(shopProducts.get(position).getPrice());
         viewHolder.commodityNum.setText(1+"");
         viewHolder.shoppingNum.setText(shopProducts.get(position).getNumber()+"");
+
+//        viewHolder.ll_productInfo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent=new Intent(context, DischesViewShowActivity.class);
+//                context.startActivity(intent);
+//            }
+//        });
+
 
         viewHolder.increase.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,5 +153,9 @@ public class ShopAdapter extends BaseAdapter {
          * 商品数目
          */
         public TextView shoppingNum;
+
+//        public LinearLayout ll_productInfo;
+
+
     }
 }

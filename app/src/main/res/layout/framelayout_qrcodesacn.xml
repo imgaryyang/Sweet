@@ -41,8 +41,8 @@
                     android:id="@+id/mo_scanner_back"
                     android:onClick="onButtonClick"
                     android:layout_width="10dp"
-                    android:layout_height="28dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="3dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="5dp"
@@ -56,7 +56,8 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:text="扫一扫"
-                    android:textSize="20dp"
+                    android:textColor="@color/white"
+                    android:textSize="21dp"
                     android:gravity="center"
                     />
 
@@ -67,8 +68,9 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:textColor="@color/white"
                     android:onClick="onButtonClick"
-                    android:textSize="16dp"
+                    android:textSize="18dp"
                     android:text="相册"/>
             </LinearLayout>
         <TextView
