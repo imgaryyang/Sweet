@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayoutandroid="http://schemas.android.com/tools"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -150,7 +151,7 @@
         <!--android:layout_marginRight="8dp">-->
         <!--</com.lucky.sweet.views.CircleGrideView>-->
 
-        <LinearLayout
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp">
@@ -173,7 +174,20 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:src="@mipmap/test_one"/>
-        </LinearLayout>
+        </LinearLayout>-->
+
+        <com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayout
+            android:id="@+id/l_pictures"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.lucky.sweet.widgets.ImageViewWatcher.SquareImageView
+                android:id="@+id/i_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"/>
+
+        </com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
