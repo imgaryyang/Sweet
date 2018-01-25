@@ -217,15 +217,22 @@
                         android:textSize="13dp"/>
                 </LinearLayout>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rec_foodStore"
+                <com.lucky.sweet.widgets.dragload.RecycleViewRefresh
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="5dp"
-                    android:clipChildren="false"/>
+                    android:id="@+id/ref_recy_food"
+                    >
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rec_foodStore"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="5dp"
+                        android:clipChildren="false"/>
+                </com.lucky.sweet.widgets.dragload.RecycleViewRefresh>
 
 
             </LinearLayout>
@@ -268,7 +275,11 @@
                         android:textColor="@color/Myappcolor"
                         android:textSize="13dp"/>
                 </LinearLayout>
-
+                <com.lucky.sweet.widgets.dragload.RecycleViewRefresh
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/ref_recy_fun"
+                    >
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rec_funStore"
                     android:layout_width="match_parent"
@@ -278,6 +289,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="5dp"
                     android:clipChildren="false"/>
+                </com.lucky.sweet.widgets.dragload.RecycleViewRefresh>
             </LinearLayout>
 
             <!--<include-->

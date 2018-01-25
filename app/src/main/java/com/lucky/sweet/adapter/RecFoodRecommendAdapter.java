@@ -35,7 +35,6 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
 
     public final static int FOOD = 0;
     public final static int FUN = 1;
-    private mMoreHolder moreHolder;
 
 
     public RecFoodRecommendAdapter(Context context, int type, List data) {
@@ -65,10 +64,7 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == AdapterSize - 1) {
-            return new mMoreHolder(inflater.inflate(R.layout.item_recycle_more, parent,
-                    false));
-        }
+
         return new mViewHolder(inflater.inflate(R.layout.item_viewpager_foodinfo, parent, false));
     }
 
@@ -115,14 +111,10 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
                     }
                 }
             });
-        } else {
-            moreHolder = (mMoreHolder) holder;
         }
     }
 
-    public void nowLoading() {
-          moreHolder.loadingMore();
-    }
+
 
     @Override
     public int getItemCount() {
@@ -205,19 +197,6 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
             public void setPho_url(String pho_url) {
                 this.pho_url = pho_url;
             }
-        }
-    }
-
-    static class mMoreHolder extends RecyclerView.ViewHolder {
-        View view;
-
-        public mMoreHolder(View itemView) {
-            super(itemView);
-              view = itemView.findViewById(R.id.pb_main_loading);
-        }
-
-        public void loadingMore() {
-            view.setVisibility(View.VISIBLE);
         }
     }
 

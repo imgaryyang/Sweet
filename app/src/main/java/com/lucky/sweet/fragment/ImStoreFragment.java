@@ -29,8 +29,8 @@ import com.lucky.sweet.utility.HiddenAnimUtils;
 import com.lucky.sweet.views.GradualChangeLinearLayout;
 import com.lucky.sweet.views.IndicatorView;
 import com.lucky.sweet.views.MySearchView;
-import com.lucky.sweet.viewsexpand.AdRecyCleViewOnScrollState;
 import com.lucky.sweet.viewsexpand.AdViewPagerTransformer;
+import com.lucky.sweet.widgets.dragload.RecycleViewRefresh;
 
 /**
  * Created by Qiuyue on 2017/11/15.
@@ -66,6 +66,8 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private IndicatorView in_vp_ad;
+    private RecycleViewRefresh ref_recy_food;
+    private RecycleViewRefresh ref_recy_fun;
 
     @Override
     public void onAttach(Context context) {
@@ -122,11 +124,13 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
 
         // rec_ad_show.setAdapter(new RecminiAdAdapter(context));
+/*
 
         rec_foodStore.addOnScrollListener(new AdRecyCleViewOnScrollState
                 (context, AdRecyCleViewOnScrollState.FOOD));
         rec_funStore.addOnScrollListener(new AdRecyCleViewOnScrollState
                 (context, AdRecyCleViewOnScrollState.FUN));
+*/
 
 
     }
@@ -145,6 +149,8 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         rec_funStore = view.findViewById(R.id.rec_funStore);
         //rec_ad_show = view.findViewById(R.id.rec_ad_show);
         btn_qrcodescan = view.findViewById(R.id.btn_qrcodescan);
+        ref_recy_food = view.findViewById(R.id.ref_recy_food);
+        ref_recy_fun = view.findViewById(R.id.ref_recy_fun);
         collapsingToolbarLayout = view.findViewById(R.id.collapsingToolbarLayout);
         in_vp_ad = view.findViewById(R.id.in_vp_ad);
         collapsingToolbarLayout.setContentScrim(getResources().getDrawable(R.drawable.search_bg));
@@ -200,6 +206,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
             }
         });
+
     }
 
 

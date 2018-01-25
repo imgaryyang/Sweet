@@ -11,10 +11,15 @@ import android.widget.Toast;
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.SearchSpinnerAdapter;
 import com.lucky.sweet.adapter.ShowInfoListViewAdapter;
+import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.model.StoreDisplatManager;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
+import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -40,6 +45,9 @@ public class StoreDisplatActivity extends BaseActivity {
 
     private ListView lv_storeInfo;
     private StoreDisplatManager storeDisplatManager;
+    private SwipyRefreshLayout sw_store_info;
+    private ShowInfoListViewAdapter adapter;
+    private List<MainStoreInfo> storeShowInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +105,7 @@ public class StoreDisplatActivity extends BaseActivity {
 
     private void initViews() {
         lv_storeInfo = findViewById(R.id.lv_storeInfo);
-
+        sw_store_info = findViewById(R.id.sw_store_info);
     }
 
 
@@ -145,11 +153,26 @@ public class StoreDisplatActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent = new Intent(StoreDisplatActivity.this, StoreParticularInfoActivity.class);
-                intent.putExtra("shopid", ""+position);
+                intent.putExtra("shopid", "" + position);
                 startActivity(intent);
                 goNextAnim();
             }
         });
+        sw_store_info.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+                storeShowInfo.add(new MainStoreInfo());
+                storeShowInfo.add(new MainStoreInfo());
+                storeShowInfo.add(new MainStoreInfo());
+                storeShowInfo.add(new MainStoreInfo());
+                storeShowInfo.add(new MainStoreInfo());
+                storeShowInfo.add(new MainStoreInfo());
+                adapter.notifyDataSetChanged();
+                sw_store_info.setRefreshing(false);
+            }
+        });
+
+
     }
 
     private void initAdapter() {
@@ -159,8 +182,11 @@ public class StoreDisplatActivity extends BaseActivity {
         sp_RecreationType.setAdapter(new SearchSpinnerAdapter(storeDisplatManager.getRecreationTypeList(), this));
 
         sp_RankType.setAdapter(new SearchSpinnerAdapter(storeDisplatManager.getRankTypeList(), this));
+        storeShowInfo = storeDisplatManager.getStoreShowInfo();
+        adapter = new ShowInfoListViewAdapter
+                (storeShowInfo, this);
 
-        lv_storeInfo.setAdapter(new ShowInfoListViewAdapter(storeDisplatManager.getStoreShowInfo(), this));
+        lv_storeInfo.setAdapter(adapter);
 
     }
 

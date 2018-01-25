@@ -49,10 +49,8 @@ public class AdRecyCleViewOnScrollState extends RecyclerView.OnScrollListener {
 
                 if (flag) {
                     flag = false;
-                    RecyclerView.Adapter adapter = recyclerView.getAdapter();
-                    if (adapter instanceof RecFoodRecommendAdapter) {
-                        ((RecFoodRecommendAdapter) adapter).nowLoading();
-                    }
+
+
                     Timer timer = new Timer();
                     timer.schedule(new TimerTask() {
                         @Override

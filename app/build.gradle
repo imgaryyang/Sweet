@@ -54,4 +54,5 @@ dependencies {
     compile 'com.zhy:okhttputils:2.0.0'
     compile 'com.nex3z:flow-layout:1.1.0'
     compile 'com.gospelware.liquidbutton:liquidButtonLib:1.1.5'
+    compile 'com.github.omadahealth:swipy:1.2.3@aar'
 }
