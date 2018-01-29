@@ -57,14 +57,13 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-
         return position;
 
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
+        if (viewType == AdapterSize - 1) return new moreViewHolder(inflater.inflate(R.layout.item_recycle_more, parent, false));
         return new mViewHolder(inflater.inflate(R.layout.item_viewpager_foodinfo, parent, false));
     }
 
@@ -113,7 +112,6 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
             });
         }
     }
-
 
 
     @Override
@@ -198,6 +196,16 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
                 this.pho_url = pho_url;
             }
         }
+    }
+
+    static class moreViewHolder extends RecyclerView.ViewHolder {
+
+
+        public moreViewHolder(View itemView) {
+            super(itemView);
+        }
+
+
     }
 
     public interface OnItemClickListener {

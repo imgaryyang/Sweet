@@ -218,20 +218,27 @@
                 </LinearLayout>
 
                 <com.lucky.sweet.widgets.dragload.RecycleViewRefresh
+                    android:id="@+id/ref_recy_food"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/ref_recy_food"
+                    android:orientation="horizontal"
                     >
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rec_foodStore"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="5dp"
-                        android:clipChildren="false"/>
+                        android:layout_height="wrap_content"
+
+                        android:clipChildren="false"
+                        android:overScrollMode="never"
+                        android:scrollbars="none"/>
+
+
+                    <ProgressBar
+                        android:id="@+id/pb_food_loading"
+                        android:layout_width="@dimen/dimen_20_dp"
+                        android:layout_height="@dimen/dimen_20_dp"
+                        android:layout_gravity="center_vertical"/>
                 </com.lucky.sweet.widgets.dragload.RecycleViewRefresh>
 
 
@@ -275,20 +282,27 @@
                         android:textColor="@color/Myappcolor"
                         android:textSize="13dp"/>
                 </LinearLayout>
+
                 <com.lucky.sweet.widgets.dragload.RecycleViewRefresh
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:id="@+id/ref_recy_fun"
-                    >
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rec_funStore"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="5dp"
-                    android:clipChildren="false"/>
+                    >
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rec_funStore"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="5dp"
+                        android:clipChildren="false"/>
+                    <ProgressBar
+                        android:id="@+id/pb_fun_loading"
+                        android:layout_width="@dimen/dimen_20_dp"
+                        android:layout_height="@dimen/dimen_20_dp"
+                        android:layout_gravity="center_vertical"/>
                 </com.lucky.sweet.widgets.dragload.RecycleViewRefresh>
             </LinearLayout>
 

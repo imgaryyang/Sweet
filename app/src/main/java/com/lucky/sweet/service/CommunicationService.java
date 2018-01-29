@@ -13,13 +13,17 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.lucky.sweet.activity.OrderSeatActivity;
+import com.lucky.sweet.activity.StoreDisplatActivity;
 import com.lucky.sweet.activity.StoreParticularInfoActivity;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.PerdetermingEntity;
 import com.lucky.sweet.entity.StoreDetailedInfo;
+import com.lucky.sweet.entity.StoreDisplayInfo;
+import com.lucky.sweet.entity.StoreDisplaySearchEntity;
 import com.lucky.sweet.entity.UserLoginInfo;
 import com.lucky.sweet.entity.WeatherInfo;
 import com.lucky.sweet.fragment.ImStoreFragment;
+import com.lucky.sweet.handler.DisplayActivityHandle;
 import com.lucky.sweet.handler.ImStoreHandler;
 import com.lucky.sweet.handler.LoginRegisterHandler;
 import com.lucky.sweet.handler.OrderSeatHandler;
@@ -208,7 +212,64 @@ public class CommunicationService extends Service {
             });
         }
 
+        public void requestStoreDisplayInfo(StoreDisplatActivity activity, String project,
+                                            String
+                                                    circle,
+                                            String city, String rank, String num) {
+            final DisplayActivityHandle displayActivityHandle = new
+                    DisplayActivityHandle(activity);
+            getStoreDisplayInfo(project, circle, city, rank, num, new OnDisPlayInfoRequest() {
+                @Override
+                public void DisplayInfo(StoreDisplayInfo storeDisplayInfo) {
+                    Message message = new Message();
+                    message.what = DisplayActivityHandle.DISPLAYINFO;
+                    message.obj = storeDisplayInfo;
+                    displayActivityHandle.sendMessage(message);
+                }
+            });
+            getStoreDisplaySearchTitle(city, new OnDisPlaySearchRequest() {
+                @Override
+                public void DisplaySearch(StoreDisplaySearchEntity storeDisplaySearchEntity) {
+                    Message message = new Message();
+                    message.what = DisplayActivityHandle.DISPLAYSEARCHINFO;
+                    message.obj = storeDisplaySearchEntity;
+                    displayActivityHandle.sendMessage(message);
+                }
+            });
 
+
+        }
+
+    }
+
+    private void getStoreDisplaySearchTitle(
+            String
+                    city, final OnDisPlaySearchRequest
+                    onDisPlaySearchRequest) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("city", city);
+        HttpUtils.sendOkHttpRequest(Properties.DISPLAYSEARCHTITLE, new com.zhy.http.okhttp
+                .callback.Callback() {
+            @Override
+            public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
+
+                Gson gson = new Gson();
+                StoreDisplaySearchEntity storeDisplaySearchEntity = gson.fromJson(response.body().string(),
+                        StoreDisplaySearchEntity.class);
+                onDisPlaySearchRequest.DisplaySearch(storeDisplaySearchEntity);
+                return null;
+            }
+
+            @Override
+            public void onError(com.squareup.okhttp.Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Object response) {
+
+            }
+        }, map);
     }
 
     private interface PerdetermingRequest {
@@ -396,6 +457,55 @@ public class CommunicationService extends Service {
             }
         }.start();
 
+    }
+
+    interface OnDisPlayInfoRequest {
+
+        void DisplayInfo(StoreDisplayInfo storeDisplayInfo);
+
+
+    }
+
+    interface OnDisPlaySearchRequest {
+        void DisplaySearch(StoreDisplaySearchEntity storeDisplaySearchEntity);
+
+    }
+
+    private void getStoreDisplayInfo(String project, String circle, String city, String rank, String num, final OnDisPlayInfoRequest
+            onDisPlayInfoRequest) {
+        final HashMap<String, String> map = new HashMap<>();
+        map.put("small_project", project);
+        map.put("circle", circle);
+        map.put("city", city);
+        map.put("rank", rank);
+        map.put("num_start", num);
+        new Thread() {
+            @Override
+            public void run() {
+                HttpUtils.sendOkHttpRequest(Properties.DISPLAYMAINSHOWPATH, new
+                        com.zhy.http.okhttp.callback.Callback() {
+                            @Override
+                            public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
+                                String string = response.body().string();
+                                Gson gson = new Gson();
+                                System.out.println(string);
+                                StoreDisplayInfo storeDisplayInfo = gson.fromJson(string, StoreDisplayInfo.class);
+                                onDisPlayInfoRequest.DisplayInfo(storeDisplayInfo);
+                                return null;
+                            }
+
+                            @Override
+                            public void onError(Request request, Exception e) {
+
+                            }
+
+                            @Override
+                            public void onResponse(Object response) {
+
+                            }
+                        }, map);
+            }
+        }.start();
     }
 
     public interface OnParticularDis {

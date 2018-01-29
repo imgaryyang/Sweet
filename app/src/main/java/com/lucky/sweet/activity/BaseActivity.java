@@ -59,6 +59,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     abstract void onServiceBind(CommunicationService.MyBinder myBinder);
 
+
+
     private class MyConn implements ServiceConnection {
 
         @Override

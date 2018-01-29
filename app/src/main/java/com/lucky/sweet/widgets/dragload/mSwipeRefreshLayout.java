@@ -167,6 +167,7 @@ public class mSwipeRefreshLayout extends ViewGroup implements NestedScrollingPar
             }
         }
     };
+    private float mInitialDownX;
 
     void reset() {
         mCircleView.clearAnimation();
@@ -310,7 +311,7 @@ public class mSwipeRefreshLayout extends ViewGroup implements NestedScrollingPar
 
         setWillNotDraw(false);
         mDecelerateInterpolator = new DecelerateInterpolator(DECELERATE_INTERPOLATION_FACTOR);
-
+        //展示分辨率
         final DisplayMetrics metrics = getResources().getDisplayMetrics();
         mCircleDiameter = (int) (CIRCLE_DIAMETER * metrics.density);
 
@@ -587,8 +588,8 @@ public class mSwipeRefreshLayout extends ViewGroup implements NestedScrollingPar
         int circleHeight = mCircleView.getMeasuredHeight();
 
         mCircleView.layout((width - circleWidth),
-                 childHeight/2-circleHeight,
-                (width),  childHeight/2);
+                childHeight / 2 - circleHeight,
+                (width), childHeight / 2);
     }
 
     @Override
@@ -678,6 +679,7 @@ public class mSwipeRefreshLayout extends ViewGroup implements NestedScrollingPar
                     return false;
                 }
                 mInitialDownY = ev.getY(pointerIndex);
+                mInitialDownX = ev.getX(pointerIndex);
                 break;
 
             case MotionEvent.ACTION_MOVE:
@@ -691,7 +693,8 @@ public class mSwipeRefreshLayout extends ViewGroup implements NestedScrollingPar
                     return false;
                 }
                 final float y = ev.getY(pointerIndex);
-                startDragging(y);
+                final float x = ev.getY(pointerIndex);
+                startDragging(x, y);
                 break;
 
             case MotionEvent.ACTION_POINTER_UP:
@@ -986,10 +989,12 @@ public class mSwipeRefreshLayout extends ViewGroup implements NestedScrollingPar
                 }
 
                 final float y = ev.getY(pointerIndex);
-                startDragging(y);
+                final float x = ev.getX(pointerIndex);
+
+                startDragging(x,y);
 
                 if (mIsBeingDragged) {
-                    final float overscrollTop = (y - mInitialMotionY) * DRAG_RATE;
+                    final float overscrollTop = (x - mInitialDownX) * DRAG_RATE;
                     if (overscrollTop > 0) {
                         moveSpinner(overscrollTop);
                     } else {
@@ -1022,7 +1027,7 @@ public class mSwipeRefreshLayout extends ViewGroup implements NestedScrollingPar
 
                 if (mIsBeingDragged) {
                     final float y = ev.getY(pointerIndex);
-                    final float overscrollTop = (y - mInitialMotionY) * DRAG_RATE;
+                    final float overscrollTop = (y - mInitialDownX) * DRAG_RATE;
                     mIsBeingDragged = false;
                     finishSpinner(overscrollTop);
                 }
@@ -1036,13 +1041,20 @@ public class mSwipeRefreshLayout extends ViewGroup implements NestedScrollingPar
         return true;
     }
 
-    private void startDragging(float y) {
-        final float yDiff = y - mInitialDownY;
-        if (yDiff > mTouchSlop && !mIsBeingDragged) {
+    private void startDragging(float x, float y) {
+        // final float yDiff = y - mInitialDownY;
+        final float xDiff = x - mInitialDownX;
+ /*       if (yDiff > mTouchSlop && !mIsBeingDragged) {
             mInitialMotionY = mInitialDownY + mTouchSlop;
             mIsBeingDragged = true;
             mProgress.setAlpha(STARTING_PROGRESS_ALPHA);
+        }*/
+        if (xDiff > mTouchSlop && !mIsBeingDragged) {
+            mInitialDownX = mInitialDownX + mTouchSlop;
+            mIsBeingDragged = true;
+            mProgress.setAlpha(STARTING_PROGRESS_ALPHA);
         }
+
     }
 
     private void animateOffsetToCorrectPosition(int from, Animation.AnimationListener listener) {

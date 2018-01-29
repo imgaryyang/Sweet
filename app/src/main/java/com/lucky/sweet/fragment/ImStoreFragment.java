@@ -1,5 +1,6 @@
 package com.lucky.sweet.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -150,7 +151,11 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         //rec_ad_show = view.findViewById(R.id.rec_ad_show);
         btn_qrcodescan = view.findViewById(R.id.btn_qrcodescan);
         ref_recy_food = view.findViewById(R.id.ref_recy_food);
+        View inc_recycle_more_food = view.findViewById(R.id.pb_food_loading);
+        ref_recy_food.setMoveViews(inc_recycle_more_food);
         ref_recy_fun = view.findViewById(R.id.ref_recy_fun);
+        View pb_fun_loading = view.findViewById(R.id.pb_fun_loading);
+        ref_recy_fun.setMoveViews(pb_fun_loading);
         collapsingToolbarLayout = view.findViewById(R.id.collapsingToolbarLayout);
         in_vp_ad = view.findViewById(R.id.in_vp_ad);
         collapsingToolbarLayout.setContentScrim(getResources().getDrawable(R.drawable.search_bg));
@@ -206,9 +211,49 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
             }
         });
+        ref_recy_food.setOnPullToLeftListener(new RecycleViewRefresh.OnPullToLeftListener() {
+            @Override
+            public void onReleaseFingerToUpload() {
 
+                Intent intent = new Intent(context, StoreDisplatActivity.class);
+                intent.putExtra("tv_moreFood", "Food");
+                intent.putExtra("city", tv_location.getText().toString().trim());
+
+                context.startActivity(intent);
+                ((Activity) context).overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+                ref_recy_food.completeToUpload();
+            }
+
+            @Override
+            public void onStartToUpload() {
+
+            }
+        });
+        ref_recy_fun.setOnPullToLeftListener(new RecycleViewRefresh.OnPullToLeftListener() {
+            @Override
+            public void onReleaseFingerToUpload() {
+
+                Intent intent = new Intent(context, StoreDisplatActivity.class);
+                intent.putExtra("tv_moreRelax", "Relax");
+                intent.putExtra("city", tv_location.getText().toString().trim());
+
+                context.startActivity(intent);
+                ((Activity) context).overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+
+            }
+
+            @Override
+            public void onStartToUpload() {
+
+            }
+        });
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
 
     public void setShowInfo(MainStoreInfo showInfo) {
 
@@ -251,12 +296,16 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
             case R.id.tv_moreFood:
                 intent = new Intent(getActivity(), StoreDisplatActivity.class);
                 intent.putExtra("tv_moreFood", "Food");
+                intent.putExtra("city", tv_location.getText().toString().trim());
+
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
                 break;
             case R.id.tv_moreRelax:
                 intent = new Intent(getActivity(), StoreDisplatActivity.class);
                 intent.putExtra("tv_moreRelax", "Relax");
+                intent.putExtra("city", tv_location.getText().toString().trim());
+
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
                 break;

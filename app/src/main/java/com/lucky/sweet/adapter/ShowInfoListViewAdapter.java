@@ -4,10 +4,12 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
-import com.lucky.sweet.entity.MainStoreInfo;
+import com.lucky.sweet.entity.StoreDisplayInfo;
 
 import java.util.List;
 
@@ -20,22 +22,22 @@ import java.util.List;
  */
 
 public class ShowInfoListViewAdapter extends BaseAdapter {
-    private List<MainStoreInfo> datas;
+    private List<StoreDisplayInfo.MerListBean> data;
     private Context context;
 
-    public ShowInfoListViewAdapter(List<MainStoreInfo> datas, Context context) {
-        this.datas = datas;
+    public ShowInfoListViewAdapter(List<StoreDisplayInfo.MerListBean> data, Context context) {
+        this.data = data;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return datas.size();
+        return data.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return datas.get(position);
+        return data.get(position);
     }
 
     @Override
@@ -49,15 +51,32 @@ public class ShowInfoListViewAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = View.inflate(context, R.layout.item_storeinfo, null);
             viewHolder = new ViewHolder();
-
+            viewHolder.imv_shop_sur = convertView.findViewById(R.id.imv_shop_sur);
+            viewHolder.imv_shop_dis_fir = convertView.findViewById(R.id.imv_shop_dis_fir);
+            viewHolder.imv_shop_dis_sec = convertView.findViewById(R.id.imv_shop_dis_sec);
+            viewHolder.imv_shop_dis_the = convertView.findViewById(R.id.imv_shop_dis_the);
+            viewHolder.tv_shop_title = convertView.findViewById(R.id.tv_shop_title);
+            viewHolder.tv_shop_des = convertView.findViewById(R.id.tv_shop_des);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        viewHolder.onBindInfo(data.get(position), context);
         return convertView;
     }
 
     static public class ViewHolder {
-        TextView type;
+        ImageView imv_shop_sur;
+        ImageView imv_shop_dis_fir;
+        ImageView imv_shop_dis_sec;
+        ImageView imv_shop_dis_the;
+        TextView tv_shop_title;
+        TextView tv_shop_des;
+
+        public void onBindInfo(StoreDisplayInfo.MerListBean info, Context context) {
+            Glide.with(context).load(info.getSurface()).into(imv_shop_sur);
+            tv_shop_title.setText(info.getName());
+            tv_shop_des.setText(info.getMer_address());
+        }
     }
 }

@@ -12,6 +12,8 @@ import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.SearchSpinnerAdapter;
 import com.lucky.sweet.adapter.ShowInfoListViewAdapter;
 import com.lucky.sweet.entity.MainStoreInfo;
+import com.lucky.sweet.entity.StoreDisplayInfo;
+import com.lucky.sweet.entity.StoreDisplaySearchEntity;
 import com.lucky.sweet.model.StoreDisplatManager;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.Title;
@@ -48,6 +50,8 @@ public class StoreDisplatActivity extends BaseActivity {
     private SwipyRefreshLayout sw_store_info;
     private ShowInfoListViewAdapter adapter;
     private List<MainStoreInfo> storeShowInfo;
+    private CommunicationService.MyBinder myBinder;
+    private List<StoreDisplayInfo.MerListBean> displayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +76,8 @@ public class StoreDisplatActivity extends BaseActivity {
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
-
+        myBinder.requestStoreDisplayInfo(this, "聚餐宴请", "全部", "大连市", "最新搜录", "0");
+        this.myBinder = myBinder;
     }
 
     private void initTitle() {
@@ -86,6 +91,8 @@ public class StoreDisplatActivity extends BaseActivity {
         } else if (intent.getStringExtra("tv_moreRelax") != null && intent.getStringExtra("tv_moreRelax").equals("Relax")) {
             title.setTitleNameStr("休闲");
         }
+
+        intent.getStringExtra("city");
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
                 .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
         title.setOnTitleButtonClickListener(new Title
@@ -108,6 +115,27 @@ public class StoreDisplatActivity extends BaseActivity {
         sw_store_info = findViewById(R.id.sw_store_info);
     }
 
+    public void upDataDisplayInfo(StoreDisplayInfo info) {
+
+        displayList = info.getMer_list();
+        System.out.println(displayList.size());
+
+        adapter = new ShowInfoListViewAdapter(displayList, this);
+        lv_storeInfo.setAdapter(adapter);
+
+    }
+
+    public void upDataSearchInfo(StoreDisplaySearchEntity info) {
+
+        StoreDisplaySearchEntity.LiistBean list = info.getLiist();
+
+        sp_BusinessArea.setAdapter(new SearchSpinnerAdapter(list.getCircle(), this));
+
+        sp_RecreationType.setAdapter(new SearchSpinnerAdapter(list.getClassify(), this));
+
+        sp_RankType.setAdapter(new SearchSpinnerAdapter(list.getOrder(), this));
+
+    }
 
     //设置监听事件，将来商家列表的排序都在这里面处理
     private void setListener() {
@@ -153,7 +181,7 @@ public class StoreDisplatActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent = new Intent(StoreDisplatActivity.this, StoreParticularInfoActivity.class);
-                intent.putExtra("shopid", "" + position);
+                intent.putExtra("shopid",  displayList.get(position).getMer_id());
                 startActivity(intent);
                 goNextAnim();
             }
@@ -177,17 +205,12 @@ public class StoreDisplatActivity extends BaseActivity {
 
     private void initAdapter() {
 
-        sp_BusinessArea.setAdapter(new SearchSpinnerAdapter(storeDisplatManager.getBusinessAreaList(), this));
+       /* sp_BusinessArea.setAdapter(new SearchSpinnerAdapter(storeDisplatManager.getBusinessAreaList(), this));
 
         sp_RecreationType.setAdapter(new SearchSpinnerAdapter(storeDisplatManager.getRecreationTypeList(), this));
 
-        sp_RankType.setAdapter(new SearchSpinnerAdapter(storeDisplatManager.getRankTypeList(), this));
+        sp_RankType.setAdapter(new SearchSpinnerAdapter(storeDisplatManager.getRankTypeList(), this));*/
         storeShowInfo = storeDisplatManager.getStoreShowInfo();
-        adapter = new ShowInfoListViewAdapter
-                (storeShowInfo, this);
-
-        lv_storeInfo.setAdapter(adapter);
-
     }
 
 
