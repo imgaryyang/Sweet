@@ -99,6 +99,7 @@
         </activity>
         <activity android:name=".activity.SettlementActivity">
         </activity>
+        <activity android:name=".activity.MyCommentActivity"/>
     </application>
 
 </manifest>

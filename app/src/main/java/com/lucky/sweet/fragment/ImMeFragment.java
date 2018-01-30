@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.activity.MyCommentActivity;
 import com.lucky.sweet.activity.OrderSubmitActivity;
 import com.lucky.sweet.activity.SetUserInfoActivity;
 import com.lucky.sweet.activity.VipCardActiviry;
@@ -75,6 +76,15 @@ public class ImMeFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), SetUserInfoActivity.class);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+
+            }
+        });
+
+        view.findViewById(R.id.rl_mycomment).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), MyCommentActivity.class));
                 getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
 
             }
