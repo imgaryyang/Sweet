@@ -8,7 +8,49 @@
 
     <include layout="@layout/layout_title"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/gray0" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/grayDividerDark" />
+
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|left"
+            android:textSize="17dp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="@dimen/dimen_15_dp"
+            android:text="#今日最爱"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/grayDividerDark" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/gray0" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/grayDividerDark" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/shape_cycle_corner_white"
@@ -22,13 +64,119 @@
             android:id="@+id/et_description"
             style="@style/editText"
             android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="1"
+            android:layout_height="85dp"
             android:gravity="left|top"
             android:hint="输入内容..."
             android:maxLength="30"
+            android:textSize="17dp"
             android:textColor="@color/black" />
+        <ImageButton
+            android:id="@+id/ibtn_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/circle_place"
+            android:layout_marginLeft="13dp"
+            android:layout_below="@+id/et_description"/>
 
-    </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/ibtn_place"
+            android:layout_below="@+id/et_description"
+            android:layout_marginLeft="5dp"
+            android:text="101烤羊腿"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp"
+            android:background="@drawable/shape_circle_bg"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/ibtn_place"
+            android:layout_marginTop="15dp">
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@mipmap/test_one"
+                    android:layout_centerInParent="true"/>
+                <ImageButton
+                    android:layout_width="20dp"
+                    android:layout_height="25dp"
+                    android:background="@mipmap/circle_deletepic"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="18dp"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@mipmap/test_second"
+                    android:layout_centerInParent="true"/>
+                <ImageButton
+                    android:layout_width="20dp"
+                    android:layout_height="25dp"
+                    android:background="@mipmap/circle_deletepic"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="18dp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/img3"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@mipmap/test_third"
+                    android:layout_centerInParent="true"/>
+                <ImageButton
+                    android:layout_width="20dp"
+                    android:layout_height="25dp"
+                    android:background="@mipmap/circle_deletepic"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="18dp"/>
+            </RelativeLayout>
+
+
+
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/ibtn_album"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:background="@mipmap/circle_picture"/>
+        <ImageButton
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="11dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/ibtn_album"
+            android:background="@mipmap/circle_place"/>
+        <Button
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="发布"
+            android:textColor="@color/white"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shape_btn_order"/>
+    </RelativeLayout>
 
 </LinearLayout>

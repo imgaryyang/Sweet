@@ -40,7 +40,8 @@ public class SendCircleActivity extends BaseActivity {
 
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
                 .BUTTON_LEFT,R.drawable.selector_btn_titleback, null);
-
+        Title.ButtonInfo buttonRight = new Title.ButtonInfo(true, Title
+                .BUTTON_RIGHT1,0, "#选择话题");
         title.setOnTitleButtonClickListener(new Title
                 .OnTitleButtonClickListener() {
             @Override
@@ -56,6 +57,7 @@ public class SendCircleActivity extends BaseActivity {
         });
 
         title.mSetButtonInfo(buttonLeft);
+        title.mSetButtonInfo(buttonRight);
     }
 
     private void initViews() {
