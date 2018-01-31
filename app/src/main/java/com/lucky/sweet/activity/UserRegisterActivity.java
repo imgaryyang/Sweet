@@ -75,10 +75,11 @@ public class UserRegisterActivity extends BaseActivity {
             title.setTitleNameStr("注册");
         else
             title.setTitleNameStr("找回密码");
-        title.setTheme(Title.Theme.THEME_TRANSLATE_NODIVIDER);
+        title.setTheme(Title.Theme.THEME_TRANSLATE_GRAYDIVIDER);
+
 //        Title.ButtonInfo buttonLeft=new Title.ButtonInfo(true,Title.BUTTON_LEFT,0,"立即注册");
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
-                .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
+                .BUTTON_LEFT, R.drawable.selector_btn_titlebackblack, null);
         title.setOnTitleButtonClickListener(new Title
                 .OnTitleButtonClickListener() {
             @Override

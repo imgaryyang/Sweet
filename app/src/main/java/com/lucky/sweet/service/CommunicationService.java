@@ -303,8 +303,8 @@ public class CommunicationService extends Service {
     }
 
     private void requestPredetermined(PerdetermingRequest request) {
-        String[] data = {"一月十九", "一月二十", "一月二十一", "一月二十二", "一月二十三",
-                "一月二十四"};
+        String[] data = { "2-1", "2-2", "2-3", "2-4",
+                "2-5","2-6"};
         String[][] time = {
                 {
                         "1", "2", "3", "4", "5", "6"

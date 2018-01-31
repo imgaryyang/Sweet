@@ -193,7 +193,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginLeft="17dp"
                     android:layout_marginRight="15dp"
                     android:orientation="horizontal">
 
@@ -204,7 +204,7 @@
                         android:gravity="left|center"
                         android:text="美食"
                         android:textColor="@color/black"
-                        android:textSize="15dp"/>
+                        android:textSize="16dp"/>
 
                     <TextView
                         android:id="@+id/tv_moreFood"
@@ -214,7 +214,7 @@
                         android:onClick="onButtonClick"
                         android:text="查看更多>"
                         android:textColor="@color/Myappcolor"
-                        android:textSize="13dp"/>
+                        android:textSize="14dp"/>
                 </LinearLayout>
 
                 <com.lucky.sweet.widgets.dragload.RecycleViewRefresh
@@ -228,7 +228,10 @@
                         android:id="@+id/rec_foodStore"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="5dp"
                         android:clipChildren="false"
                         android:overScrollMode="never"
                         android:scrollbars="none"/>
@@ -259,7 +262,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginLeft="17dp"
                     android:layout_marginRight="15dp"
                     android:orientation="horizontal">
 
@@ -270,7 +273,7 @@
                         android:gravity="left|center"
                         android:text="休闲"
                         android:textColor="@color/black"
-                        android:textSize="15dp"/>
+                        android:textSize="16dp"/>
 
                     <TextView
                         android:id="@+id/tv_moreRelax"
@@ -280,7 +283,7 @@
                         android:onClick="onButtonClick"
                         android:text="查看更多>"
                         android:textColor="@color/Myappcolor"
-                        android:textSize="13dp"/>
+                        android:textSize="14dp"/>
                 </LinearLayout>
 
                 <com.lucky.sweet.widgets.dragload.RecycleViewRefresh
@@ -294,7 +297,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="5dp"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="3dp"
                         android:layout_marginRight="15dp"
                         android:layout_marginTop="5dp"
                         android:clipChildren="false"/>

@@ -88,25 +88,25 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginLeft="15dp"
-                android:src="@mipmap/test_one"/>
+                android:src="@mipmap/test1"/>
 
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginLeft="15dp"
-                android:src="@mipmap/test_one"/>
+                android:src="@mipmap/test2"/>
 
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:src="@mipmap/test_one"/>
+                android:src="@mipmap/test3"/>
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginRight="15dp"
-                android:src="@mipmap/test_one"/>
+                android:src="@mipmap/test4"/>
         </LinearLayout>
     </RelativeLayout>
 
