@@ -26,8 +26,8 @@ public class OrderSeatHandler extends Handler {
     public void handleMessage(Message msg) {
         switch (msg.what) {
             case UPDATE_DIALOGDAT:
-                PerdetermingEntity entity = (PerdetermingEntity) msg.obj;
-                orderSubmitActivity.upDateRequest(entity);
+
+                orderSubmitActivity.upDateRequest((PerdetermingEntity) msg.obj);
                 break;
             case 1:
                 break;

@@ -10,7 +10,7 @@ package com.lucky.sweet.properties;
 
 public class Properties {
     public static final String LOGINPATH =
-            "http://thethreestooges.cn/consumer/bean/login/login.php";
+            "https://thethreestooges.cn:666/identity/login/login.php";
 
     public static final String USERWRITEPATH =
             "http://thethreestooges.cn/consumer/bean/login/user_write.php";
@@ -38,6 +38,10 @@ public class Properties {
             "https://thethreestooges.cn:666/application/searching/select_show.php";
     public static final String DISPLAYMAINSHOWPATH =
             "https://thethreestooges.cn:666/application/searching/search_show.php";
+
+    public static final String ORDERSUBMITPATH =
+            "https://thethreestooges.cn:666/order/order/submit";
+
 
 
 

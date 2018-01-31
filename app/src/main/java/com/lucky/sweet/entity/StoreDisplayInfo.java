@@ -11,6 +11,7 @@ import java.util.List;
  */
 
 public class StoreDisplayInfo {
+
     private List<MerListBean> mer_list;
 
     public List<MerListBean> getMer_list() {
@@ -24,14 +25,14 @@ public class StoreDisplayInfo {
     public static class MerListBean {
         /**
          * mer_id : 5
-         * mer_address : 辽宁省大连市旅顺口区旅顺盐场海鲜街45号（大连医科大学、大连外国语学院）
+         * mer_address : null
          * name : 老板
          * environment : null
          * surface : https://thethreestooges.cn/merchant/img/photo_mer/5/surface.png
          */
 
         private String mer_id;
-        private String mer_address;
+        private Object mer_address;
         private String name;
         private Object environment;
         private String surface;
@@ -44,11 +45,11 @@ public class StoreDisplayInfo {
             this.mer_id = mer_id;
         }
 
-        public String getMer_address() {
+        public Object getMer_address() {
             return mer_address;
         }
 
-        public void setMer_address(String mer_address) {
+        public void setMer_address(Object mer_address) {
             this.mer_address = mer_address;
         }
 

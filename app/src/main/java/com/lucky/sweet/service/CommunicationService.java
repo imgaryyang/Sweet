@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.lucky.sweet.activity.MyApplication;
 import com.lucky.sweet.activity.OrderSeatActivity;
 import com.lucky.sweet.activity.StoreDisplatActivity;
 import com.lucky.sweet.activity.StoreParticularInfoActivity;
@@ -212,12 +213,8 @@ public class CommunicationService extends Service {
             });
         }
 
-        public void requestStoreDisplayInfo(StoreDisplatActivity activity, String project,
-                                            String
-                                                    circle,
-                                            String city, String rank, String num) {
-            final DisplayActivityHandle displayActivityHandle = new
-                    DisplayActivityHandle(activity);
+        public void requestStoreDisplayInfo(StoreDisplatActivity activity, String project, String circle, String city, String rank, String num) {
+            final DisplayActivityHandle displayActivityHandle = new DisplayActivityHandle(activity);
             getStoreDisplayInfo(project, circle, city, rank, num, new OnDisPlayInfoRequest() {
                 @Override
                 public void DisplayInfo(StoreDisplayInfo storeDisplayInfo) {
@@ -240,12 +237,41 @@ public class CommunicationService extends Service {
 
         }
 
+        public void sendOrderSeatInfo(String time, String num, String peopleNum, String photo, String des) {
+            requestOrderSeatInfo(time, num, peopleNum, photo, des);
+        }
     }
 
-    private void getStoreDisplaySearchTitle(
-            String
-                    city, final OnDisPlaySearchRequest
-                    onDisPlaySearchRequest) {
+    private void requestOrderSeatInfo(String time, String num, String peopleNum, String photo, String des) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("tim", time);
+        map.put("num", num);
+        map.put("peopleNum", peopleNum);
+        map.put("photo", photo);
+        map.put("des", des);
+        map.put("session", MyApplication.sessionId);
+        HttpUtils.sendOkHttpRequest(Properties.MAINSHOWPLAYTPATH, new com.zhy.http.okhttp.callback.Callback() {
+            @Override
+            public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
+
+                Gson gson = new Gson();
+                System.out.println(response.toString());
+                return null;
+            }
+
+            @Override
+            public void onError(com.squareup.okhttp.Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Object response) {
+
+            }
+        }, map);
+    }
+
+    private void getStoreDisplaySearchTitle(String city, final OnDisPlaySearchRequest onDisPlaySearchRequest) {
         HashMap<String, String> map = new HashMap<>();
         map.put("city", city);
         HttpUtils.sendOkHttpRequest(Properties.DISPLAYSEARCHTITLE, new com.zhy.http.okhttp
@@ -399,6 +425,7 @@ public class CommunicationService extends Service {
                     if (error == TencentLocation.ERROR_OK) {
 
                         String city = tencentLocation.getCity().trim();
+                        MyApplication.setCurrenCity(city);
                         if (city.length() > 3) {
                             city = city.substring(0, 2) + "...";
                         }
@@ -488,7 +515,6 @@ public class CommunicationService extends Service {
                             public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
                                 String string = response.body().string();
                                 Gson gson = new Gson();
-                                System.out.println(string);
                                 StoreDisplayInfo storeDisplayInfo = gson.fromJson(string, StoreDisplayInfo.class);
                                 onDisPlayInfoRequest.DisplayInfo(storeDisplayInfo);
                                 return null;

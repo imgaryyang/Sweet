@@ -4,8 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.telephony.PhoneNumberUtils;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -16,12 +14,10 @@ import android.widget.Toast;
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.PerdetermingEntity;
 import com.lucky.sweet.service.CommunicationService;
+import com.lucky.sweet.utility.RegularUtils;
 import com.lucky.sweet.views.DishesOrderDialog;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by Qiuyue on 2017/12/19.
@@ -33,10 +29,13 @@ import java.util.regex.Pattern;
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
 public class OrderSeatActivity extends BaseActivity {
+    private CommunicationService.MyBinder myBinder;
     private Title title = null;
     private TextView tv_timeSelect;
     private TextView edt_num;
     private EditText et_input_phone;
+    private EditText edt_people_num;
+    private EditText edt_order_des;
     private String[] data;
     private String[][] time;
 
@@ -51,7 +50,6 @@ public class OrderSeatActivity extends BaseActivity {
 
     }
 
-    private CommunicationService.MyBinder myBinder;
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
@@ -63,6 +61,8 @@ public class OrderSeatActivity extends BaseActivity {
         tv_timeSelect = findViewById(R.id.tv_timeSelect);
         edt_num = findViewById(R.id.edt_num);
         et_input_phone = findViewById(R.id.et_input_phone);
+        edt_people_num = findViewById(R.id.edt_people_num);
+        edt_order_des = findViewById(R.id.edt_order_des);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         initTitle();
     }
@@ -97,7 +97,7 @@ public class OrderSeatActivity extends BaseActivity {
             public void onClick(View v) {
 
                 String phone = et_input_phone.getText().toString().trim();
-                boolean result = isPhoneNumber(phone);
+                boolean result = RegularUtils.isPhoneNumber(phone);
                 if (result == true) {
                     AlertDialog dialog = new AlertDialog.Builder(OrderSeatActivity.this)
 //                        .setTitle("标题")
@@ -107,6 +107,7 @@ public class OrderSeatActivity extends BaseActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int
                                         which) {
+                                    sendOrderSeatInfo();
                                     dialog.dismiss();
                                 }
                             })
@@ -115,6 +116,7 @@ public class OrderSeatActivity extends BaseActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int
                                         which) {
+                                    sendOrderSeatInfo();
                                     startActivity(new Intent(OrderSeatActivity
                                             .this, MerchantActivity.class));
                                     goNextAnim();
@@ -169,26 +171,13 @@ public class OrderSeatActivity extends BaseActivity {
 
     }
 
-    public static boolean isPhoneNumber(String phoneNo) {
-        if (TextUtils.isEmpty(phoneNo)) {
-            return false;
-        }
-        if (phoneNo.length() == 11) {
-            for (int i = 0; i < 11; i++) {
-                if (!PhoneNumberUtils.isISODigit(phoneNo.charAt(i))) {
-                    return false;
-                }
-            }
-            Pattern p = Pattern.compile("^((13[^4,\\D])" + "|(134[^9,\\D])" +
-                    "|(14[5,7])" +
-                    "|(15[^4,\\D])" +
-                    "|(17[3,6-8])" +
-                    "|(18[0-9]))\\d{8}$");
-            Matcher m = p.matcher(phoneNo);
-            return m.matches();
-        }
-        return false;
+    private void sendOrderSeatInfo() {
+       /* String time = tv_timeSelect.getText().toString().trim();
+        String num = edt_num.getText().toString().trim();
+        String peopleNum = edt_people_num.getText().toString().trim();
+        String photo = et_input_phone.getText().toString().trim();
+        String des = edt_order_des.getText().toString().trim();
+        myBinder.sendOrderSeatInfo(time,num,peopleNum,photo,des);*/
     }
-
 
 }

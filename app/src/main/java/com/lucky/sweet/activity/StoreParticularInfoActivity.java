@@ -74,7 +74,6 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
         initTitle();
 
-        /*ParticularInfoManager particularInfoManager = new ParticularInfoManager(this);*/
     }
 
     @Override

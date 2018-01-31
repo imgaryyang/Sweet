@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.SearchSpinnerAdapter;
@@ -52,6 +51,12 @@ public class StoreDisplatActivity extends BaseActivity {
     private List<MainStoreInfo> storeShowInfo;
     private CommunicationService.MyBinder myBinder;
     private List<StoreDisplayInfo.MerListBean> displayList;
+    private String businessArea;
+    private String rankType;
+    private String recreationType;
+    private List<String> circle;
+    private List<String> classify;
+    private List<String> order;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +65,6 @@ public class StoreDisplatActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         storeDisplatManager = new StoreDisplatManager(this);
-
         storeDisplatManager.getDisInfo();
 
 
@@ -76,7 +80,8 @@ public class StoreDisplatActivity extends BaseActivity {
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
-        myBinder.requestStoreDisplayInfo(this, "聚餐宴请", "全部", "大连市", "最新搜录", "0");
+
+        myBinder.requestStoreDisplayInfo(this, "聚餐宴请", "全部", MyApplication.CURRENT_CITY, "最新搜录", "0");
         this.myBinder = myBinder;
     }
 
@@ -118,7 +123,6 @@ public class StoreDisplatActivity extends BaseActivity {
     public void upDataDisplayInfo(StoreDisplayInfo info) {
 
         displayList = info.getMer_list();
-        System.out.println(displayList.size());
 
         adapter = new ShowInfoListViewAdapter(displayList, this);
         lv_storeInfo.setAdapter(adapter);
@@ -128,13 +132,30 @@ public class StoreDisplatActivity extends BaseActivity {
     public void upDataSearchInfo(StoreDisplaySearchEntity info) {
 
         StoreDisplaySearchEntity.LiistBean list = info.getLiist();
+        circle = list.getCircle();
+        classify = list.getClassify();
+        order = list.getOrder();
 
-        sp_BusinessArea.setAdapter(new SearchSpinnerAdapter(list.getCircle(), this));
+        businessArea = circle.get(0);
+        rankType = classify.get(0);
+        recreationType = order.get(0);
 
-        sp_RecreationType.setAdapter(new SearchSpinnerAdapter(list.getClassify(), this));
+        sp_BusinessArea.setAdapter(new SearchSpinnerAdapter(circle, this));
 
-        sp_RankType.setAdapter(new SearchSpinnerAdapter(list.getOrder(), this));
+        sp_RecreationType.setAdapter(new SearchSpinnerAdapter(classify, this));
 
+        sp_RankType.setAdapter(new SearchSpinnerAdapter(order, this));
+
+    }
+
+    private void sendSearChRequest() {
+     /*   myBinder.requestStoreDisplayInfo(this, recreationType, businessArea, MyApplication.CURRENT_CITY, rankType, "0");
+        if (displayList.size() != 0) {
+
+              displayList.clear();
+
+        }
+        adapter.notifyDataSetChanged();*/
     }
 
     //设置监听事件，将来商家列表的排序都在这里面处理
@@ -142,7 +163,8 @@ public class StoreDisplatActivity extends BaseActivity {
         sp_BusinessArea.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(StoreDisplatActivity.this, "点击了" + storeDisplatManager.getBusinessAreaList().get(position), Toast.LENGTH_SHORT).show();
+                businessArea = circle.get(position);
+                sendSearChRequest();
             }
 
             @Override
@@ -154,9 +176,9 @@ public class StoreDisplatActivity extends BaseActivity {
         sp_RecreationType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(StoreDisplatActivity.this, "点击了" +
-                        storeDisplatManager.getRecreationTypeList().get
-                                (position), Toast.LENGTH_SHORT).show();
+                recreationType = classify.get(position);
+                sendSearChRequest();
+
             }
 
             @Override
@@ -168,7 +190,9 @@ public class StoreDisplatActivity extends BaseActivity {
         sp_RankType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(StoreDisplatActivity.this, "点击了" + storeDisplatManager.getRankTypeList().get(position), Toast.LENGTH_SHORT).show();
+                rankType = order.get(position);
+                sendSearChRequest();
+
             }
 
             @Override
@@ -181,7 +205,7 @@ public class StoreDisplatActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent = new Intent(StoreDisplatActivity.this, StoreParticularInfoActivity.class);
-                intent.putExtra("shopid",  displayList.get(position).getMer_id());
+                intent.putExtra("shopid", displayList.get(position).getMer_id());
                 startActivity(intent);
                 goNextAnim();
             }
@@ -189,14 +213,7 @@ public class StoreDisplatActivity extends BaseActivity {
         sw_store_info.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
-                storeShowInfo.add(new MainStoreInfo());
-                storeShowInfo.add(new MainStoreInfo());
-                storeShowInfo.add(new MainStoreInfo());
-                storeShowInfo.add(new MainStoreInfo());
-                storeShowInfo.add(new MainStoreInfo());
-                storeShowInfo.add(new MainStoreInfo());
-                adapter.notifyDataSetChanged();
-                sw_store_info.setRefreshing(false);
+
             }
         });
 
@@ -205,11 +222,7 @@ public class StoreDisplatActivity extends BaseActivity {
 
     private void initAdapter() {
 
-       /* sp_BusinessArea.setAdapter(new SearchSpinnerAdapter(storeDisplatManager.getBusinessAreaList(), this));
 
-        sp_RecreationType.setAdapter(new SearchSpinnerAdapter(storeDisplatManager.getRecreationTypeList(), this));
-
-        sp_RankType.setAdapter(new SearchSpinnerAdapter(storeDisplatManager.getRankTypeList(), this));*/
         storeShowInfo = storeDisplatManager.getStoreShowInfo();
     }
 

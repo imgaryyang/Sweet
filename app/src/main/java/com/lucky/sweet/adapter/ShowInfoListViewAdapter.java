@@ -76,7 +76,7 @@ public class ShowInfoListViewAdapter extends BaseAdapter {
         public void onBindInfo(StoreDisplayInfo.MerListBean info, Context context) {
             Glide.with(context).load(info.getSurface()).into(imv_shop_sur);
             tv_shop_title.setText(info.getName());
-            tv_shop_des.setText(info.getMer_address());
+
         }
     }
 }

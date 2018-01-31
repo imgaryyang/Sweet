@@ -22,9 +22,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private MyConn conn = new MyConn();
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

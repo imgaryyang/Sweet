@@ -31,6 +31,8 @@ public class MyApplication extends Application {
 
     public static String sessionId = "";
 
+    public static String CURRENT_CITY = "大连市";
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -109,5 +111,9 @@ public class MyApplication extends Application {
         }
 
 
+    }
+
+    public static void setCurrenCity(String city) {
+        CURRENT_CITY = city;
     }
 }
