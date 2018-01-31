@@ -208,7 +208,15 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         productList = new ArrayList<>();
         strings = new ArrayList<>();
         sectionedAdapter = new TestSectionedAdapter(getActivity(), productCategorizes);
-
+        sectionedAdapter.setOnItemDesClickListener(new TestSectionedAdapter.OnItemDesClickListener() {
+            @Override
+            public void onClick(int section,int position) {
+                if (onClickListener != null) {
+                    onClickListener.onItemClick(calculateListPositon(section,
+                            position, (ArrayList<ProductType>) productCategorizes));
+                }
+            }
+        });
         sectionedAdapter.SetOnSetHolderClickListener(new TestSectionedAdapter.HolderClickListener() {
 
             @Override
@@ -223,22 +231,7 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         }
 
         morelist.setAdapter(sectionedAdapter);
-        morelist.setOnItemClickListener(new PinnedHeaderListView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int section, int position, long id) {
-                Toast.makeText(getContext(), "section:" + section + "position" + position, Toast.LENGTH_SHORT).show();
-                if (onClickListener != null) {
-                    onClickListener.onItemClick(calculateListPositon(section,
-                            position, (ArrayList<ProductType>) productCategorizes));
-                }
 
-            }
-
-            @Override
-            public void onSectionClick(AdapterView<?> adapterView, View view, int section, long id) {
-
-            }
-        });
         sectionedAdapter.setCallBackListener(this);
         mainlist.setAdapter(new ArrayAdapter<String>(getActivity(),
                 R.layout.categorize_item, strings));
