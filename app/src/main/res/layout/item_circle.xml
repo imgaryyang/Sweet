@@ -180,7 +180,6 @@
             android:id="@+id/l_pictures"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-
             <com.lucky.sweet.widgets.ImageViewWatcher.SquareImageView
                 android:id="@+id/i_picture"
                 android:layout_width="wrap_content"

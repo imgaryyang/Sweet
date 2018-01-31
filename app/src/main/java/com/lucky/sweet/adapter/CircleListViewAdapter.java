@@ -7,8 +7,12 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.CirclePicData;
 import com.lucky.sweet.views.CircleImageView;
+import com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayout;
+import com.lucky.sweet.widgets.ImageViewWatcher.SquareImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,12 +26,25 @@ import java.util.List;
 public class CircleListViewAdapter extends BaseAdapter {
     private List<String> datas;
     private Context context;
+    private final ArrayList<Integer> integers;
+    private MessagePicturesLayout.Callback mcallback;
 
     public CircleListViewAdapter(List<String> datas, Context context) {
         this.datas = datas;
         this.context = context;
+
+
+        integers = new ArrayList<>();
+        integers.add(R.mipmap.test_second);
+        integers.add(R.mipmap.test_one);
+        integers.add(R.mipmap.test_second);
+        integers.add(R.mipmap.test_one);
     }
 
+    public CircleListViewAdapter setCallBack(MessagePicturesLayout.Callback mcallback){
+        this.mcallback = mcallback;
+        return this;
+    }
 
     @Override
     public int getCount() {
@@ -50,8 +67,10 @@ public class CircleListViewAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = View.inflate(context, R.layout.item_circle, null);
             viewHolder = new ViewHolder();
-            viewHolder.imv_head=convertView.findViewById(R.id.imv_head);
-
+            viewHolder.imv_head = convertView.findViewById(R.id.imv_head);
+            viewHolder.messPicLayout = convertView.findViewById(R.id.l_pictures);
+            viewHolder.i_picture = convertView.findViewById(R.id.i_picture);
+            viewHolder.messPicLayout.setCallback(mcallback);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -59,12 +78,17 @@ public class CircleListViewAdapter extends BaseAdapter {
 
         viewHolder.imv_head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
 
+        viewHolder.messPicLayout.set(integers);
+
         return convertView;
+
     }
 
     static public class ViewHolder {
         TextView type;
         CircleImageView imv_head;
+        MessagePicturesLayout messPicLayout;
+        SquareImageView i_picture;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.lucky.sweet.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,17 +11,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.activity.PersonalCircleActivity;
 import com.lucky.sweet.activity.SendCircleActivity;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
 import com.lucky.sweet.views.CircleImageView;
+import com.lucky.sweet.widgets.ImageViewWatcher.ImageWatcher;
+import com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayout;
 import com.lucky.sweet.widgets.ToolBar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import cn.forward.androids.views.StringScrollPicker;
 
@@ -33,10 +39,12 @@ import cn.forward.androids.views.StringScrollPicker;
 // ( (oo) )  ( (oo) )  ( (oo) )
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
-public class ImCircleFragment extends Fragment {
+public class ImCircleFragment extends Fragment implements
+        MessagePicturesLayout.Callback{
     //    private Title title = null;
     private static final String[] title = {"朋友", "今日", "广场"};
     private CircleImageView imv_head;
+    private    ImageWatcher   vImageWatcher   ;
 
     @Nullable
     @Override
@@ -91,7 +99,8 @@ public class ImCircleFragment extends Fragment {
         objects.add("");
         objects.add("");
         objects.add("");
-        lv_circle.setAdapter(new CircleListViewAdapter(objects, getActivity()));
+        lv_circle.setAdapter(new CircleListViewAdapter(objects, getActivity()
+        ).setCallBack(this));
 
 
         lv_circle.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -103,6 +112,40 @@ public class ImCircleFragment extends Fragment {
                 getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
             }
         });
+        vImageWatcher = (ImageWatcher)  view.findViewById(R.id.imv_watcger);
+        // 如果是透明状态栏，你需要给ImageWatcher标记 一个偏移值，以修正点击ImageView查看的启动动画的Y轴起点的不正确
+//        vImageWatcher.setTranslucentStatus(!isTranslucentStatus ?
+//                ImageViewWatcherUtils.calcStatusBarHeight(getContext()) : 0);
+
+
+        //长按
+        vImageWatcher.setOnPictureLongPressListener(new ImageWatcher.OnPictureLongPressListener() {
+            @Override
+            public void onPictureLongPress() {
+
+            }
+        });
+        //是否用手势
+        vImageWatcher.setOnGesture(true);
     }
+
+    @Override
+    public void onThumbPictureClick(ImageView i, List<ImageView> imageGroupList, List<Integer> urlList) {
+        vImageWatcher.show(i, imageGroupList, urlList);
+    }
+
+
+   /* @Override
+    public void onBackPressed() {
+        if (!vImageWatcher.handleBackPressed()) {
+            super.onBackPressed();
+        }
+    }*/
+
+//    //重写长按
+//    @Override
+//    public void onPictureLongPress() {
+//        Toast.makeText(this,"11111",Toast.LENGTH_SHORT).show();
+//    }
 
 }
