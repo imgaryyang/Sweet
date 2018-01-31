@@ -75,6 +75,24 @@ public class ShowInfoListViewAdapter extends BaseAdapter {
 
         public void onBindInfo(StoreDisplayInfo.MerListBean info, Context context) {
             Glide.with(context).load(info.getSurface()).into(imv_shop_sur);
+            List<String> environment = info.getEnvironment();
+            //todo 完善逻辑
+            for (int i = 0; i < environment.size(); i++) {
+                switch (i) {
+                    case 0:
+                        Glide.with(context).load(environment.get(i)).into(imv_shop_dis_fir);
+                        break;
+                    case 1:
+                        Glide.with(context).load(environment.get(i)).into(imv_shop_dis_sec);
+
+                        break;
+                    case 2:
+                        Glide.with(context).load(environment.get(i)).into(imv_shop_dis_the);
+
+                        break;
+                }
+            }
+
             tv_shop_title.setText(info.getName());
 
         }

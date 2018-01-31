@@ -12,6 +12,7 @@ import java.util.List;
 
 public class StoreDisplayInfo {
 
+
     private List<MerListBean> mer_list;
 
     public List<MerListBean> getMer_list() {
@@ -27,15 +28,15 @@ public class StoreDisplayInfo {
          * mer_id : 5
          * mer_address : null
          * name : 老板
-         * environment : null
+         * environment : ["https://thethreestooges.cn/123123.jpg","https://thethreestooges.cn/123123.jpg","https://thethreestooges.cn/123123.jpg"]
          * surface : https://thethreestooges.cn/merchant/img/photo_mer/5/surface.png
          */
 
         private String mer_id;
         private Object mer_address;
         private String name;
-        private Object environment;
         private String surface;
+        private List<String> environment;
 
         public String getMer_id() {
             return mer_id;
@@ -61,20 +62,20 @@ public class StoreDisplayInfo {
             this.name = name;
         }
 
-        public Object getEnvironment() {
-            return environment;
-        }
-
-        public void setEnvironment(Object environment) {
-            this.environment = environment;
-        }
-
         public String getSurface() {
             return surface;
         }
 
         public void setSurface(String surface) {
             this.surface = surface;
+        }
+
+        public List<String> getEnvironment() {
+            return environment;
+        }
+
+        public void setEnvironment(List<String> environment) {
+            this.environment = environment;
         }
     }
 }
