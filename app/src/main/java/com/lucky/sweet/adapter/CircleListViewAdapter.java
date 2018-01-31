@@ -35,10 +35,10 @@ public class CircleListViewAdapter extends BaseAdapter {
 
 
         integers = new ArrayList<>();
-        integers.add(R.mipmap.test_second);
-        integers.add(R.mipmap.test_one);
-        integers.add(R.mipmap.test_second);
-        integers.add(R.mipmap.test_one);
+        integers.add(R.mipmap.test1);
+        integers.add(R.mipmap.test2);
+        integers.add(R.mipmap.test3);
+        integers.add(R.mipmap.test4);
     }
 
     public CircleListViewAdapter setCallBack(MessagePicturesLayout.Callback mcallback){

@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.activity.MainActivity;
 import com.lucky.sweet.activity.PersonalCircleActivity;
 import com.lucky.sweet.activity.SendCircleActivity;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
@@ -117,6 +118,11 @@ public class ImCircleFragment extends Fragment implements
 //        vImageWatcher.setTranslucentStatus(!isTranslucentStatus ?
 //                ImageViewWatcherUtils.calcStatusBarHeight(getContext()) : 0);
 
+//        if (vImageWatcher.getVisibility()==View.GONE)
+//        {
+//
+//        }
+
 
         //长按
         vImageWatcher.setOnPictureLongPressListener(new ImageWatcher.OnPictureLongPressListener() {
@@ -131,8 +137,19 @@ public class ImCircleFragment extends Fragment implements
 
     @Override
     public void onThumbPictureClick(ImageView i, List<ImageView> imageGroupList, List<Integer> urlList) {
+
         vImageWatcher.show(i, imageGroupList, urlList);
+
+        ((MainActivity) getActivity()).hideTabView();
+/*
+        if (vImageWatcher.getVisibility()==View.VISIBLE)
+        {
+            ((MainActivity) getActivity()).showTabView();
+
+        }*/
     }
+
+
 
 
    /* @Override

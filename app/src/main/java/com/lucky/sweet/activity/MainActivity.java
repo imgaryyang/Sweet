@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
+import android.view.View;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.fragment.ImCircleFragment;
@@ -126,5 +127,12 @@ public class MainActivity extends BaseActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public void hideTabView(){
+        mTabLayout.setVisibility(View.GONE);
+    }
+    public void showTabView(){
+        mTabLayout.setVisibility(View.VISIBLE);
     }
 }

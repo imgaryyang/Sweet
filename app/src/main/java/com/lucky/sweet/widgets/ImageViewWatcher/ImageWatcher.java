@@ -28,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.lucky.sweet.R;
+import com.lucky.sweet.activity.MainActivity;
 import com.lucky.sweet.utility.ViewState;
 
 import java.lang.ref.WeakReference;
@@ -839,6 +840,9 @@ public class ImageWatcher extends FrameLayout implements GestureDetector.OnGestu
                         // 如果是退出查看操作，动画执行完后，原始被点击的ImageView恢复可见
                         if (iOrigin != null) iOrigin.setVisibility(View.VISIBLE);
                         setVisibility(View.GONE);
+                        ((MainActivity) getContext()).showTabView();
+
+
                     }
                 });
             }
