@@ -101,7 +101,6 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
     private void initData() {
 
-        //ImStoreManager imStoreManager = new ImStoreManager(this);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -112,7 +111,6 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        // rec_ad_show.setLayoutManager(linearLayoutManager);
 
         linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -122,16 +120,6 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rec_funStore.setLayoutManager(linearLayoutManager);
-
-
-        // rec_ad_show.setAdapter(new RecminiAdAdapter(context));
-/*
-
-        rec_foodStore.addOnScrollListener(new AdRecyCleViewOnScrollState
-                (context, AdRecyCleViewOnScrollState.FOOD));
-        rec_funStore.addOnScrollListener(new AdRecyCleViewOnScrollState
-                (context, AdRecyCleViewOnScrollState.FUN));
-*/
 
 
     }

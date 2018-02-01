@@ -26,7 +26,7 @@ import okhttp3.Response;
  */
 
 public class MyApplication extends Application {
-
+    //todo 选取session并且判读当为“”时，则视为站务登陆
     private static Context context;
 
     public static String sessionId = "";
@@ -38,7 +38,7 @@ public class MyApplication extends Application {
         super.onCreate();
         context = getApplicationContext();
 
-
+        initSession();
         initBroadCastReceiver();
     }
 

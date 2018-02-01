@@ -28,9 +28,6 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashactivity);
         initViews();
-
-        MyApplication.initSession();
-
     }
 
     @Override
