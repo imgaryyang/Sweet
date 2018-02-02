@@ -63,8 +63,8 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@drawable/search_bg"/>
+        android:layout_height="25dp"
+        android:background="@color/transparent"/>
 
 
 </LinearLayout>

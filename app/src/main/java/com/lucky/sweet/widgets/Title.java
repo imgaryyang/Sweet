@@ -157,7 +157,9 @@ public class Title extends RelativeLayout{
         THEME_TRANSLATE,//主题_透明
         THEME_LIGHT,//主题_明亮，背景是浅色
         THEME_DARK,//主题_黑色，背景是深色
-        THEME_TRANSLATE_NODIVIDER;//主题_透明无分割线
+        THEME_TRANSLATE_NODIVIDER,//主题_透明无分割线
+        THEME_TRANSLATE_GRAYDIVIDER;//主题_灰无分割线
+
     }
 
 
@@ -233,6 +235,17 @@ public class Title extends RelativeLayout{
                 buttonHolderRight2.text.setTextColor(getResources().getColorStateList(R.color.selector_titletext_themetransport));
 
                 titleDivider.setBackgroundResource(android.R.color.transparent);
+                this.setBackgroundResource(android.R.color.transparent);
+                break;
+            case THEME_TRANSLATE_GRAYDIVIDER:
+                if(titleName != null){
+                    titleName.setTextColor(Color.WHITE);
+                }
+                buttonHolderLeft.text.setTextColor(getResources().getColorStateList(R.color.selector_titletext_themetransport));
+                buttonHolderRight1.text.setTextColor(getResources().getColorStateList(R.color.selector_titletext_themetransport));
+                buttonHolderRight2.text.setTextColor(getResources().getColorStateList(R.color.selector_titletext_themetransport));
+                titleDivider.setBackgroundResource(R.color.grayDividerDark);
+
                 this.setBackgroundResource(android.R.color.transparent);
                 break;
         }

@@ -50,6 +50,7 @@
             android:hint="请输入邮箱账号"
             android:paddingLeft="45dp"
             android:singleLine="true"
+            android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="14dp"/>
 
@@ -78,6 +79,7 @@
             android:inputType="textPassword"
             android:paddingLeft="45dp"
             android:singleLine="true"
+            android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="14dp"/>
 
