@@ -280,9 +280,11 @@ public class CommunicationService extends Service {
             public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
 
                 Gson gson = new Gson();
-                StoreDisplaySearchEntity storeDisplaySearchEntity = gson.fromJson(response.body().string(),
+                System.out.println(response.body().string());
+                //todo 修改商品展示检索栏
+              /*  StoreDisplaySearchEntity storeDisplaySearchEntity = gson.fromJson(response.body().string(),
                         StoreDisplaySearchEntity.class);
-                onDisPlaySearchRequest.DisplaySearch(storeDisplaySearchEntity);
+                onDisPlaySearchRequest.DisplaySearch(storeDisplaySearchEntity);*/
                 return null;
             }
 
