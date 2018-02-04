@@ -100,6 +100,7 @@ public class MyApplication extends Application {
                         Response response = client.newCall(request).execute();
                         if (response.isSuccessful()) {
                             sessionId = response.body().string();
+                            System.out.println("session:"+sessionId);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();

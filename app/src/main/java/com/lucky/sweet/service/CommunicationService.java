@@ -253,9 +253,12 @@ public class CommunicationService extends Service {
         HttpUtils.sendOkHttpRequest(Properties.MAINSHOWPLAYTPATH, new com.zhy.http.okhttp.callback.Callback() {
             @Override
             public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
-
-                Gson gson = new Gson();
-                System.out.println(response.toString());
+                try {
+                    Gson gson = new Gson();
+                    System.out.println(response.toString());
+                } catch (Exception e) {
+                    Log.e("Service", "requestOrder");
+                }
                 return null;
             }
 
@@ -278,13 +281,15 @@ public class CommunicationService extends Service {
                 .callback.Callback() {
             @Override
             public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
+                try {
+                    Gson gson = new Gson();
+                    //todo 修改商品展示检索栏
+                    StoreDisplaySearchEntity storeDisplaySearchEntity = gson.fromJson(response.body().string(), StoreDisplaySearchEntity.class);
+                    onDisPlaySearchRequest.DisplaySearch(storeDisplaySearchEntity);
+                } catch (Exception e) {
+                    Log.e("Service", "StoreDisplay");
+                }
 
-                Gson gson = new Gson();
-                System.out.println(response.body().string());
-                //todo 修改商品展示检索栏
-              /*  StoreDisplaySearchEntity storeDisplaySearchEntity = gson.fromJson(response.body().string(),
-                        StoreDisplaySearchEntity.class);
-                onDisPlaySearchRequest.DisplaySearch(storeDisplaySearchEntity);*/
                 return null;
             }
 
@@ -305,8 +310,8 @@ public class CommunicationService extends Service {
     }
 
     private void requestPredetermined(PerdetermingRequest request) {
-        String[] data = { "2-1", "2-2", "2-3", "2-4",
-                "2-5","2-6"};
+        String[] data = {"2-1", "2-2", "2-3", "2-4",
+                "2-5", "2-6"};
         String[][] time = {
                 {
                         "1", "2", "3", "4", "5", "6"
@@ -347,12 +352,16 @@ public class CommunicationService extends Service {
         HttpUtils.sendOkHttpRequest(Properties.MAINSHOWPLAYTPATH, new com.zhy.http.okhttp.callback.Callback() {
             @Override
             public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
-
-                Gson gson = new Gson();
-                MainStoreInfo mainStoreInfo = gson.fromJson(response.body().string(), MainStoreInfo.class);
-                if (onMainDsplay != null) {
-                    onMainDsplay.upDataShowInfo(mainStoreInfo);
+                try {
+                    Gson gson = new Gson();
+                    MainStoreInfo mainStoreInfo = gson.fromJson(response.body().string(), MainStoreInfo.class);
+                    if (onMainDsplay != null) {
+                        onMainDsplay.upDataShowInfo(mainStoreInfo);
+                    }
+                } catch (Exception e) {
+                    Log.e("Service", "initShopInfo");
                 }
+
 
                 return null;
             }
@@ -431,7 +440,7 @@ public class CommunicationService extends Service {
                         if (city.length() > 3) {
                             city = city.substring(0, 2) + "...";
                         }
-                        if (onMainDsplay != null) {
+                        if (onMainDsplay != null && city != null) {
                             onMainDsplay.upDataLocation(city);
                         }
                         if (city.contains("市"))

@@ -29,9 +29,10 @@ public class HttpUtils {
     }
 
     public static void sendOkHttpRequest(final String address, final com.zhy
-            .http.okhttp.callback.Callback callback, HashMap<String, String> request) {
+            .http.okhttp.callback.Callback callback, HashMap<String, String>
+            param) {
         PostFormBuilder url = OkHttpUtils.post().url(address);
-        Iterator<Map.Entry<String, String>> iterator = request.entrySet().iterator();
+        Iterator<Map.Entry<String, String>> iterator = param.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<String, String> next = iterator.next();
             url.addParams(next.getKey(), next.getValue());

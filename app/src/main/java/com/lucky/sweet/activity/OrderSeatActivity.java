@@ -2,17 +2,21 @@ package com.lucky.sweet.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.PerdetermingEntity;
+import com.lucky.sweet.properties.Properties;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.utility.RegularUtils;
 import com.lucky.sweet.views.DishesOrderDialog;
@@ -38,6 +42,7 @@ public class OrderSeatActivity extends BaseActivity {
     private EditText edt_order_des;
     private String[] data;
     private String[][] time;
+    private LinearLayout ll_order_seat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +51,18 @@ public class OrderSeatActivity extends BaseActivity {
 
         initView();
 
+        initData();
+
         initEvent();
 
+    }
+
+    private void initData() {
+        try {
+            ll_order_seat.setBackground(BitmapDrawable.createFromPath(Properties.ORDER_SEAT_BACKGROUND_PATH));
+        } catch (Exception e) {
+            Log
+        }
     }
 
 
@@ -60,9 +75,11 @@ public class OrderSeatActivity extends BaseActivity {
     private void initView() {
         tv_timeSelect = findViewById(R.id.tv_timeSelect);
         edt_num = findViewById(R.id.edt_num);
+        ll_order_seat = findViewById(R.id.ll_order_seat);
         et_input_phone = findViewById(R.id.et_input_phone);
         edt_people_num = findViewById(R.id.edt_people_num);
         edt_order_des = findViewById(R.id.edt_order_des);
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         initTitle();
     }

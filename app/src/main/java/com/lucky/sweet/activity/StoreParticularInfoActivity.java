@@ -6,12 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.lucky.sweet.thread.BlurBitmapThread;
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
 import com.lucky.sweet.entity.StoreDetailedInfo;
@@ -60,7 +62,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private TextView tv_moreFood;
     private TextView tv_moreevr;
     private ScrollView sv_storeInfo;
-
+    private LinearLayout ll_store_part_info;
 
 
     @Override
@@ -169,7 +171,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
         btn_map_position = findViewById(R.id.btn_map_position);
         sv_storeInfo = (ScrollView) findViewById(R.id.sv_storeInfo);
         sv_storeInfo.smoothScrollTo(0, 0);
-
+        ll_store_part_info = findViewById(R.id.ll_store_part_info);
         imv_shop_one = findViewById(R.id.imv_shop_one);
         imv_shop_two = findViewById(R.id.imv_shop_two);
         imv_shop_three = findViewById(R.id.imv_shop_three);
@@ -180,9 +182,16 @@ public class StoreParticularInfoActivity extends BaseActivity {
         findViewById(R.id.btn_order).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(StoreParticularInfoActivity.this,
-                        OrderSeatActivity.class));
-                goNextAnim();
+                new BlurBitmapThread(StoreParticularInfoActivity.this,
+                        ll_store_part_info, 20) {
+                    @Override
+                    public void onBulerBitmapFinish() {
+                        startActivity(new Intent(StoreParticularInfoActivity.this,
+                                OrderSeatActivity.class));
+                        goNextAnim();
+                    }
+                }.run();
+
             }
         });
 

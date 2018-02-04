@@ -54,9 +54,10 @@ public class ExampleInstrumentedTest {
             assertEquals("1", response.body().string());
         }
     }
+
     //todo 测试用户找回密码。对照返回测试码
     @Test
-    public void TestUserForgetPsw() throws Exception{
+    public void TestUserForgetPsw() throws Exception {
         String userName = "chinn96@163.com";
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(Properties.FORGETVALIDATEPATH)
@@ -66,4 +67,6 @@ public class ExampleInstrumentedTest {
             assertEquals("1", response.body().string());
         }
     }
+
+
 }

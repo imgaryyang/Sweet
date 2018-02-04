@@ -4,10 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.entity.CirclePicData;
 import com.lucky.sweet.views.CircleImageView;
 import com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayout;
 import com.lucky.sweet.widgets.ImageViewWatcher.SquareImageView;
@@ -85,7 +83,6 @@ public class CircleListViewAdapter extends BaseAdapter {
     }
 
     static public class ViewHolder {
-        TextView type;
         CircleImageView imv_head;
         MessagePicturesLayout messPicLayout;
         SquareImageView i_picture;
