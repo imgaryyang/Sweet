@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -20,7 +21,6 @@
             app:collapsedTitleGravity="left|center_vertical"
             app:collapsedTitleTextAppearance="@style/CollapsingText"
             app:contentScrim="#499607"
-            app:expandedTitleGravity="bottom|center_horizontal"
             app:expandedTitleMarginBottom="30dp"
             app:expandedTitleTextAppearance="@style/ExtendText"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -115,6 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
                 >
 
                 <com.lucky.sweet.views.MySearchView

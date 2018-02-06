@@ -52,5 +52,17 @@ public class Properties {
 
     public static final String ORDER_SEAT_BACKGROUND_PATH =
             MyApplication.getContext().getCacheDir()
-            .getAbsolutePath() + "/background.png";
+            .getAbsolutePath() ;
+
+
+
+
+    public final static String TEST_BUCKET = "thethreestooges";
+
+    public final static String END_POINT = "http://oss-cn-shenzhen.aliyuncs"
+            + ".com";
+
+    public final static String REQUEST_PATH = "https://thethreestooges" +
+            ".cn:5210/identity/oss/token.php";
+
 }

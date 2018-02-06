@@ -11,12 +11,27 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.alibaba.sdk.android.oss.ClientConfiguration;
+import com.alibaba.sdk.android.oss.ClientException;
+import com.alibaba.sdk.android.oss.OSS;
+import com.alibaba.sdk.android.oss.OSSClient;
+import com.alibaba.sdk.android.oss.ServiceException;
+import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
+import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
+import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
+import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
+import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
+import com.alibaba.sdk.android.oss.model.GetObjectRequest;
+import com.alibaba.sdk.android.oss.model.GetObjectResult;
+import com.alibaba.sdk.android.oss.model.PutObjectRequest;
+import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.google.gson.Gson;
 import com.lucky.sweet.activity.MyApplication;
 import com.lucky.sweet.activity.OrderSeatActivity;
 import com.lucky.sweet.activity.StoreDisplatActivity;
 import com.lucky.sweet.activity.StoreParticularInfoActivity;
 import com.lucky.sweet.entity.MainStoreInfo;
+import com.lucky.sweet.entity.OssBean;
 import com.lucky.sweet.entity.PerdetermingEntity;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.entity.StoreDisplayInfo;
@@ -46,6 +61,10 @@ import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
+
+import static com.lucky.sweet.properties.Properties.END_POINT;
+import static com.lucky.sweet.properties.Properties.REQUEST_PATH;
+import static com.lucky.sweet.properties.Properties.TEST_BUCKET;
 
 
 /**
@@ -240,7 +259,154 @@ public class CommunicationService extends Service {
         public void sendOrderSeatInfo(String time, String num, String peopleNum, String photo, String des) {
             requestOrderSeatInfo(time, num, peopleNum, photo, des);
         }
+
+        public void ossUpdata(final String objectkey, final String filepath) {
+
+            CommunicationService.this.ossUpdata(MyApplication.getContext(),
+                    objectkey,filepath);
+        }
+
+        public void ossUpdata(final String objectkey, final byte[] bytes) {
+            CommunicationService.this.ossUpdata(MyApplication.getContext(),
+                    objectkey,bytes);
+        }
+
+        public void ossDownload(final String objectKey,
+                                final OSSCompletedCallback<GetObjectRequest, GetObjectResult> call) {
+            CommunicationService.this.ossDown(MyApplication.getContext(),
+                    objectKey,call);
+        }
     }
+
+
+    private static String KEY_ID = "";
+    private static String SECRET_KEY_ID = "";
+    private static String TOKEN = "";
+
+    private static void initOSS(final Context context, final OnOSSContecent
+            onOSSContecent) {
+        getInfo(new OnLoginSuccessful() {
+            @Override
+            public void onKeyUpData() {
+                OSSCredentialProvider credentialProvider = new
+                        OSSStsTokenCredentialProvider(KEY_ID, SECRET_KEY_ID, TOKEN
+                );
+                ClientConfiguration conf = new ClientConfiguration();
+                conf.setConnectionTimeout(15 * 1000); // 连接超时，默认15秒
+                conf.setSocketTimeout(15 * 1000); // socket超时，默认15秒
+                conf.setMaxConcurrentRequest(5); // 最大并发请求数，默认5个
+                conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
+                onOSSContecent.onClientSuccessful(new OSSClient(context.getApplicationContext(), END_POINT, credentialProvider));
+
+            }
+        });
+
+    }
+
+    private interface OnLoginSuccessful {
+        void onKeyUpData();
+    }
+
+    private interface OnOSSContecent {
+        void onClientSuccessful(OSS oss);
+    }
+
+    private void ossUpdata(Context context, final String objectkey, final
+    String
+            filepath) {
+        initOSS(context, new OnOSSContecent() {
+            @Override
+            public void onClientSuccessful(OSS oss) {
+                PutObjectRequest put = new PutObjectRequest(TEST_BUCKET, objectkey, filepath);
+                setServiceCallBack(put, oss);
+            }
+        });
+
+
+    }
+
+    private void ossUpdata(Context context, final String objectkey, final
+    byte[] bytes) {
+        initOSS(context, new OnOSSContecent() {
+            @Override
+            public void onClientSuccessful(OSS oss) {
+                PutObjectRequest put = new PutObjectRequest(TEST_BUCKET, objectkey, bytes);
+                setServiceCallBack(put, oss);
+            }
+        });
+
+
+    }
+
+    private void ossDown(Context context, final String objectKey,
+                         final OSSCompletedCallback<GetObjectRequest, GetObjectResult> call)
+
+    {
+        initOSS(context, new OnOSSContecent() {
+            @Override
+            public void onClientSuccessful(OSS oss) {
+                GetObjectRequest get = new GetObjectRequest(TEST_BUCKET, objectKey);
+                OSSAsyncTask task = oss.asyncGetObject(get, call);
+            }
+        });
+
+
+    }
+
+    private static void setServiceCallBack(PutObjectRequest put, OSS oss) {
+
+        // 异步上传时可以设置进度回调
+        put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
+            @Override
+            public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
+                Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
+            }
+        });
+        OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+            @Override
+            public void onSuccess(PutObjectRequest request, PutObjectResult result) {
+                Log.d("PutObject", "UploadSuccess");
+            }
+
+            @Override
+            public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                // 请求异常
+                if (clientExcepion != null) {
+                    // 本地异常如网络异常等
+                    clientExcepion.printStackTrace();
+                }
+                if (serviceException != null) {
+                    // 服务异常
+                    Log.e("ErrorCode", serviceException.getErrorCode());
+                    Log.e("RequestId", serviceException.getRequestId());
+                    Log.e("HostId", serviceException.getHostId());
+                    Log.e("RawMessage", serviceException.getRawMessage());
+                }
+            }
+        });
+    }
+
+    private static void getInfo(final OnLoginSuccessful onLoginSuccessful) {
+        HttpUtils.sendOkHttpRequest(REQUEST_PATH, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Gson gson = new Gson();
+                OssBean ossBean = gson.fromJson(response.body().string
+                        (), OssBean.class);
+                KEY_ID = ossBean.getCredentials().getAccessKeyId();
+                TOKEN = ossBean.getCredentials().getSecurityToken();
+                SECRET_KEY_ID = ossBean.getCredentials().getAccessKeySecret();
+                onLoginSuccessful.onKeyUpData();
+
+            }
+        });
+    }
+
 
     private void requestOrderSeatInfo(String time, String num, String peopleNum, String photo, String des) {
         HashMap<String, String> map = new HashMap<>();

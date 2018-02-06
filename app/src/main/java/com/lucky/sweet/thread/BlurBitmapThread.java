@@ -39,31 +39,12 @@ public abstract class BlurBitmapThread extends Thread {
     public void run() {
         Bitmap bitmap = BlurBitmapUtil.takeScreenshot((AppCompatActivity) activity, view);
         bitmap = BlurBitmapUtil.blurBitmap(activity, bitmap, 20);
-        saveFile(bitmap, Properties.ORDER_SEAT_BACKGROUND_PATH);
+        BlurBitmapUtil.saveFile(bitmap,  Properties.ORDER_SEAT_BACKGROUND_PATH+
+                "/background.png");
         onBulerBitmapFinish();
     }
 
     public abstract void onBulerBitmapFinish();
 
-    public static boolean saveFile(Bitmap bm, String path) {
-        if (bm == null || path == null)
-            return false;
-        File myCaptureFile = new File(path);
-        if (myCaptureFile.exists()) {
-            myCaptureFile.delete();
-        }
-        try {
-            BufferedOutputStream bos = new BufferedOutputStream(
-                    new FileOutputStream(myCaptureFile));
-            bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
-            bos.flush();
-            bos.close();
-            return true;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
+
 }

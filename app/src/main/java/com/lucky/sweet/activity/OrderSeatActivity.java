@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -61,7 +60,7 @@ public class OrderSeatActivity extends BaseActivity {
         try {
             ll_order_seat.setBackground(BitmapDrawable.createFromPath(Properties.ORDER_SEAT_BACKGROUND_PATH));
         } catch (Exception e) {
-            Log
+
         }
     }
 

@@ -9,6 +9,12 @@ import android.renderscript.ScriptIntrinsicBlur;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 /**
  * Created by chn on 2018/2/4.
  * (╯°□°）╯︵ ┻━┻ MMP好气啊！
@@ -86,5 +92,26 @@ public class BlurBitmapUtil {
             e.printStackTrace();
         }
         return bitmap;
+    }
+    public static boolean saveFile(Bitmap bm, String path) {
+        if (bm == null || path == null)
+            return false;
+        File myCaptureFile = new File(path);
+        if (myCaptureFile.exists()) {
+            myCaptureFile.delete();
+        }
+        try {
+            BufferedOutputStream bos = new BufferedOutputStream(
+                    new FileOutputStream(myCaptureFile));
+            bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+            bos.flush();
+            bos.close();
+            return true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

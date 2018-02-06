@@ -144,6 +144,7 @@ public class OrderSubmitActivity extends BaseActivity {
         tv_shop_name = findViewById(R.id.tv_shop_name);
         tv_now_time = findViewById(R.id.tv_now_time);
         tv_cost_num = findViewById(R.id.tv_cost_num);
+
         ll_order_list = findViewById(R.id.ll_order_list);
         title = findViewById(R.id.title);
 

@@ -11,6 +11,7 @@ import com.lucky.sweet.broadcastreceiver.NetBroadcastReceiver;
 import com.lucky.sweet.properties.Properties;
 
 import java.io.IOException;
+import java.net.IDN;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -26,12 +27,15 @@ import okhttp3.Response;
  */
 
 public class MyApplication extends Application {
-    //todo 选取session并且判读当为“”时，则视为站务登陆
+    //todo 选取session并且判读当为“”时，则视为暂无登陆
     private static Context context;
 
     public static String sessionId = "";
 
     public static String CURRENT_CITY = "大连市";
+
+    public static String USER_ID = "";
+
 
     @Override
     public void onCreate() {
@@ -39,6 +43,7 @@ public class MyApplication extends Application {
         context = getApplicationContext();
 
         initSession();
+
         initBroadCastReceiver();
     }
 
@@ -81,11 +86,15 @@ public class MyApplication extends Application {
         sessionId = id;
     }
 
+    public static void setCurrenCity(String city) {
+        CURRENT_CITY = city;
+    }
+
     public static void initSession() {
         final SharedPreferences config = context.getSharedPreferences("config",
                 MODE_PRIVATE);
         if (config.getBoolean("logined", false)) {
-            final String id = config.getString("Id", "");
+            USER_ID= config.getString("Id", "");
             final String psw = config.getString("Psw", "");
             new Thread() {
                 @Override
@@ -95,12 +104,12 @@ public class MyApplication extends Application {
                         OkHttpClient client = new OkHttpClient();
                         Request request = new Request.Builder().url
                                 (Properties.LOGINPATH).post(new FormBody
-                                .Builder().add("username", id).add
+                                .Builder().add("username", USER_ID).add
                                 ("password", psw).build()).build();
                         Response response = client.newCall(request).execute();
                         if (response.isSuccessful()) {
                             sessionId = response.body().string();
-                            System.out.println("session:"+sessionId);
+                            System.out.println("session:" + sessionId);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -114,7 +123,5 @@ public class MyApplication extends Application {
 
     }
 
-    public static void setCurrenCity(String city) {
-        CURRENT_CITY = city;
-    }
+
 }

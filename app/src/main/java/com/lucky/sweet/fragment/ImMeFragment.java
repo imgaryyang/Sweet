@@ -1,6 +1,9 @@
 package com.lucky.sweet.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,13 +13,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
+import com.lucky.sweet.activity.CropIwaActivity;
+import com.lucky.sweet.activity.MainActivity;
 import com.lucky.sweet.activity.MyCommentActivity;
-import com.lucky.sweet.activity.OrderSubmitActivity;
 import com.lucky.sweet.activity.SetUserInfoActivity;
 import com.lucky.sweet.activity.VipCardActiviry;
 import com.lucky.sweet.views.CircleImageView;
 import com.lucky.sweet.widgets.ToolBar;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.GlideEngine;
 
 /**
  * Created by Qiuyue on 2017/11/15.
@@ -28,11 +36,11 @@ import com.lucky.sweet.widgets.ToolBar;
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
 public class ImMeFragment extends Fragment {
-    /*private Button btn_userOut;
-    private SharedPreferences config;
-    private SharedPreferences.Editor edit;*/
+
     private Button btn_setUserInfo;
     private CircleImageView imv_head;
+    private MainActivity activity;
+    public final static int CROP_PHOTO = 1000;
 
 
     @Nullable
@@ -43,7 +51,7 @@ public class ImMeFragment extends Fragment {
 //        initData();
 
         initView(view);
-
+        initEvent();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ToolBar toolBar = new ToolBar(getActivity());
             toolBar.setStatusBarDarkMode();
@@ -56,13 +64,43 @@ public class ImMeFragment extends Fragment {
         } else {
         }
 
-
+        activity = (MainActivity) getActivity();
         return view;
     }
+
+    public void upPersonPortrait(String filePath) {
+        System.out.println(filePath);
+        Glide.with(this).load(filePath).into(imv_head);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+
+            switch (requestCode) {
+                case REQUEST_CODE_CHOOSE:
+                    Uri uri = Matisse.obtainResult(data).get(0);
+
+                    Intent intent = new Intent(getActivity(),
+                            CropIwaActivity.class);
+                    intent.putExtra("img_uri", uri.toString());
+                    activity.startActivityForResult(intent, CROP_PHOTO);
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+    }
+
 
     private void initView(View view) {
 
         btn_setUserInfo = view.findViewById(R.id.btn_setUserInfo);
+
         view.findViewById(R.id.rl_vipcard).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,5 +130,26 @@ public class ImMeFragment extends Fragment {
 
         imv_head = view.findViewById(R.id.imv_head);
         imv_head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
+
+
     }
+
+    private final static int REQUEST_CODE_CHOOSE = 10000;
+
+    private void initEvent() {
+        imv_head.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Matisse.from(ImMeFragment.this)
+                        .choose(MimeType.allOf())
+                        .countable(true)
+                        .maxSelectable(1)
+                        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                        .thumbnailScale(0.85f)
+                        .imageEngine(new GlideEngine())
+                        .forResult(REQUEST_CODE_CHOOSE);
+            }
+        });
+    }
+
 }

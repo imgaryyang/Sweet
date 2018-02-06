@@ -21,6 +21,9 @@ public class MainActivity extends BaseActivity {
     final ToolBar toolBar = new ToolBar(MainActivity.this);
     private TabContainerView mTabLayout;
     private CommunicationService.MyBinder myBinder = null;
+    private final String USER_PORTRAIT_PATH = "sweet/person/portrait/" + MyApplication.USER_ID + ".png";
+    private ImMeFragment imMeFragment = new ImMeFragment();
+    private Fragment[] fragments = {new ImStoreFragment(), new ImCircleFragment(), imMeFragment};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +39,23 @@ public class MainActivity extends BaseActivity {
     void onServiceBind(CommunicationService.MyBinder myBinder) {
         if (this.myBinder == null) {
             myBinder.requestImStoreInfo(MainActivity.this, (ImStoreFragment) fragments[0]);
-        } else {
-            this.myBinder = myBinder;
+
         }
+        this.myBinder = myBinder;
+
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == ImMeFragment.CROP_PHOTO) {
+            System.out.println("RESULT_OK");
+            String path = data.getStringExtra("path");
+            imMeFragment.upPersonPortrait(path);
+            // myBinder.ossUpdata(USER_PORTRAIT_PATH, path);
+
+        } else super.onActivityResult(requestCode, resultCode, data);
+
+    }
 
     @Override
     protected boolean enableSliding() {
@@ -70,8 +85,6 @@ public class MainActivity extends BaseActivity {
             R.color.gray4,
             R.color.Myappcolor};
 
-    private Fragment[] fragments = {new ImStoreFragment(), new
-            ImCircleFragment(), new ImMeFragment()};
 
     private void initViews() {
 
@@ -129,10 +142,11 @@ public class MainActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    public void hideTabView(){
+    public void hideTabView() {
         mTabLayout.setVisibility(View.GONE);
     }
-    public void showTabView(){
+
+    public void showTabView() {
         mTabLayout.setVisibility(View.VISIBLE);
     }
 }
