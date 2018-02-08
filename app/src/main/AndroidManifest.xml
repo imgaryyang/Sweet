@@ -100,7 +100,7 @@
         <activity android:name=".activity.SettlementActivity">
         </activity>
         <activity android:name=".activity.MyCommentActivity"/>
-        <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>
+
         <activity android:name=".activity.CropIwaActivity">
         </activity>
     </application>

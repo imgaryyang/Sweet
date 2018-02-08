@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
@@ -13,15 +12,17 @@ import com.isseiaoki.simplecropview.callback.CropCallback;
 import com.isseiaoki.simplecropview.callback.LoadCallback;
 import com.lucky.sweet.R;
 import com.lucky.sweet.properties.Properties;
+import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.utility.BlurBitmapUtil;
 
 
-public class CropIwaActivity extends AppCompatActivity {
-    public final String cachePath = Properties
-            .ORDER_SEAT_BACKGROUND_PATH + "/personPerCache.png";
+public class CropIwaActivity extends BaseActivity {
+    public final String cachePath = Properties.ORDER_SEAT_BACKGROUND_PATH + "/personPerCache.png";
     private Button submitCrop;
     private CropImageView cropView;
     private Uri img_uri;
+    private final String USER_PORTRAIT_PATH = "sweet/person/portrait/" + MyApplication.USER_ID + ".png";
+    private CommunicationService.MyBinder myBinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,12 @@ public class CropIwaActivity extends AppCompatActivity {
         initView();
 
         initEvent();
+    }
+
+
+    @Override
+    void onServiceBind(CommunicationService.MyBinder myBinder) {
+        this.myBinder = myBinder;
     }
 
     private void initEvent() {
@@ -47,11 +54,13 @@ public class CropIwaActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         BlurBitmapUtil.saveFile(cropped, cachePath);
+                                        myBinder.ossUpdata(USER_PORTRAIT_PATH, cachePath);
                                         Intent intent = new Intent();
                                         intent.putExtra("path", cachePath);
-                                        setResult(RESULT_OK,intent);
+                                        setResult(RESULT_OK, intent);
                                         finish();
                                     }
+
                                 }.start();
                             }
 

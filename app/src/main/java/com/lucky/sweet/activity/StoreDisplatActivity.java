@@ -10,15 +10,17 @@ import android.widget.Spinner;
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.SearchSpinnerAdapter;
 import com.lucky.sweet.adapter.ShowInfoListViewAdapter;
-import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.StoreDisplayInfo;
 import com.lucky.sweet.entity.StoreDisplaySearchEntity;
-import com.lucky.sweet.model.StoreDisplatManager;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -45,10 +47,8 @@ public class StoreDisplatActivity extends BaseActivity {
     Spinner sp_RankType;
 
     private ListView lv_storeInfo;
-    private StoreDisplatManager storeDisplatManager;
     private SwipyRefreshLayout sw_store_info;
     private ShowInfoListViewAdapter adapter;
-    private List<MainStoreInfo> storeShowInfo;
     private CommunicationService.MyBinder myBinder;
     private List<StoreDisplayInfo.MerListBean> displayList;
     private String businessArea;
@@ -64,13 +64,8 @@ public class StoreDisplatActivity extends BaseActivity {
         setContentView(R.layout.activity_storedisplay);
         ButterKnife.bind(this);
 
-        storeDisplatManager = new StoreDisplatManager(this);
-        storeDisplatManager.getDisInfo();
-
 
         initViews();
-
-        initAdapter();
 
         setListener();
 
@@ -79,9 +74,21 @@ public class StoreDisplatActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
 
-        myBinder.requestStoreDisplayInfo(this, "聚餐宴请", "全部", MyApplication.CURRENT_CITY, "最新搜录", "0");
+        myBinder.requestStoreDisplayInfo("聚餐宴请", "全部", MyApplication.CURRENT_CITY, "最新搜录", "0");
         this.myBinder = myBinder;
     }
 
@@ -120,42 +127,9 @@ public class StoreDisplatActivity extends BaseActivity {
         sw_store_info = findViewById(R.id.sw_store_info);
     }
 
-    public void upDataDisplayInfo(StoreDisplayInfo info) {
-
-        displayList = info.getMer_list();
-
-        adapter = new ShowInfoListViewAdapter(displayList, this);
-        lv_storeInfo.setAdapter(adapter);
-
-    }
-
-    public void upDataSearchInfo(StoreDisplaySearchEntity info) {
-
-        StoreDisplaySearchEntity.LiistBean list = info.getLiist();
-        circle = list.getCircle();
-        classify = list.getClassify();
-        order = list.getOrder();
-
-        businessArea = circle.get(0);
-        rankType = classify.get(0);
-        recreationType = order.get(0);
-
-        sp_BusinessArea.setAdapter(new SearchSpinnerAdapter(circle, this));
-
-        sp_RecreationType.setAdapter(new SearchSpinnerAdapter(classify, this));
-
-        sp_RankType.setAdapter(new SearchSpinnerAdapter(order, this));
-
-    }
 
     private void sendSearChRequest() {
-     /*   myBinder.requestStoreDisplayInfo(this, recreationType, businessArea, MyApplication.CURRENT_CITY, rankType, "0");
-        if (displayList.size() != 0) {
 
-              displayList.clear();
-
-        }
-        adapter.notifyDataSetChanged();*/
     }
 
     //设置监听事件，将来商家列表的排序都在这里面处理
@@ -220,10 +194,36 @@ public class StoreDisplatActivity extends BaseActivity {
 
     }
 
-    private void initAdapter() {
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(StoreDisplayInfo info) {
+
+        displayList = info.getMer_list();
+
+        adapter = new ShowInfoListViewAdapter(displayList, this);
+        lv_storeInfo.setAdapter(adapter);
+
+    }
 
 
-        storeShowInfo = storeDisplatManager.getStoreShowInfo();
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(StoreDisplaySearchEntity info) {
+
+        StoreDisplaySearchEntity.LiistBean list = info.getLiist();
+
+        circle = list.getCircle();
+        classify = list.getClassify();
+        order = list.getOrder();
+
+        businessArea = circle.get(0);
+        rankType = classify.get(0);
+        recreationType = order.get(0);
+
+        sp_BusinessArea.setAdapter(new SearchSpinnerAdapter(circle, this));
+
+        sp_RecreationType.setAdapter(new SearchSpinnerAdapter(classify, this));
+
+        sp_RankType.setAdapter(new SearchSpinnerAdapter(order, this));
     }
 
 

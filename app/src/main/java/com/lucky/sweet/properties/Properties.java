@@ -49,12 +49,11 @@ public class Properties {
 
     public static final String TIMECHECK = "http://quan.suning.com/getSysTime.do";
 
-
-    public static final String ORDER_SEAT_BACKGROUND_PATH =
-            MyApplication.getContext().getCacheDir()
-            .getAbsolutePath() ;
+    public static final String SHOP_CAR = "https://thethreestooges" +
+            ".cn:666/trolley/trolley_show";
 
 
+    public static final String ORDER_SEAT_BACKGROUND_PATH = MyApplication.getContext().getCacheDir().getAbsolutePath();
 
 
     public final static String TEST_BUCKET = "thethreestooges";

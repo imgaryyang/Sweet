@@ -30,14 +30,13 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:orientation="vertical">
-                    Intent intent = new Intent(this, SelectedPreviewActivity.class);
-                    intent.putExtra(BasePreviewActivity.EXTRA_DEFAULT_BUNDLE, mSelectedCollection.getDataWithBundle());
-                    startActivityForResult(intent, REQUEST_CODE_PREVIEW);
+
                     <com.lucky.sweet.views.CircleImageView
                         android:id="@+id/imv_head"
                         android:layout_width="58dp"
                         android:layout_height="58dp"
                         android:layout_gravity="center"
+                        android:scaleType="centerCrop"
                         android:src="@mipmap/test_head">
                     </com.lucky.sweet.views.CircleImageView>
 

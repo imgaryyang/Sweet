@@ -42,6 +42,7 @@ public class OrderSeatActivity extends BaseActivity {
     private String[] data;
     private String[][] time;
     private LinearLayout ll_order_seat;
+    private String mer_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,10 @@ public class OrderSeatActivity extends BaseActivity {
 
     private void initData() {
         try {
-            ll_order_seat.setBackground(BitmapDrawable.createFromPath(Properties.ORDER_SEAT_BACKGROUND_PATH));
+            ll_order_seat.setBackground(BitmapDrawable.createFromPath(Properties.ORDER_SEAT_BACKGROUND_PATH +
+                    "/background.png"));
+            Intent intent = getIntent();
+            mer_id = intent.getStringExtra("mer_id");
         } catch (Exception e) {
 
         }
@@ -133,8 +137,10 @@ public class OrderSeatActivity extends BaseActivity {
                                 public void onClick(DialogInterface dialog, int
                                         which) {
                                     sendOrderSeatInfo();
-                                    startActivity(new Intent(OrderSeatActivity
-                                            .this, MerchantActivity.class));
+                                    Intent intent = new Intent(OrderSeatActivity
+                                            .this, MerchantActivity.class);
+                                    intent.putExtra("mer_id", mer_id);
+                                    startActivity(intent);
                                     goNextAnim();
 
                                 }

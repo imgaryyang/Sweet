@@ -10,14 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.lucky.sweet.thread.BlurBitmapThread;
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.service.CommunicationService;
+import com.lucky.sweet.thread.BlurBitmapThread;
 import com.lucky.sweet.views.StarLevelIndicatorView;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
@@ -26,6 +25,10 @@ import com.tencent.mapsdk.raster.model.Marker;
 import com.tencent.mapsdk.raster.model.MarkerOptions;
 import com.tencent.tencentmap.mapsdk.map.MapView;
 import com.tencent.tencentmap.mapsdk.map.TencentMap;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +66,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private TextView tv_moreevr;
     private ScrollView sv_storeInfo;
     private LinearLayout ll_store_part_info;
+    private String mer_id;
 
 
     @Override
@@ -81,8 +85,8 @@ public class StoreParticularInfoActivity extends BaseActivity {
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
         Intent intent = getIntent();
-        String mer_id = intent.getStringExtra("shopid");
-        Toast.makeText(this, "点击店铺ID：" + mer_id, Toast.LENGTH_SHORT).show();
+        mer_id = intent.getStringExtra("shopid");
+
         myBinder.requestShopDisplay(this, mer_id);
     }
 
@@ -114,48 +118,6 @@ public class StoreParticularInfoActivity extends BaseActivity {
         });
     }
 
-    public void upData(StoreDetailedInfo info) {
-        initShopDesInfo(info.getInfo());
-    }
-
-    private void initShopDesInfo(StoreDetailedInfo.InfoBean info) {
-
-        Glide.with(this).load(info.getSurface()).into(imv_back);
-
-        List<String> environment = info.getEnvironment();
-
-        Glide.with(this).load(environment.get(0)).into
-                (imv_show_fir);
-        Glide.with(this).load(environment.get(1)).into
-                (imv_show_sec);
-        Glide.with(this).load(environment.get(2)).into
-                (imv_show_sed);
-        List<String> recommend = info.getRecommend();
-        Glide.with(this).load(recommend.get(0)).into
-                (imv_shop_one);
-        Glide.with(this).load(recommend.get(1)).into
-                (imv_shop_two);
-        Glide.with(this).load(recommend.get(2)).into
-                (imv_shop_three);
-
-
-        StoreDetailedInfo.InfoBean.ShopdesBean shopdes = info.getShopdes();
-
-        tv_shop_int.setText(shopdes.getClassify());
-        tv_shop_title.setText(shopdes.getName());
-        tv_shop_des.setText(shopdes.getIntroduce());
-        tv_shop_worktime.setText(shopdes.getBusiness_hours());
-
-        latLng = new LatLng(Double.valueOf(shopdes.getLatitude()),
-                Double.valueOf(shopdes.getLongitude()));
-        maps = map.getMap();
-
-        maps.setCenter(latLng);
-        maps.setZoom(75);
-        Marker marker = this.map.addMarker(new MarkerOptions().title(shopdes.getName()).anchor(0.5f, 0.5f).position(latLng));
-        marker.showInfoWindow();
-    }
-
 
     private void initView() {
         imv_back = findViewById(R.id.imv_back);
@@ -169,7 +131,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
         tv_shop_worktime = findViewById(R.id.tv_shop_worktime);
         tv_shop_des = findViewById(R.id.tv_shop_des);
         btn_map_position = findViewById(R.id.btn_map_position);
-        sv_storeInfo = (ScrollView) findViewById(R.id.sv_storeInfo);
+        sv_storeInfo = findViewById(R.id.sv_storeInfo);
         sv_storeInfo.smoothScrollTo(0, 0);
         ll_store_part_info = findViewById(R.id.ll_store_part_info);
         imv_shop_one = findViewById(R.id.imv_shop_one);
@@ -186,8 +148,11 @@ public class StoreParticularInfoActivity extends BaseActivity {
                         ll_store_part_info, 20) {
                     @Override
                     public void onBulerBitmapFinish() {
-                        startActivity(new Intent(StoreParticularInfoActivity.this,
-                                OrderSeatActivity.class));
+                        Intent intent = new Intent(StoreParticularInfoActivity.this,
+                                OrderSeatActivity.class);
+                        intent.putExtra("mer_id", mer_id);
+                        startActivity(intent);
+
                         goNextAnim();
                     }
                 }.run();
@@ -232,6 +197,60 @@ public class StoreParticularInfoActivity extends BaseActivity {
         });
         title.mSetButtonInfo(buttonLeft);
         title.mSetButtonInfo(buttonRight);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(StoreDetailedInfo entity) {
+        StoreDetailedInfo.InfoBean info = entity.getInfo();
+
+        Glide.with(this).load(info.getSurface()).into(imv_back);
+
+        List<String> environment = info.getEnvironment();
+
+        Glide.with(this).load(environment.get(0)).into
+                (imv_show_fir);
+        Glide.with(this).load(environment.get(1)).into
+                (imv_show_sec);
+        Glide.with(this).load(environment.get(2)).into
+                (imv_show_sed);
+        List<String> recommend = info.getRecommend();
+        Glide.with(this).load(recommend.get(0)).into
+                (imv_shop_one);
+        Glide.with(this).load(recommend.get(1)).into
+                (imv_shop_two);
+        Glide.with(this).load(recommend.get(2)).into
+                (imv_shop_three);
+
+
+        StoreDetailedInfo.InfoBean.ShopdesBean shopdes = info.getShopdes();
+
+        tv_shop_int.setText(shopdes.getClassify());
+        tv_shop_title.setText(shopdes.getName());
+        tv_shop_des.setText(shopdes.getIntroduce());
+        tv_shop_worktime.setText(shopdes.getBusiness_hours());
+
+        latLng = new LatLng(Double.valueOf(shopdes.getLatitude()),
+                Double.valueOf(shopdes.getLongitude()));
+        maps = map.getMap();
+
+        maps.setCenter(latLng);
+        maps.setZoom(75);
+        Marker marker = this.map.addMarker(new MarkerOptions().title(shopdes.getName()).anchor(0.5f, 0.5f).position(latLng));
+        marker.showInfoWindow();
+
 
     }
 

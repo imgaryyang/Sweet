@@ -28,22 +28,18 @@ import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.google.gson.Gson;
 import com.lucky.sweet.activity.MyApplication;
 import com.lucky.sweet.activity.OrderSeatActivity;
-import com.lucky.sweet.activity.StoreDisplatActivity;
 import com.lucky.sweet.activity.StoreParticularInfoActivity;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.OssBean;
 import com.lucky.sweet.entity.PerdetermingEntity;
+import com.lucky.sweet.entity.ShopCarEntity;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.entity.StoreDisplayInfo;
 import com.lucky.sweet.entity.StoreDisplaySearchEntity;
 import com.lucky.sweet.entity.UserLoginInfo;
 import com.lucky.sweet.entity.WeatherInfo;
-import com.lucky.sweet.fragment.ImStoreFragment;
-import com.lucky.sweet.handler.DisplayActivityHandle;
-import com.lucky.sweet.handler.ImStoreHandler;
 import com.lucky.sweet.handler.LoginRegisterHandler;
 import com.lucky.sweet.handler.OrderSeatHandler;
-import com.lucky.sweet.handler.StoreParticularInfoHandler;
 import com.lucky.sweet.properties.Properties;
 import com.lucky.sweet.utility.HttpUtils;
 import com.lucky.sweet.utility.PanduanNet;
@@ -52,6 +48,8 @@ import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
 import com.tencent.map.geolocation.TencentLocationRequest;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -78,7 +76,7 @@ import static com.lucky.sweet.properties.Properties.TEST_BUCKET;
 public class CommunicationService extends Service {
 
     private TencentLocationManager locationManager;
-    private OnMainDsplay onMainDsplay;
+
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -166,35 +164,9 @@ public class CommunicationService extends Service {
 
         }
 
-        public void requestImStoreInfo(Activity activity, final ImStoreFragment fragment) {
-            CommunicationService.this.initLocation(activity, new OnMainDsplay() {
-                ImStoreHandler imStoreHandler = new ImStoreHandler(fragment);
-                Message message;
+        public void requestImStoreInfo(Activity activity) {
 
-                @Override
-                public void upDataLocation(String city) {
-                    message = new Message();
-                    message.what = ImStoreHandler.UPDATALOCATION;
-                    message.obj = city;
-                    imStoreHandler.sendMessage(message);
-                }
-
-                @Override
-                public void upDataWeather(WeatherInfo weatherInfo) {
-                    message = new Message();
-                    message.what = ImStoreHandler.UPDATAWEATHER;
-                    message.obj = weatherInfo;
-                    imStoreHandler.sendMessage(message);
-                }
-
-                @Override
-                public void upDataShowInfo(MainStoreInfo mainStoreInfo) {
-                    message = new Message();
-                    message.what = ImStoreHandler.UPSHOWINFO;
-                    message.obj = mainStoreInfo;
-                    imStoreHandler.sendMessage(message);
-                }
-            });
+            initLocation(activity);
 
         }
 
@@ -202,18 +174,7 @@ public class CommunicationService extends Service {
         public void requestShopDisplay(final StoreParticularInfoActivity
                                                activity, String mer_id) {
 
-            final StoreParticularInfoHandler storeParticularInfoHandler = new StoreParticularInfoHandler(activity);
-
-            CommunicationService.this.getParticularInfo(mer_id, new
-                    OnParticularDis() {
-                        @Override
-                        public void upDataInfo(StoreDetailedInfo storeDetailedInfo) {
-                            Message message = new Message();
-                            message.what = StoreParticularInfoHandler.UPDATA;
-                            message.obj = storeDetailedInfo;
-                            storeParticularInfoHandler.sendMessage(message);
-                        }
-                    });
+            CommunicationService.this.getParticularInfo(mer_id);
         }
 
         public void requestPerdeterming(OrderSeatActivity activity) {
@@ -232,27 +193,10 @@ public class CommunicationService extends Service {
             });
         }
 
-        public void requestStoreDisplayInfo(StoreDisplatActivity activity, String project, String circle, String city, String rank, String num) {
-            final DisplayActivityHandle displayActivityHandle = new DisplayActivityHandle(activity);
-            getStoreDisplayInfo(project, circle, city, rank, num, new OnDisPlayInfoRequest() {
-                @Override
-                public void DisplayInfo(StoreDisplayInfo storeDisplayInfo) {
-                    Message message = new Message();
-                    message.what = DisplayActivityHandle.DISPLAYINFO;
-                    message.obj = storeDisplayInfo;
-                    displayActivityHandle.sendMessage(message);
-                }
-            });
-            getStoreDisplaySearchTitle(city, new OnDisPlaySearchRequest() {
-                @Override
-                public void DisplaySearch(StoreDisplaySearchEntity storeDisplaySearchEntity) {
-                    Message message = new Message();
-                    message.what = DisplayActivityHandle.DISPLAYSEARCHINFO;
-                    message.obj = storeDisplaySearchEntity;
-                    displayActivityHandle.sendMessage(message);
-                }
-            });
+        public void requestStoreDisplayInfo(String project, String circle, String city, String rank, String num) {
 
+            getStoreDisplayInfo(project, circle, city, rank, num);
+            getStoreDisplaySearchTitle(city);
 
         }
 
@@ -263,18 +207,24 @@ public class CommunicationService extends Service {
         public void ossUpdata(final String objectkey, final String filepath) {
 
             CommunicationService.this.ossUpdata(MyApplication.getContext(),
-                    objectkey,filepath);
+                    objectkey, filepath);
         }
 
         public void ossUpdata(final String objectkey, final byte[] bytes) {
             CommunicationService.this.ossUpdata(MyApplication.getContext(),
-                    objectkey,bytes);
+                    objectkey, bytes);
         }
 
         public void ossDownload(final String objectKey,
                                 final OSSCompletedCallback<GetObjectRequest, GetObjectResult> call) {
-            CommunicationService.this.ossDown(MyApplication.getContext(),
-                    objectKey,call);
+            CommunicationService.this.ossPicDown(MyApplication.getContext(),
+                    objectKey, call);
+
+        }
+
+        public void shopCarRequest(String mer_id) {
+
+            requestShopCarInfo(mer_id);
         }
     }
 
@@ -338,15 +288,16 @@ public class CommunicationService extends Service {
 
     }
 
-    private void ossDown(Context context, final String objectKey,
-                         final OSSCompletedCallback<GetObjectRequest, GetObjectResult> call)
+    private void ossPicDown(Context context, final String objectKey,
+                            final OSSCompletedCallback<GetObjectRequest, GetObjectResult> call)
 
     {
         initOSS(context, new OnOSSContecent() {
             @Override
             public void onClientSuccessful(OSS oss) {
-                GetObjectRequest get = new GetObjectRequest(TEST_BUCKET, objectKey);
-                OSSAsyncTask task = oss.asyncGetObject(get, call);
+                GetObjectRequest request = new GetObjectRequest(TEST_BUCKET, objectKey);
+                request.setxOssProcess("image/resize,m_fixed,w_100," + "h_100/quality,q_50");
+                OSSAsyncTask task = oss.asyncGetObject(request, call);
             }
         });
 
@@ -407,7 +358,6 @@ public class CommunicationService extends Service {
         });
     }
 
-
     private void requestOrderSeatInfo(String time, String num, String peopleNum, String photo, String des) {
         HashMap<String, String> map = new HashMap<>();
         map.put("tim", time);
@@ -440,7 +390,42 @@ public class CommunicationService extends Service {
         }, map);
     }
 
-    private void getStoreDisplaySearchTitle(String city, final OnDisPlaySearchRequest onDisPlaySearchRequest) {
+    private void requestShopCarInfo(String mer_id) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("mer_id", "1");
+        map.put("session", MyApplication.sessionId);
+        HttpUtils.sendOkHttpRequest(Properties.SHOP_CAR, new com.zhy.http.okhttp
+                .callback.Callback() {
+            @Override
+            public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
+                String string = response.body().string();
+
+                try {
+                    Gson gson = new Gson();
+                    ShopCarEntity shopCarEntity = gson.fromJson(string, ShopCarEntity.class);
+                    EventBus.getDefault().post(shopCarEntity);
+                } catch (Exception e) {
+
+                    if (string.equals("250")) {
+                        System.out.println("session过期");
+                    }
+                }
+                return null;
+            }
+
+            @Override
+            public void onError(com.squareup.okhttp.Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Object response) {
+
+            }
+        }, map);
+    }
+
+    private void getStoreDisplaySearchTitle(String city) {
         HashMap<String, String> map = new HashMap<>();
         map.put("city", city);
         HttpUtils.sendOkHttpRequest(Properties.DISPLAYSEARCHTITLE, new com.zhy.http.okhttp
@@ -449,9 +434,11 @@ public class CommunicationService extends Service {
             public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
                 try {
                     Gson gson = new Gson();
+
                     //todo 修改商品展示检索栏
                     StoreDisplaySearchEntity storeDisplaySearchEntity = gson.fromJson(response.body().string(), StoreDisplaySearchEntity.class);
-                    onDisPlaySearchRequest.DisplaySearch(storeDisplaySearchEntity);
+                    EventBus.getDefault().post(storeDisplaySearchEntity);
+
                 } catch (Exception e) {
                     Log.e("Service", "StoreDisplay");
                 }
@@ -501,16 +488,6 @@ public class CommunicationService extends Service {
         request.getIt(new PerdetermingEntity().setData(data).setTime(time));
     }
 
-
-    private interface OnMainDsplay {
-
-        void upDataLocation(String city);
-
-        void upDataWeather(WeatherInfo weatherInfo);
-
-        void upDataShowInfo(MainStoreInfo mainStoreInfo);
-    }
-
     private void initShopInfo(final double lat, final double lon) {
         HashMap<String, String> map = new HashMap<>();
         map.put("long", String.valueOf(lon));
@@ -521,9 +498,8 @@ public class CommunicationService extends Service {
                 try {
                     Gson gson = new Gson();
                     MainStoreInfo mainStoreInfo = gson.fromJson(response.body().string(), MainStoreInfo.class);
-                    if (onMainDsplay != null) {
-                        onMainDsplay.upDataShowInfo(mainStoreInfo);
-                    }
+                    EventBus.getDefault().post(mainStoreInfo);
+
                 } catch (Exception e) {
                     Log.e("Service", "initShopInfo");
                 }
@@ -545,9 +521,9 @@ public class CommunicationService extends Service {
 
     }
 
-    private void initLocation(Activity activity, OnMainDsplay onMainDsplay) {
+    private void initLocation(Activity activity) {
         boolean networkState = PanduanNet.detect(activity);
-        this.onMainDsplay = onMainDsplay;
+
         if (!networkState) {
             Toast.makeText(this, "网络错误，无法获取当前位置", Toast.LENGTH_SHORT).show();
         } else {
@@ -580,10 +556,8 @@ public class CommunicationService extends Service {
 
                         Gson gson = new Gson();
                         WeatherInfo weatherInfo = gson.fromJson(response.body().string(), WeatherInfo.class);
+                        EventBus.getDefault().post(weatherInfo);
 
-                        if (onMainDsplay != null) {
-                            onMainDsplay.upDataWeather(weatherInfo);
-                        }
 
                     }
 
@@ -605,14 +579,14 @@ public class CommunicationService extends Service {
                         MyApplication.setCurrenCity(city);
                         if (city.length() > 3) {
                             city = city.substring(0, 2) + "...";
+                            EventBus.getDefault().post(city);
                         }
-                        if (onMainDsplay != null && city != null) {
-                            onMainDsplay.upDataLocation(city);
-                        }
+
                         if (city.contains("市"))
                             initWeather(city.substring(0, city.length() - 1));
 
                         System.out.println("纬度" + tencentLocation.getLatitude() + "经度" + tencentLocation.getLongitude());
+
                         initShopInfo(tencentLocation.getLatitude(), tencentLocation.getLongitude());
                     }
                     stopLocation();
@@ -630,8 +604,7 @@ public class CommunicationService extends Service {
     }
 
 
-    private void getParticularInfo(String shopid, final OnParticularDis
-            onParticularDis) {
+    private void getParticularInfo(String shopid) {
         final HashMap<String, String> map = new HashMap<>();
         map.put("mer_id", shopid);
         new Thread() {
@@ -643,8 +616,7 @@ public class CommunicationService extends Service {
                             public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
                                 String string = response.body().string();
                                 Gson gson = new Gson();
-                                StoreDetailedInfo storeDetailedInfo = gson.fromJson(string, StoreDetailedInfo.class);
-                                onParticularDis.upDataInfo(storeDetailedInfo);
+                                EventBus.getDefault().post(gson.fromJson(string, StoreDetailedInfo.class));
                                 return null;
                             }
 
@@ -663,20 +635,8 @@ public class CommunicationService extends Service {
 
     }
 
-    interface OnDisPlayInfoRequest {
 
-        void DisplayInfo(StoreDisplayInfo storeDisplayInfo);
-
-
-    }
-
-    interface OnDisPlaySearchRequest {
-        void DisplaySearch(StoreDisplaySearchEntity storeDisplaySearchEntity);
-
-    }
-
-    private void getStoreDisplayInfo(String project, String circle, String city, String rank, String num, final OnDisPlayInfoRequest
-            onDisPlayInfoRequest) {
+    private void getStoreDisplayInfo(String project, String circle, String city, String rank, String num) {
         final HashMap<String, String> map = new HashMap<>();
         map.put("small_project", project);
         map.put("circle", circle);
@@ -692,8 +652,9 @@ public class CommunicationService extends Service {
                             public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
                                 String string = response.body().string();
                                 Gson gson = new Gson();
-                                StoreDisplayInfo storeDisplayInfo = gson.fromJson(string, StoreDisplayInfo.class);
-                                onDisPlayInfoRequest.DisplayInfo(storeDisplayInfo);
+
+                                EventBus.getDefault().post(gson.fromJson(string, StoreDisplayInfo.class));
+
                                 return null;
                             }
 
@@ -711,9 +672,6 @@ public class CommunicationService extends Service {
         }.start();
     }
 
-    public interface OnParticularDis {
-        void upDataInfo(StoreDetailedInfo storeDetailedInfo);
-    }
 
     private Boolean isLogin = false;
     private Context context;
@@ -810,6 +768,5 @@ public class CommunicationService extends Service {
             }
         }.start();
     }
-
 
 }

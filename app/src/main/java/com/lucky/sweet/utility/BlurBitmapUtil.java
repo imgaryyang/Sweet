@@ -93,6 +93,7 @@ public class BlurBitmapUtil {
         }
         return bitmap;
     }
+
     public static boolean saveFile(Bitmap bm, String path) {
         if (bm == null || path == null)
             return false;
@@ -103,7 +104,8 @@ public class BlurBitmapUtil {
         try {
             BufferedOutputStream bos = new BufferedOutputStream(
                     new FileOutputStream(myCaptureFile));
-            bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+            bm.compress(Bitmap.CompressFormat.JPEG, 50, bos);
+            bm.recycle();
             bos.flush();
             bos.close();
             return true;

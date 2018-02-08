@@ -25,7 +25,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bindService();
         if (enableSliding()) {
             SlidingLayoutView rootView = new SlidingLayoutView(this);
             rootView.bindActivity(this);
@@ -40,11 +39,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
         bindService();
+
     }
 
     @Override
@@ -55,7 +54,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     abstract void onServiceBind(CommunicationService.MyBinder myBinder);
-
 
 
     private class MyConn implements ServiceConnection {

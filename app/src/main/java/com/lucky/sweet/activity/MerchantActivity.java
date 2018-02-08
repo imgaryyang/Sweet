@@ -2,14 +2,19 @@ package com.lucky.sweet.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.ShopCarEntity;
 import com.lucky.sweet.entity.ShopCarSingleInformation;
 import com.lucky.sweet.model.shoppingcar.fragment.ProductsFragment;
 import com.lucky.sweet.model.shoppingcar.mode.ProductType;
 import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
+import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.ToolBar;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -22,7 +27,7 @@ import java.util.ArrayList;
 // ( (oo) )  ( (oo) )  ( (oo) )
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
-public class MerchantActivity extends FragmentActivity {
+public class MerchantActivity extends BaseActivity {
 
 
     private ProductsFragment fg_shop_car;
@@ -37,34 +42,27 @@ public class MerchantActivity extends FragmentActivity {
 
         initView();
 
-        initData();
-
         initEvent();
 
     }
 
-
-    private ArrayList<ProductType> getShopCarInfo() {
-        ArrayList<ProductType> productCategorizes = new ArrayList<>();
-        for (int i = 1; i < 5; i++) {
-            ProductType productCategorize = new ProductType();
-            productCategorize.setType("分类信息" + i);
-            ArrayList shopProductsAll = new ArrayList<>();
-            for (int j = 1; j < 6; j++) {
-                ShopProduct product = new ShopProduct();
-                product.setId(154788 + i + j);
-                product.setGoods("衬衫" + i);
-                product.setPrice(18 + "");
-                shopProductsAll.add(product);
-            }
-            productCategorize.setProduct(shopProductsAll);
-            productCategorizes.add(productCategorize);
-        }
-        return productCategorizes;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
     }
 
-    private void initData() {
-        fg_shop_car.initData(getShopCarInfo());
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+
+    }
+
+    @Override
+    void onServiceBind(CommunicationService.MyBinder myBinder) {
+
+        myBinder.shopCarRequest(getIntent().getStringExtra("mer_id"));
     }
 
 
@@ -104,5 +102,29 @@ public class MerchantActivity extends FragmentActivity {
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(ShopCarEntity entity) {
+        ArrayList<ProductType> productCategorizes = new ArrayList<>();
+
+        for (ShopCarEntity.TrolleyInfoBean entiy : entity.getTrolley_info()) {
+            ProductType productCategorize = new ProductType();
+            productCategorize.setType(entiy.getName());
+            ArrayList shopProductsAll = new ArrayList<>();
+
+            for (ShopCarEntity.TrolleyInfoBean.ItemBean item : entiy.getItem()) {
+                ShopProduct product = new ShopProduct();
+                product.setId(Integer.parseInt(item.getItem_id()));
+                product.setGoods(item.getName());
+                product.setPrice(item.getUnivalence());
+                product.setPicture(item.getPhoto());
+                shopProductsAll.add(product);
+            }
+            productCategorize.setProduct(shopProductsAll);
+            productCategorizes.add(productCategorize);
+
+        }
+
+        fg_shop_car.initData(productCategorizes);
+    }
 
 }

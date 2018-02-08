@@ -3,7 +3,11 @@ package com.lucky.sweet.utility;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.builder.PostFormBuilder;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -38,5 +42,21 @@ public class HttpUtils {
             url.addParams(next.getKey(), next.getValue());
         }
         url.build().execute(callback);
+    }
+    public static void writeImagetoChace(InputStream in, File file) {
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            int len=-1;
+            byte[] buffer = new byte[1024];
+            while ((len = in.read(buffer))!=-1){
+                fos.write(buffer);
+            }
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

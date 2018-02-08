@@ -26,6 +26,7 @@ import com.lucky.sweet.activity.StoreParticularInfoActivity;
 import com.lucky.sweet.adapter.AdViewPagerAdapter;
 import com.lucky.sweet.adapter.RecFoodRecommendAdapter;
 import com.lucky.sweet.entity.MainStoreInfo;
+import com.lucky.sweet.entity.WeatherInfo;
 import com.lucky.sweet.utility.HiddenAnimUtils;
 import com.lucky.sweet.views.GradualChangeLinearLayout;
 import com.lucky.sweet.views.IndicatorView;
@@ -93,9 +94,15 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         tv_location.setText(location);
     }
 
-    public void updataWeather(String tmp, int res) {
-        imv_weather.setImageResource(res);
-        tv_weathertype.setText(tmp);
+    public void updataWeather(WeatherInfo info) {
+        String cond_txt = info.getHeWeather6().get(0).getNow
+                ().getCond_txt();
+        String tmp = info.getHeWeather6().get(0).getNow
+                ().getTmp();
+
+        int resId = context.getResources().getIdentifier("w" + info.getHeWeather6().get(0).getNow().getCond_code(), "mipmap", context.getPackageName());
+        imv_weather.setImageResource(resId);
+        tv_weathertype.setText(cond_txt + " " + tmp);
 
     }
 

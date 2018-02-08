@@ -64,12 +64,12 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_product, null);
             viewHolder = new ViewHolder();
-            viewHolder.head = (ImageView) convertView.findViewById(R.id.head);
-            viewHolder.name = (TextView) convertView.findViewById(R.id.name);
-            viewHolder.prise = (TextView) convertView.findViewById(R.id.tv_prise);
-            viewHolder.increase = (TextView) convertView.findViewById(R.id.increase);
-            viewHolder.reduce = (TextView) convertView.findViewById(R.id.reduce);
-            viewHolder.shoppingNum = (TextView) convertView.findViewById(R.id.shoppingNum);
+            viewHolder.head = convertView.findViewById(R.id.head);
+            viewHolder.name = convertView.findViewById(R.id.name);
+            viewHolder.prise = convertView.findViewById(R.id.tv_prise);
+            viewHolder.increase = convertView.findViewById(R.id.increase);
+            viewHolder.reduce = convertView.findViewById(R.id.reduce);
+            viewHolder.shoppingNum = convertView.findViewById(R.id.shoppingNum);
             viewHolder.back = convertView.findViewById(R.id.ll_productInfo);
             convertView.setTag(viewHolder);
         } else {
@@ -87,6 +87,19 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
                 }
             }
         });
+      /*  OssUtils.down(product.getPicture(), new OSSCompletedCallback<GetObjectRequest, GetObjectResult>() {
+            @Override
+            public void onSuccess(GetObjectRequest request, GetObjectResult result) {
+                System.out.println(result.getObjectContent());
+                Glide.with(context).load(result.getObjectContent()).into
+                        (viewHolder.head);
+            }
+
+            @Override
+            public void onFailure(GetObjectRequest request, ClientException clientException, ServiceException serviceException) {
+
+            }
+        });*/
         viewHolder.increase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

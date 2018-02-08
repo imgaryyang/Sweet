@@ -154,57 +154,6 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
 
     public void initData(ArrayList<ProductType> data) {
         productCategorizes = data;
-
-        initView();
-    }
-
-    private void initView() {
-
-        animation_viewGroup = createAnimLayout();
-        noData = (TextView) getView().findViewById(R.id.noData);
-        tv_shopcar_int = getView().findViewById(R.id.tv_shopcar_int);
-        settlement1 = (TextView) getView().findViewById(R.id.settlement1);
-        parentLayout = (RelativeLayout) getView().findViewById(R.id.parentLayout);
-        shoppingPrise = (TextView) getView().findViewById(R.id.shoppingPrise);
-        shoppingNum = (TextView) getView().findViewById(R.id.shoppingNum);
-//        settlement = (TextView) getView().findViewById(R.id.settlement);
-        mainlist = (ListView) getView().findViewById(R.id.classify_mainlist);
-        morelist = (PinnedHeaderListView) getView().findViewById(R.id.classify_morelist);
-        shopping_cart = (ImageView) getView().findViewById(R.id.shopping_cart);
-        defaultText = (TextView) getView().findViewById(R.id.defaultText);
-//        shoppingList = (LinearLayout) getView().findViewById(R.id.shoppingList);
-        shoppingListView = (ListView) getView().findViewById(R.id.shopproductListView);
-        cardLayout = (FrameLayout) getView().findViewById(R.id.cardLayout);
-        cardShopLayout = (LinearLayout) getView().findViewById(R.id.cardShopLayout);
-        bg_layout = getView().findViewById(R.id.bg_layout);
-        btn_back = (Button) getView().findViewById(R.id.btn_back);
-        initData();
-    }
-
-    private static int calculateListPositon(int section, int position, ArrayList<ProductType> data) {
-
-        if (section == 0)
-            return position;
-
-        int count = 0;
-        for (int i = 0; i < section; i++) {
-            if (i == section) {
-                for (int a = 0; a < position; a++) {
-                    count++;
-                }
-                continue;
-            }
-            List<ShopProduct> product = data.get(i).getProduct();
-            for (int a = 0; a < product.size(); a++) {
-                count++;
-            }
-
-        }
-
-        return count;
-    }
-
-    private void initData() {
         productList = new ArrayList<>();
         strings = new ArrayList<>();
         sectionedAdapter = new TestSectionedAdapter(getActivity(), productCategorizes);
@@ -312,6 +261,53 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         settlement1.setOnClickListener(this);
 
     }
+
+    private void initView() {
+
+        animation_viewGroup = createAnimLayout();
+        noData = (TextView) getView().findViewById(R.id.noData);
+        tv_shopcar_int = getView().findViewById(R.id.tv_shopcar_int);
+        settlement1 = (TextView) getView().findViewById(R.id.settlement1);
+        parentLayout = (RelativeLayout) getView().findViewById(R.id.parentLayout);
+        shoppingPrise = (TextView) getView().findViewById(R.id.shoppingPrise);
+        shoppingNum = (TextView) getView().findViewById(R.id.shoppingNum);
+//        settlement = (TextView) getView().findViewById(R.id.settlement);
+        mainlist = (ListView) getView().findViewById(R.id.classify_mainlist);
+        morelist = (PinnedHeaderListView) getView().findViewById(R.id.classify_morelist);
+        shopping_cart = (ImageView) getView().findViewById(R.id.shopping_cart);
+        defaultText = (TextView) getView().findViewById(R.id.defaultText);
+//        shoppingList = (LinearLayout) getView().findViewById(R.id.shoppingList);
+        shoppingListView = (ListView) getView().findViewById(R.id.shopproductListView);
+        cardLayout = (FrameLayout) getView().findViewById(R.id.cardLayout);
+        cardShopLayout = (LinearLayout) getView().findViewById(R.id.cardShopLayout);
+        bg_layout = getView().findViewById(R.id.bg_layout);
+        btn_back = (Button) getView().findViewById(R.id.btn_back);
+
+    }
+
+    private static int calculateListPositon(int section, int position, ArrayList<ProductType> data) {
+
+        if (section == 0)
+            return position;
+
+        int count = 0;
+        for (int i = 0; i < section; i++) {
+            if (i == section) {
+                for (int a = 0; a < position; a++) {
+                    count++;
+                }
+                continue;
+            }
+            List<ShopProduct> product = data.get(i).getProduct();
+            for (int a = 0; a < product.size(); a++) {
+                count++;
+            }
+
+        }
+
+        return count;
+    }
+
 
     /**
      * 回调函数更新购物车和价格显示状态

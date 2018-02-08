@@ -3,6 +3,8 @@ package com.lucky.sweet.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
 import com.lucky.sweet.activity.CropIwaActivity;
 import com.lucky.sweet.activity.MainActivity;
@@ -25,6 +26,8 @@ import com.lucky.sweet.widgets.ToolBar;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
+
+import java.io.InputStream;
 
 /**
  * Created by Qiuyue on 2017/11/15.
@@ -68,9 +71,9 @@ public class ImMeFragment extends Fragment {
         return view;
     }
 
-    public void upPersonPortrait(String filePath) {
-        System.out.println(filePath);
-        Glide.with(this).load(filePath).into(imv_head);
+    public void upPersonPortrait(InputStream filePath) {
+        Bitmap bitmap = BitmapFactory.decodeStream(filePath);
+        imv_head.setImageBitmap(bitmap);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.lucky.sweet.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -12,6 +11,7 @@ import com.lucky.sweet.adapter.DisLeftListAdapter;
 import com.lucky.sweet.adapter.MainSectionedAdapter;
 import com.lucky.sweet.entity.ShopCarInfo;
 import com.lucky.sweet.model.OrderManager;
+import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.views.PinnedHeaderListView;
 import com.lucky.sweet.views.ShopCarPopWindow;
 import com.lucky.sweet.widgets.Title;
@@ -23,7 +23,7 @@ import java.util.HashMap;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class OrderActivity extends AppCompatActivity {
+public class OrderActivity extends BaseActivity {
 
     private Title title = null;
 
@@ -41,16 +41,18 @@ public class OrderActivity extends AppCompatActivity {
     private HashMap<String, Integer> menuDirectory = new HashMap<String, Integer>();
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
         initTitle();
+
         leftStr = OrderManager.getDishesType();
         rightStr = OrderManager.getDishesList();
 
         ButterKnife.bind(this);
-        pinnedListView = (PinnedHeaderListView) findViewById(R.id.pinnedListView);
+        pinnedListView =  findViewById(R.id.pinnedListView);
         final MainSectionedAdapter sectionedAdapter = new MainSectionedAdapter(this, leftStr, rightStr);
 
         pinnedListView.setAdapter(sectionedAdapter);
@@ -162,6 +164,11 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     @Override
+    void onServiceBind(CommunicationService.MyBinder myBinder) {
+
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
@@ -174,7 +181,7 @@ public class OrderActivity extends AppCompatActivity {
         title.setTitleNameStr("点餐列表");
 
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
-                .BUTTON_LEFT,R.drawable.selector_btn_titleback, null);
+                .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
         final Title.ButtonInfo buttonRigt = new Title.ButtonInfo(true, Title
                 .BUTTON_RIGHT1, R.mipmap.shop_car, null);
         title.setOnTitleButtonClickListener(new Title
