@@ -207,19 +207,41 @@ public class CommunicationService extends Service {
         public void ossUpdata(final String objectkey, final String filepath) {
 
             CommunicationService.this.ossUpdata(MyApplication.getContext(),
-                    objectkey, filepath);
+                    objectkey, filepath,null);
         }
 
         public void ossUpdata(final String objectkey, final byte[] bytes) {
             CommunicationService.this.ossUpdata(MyApplication.getContext(),
-                    objectkey, bytes);
+                    objectkey, bytes,null);
         }
 
         public void ossDownload(final String objectKey,
                                 final OSSCompletedCallback<GetObjectRequest, GetObjectResult> call) {
-            CommunicationService.this.ossPicDown(MyApplication.getContext(),
-                    objectKey, call);
+            ossPicDown(MyApplication.getContext(), objectKey, call);
 
+        }
+
+        public void getPersonPortrait(final String objectKey) {
+            ossPicDown(MyApplication.getContext(),
+                    objectKey, new OSSCompletedCallback<GetObjectRequest, GetObjectResult>() {
+                        @Override
+                        public void onSuccess(GetObjectRequest request,
+                                              GetObjectResult result) {
+                            EventBus.getDefault().post(result);
+
+                        }
+
+                        @Override
+                        public void onFailure(GetObjectRequest request, ClientException clientException, ServiceException serviceException) {
+
+                        }
+                    });
+        }
+
+        public void upDataPersonPortrait(final String objectkey, final String
+                filepath,OnUpdaSuccess onUpdaSuccess) {
+            CommunicationService.this.ossUpdata(MyApplication.getContext(),
+                    objectkey, filepath, onUpdaSuccess);
         }
 
         public void shopCarRequest(String mer_id) {
@@ -263,12 +285,12 @@ public class CommunicationService extends Service {
 
     private void ossUpdata(Context context, final String objectkey, final
     String
-            filepath) {
+            filepath, final OnUpdaSuccess onUpdaSuccess) {
         initOSS(context, new OnOSSContecent() {
             @Override
             public void onClientSuccessful(OSS oss) {
                 PutObjectRequest put = new PutObjectRequest(TEST_BUCKET, objectkey, filepath);
-                setServiceCallBack(put, oss);
+                setServiceCallBack(put, oss,onUpdaSuccess);
             }
         });
 
@@ -276,12 +298,12 @@ public class CommunicationService extends Service {
     }
 
     private void ossUpdata(Context context, final String objectkey, final
-    byte[] bytes) {
+    byte[] bytes, final OnUpdaSuccess onUpdaSuccess) {
         initOSS(context, new OnOSSContecent() {
             @Override
             public void onClientSuccessful(OSS oss) {
                 PutObjectRequest put = new PutObjectRequest(TEST_BUCKET, objectkey, bytes);
-                setServiceCallBack(put, oss);
+                setServiceCallBack(put, oss,onUpdaSuccess);
             }
         });
 
@@ -304,7 +326,12 @@ public class CommunicationService extends Service {
 
     }
 
-    private static void setServiceCallBack(PutObjectRequest put, OSS oss) {
+   public interface OnUpdaSuccess {
+        void success();
+    }
+
+    private static void setServiceCallBack(PutObjectRequest put, OSS oss,
+                                           final OnUpdaSuccess onUpdaSuccess) {
 
         // 异步上传时可以设置进度回调
         put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
@@ -316,6 +343,9 @@ public class CommunicationService extends Service {
         OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
             @Override
             public void onSuccess(PutObjectRequest request, PutObjectResult result) {
+                if (onUpdaSuccess!=null) {
+                    onUpdaSuccess.success();
+                }
                 Log.d("PutObject", "UploadSuccess");
             }
 

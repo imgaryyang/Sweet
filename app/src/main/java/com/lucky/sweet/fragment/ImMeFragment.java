@@ -44,35 +44,33 @@ public class ImMeFragment extends Fragment {
     private CircleImageView imv_head;
     private MainActivity activity;
     public final static int CROP_PHOTO = 1000;
+    private Bitmap bitmap;
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+
+        super.onActivityCreated(savedInstanceState);
+
+        initView(getView());
+
+        initEvent();
+
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_imme, container, false);
-//        initData();
-
-        initView(view);
-        initEvent();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ToolBar toolBar = new ToolBar(getActivity());
-            toolBar.setStatusBarDarkMode();
-            int statusBarHeight = toolBar.getStatusBarHeight(getActivity());
-            View view_margin = view.findViewById(R.id.view_margin);
-            ViewGroup.LayoutParams lp;
-            lp = view_margin.getLayoutParams();
-            lp.height = statusBarHeight;
-            view_margin.setLayoutParams(lp);
-        } else {
-        }
 
         activity = (MainActivity) getActivity();
         return view;
     }
 
     public void upPersonPortrait(InputStream filePath) {
-        Bitmap bitmap = BitmapFactory.decodeStream(filePath);
+        bitmap = BitmapFactory.decodeStream(filePath);
+        if (imv_head == null)
+            return;
         imv_head.setImageBitmap(bitmap);
     }
 
@@ -132,8 +130,21 @@ public class ImMeFragment extends Fragment {
         });
 
         imv_head = view.findViewById(R.id.imv_head);
+        if (bitmap!=null) {
+            imv_head.setImageBitmap(bitmap);
+        }
         imv_head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ToolBar toolBar = new ToolBar(getActivity());
+            toolBar.setStatusBarDarkMode();
+            int statusBarHeight = toolBar.getStatusBarHeight(getActivity());
+            View view_margin = view.findViewById(R.id.view_margin);
+            ViewGroup.LayoutParams lp;
+            lp = view_margin.getLayoutParams();
+            lp.height = statusBarHeight;
+            view_margin.setLayoutParams(lp);
+        } else {
+        }
 
     }
 

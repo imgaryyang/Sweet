@@ -14,6 +14,7 @@ import com.lucky.sweet.entity.OssBean;
 import com.lucky.sweet.properties.Properties;
 
 import java.io.IOException;
+import java.net.URL;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -35,7 +36,6 @@ public class OssUtils {
 
 
     private final static String requestPah = "https://thethreestooges.cn:5210/identity/oss/token.php";
-
     private static void initOSS(final OnOSSContecent onOSSContecent) {
 
         getInfo(new OnLoginSuccessful() {
@@ -49,6 +49,7 @@ public class OssUtils {
                 conf.setSocketTimeout(15 * 1000); // socket超时，默认15秒
                 conf.setMaxConcurrentRequest(5); // 最大并发请求数，默认5个
                 conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
+
                 onOSSContecent.onClientSuccessful(new OSSClient(MyApplication.getContext().getApplicationContext(), Properties.END_POINT, credentialProvider));
 
             }

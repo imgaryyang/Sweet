@@ -54,11 +54,18 @@ public class CropIwaActivity extends BaseActivity {
                                     @Override
                                     public void run() {
                                         BlurBitmapUtil.saveFile(cropped, cachePath);
-                                        myBinder.ossUpdata(USER_PORTRAIT_PATH, cachePath);
-                                        Intent intent = new Intent();
-                                        intent.putExtra("path", cachePath);
-                                        setResult(RESULT_OK, intent);
-                                        finish();
+                                        myBinder.upDataPersonPortrait
+                                                (USER_PORTRAIT_PATH,
+                                                        cachePath, new CommunicationService.OnUpdaSuccess() {
+                                                            @Override
+                                                            public void success() {
+                                                                Intent intent = new Intent();
+                                                                intent.putExtra("path", cachePath);
+                                                                setResult(RESULT_OK, intent);
+                                                                finish();
+                                                            }
+                                                        });
+
                                     }
 
                                 }.start();

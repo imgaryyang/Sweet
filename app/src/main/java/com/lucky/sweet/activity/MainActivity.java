@@ -7,10 +7,6 @@ import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.View;
 
-import com.alibaba.sdk.android.oss.ClientException;
-import com.alibaba.sdk.android.oss.ServiceException;
-import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
-import com.alibaba.sdk.android.oss.model.GetObjectRequest;
 import com.alibaba.sdk.android.oss.model.GetObjectResult;
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.MainStoreInfo;
@@ -42,21 +38,21 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        EventBus.getDefault().register(this);
         initViews();
 
     }
 
     @Override
     protected void onPause() {
-        EventBus.getDefault().unregister(this);
         super.onPause();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        EventBus.getDefault().register(this);
+
     }
 
 
@@ -65,7 +61,8 @@ public class MainActivity extends BaseActivity {
         if (this.myBinder == null) {
 
             myBinder.requestImStoreInfo(MainActivity.this);
-            requestPersonPortrait(myBinder);
+            myBinder.getPersonPortrait(USER_PORTRAIT_PATH);
+
         }
         this.myBinder = myBinder;
 
@@ -76,26 +73,12 @@ public class MainActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         if (resultCode == RESULT_OK && requestCode == ImMeFragment.CROP_PHOTO) {
 
-            requestPersonPortrait(myBinder);
+            myBinder.getPersonPortrait(USER_PORTRAIT_PATH);
 
         } else super.onActivityResult(requestCode, resultCode, data);
 
     }
 
-    private void requestPersonPortrait(CommunicationService.MyBinder myBinder) {
-        myBinder.ossDownload(USER_PORTRAIT_PATH, new OSSCompletedCallback<GetObjectRequest, GetObjectResult>() {
-            @Override
-            public void onSuccess(GetObjectRequest request, GetObjectResult result) {
-
-                meFragment.upPersonPortrait(result.getObjectContent());
-            }
-
-            @Override
-            public void onFailure(GetObjectRequest request, ClientException clientException, ServiceException serviceException) {
-
-            }
-        });
-    }
 
     @Override
     protected boolean enableSliding() {
@@ -209,6 +192,13 @@ public class MainActivity extends BaseActivity {
     public void Event(MainStoreInfo mainStoreInfo) {
 
         storeFragment.setShowInfo(mainStoreInfo);
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(GetObjectResult result) {
+
+        meFragment.upPersonPortrait(result.getObjectContent());
 
     }
 

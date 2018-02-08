@@ -87,7 +87,7 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
                 }
             }
         });
-      /*  OssUtils.down(product.getPicture(), new OSSCompletedCallback<GetObjectRequest, GetObjectResult>() {
+        /*OssUtils.down(product.getPicture(), new OSSCompletedCallback<GetObjectRequest, GetObjectResult>() {
             @Override
             public void onSuccess(GetObjectRequest request, GetObjectResult result) {
                 System.out.println(result.getObjectContent());
