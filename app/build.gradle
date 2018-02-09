@@ -61,9 +61,10 @@ dependencies {
     compile 'com.isseiaoki:simplecropview:1.1.7'
 
     compile 'com.zhihu.android:matisse:0.4.3'
-    compile 'com.squareup.okio:okio:1.13.0'
+    //oss阿里云
     compile 'com.aliyun.dpa:oss-android-sdk:2.4.5'
-
-
+    compile 'com.squareup.okio:okio:1.13.0'
+    //事件传递
     compile 'org.greenrobot:eventbus:3.0.0'
+
 }

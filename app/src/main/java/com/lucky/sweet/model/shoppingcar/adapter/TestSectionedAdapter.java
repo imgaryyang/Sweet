@@ -1,6 +1,8 @@
 package com.lucky.sweet.model.shoppingcar.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +15,9 @@ import com.lucky.sweet.R;
 import com.lucky.sweet.model.shoppingcar.assistant.onCallBackListener;
 import com.lucky.sweet.model.shoppingcar.mode.ProductType;
 import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
+import com.lucky.sweet.utility.OssUtils;
 
+import java.io.InputStream;
 import java.util.List;
 
 public class TestSectionedAdapter extends SectionedBaseAdapter {
@@ -87,19 +91,19 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
                 }
             }
         });
-        /*OssUtils.down(product.getPicture(), new OSSCompletedCallback<GetObjectRequest, GetObjectResult>() {
-            @Override
-            public void onSuccess(GetObjectRequest request, GetObjectResult result) {
-                System.out.println(result.getObjectContent());
-                Glide.with(context).load(result.getObjectContent()).into
-                        (viewHolder.head);
-            }
+        String picture = product.getPicture();
+        if (picture!=null) {
+            OssUtils.down(picture, new OssUtils.OnInpustreamBack() {
+                @Override
+                public void inputstreamFinish(InputStream inputStream) {
+                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    viewHolder.head.setImageBitmap(bitmap);
 
-            @Override
-            public void onFailure(GetObjectRequest request, ClientException clientException, ServiceException serviceException) {
+                }
+            });
+        }
 
-            }
-        });*/
+
         viewHolder.increase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

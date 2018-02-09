@@ -30,7 +30,6 @@ import com.lucky.sweet.activity.MyApplication;
 import com.lucky.sweet.activity.OrderSeatActivity;
 import com.lucky.sweet.activity.StoreParticularInfoActivity;
 import com.lucky.sweet.entity.MainStoreInfo;
-import com.lucky.sweet.entity.OssBean;
 import com.lucky.sweet.entity.PerdetermingEntity;
 import com.lucky.sweet.entity.ShopCarEntity;
 import com.lucky.sweet.entity.StoreDetailedInfo;
@@ -60,8 +59,10 @@ import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
+import static com.lucky.sweet.activity.MyApplication.KEY_ID;
+import static com.lucky.sweet.activity.MyApplication.SECRET_KEY_ID;
+import static com.lucky.sweet.activity.MyApplication.TOKEN;
 import static com.lucky.sweet.properties.Properties.END_POINT;
-import static com.lucky.sweet.properties.Properties.REQUEST_PATH;
 import static com.lucky.sweet.properties.Properties.TEST_BUCKET;
 
 
@@ -171,8 +172,7 @@ public class CommunicationService extends Service {
         }
 
 
-        public void requestShopDisplay(final StoreParticularInfoActivity
-                                               activity, String mer_id) {
+        public void requestShopDisplay( String mer_id) {
 
             CommunicationService.this.getParticularInfo(mer_id);
         }
@@ -206,42 +206,28 @@ public class CommunicationService extends Service {
 
         public void ossUpdata(final String objectkey, final String filepath) {
 
-            CommunicationService.this.ossUpdata(MyApplication.getContext(),
-                    objectkey, filepath,null);
+            CommunicationService.this.ossUpdata(
+                    objectkey, filepath, null);
         }
 
         public void ossUpdata(final String objectkey, final byte[] bytes) {
-            CommunicationService.this.ossUpdata(MyApplication.getContext(),
-                    objectkey, bytes,null);
+            CommunicationService.this.ossUpdata(
+                    objectkey, bytes, null);
         }
 
-        public void ossDownload(final String objectKey,
-                                final OSSCompletedCallback<GetObjectRequest, GetObjectResult> call) {
-            ossPicDown(MyApplication.getContext(), objectKey, call);
+        public void ossDownload(final String objectKey) {
+            ossPicDown(objectKey);
 
         }
 
         public void getPersonPortrait(final String objectKey) {
-            ossPicDown(MyApplication.getContext(),
-                    objectKey, new OSSCompletedCallback<GetObjectRequest, GetObjectResult>() {
-                        @Override
-                        public void onSuccess(GetObjectRequest request,
-                                              GetObjectResult result) {
-                            EventBus.getDefault().post(result);
-
-                        }
-
-                        @Override
-                        public void onFailure(GetObjectRequest request, ClientException clientException, ServiceException serviceException) {
-
-                        }
-                    });
+            ossPicDown(objectKey);
         }
 
         public void upDataPersonPortrait(final String objectkey, final String
-                filepath,OnUpdaSuccess onUpdaSuccess) {
-            CommunicationService.this.ossUpdata(MyApplication.getContext(),
-                    objectkey, filepath, onUpdaSuccess);
+                filepath, OnUpdaSuccess onUpdaSuccess) {
+
+            CommunicationService.this.ossUpdata(objectkey, filepath, onUpdaSuccess);
         }
 
         public void shopCarRequest(String mer_id) {
@@ -251,82 +237,69 @@ public class CommunicationService extends Service {
     }
 
 
-    private static String KEY_ID = "";
-    private static String SECRET_KEY_ID = "";
-    private static String TOKEN = "";
-
     private static void initOSS(final Context context, final OnOSSContecent
             onOSSContecent) {
-        getInfo(new OnLoginSuccessful() {
-            @Override
-            public void onKeyUpData() {
-                OSSCredentialProvider credentialProvider = new
-                        OSSStsTokenCredentialProvider(KEY_ID, SECRET_KEY_ID, TOKEN
-                );
-                ClientConfiguration conf = new ClientConfiguration();
-                conf.setConnectionTimeout(15 * 1000); // 连接超时，默认15秒
-                conf.setSocketTimeout(15 * 1000); // socket超时，默认15秒
-                conf.setMaxConcurrentRequest(5); // 最大并发请求数，默认5个
-                conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
-                onOSSContecent.onClientSuccessful(new OSSClient(context.getApplicationContext(), END_POINT, credentialProvider));
+        OSSCredentialProvider credentialProvider = new
+                OSSStsTokenCredentialProvider(KEY_ID, SECRET_KEY_ID, TOKEN
+        );
+        ClientConfiguration conf = new ClientConfiguration();
+        conf.setConnectionTimeout(15 * 1000); // 连接超时，默认15秒
+        conf.setSocketTimeout(15 * 1000); // socket超时，默认15秒
+        conf.setMaxConcurrentRequest(5); // 最大并发请求数，默认5个
+        conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
+        onOSSContecent.onClientSuccessful(new OSSClient(context.getApplicationContext(), END_POINT, credentialProvider));
 
-            }
-        });
 
     }
 
-    private interface OnLoginSuccessful {
-        void onKeyUpData();
-    }
 
     private interface OnOSSContecent {
         void onClientSuccessful(OSS oss);
     }
 
-    private void ossUpdata(Context context, final String objectkey, final
-    String
-            filepath, final OnUpdaSuccess onUpdaSuccess) {
-        initOSS(context, new OnOSSContecent() {
-            @Override
-            public void onClientSuccessful(OSS oss) {
-                PutObjectRequest put = new PutObjectRequest(TEST_BUCKET, objectkey, filepath);
-                setServiceCallBack(put, oss,onUpdaSuccess);
-            }
-        });
+    private void ossUpdata(final String objectkey, final
+    String filepath, final OnUpdaSuccess onUpdaSuccess) {
+
+        PutObjectRequest put = new PutObjectRequest(TEST_BUCKET, objectkey, filepath);
+        setServiceCallBack(put,  MyApplication.getOSSClient(), onUpdaSuccess);
 
 
     }
 
-    private void ossUpdata(Context context, final String objectkey, final
+    private void ossUpdata(final String objectkey, final
     byte[] bytes, final OnUpdaSuccess onUpdaSuccess) {
-        initOSS(context, new OnOSSContecent() {
-            @Override
-            public void onClientSuccessful(OSS oss) {
-                PutObjectRequest put = new PutObjectRequest(TEST_BUCKET, objectkey, bytes);
-                setServiceCallBack(put, oss,onUpdaSuccess);
-            }
-        });
+
+        PutObjectRequest put = new PutObjectRequest(TEST_BUCKET, objectkey, bytes);
+        setServiceCallBack(put,  MyApplication.getOSSClient(), onUpdaSuccess);
 
 
     }
 
-    private void ossPicDown(Context context, final String objectKey,
-                            final OSSCompletedCallback<GetObjectRequest, GetObjectResult> call)
+    private void ossPicDown(final String objectKey)
 
     {
-        initOSS(context, new OnOSSContecent() {
-            @Override
-            public void onClientSuccessful(OSS oss) {
-                GetObjectRequest request = new GetObjectRequest(TEST_BUCKET, objectKey);
-                request.setxOssProcess("image/resize,m_fixed,w_100," + "h_100/quality,q_50");
-                OSSAsyncTask task = oss.asyncGetObject(request, call);
-            }
-        });
+        GetObjectRequest request = new GetObjectRequest(TEST_BUCKET, objectKey);
+        request.setxOssProcess("image/resize,m_fixed,w_100," + "h_100/quality,q_50");
+
+            MyApplication.getOSSClient().asyncGetObject(request, new
+                    OSSCompletedCallback<GetObjectRequest, GetObjectResult>() {
+                        @Override
+                        public void onSuccess(GetObjectRequest request, GetObjectResult result) {
+
+                            EventBus.getDefault().post(result);
+
+                        }
+
+                        @Override
+                        public void onFailure(GetObjectRequest request, ClientException clientException, ServiceException serviceException) {
+
+                        }
+                    });
 
 
     }
 
-   public interface OnUpdaSuccess {
+    public interface OnUpdaSuccess {
         void success();
     }
 
@@ -343,7 +316,7 @@ public class CommunicationService extends Service {
         OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
             @Override
             public void onSuccess(PutObjectRequest request, PutObjectResult result) {
-                if (onUpdaSuccess!=null) {
+                if (onUpdaSuccess != null) {
                     onUpdaSuccess.success();
                 }
                 Log.d("PutObject", "UploadSuccess");
@@ -367,26 +340,6 @@ public class CommunicationService extends Service {
         });
     }
 
-    private static void getInfo(final OnLoginSuccessful onLoginSuccessful) {
-        HttpUtils.sendOkHttpRequest(REQUEST_PATH, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Gson gson = new Gson();
-                OssBean ossBean = gson.fromJson(response.body().string
-                        (), OssBean.class);
-                KEY_ID = ossBean.getCredentials().getAccessKeyId();
-                TOKEN = ossBean.getCredentials().getSecurityToken();
-                SECRET_KEY_ID = ossBean.getCredentials().getAccessKeySecret();
-                onLoginSuccessful.onKeyUpData();
-
-            }
-        });
-    }
 
     private void requestOrderSeatInfo(String time, String num, String peopleNum, String photo, String des) {
         HashMap<String, String> map = new HashMap<>();

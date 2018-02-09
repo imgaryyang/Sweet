@@ -23,6 +23,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+
 public class MainActivity extends BaseActivity {
 
     final ToolBar toolBar = new ToolBar(MainActivity.this);
@@ -196,10 +197,11 @@ public class MainActivity extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void Event(GetObjectResult result) {
-
+    public void Event(GetObjectResult result)
+    {
         meFragment.upPersonPortrait(result.getObjectContent());
 
     }
+
 
 }

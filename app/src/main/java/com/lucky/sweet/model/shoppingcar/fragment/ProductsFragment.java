@@ -271,12 +271,12 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         parentLayout = (RelativeLayout) getView().findViewById(R.id.parentLayout);
         shoppingPrise = (TextView) getView().findViewById(R.id.shoppingPrise);
         shoppingNum = (TextView) getView().findViewById(R.id.shoppingNum);
-//        settlement = (TextView) getView().findViewById(R.id.settlement);
+
         mainlist = (ListView) getView().findViewById(R.id.classify_mainlist);
         morelist = (PinnedHeaderListView) getView().findViewById(R.id.classify_morelist);
         shopping_cart = (ImageView) getView().findViewById(R.id.shopping_cart);
         defaultText = (TextView) getView().findViewById(R.id.defaultText);
-//        shoppingList = (LinearLayout) getView().findViewById(R.id.shoppingList);
+
         shoppingListView = (ListView) getView().findViewById(R.id.shopproductListView);
         cardLayout = (FrameLayout) getView().findViewById(R.id.cardLayout);
         cardShopLayout = (LinearLayout) getView().findViewById(R.id.cardShopLayout);

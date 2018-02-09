@@ -87,7 +87,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
         Intent intent = getIntent();
         mer_id = intent.getStringExtra("shopid");
 
-        myBinder.requestShopDisplay(this, mer_id);
+        myBinder.requestShopDisplay(mer_id);
     }
 
 
