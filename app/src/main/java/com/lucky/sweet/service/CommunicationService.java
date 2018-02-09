@@ -11,16 +11,12 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.alibaba.sdk.android.oss.ClientConfiguration;
 import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.ServiceException;
 import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
 import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
-import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
-import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
-import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
 import com.alibaba.sdk.android.oss.model.GetObjectRequest;
 import com.alibaba.sdk.android.oss.model.GetObjectResult;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
@@ -28,7 +24,6 @@ import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.google.gson.Gson;
 import com.lucky.sweet.activity.MyApplication;
 import com.lucky.sweet.activity.OrderSeatActivity;
-import com.lucky.sweet.activity.StoreParticularInfoActivity;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.PerdetermingEntity;
 import com.lucky.sweet.entity.ShopCarEntity;
@@ -59,10 +54,6 @@ import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
-import static com.lucky.sweet.activity.MyApplication.KEY_ID;
-import static com.lucky.sweet.activity.MyApplication.SECRET_KEY_ID;
-import static com.lucky.sweet.activity.MyApplication.TOKEN;
-import static com.lucky.sweet.properties.Properties.END_POINT;
 import static com.lucky.sweet.properties.Properties.TEST_BUCKET;
 
 
@@ -172,7 +163,7 @@ public class CommunicationService extends Service {
         }
 
 
-        public void requestShopDisplay( String mer_id) {
+        public void requestShopDisplay(String mer_id) {
 
             CommunicationService.this.getParticularInfo(mer_id);
         }
@@ -237,40 +228,27 @@ public class CommunicationService extends Service {
     }
 
 
-    private static void initOSS(final Context context, final OnOSSContecent
-            onOSSContecent) {
-        OSSCredentialProvider credentialProvider = new
-                OSSStsTokenCredentialProvider(KEY_ID, SECRET_KEY_ID, TOKEN
-        );
-        ClientConfiguration conf = new ClientConfiguration();
-        conf.setConnectionTimeout(15 * 1000); // 连接超时，默认15秒
-        conf.setSocketTimeout(15 * 1000); // socket超时，默认15秒
-        conf.setMaxConcurrentRequest(5); // 最大并发请求数，默认5个
-        conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
-        onOSSContecent.onClientSuccessful(new OSSClient(context.getApplicationContext(), END_POINT, credentialProvider));
-
-
-    }
-
-
-    private interface OnOSSContecent {
-        void onClientSuccessful(OSS oss);
-    }
-
     private void ossUpdata(final String objectkey, final
     String filepath, final OnUpdaSuccess onUpdaSuccess) {
+        OSSClient ossClient = MyApplication.getOSSClient();
+        if (ossClient!=null) {
+            PutObjectRequest put = new PutObjectRequest(TEST_BUCKET, objectkey, filepath);
+            setServiceCallBack(put,ossClient , onUpdaSuccess);
+        }
 
-        PutObjectRequest put = new PutObjectRequest(TEST_BUCKET, objectkey, filepath);
-        setServiceCallBack(put,  MyApplication.getOSSClient(), onUpdaSuccess);
 
 
     }
 
     private void ossUpdata(final String objectkey, final
     byte[] bytes, final OnUpdaSuccess onUpdaSuccess) {
+        OSSClient ossClient = MyApplication.getOSSClient();
+        if (ossClient!=null) {
+            PutObjectRequest put = new PutObjectRequest(TEST_BUCKET, objectkey, bytes);
+            setServiceCallBack(put, MyApplication.getOSSClient(), onUpdaSuccess);
+        }
 
-        PutObjectRequest put = new PutObjectRequest(TEST_BUCKET, objectkey, bytes);
-        setServiceCallBack(put,  MyApplication.getOSSClient(), onUpdaSuccess);
+
 
 
     }
@@ -280,8 +258,9 @@ public class CommunicationService extends Service {
     {
         GetObjectRequest request = new GetObjectRequest(TEST_BUCKET, objectKey);
         request.setxOssProcess("image/resize,m_fixed,w_100," + "h_100/quality,q_50");
-
-            MyApplication.getOSSClient().asyncGetObject(request, new
+        OSSClient ossClient = MyApplication.getOSSClient();
+        if (ossClient!=null) {
+            ossClient.asyncGetObject(request, new
                     OSSCompletedCallback<GetObjectRequest, GetObjectResult>() {
                         @Override
                         public void onSuccess(GetObjectRequest request, GetObjectResult result) {
@@ -295,6 +274,8 @@ public class CommunicationService extends Service {
 
                         }
                     });
+
+        }
 
 
     }
@@ -313,7 +294,7 @@ public class CommunicationService extends Service {
                 Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
             }
         });
-        OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+        oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
             @Override
             public void onSuccess(PutObjectRequest request, PutObjectResult result) {
                 if (onUpdaSuccess != null) {
