@@ -23,7 +23,6 @@ android {
     sourceSets {
         main {
             jniLibs.srcDirs = ['src/main/jniLibs']
-
         }
 
     }
@@ -44,8 +43,9 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     implementation 'com.google.code.gson:gson:2.8.0'
     compile 'com.sackcentury:shinebutton:0.1.6'
-    compile files('libs/TencentLocationSDK_v4.0_r139747.jar')
     compile files('libs/TencentMapSDK_Raster_v_1.2.8.1.c02ec64.jar')
+    compile files('libs/TencentLocationSdk_v6.2.5.3_r15b3b3cc_20171103_115903.jar')
+
     implementation 'com.android.support:cardview-v7:26.1.0'
     compile 'com.google.zxing:core:3.1.0'
     compile 'cn.bingoogolapple:bga-qrcodecore:1.0.7@aar'
@@ -57,14 +57,11 @@ dependencies {
     compile 'com.gospelware.liquidbutton:liquidButtonLib:1.1.5'
     compile 'com.github.omadahealth:swipy:1.2.3@aar'
     //图片剪切
-
     compile 'com.isseiaoki:simplecropview:1.1.7'
-
     compile 'com.zhihu.android:matisse:0.4.3'
     //oss阿里云
     compile 'com.aliyun.dpa:oss-android-sdk:2.4.5'
     compile 'com.squareup.okio:okio:1.13.0'
     //事件传递
     compile 'org.greenrobot:eventbus:3.0.0'
-
 }
