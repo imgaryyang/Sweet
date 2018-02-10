@@ -5,12 +5,16 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.alibaba.sdk.android.oss.ClientConfiguration;
 import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
+import com.alibaba.sdk.android.push.CloudPushService;
+import com.alibaba.sdk.android.push.CommonCallback;
+import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.google.gson.Gson;
 import com.lucky.sweet.broadcastreceiver.NetBroadcastReceiver;
 import com.lucky.sweet.entity.OssBean;
@@ -62,6 +66,8 @@ public class MyApplication extends Application {
         initOssClient();
 
         initBroadCastReceiver();
+
+        initCloudChannel(this);
     }
 
 
@@ -174,6 +180,35 @@ public class MyApplication extends Application {
             }
         });
     }
+    private static final String TAG = "Init";
+    private static CloudPushService pushService;
+    private void initCloudChannel(Context applicationContext) {
+        PushServiceFactory.init(applicationContext);
+        pushService = PushServiceFactory.getCloudPushService
+                ();
+        pushService.bindAccount("b", new CommonCallback() {
+            @Override
+            public void onSuccess(String s) {
+                Log.e("b", s);
+            }
 
+            @Override
+            public void onFailed(String s, String s1) {
+                Log.e("b", s);
+
+            }
+        });
+        pushService.register(applicationContext, new CommonCallback() {
+            @Override
+            public void onSuccess(String response) {
+                Log.d(TAG, "init cloudchannel success");
+            }
+
+            @Override
+            public void onFailed(String errorCode, String errorMessage) {
+                Log.d(TAG, "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
+            }
+        });
+    }
 
 }
