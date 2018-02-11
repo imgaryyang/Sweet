@@ -1,4 +1,4 @@
-package com.lucky.sweet.broadcastreceiver;
+package com.lucky.sweet.reciver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

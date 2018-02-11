@@ -109,7 +109,7 @@
             android:value="24801052"/> <!-- 请填写你自己的- appKey -->
         <meta-data
             android:name="com.alibaba.app.appsecret"
-            android:value="2329fce24af9442467152e4713b0b733 "/> <!-- 请填写你自己的appSecret -->
+            android:value="2329fce24af9442467152e4713b0b733"/> <!-- 请填写你自己的appSecret -->
         <receiver
             android:name=".reciver.MyMessageReceiver"
             android:exported="false"> <!-- 为保证receiver安全，建议设置不可导出，如需对其他应用开放可通过android：permission进行限制 -->

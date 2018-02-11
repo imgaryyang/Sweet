@@ -16,7 +16,7 @@ import com.alibaba.sdk.android.push.CloudPushService;
 import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.google.gson.Gson;
-import com.lucky.sweet.broadcastreceiver.NetBroadcastReceiver;
+import com.lucky.sweet.reciver.NetBroadcastReceiver;
 import com.lucky.sweet.entity.OssBean;
 import com.lucky.sweet.properties.Properties;
 import com.lucky.sweet.utility.HttpUtils;
