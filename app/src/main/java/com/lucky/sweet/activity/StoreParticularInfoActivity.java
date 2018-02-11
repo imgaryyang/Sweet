@@ -1,10 +1,15 @@
 package com.lucky.sweet.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -17,7 +22,6 @@ import com.lucky.sweet.adapter.CircleListViewAdapter;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.thread.BlurBitmapThread;
-import com.lucky.sweet.views.StarLevelIndicatorView;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 import com.tencent.mapsdk.raster.model.LatLng;
@@ -67,6 +71,17 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private ScrollView sv_storeInfo;
     private LinearLayout ll_store_part_info;
     private String mer_id;
+    private ImageButton ibtn_back;
+    private LinearLayout ll_null;
+    private LinearLayout ll_share;
+    private TextView tv_weichat;
+    private TextView tv_circle;
+    private TextView tv_weibo;
+    private ImageButton ibtn_order_seat;
+    private ImageButton ibtn_weichat;
+    private ImageButton ibtn_weibo;
+    private LinearLayout layout_order_content;
+    private LinearLayout ll_orderbtn;
 
 
     @Override
@@ -137,25 +152,29 @@ public class StoreParticularInfoActivity extends BaseActivity {
         imv_shop_one = findViewById(R.id.imv_shop_one);
         imv_shop_two = findViewById(R.id.imv_shop_two);
         imv_shop_three = findViewById(R.id.imv_shop_three);
+        ibtn_back = (ImageButton)findViewById(R.id.ibtn_back);
+        ll_null = (LinearLayout)findViewById(R.id.ll_null);
+        ll_share = (LinearLayout)findViewById(R.id.ll_share);
+        ibtn_order_seat = (ImageButton)findViewById(R.id.ibtn_order_seat);
+        ibtn_weichat = (ImageButton)findViewById(R.id.ibtn_weichat);
+        ibtn_weibo = (ImageButton)findViewById(R.id.ibtn_weibo);
+        tv_weichat = (TextView)findViewById(R.id.tv_weichat);
+        tv_circle = (TextView)findViewById(R.id.tv_circle);
+        tv_weibo = (TextView)findViewById(R.id.tv_weibo);
+        layout_order_content = (LinearLayout)findViewById(R.id.layout_order_content);
+        ll_orderbtn = (LinearLayout)findViewById(R.id.ll_orderbtn);
 
-        StarLevelIndicatorView startIndicator = findViewById(R.id.startIndicator);
-        startIndicator.initStarNumber(4);
+
+//        StarLevelIndicatorView startIndicator = findViewById(R.id.startIndicator);
+//        startIndicator.initStarNumber(4);
         map = findViewById(R.id.map);
         findViewById(R.id.btn_order).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new BlurBitmapThread(StoreParticularInfoActivity.this,
-                        ll_store_part_info, 20) {
-                    @Override
-                    public void onBulerBitmapFinish() {
-                        Intent intent = new Intent(StoreParticularInfoActivity.this,
-                                OrderSeatActivity.class);
-                        intent.putExtra("mer_id", mer_id);
-                        startActivity(intent);
 
-                        goNextAnim();
-                    }
-                }.run();
+                layout_order_content.setVisibility(View.VISIBLE);
+                ll_orderbtn.setVisibility(View.GONE);
+                startbtnAnim();
 
             }
         });
@@ -170,13 +189,49 @@ public class StoreParticularInfoActivity extends BaseActivity {
         objects.add("");
         lv_circle.setAdapter(new CircleListViewAdapter(objects, this));
         setListViewHeightBasedOnChildren(lv_circle);
+
+        ibtn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hintInputKb();
+                finish();
+                goPreAnim();
+            }
+        });
+        ll_null.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cancelbtnAnim();
+                ll_orderbtn.setVisibility(View.VISIBLE);
+
+            }
+        });
+        ibtn_order_seat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new BlurBitmapThread(StoreParticularInfoActivity.this,
+                        ll_store_part_info, 20) {
+                    @Override
+                    public void onBulerBitmapFinish() {
+                        Intent intent = new Intent
+                                (StoreParticularInfoActivity.this,
+                                OrderSeatActivity.class);
+                        intent.putExtra("mer_id", mer_id);
+                        startActivity(intent);
+
+                        goNextAnim();
+                    }
+                }.run();
+            }
+        });
     }
 
     private void initTitle() {
         ToolBar toolBar = new ToolBar(this);
-        toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
-        title = (Title) findViewById(R.id.title);
+        toolBar.setStatusBarDarkMode();
+        /*title = (Title) findViewById(R.id.title);
         title.setTitleNameStr("");
+        title.setTheme(THEME_TRANSLATE);
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
                 .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
         Title.ButtonInfo buttonRight = new Title.ButtonInfo(true, Title
@@ -196,7 +251,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
             }
         });
         title.mSetButtonInfo(buttonLeft);
-        title.mSetButtonInfo(buttonRight);
+        title.mSetButtonInfo(buttonRight);*/
 
     }
 
@@ -274,6 +329,124 @@ public class StoreParticularInfoActivity extends BaseActivity {
         params.height = totalHeight + (listView.getDividerHeight() * (adapter.getCount() - 1));
         //给listview设置高度
         listView.setLayoutParams(params);
+    }
+
+
+
+
+    private void startbtnAnim() {
+        //阴影遮罩透明度
+        ll_null.setBackgroundColor( (Color.parseColor( "#6e000000" )) );
+        int btnNum = 4;
+        final Animation[] T_Anim = new Animation[btnNum];
+        for (int i = 0; i < btnNum; i++) {
+            T_Anim[i] = new TranslateAnimation( 0f, 0, 350f, 0f );
+            T_Anim[i].setDuration( 85 );
+            T_Anim[i].setInterpolator( new BounceInterpolator() );
+            T_Anim[i].setFillAfter( true );
+        }
+        ll_share.startAnimation( T_Anim[0] );
+        T_Anim[0].setAnimationListener( new AnimationListerAdapter() {
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+                ibtn_order_seat.setVisibility( View.VISIBLE );
+                tv_circle.setVisibility( View.VISIBLE );
+                ibtn_order_seat.startAnimation( T_Anim[1] );
+                tv_circle.startAnimation( T_Anim[1] );
+            }
+        } );
+
+        T_Anim[1].setAnimationListener( new AnimationListerAdapter() {
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+                ibtn_weichat.setVisibility( View.VISIBLE );
+                tv_weichat.setVisibility( View.VISIBLE );
+                ibtn_weichat.startAnimation( T_Anim[2] );
+                tv_weichat.startAnimation( T_Anim[2] );
+            }
+        } );
+        T_Anim[2].setAnimationListener( new AnimationListerAdapter() {
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+                ibtn_weibo.setVisibility( View.VISIBLE );
+                tv_weibo.setVisibility( View.VISIBLE );
+                ibtn_weibo.startAnimation( T_Anim[3] );
+                tv_weibo.startAnimation( T_Anim[3] );
+            }
+        } );
+
+    }
+
+    private void cancelbtnAnim() {
+        ll_null.setBackgroundColor( (Color.parseColor( "#00000000" )) );
+        int btnNum = 4;
+        final Animation[] T_Anim = new TranslateAnimation[btnNum];
+        for (int i = 0; i < btnNum; i++) {
+            T_Anim[i] = new TranslateAnimation( 0f, 0, 0f, 350f );
+            T_Anim[i].setDuration( 80 );
+        }
+
+        ibtn_order_seat.startAnimation( T_Anim[0] );
+        T_Anim[0].setAnimationListener( new AnimationListerAdapter() {
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                ibtn_order_seat.setVisibility( View.GONE );
+                tv_circle.setVisibility( View.GONE );
+                ibtn_order_seat.clearAnimation();
+                tv_circle.clearAnimation();
+                ibtn_weichat.startAnimation( T_Anim[1] );
+                tv_circle.startAnimation( T_Anim[1] );
+            }
+        } );
+
+        T_Anim[1].setAnimationListener( new AnimationListerAdapter() {
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                ibtn_weichat.setVisibility( View.GONE );
+                tv_weichat.setVisibility( View.GONE );
+                ibtn_weichat.clearAnimation();
+                tv_weichat.clearAnimation();
+                ibtn_weibo.startAnimation( T_Anim[2] );
+                tv_weibo.startAnimation( T_Anim[2] );
+
+            }
+        } );
+        T_Anim[2].setAnimationListener( new AnimationListerAdapter() {
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                ibtn_weibo.setVisibility( View.GONE );
+                tv_weibo.setVisibility( View.GONE );
+                ibtn_weibo.clearAnimation();
+                tv_weibo.clearAnimation();
+                ll_share.startAnimation( T_Anim[3] );
+                layout_order_content.setVisibility( View.GONE );
+
+            }
+        } );
+
+    }
+
+    private abstract class AnimationListerAdapter implements Animation.AnimationListener {
+        @Override
+        public void onAnimationStart(Animation animation) {
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+        }
+
+        @Override
+        public abstract void onAnimationEnd(Animation animation);
+
     }
 
 
