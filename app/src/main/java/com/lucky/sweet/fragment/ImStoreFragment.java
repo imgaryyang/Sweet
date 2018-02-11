@@ -3,6 +3,7 @@ package com.lucky.sweet.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -33,6 +34,9 @@ import com.lucky.sweet.views.IndicatorView;
 import com.lucky.sweet.views.MySearchView;
 import com.lucky.sweet.viewsexpand.AdViewPagerTransformer;
 import com.lucky.sweet.widgets.dragload.RecycleViewRefresh;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by Qiuyue on 2017/11/15.
@@ -95,14 +99,19 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
     }
 
     public void updataWeather(WeatherInfo info) {
-        String cond_txt = info.getHeWeather6().get(0).getNow
-                ().getCond_txt();
-        String tmp = info.getHeWeather6().get(0).getNow
-                ().getTmp();
 
-        int resId = context.getResources().getIdentifier("w" + info.getHeWeather6().get(0).getNow().getCond_code(), "mipmap", context.getPackageName());
-        imv_weather.setImageResource(resId);
-        tv_weathertype.setText(cond_txt + " " + tmp);
+        try {
+            String cond_txt = info.getHeWeather6().get(0).getNow
+                    ().getCond_txt();
+            String tmp = info.getHeWeather6().get(0).getNow
+                    ().getTmp();
+            tv_weathertype.setText(cond_txt + " " + tmp);
+            InputStream open = context.getAssets().open("weather/w" + info.getHeWeather6().get(0).getNow().getCond_code() + ".png");
+            imv_weather.setImageBitmap(BitmapFactory.decodeStream(open));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
