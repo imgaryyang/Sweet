@@ -173,7 +173,6 @@ public class StoreParticularInfoActivity extends BaseActivity {
             public void onClick(View v) {
 
                 layout_order_content.setVisibility(View.VISIBLE);
-                ll_orderbtn.setVisibility(View.GONE);
                 startbtnAnim();
 
             }
@@ -202,7 +201,6 @@ public class StoreParticularInfoActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 cancelbtnAnim();
-                ll_orderbtn.setVisibility(View.VISIBLE);
 
             }
         });
