@@ -9,7 +9,7 @@ import com.lucky.sweet.activity.MyApplication;
 
 import java.io.InputStream;
 
-import static com.lucky.sweet.properties.Properties.TEST_BUCKET;
+import static com.lucky.sweet.properties.ServiceProperties.TEST_BUCKET;
 
 /**
  * Created by chn on 2018/1/18.

@@ -11,7 +11,7 @@ import com.lucky.sweet.R;
 import com.lucky.sweet.entity.InternetTime;
 import com.lucky.sweet.entity.ShopCarSingleInformation;
 import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
-import com.lucky.sweet.properties.Properties;
+import com.lucky.sweet.properties.ServiceProperties;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.utility.HttpUtils;
 import com.lucky.sweet.widgets.Title;
@@ -95,7 +95,7 @@ public class OrderSubmitActivity extends BaseActivity {
         tv_shop_name.setText(data.getShopName());
         tv_cost_num.setText(data.getSaleSum());
 
-        HttpUtils.sendOkHttpRequest(Properties.TIMECHECK, new Callback() {
+        HttpUtils.sendOkHttpRequest(ServiceProperties.TIMECHECK, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
 

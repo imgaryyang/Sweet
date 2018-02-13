@@ -30,8 +30,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.lucky.sweet.properties.Properties.END_POINT;
-import static com.lucky.sweet.properties.Properties.REQUEST_PATH;
+import static com.lucky.sweet.properties.ServiceProperties.END_POINT;
+import static com.lucky.sweet.properties.ServiceProperties.REQUEST_PATH;
 
 /**
  * Created by chn on 2018/1/10.
@@ -61,7 +61,7 @@ public class MyApplication extends Application {
         super.onCreate();
         context = getApplicationContext();
 
-        initSession();
+       // initSession();
 
         initOssClient();
 
@@ -186,18 +186,6 @@ public class MyApplication extends Application {
         PushServiceFactory.init(applicationContext);
         pushService = PushServiceFactory.getCloudPushService
                 ();
-        pushService.bindAccount("b", new CommonCallback() {
-            @Override
-            public void onSuccess(String s) {
-                Log.e("b", s);
-            }
-
-            @Override
-            public void onFailed(String s, String s1) {
-                Log.e("b", s);
-
-            }
-        });
         pushService.register(applicationContext, new CommonCallback() {
             @Override
             public void onSuccess(String response) {

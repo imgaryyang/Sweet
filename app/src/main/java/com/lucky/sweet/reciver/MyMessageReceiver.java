@@ -2,7 +2,6 @@ package com.lucky.sweet.reciver;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.alibaba.sdk.android.push.MessageReceiver;
 import com.alibaba.sdk.android.push.notification.CPushMessage;
@@ -23,24 +22,17 @@ public class MyMessageReceiver extends MessageReceiver {
 
     @Override
     public void onNotification(Context context, String title, String summary, Map<String, String> extraMap) {
-        Toast.makeText(context, "Receive notification, title: " + title + ", summary: " + summary + ", extraMap: " + extraMap, Toast
-                .LENGTH_SHORT).show();
         // TODO 处理推送通知
         Log.e("MyMessageReceiver", "Receive notification, title: " + title + ", summary: " + summary + ", extraMap: " + extraMap);
     }
 
     @Override
     public void onMessage(Context context, CPushMessage cPushMessage) {
-        Toast.makeText(context, "onMessage, messageId: " + cPushMessage.getMessageId() + ", title: " + cPushMessage.getTitle() + ", content:" + cPushMessage.getContent(), Toast
-                .LENGTH_SHORT).show();
         Log.e("MyMessageReceiver", "onMessage, messageId: " + cPushMessage.getMessageId() + ", title: " + cPushMessage.getTitle() + ", content:" + cPushMessage.getContent());
     }
 
     @Override
     public void onNotificationOpened(Context context, String title, String summary, String extraMap) {
-        Toast.makeText(context, "onNotificationOpened, title: " + title + ", " +
-                "summary: " + summary + ", extraMap:" + extraMap, Toast
-                .LENGTH_SHORT).show();
         Log.e("MyMessageReceiver", "onNotificationOpened, title: " + title + ", summary: " + summary + ", extraMap:" + extraMap);
     }
 

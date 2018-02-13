@@ -64,8 +64,9 @@ dependencies {
     compile 'com.squareup.okio:okio:1.13.0'
     //事件传递
     compile 'org.greenrobot:eventbus:3.0.0'
-
+    //阿里云推送
     compile 'com.aliyun.ams:alicloud-android-push:3.1.0'
-
+    //分享圈子工具
+    compile 'com.kuyue:utils:1.0.8'
 
 }

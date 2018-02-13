@@ -22,6 +22,7 @@ import com.alibaba.sdk.android.oss.model.GetObjectResult;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.lucky.sweet.activity.MyApplication;
 import com.lucky.sweet.activity.OrderSeatActivity;
 import com.lucky.sweet.entity.MainStoreInfo;
@@ -34,7 +35,9 @@ import com.lucky.sweet.entity.UserLoginInfo;
 import com.lucky.sweet.entity.WeatherInfo;
 import com.lucky.sweet.handler.LoginRegisterHandler;
 import com.lucky.sweet.handler.OrderSeatHandler;
+import com.lucky.sweet.properties.CircleProperties;
 import com.lucky.sweet.properties.Properties;
+import com.lucky.sweet.properties.ServiceProperties;
 import com.lucky.sweet.utility.HttpUtils;
 import com.lucky.sweet.utility.PanduanNet;
 import com.squareup.okhttp.Request;
@@ -46,6 +49,9 @@ import com.tencent.map.geolocation.TencentLocationRequest;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import okhttp3.Call;
@@ -54,7 +60,7 @@ import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
-import static com.lucky.sweet.properties.Properties.TEST_BUCKET;
+import static com.lucky.sweet.properties.ServiceProperties.TEST_BUCKET;
 
 
 /**
@@ -197,8 +203,30 @@ public class CommunicationService extends Service {
 
         public void ossUpdata(final String objectkey, final String filepath) {
 
-            CommunicationService.this.ossUpdata(
-                    objectkey, filepath, null);
+            CommunicationService.this.ossUpdata(objectkey, filepath, null);
+        }
+
+
+        public void ossCirclePicUpdata(final ArrayList<String> paths,String
+                content) {
+            final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");// HH:mm:ss
+            //获取当前时间
+            final Date date = new Date(System.currentTimeMillis());
+            JsonArray jsonElements = new JsonArray();
+            for (int i = 0; i < paths.size(); i++) {
+                final int finalI = i;
+                final String ossPath = CircleProperties.SEND_CIRCLE_PIC_OSS_PAHT +
+                        MyApplication.USER_ID + "/" + simpleDateFormat.format(date) + "/" + i + ".png";
+                jsonElements.add(ossPath);
+                new Thread() {
+                    @Override
+                    public void run() {
+                        ossUpdata(ossPath, paths.get(finalI));
+                    }
+                }.start();
+            }
+
+            sendCircleInfo(jsonElements.toString().trim(), content);
         }
 
         public void ossUpdata(final String objectkey, final byte[] bytes) {
@@ -225,17 +253,62 @@ public class CommunicationService extends Service {
 
             requestShopCarInfo(mer_id);
         }
+
+        public void sendCircleInfo(String photoPath, String content) {
+            System.out.println(photoPath);
+            CommunicationService.this.sendCircleInfo(photoPath, content);
+        }
+    }
+
+    private void sendCircleInfo(String photoPath, String content) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("photo", photoPath);
+        map.put("session", MyApplication.sessionId);
+        map.put("mer_id", MyApplication.USER_ID);
+        map.put("content", content);
+        HttpUtils.sendOkHttpRequest(CircleProperties.SEND_CIRCLE, new com.zhy.http
+                .okhttp.callback.Callback() {
+            @Override
+            public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
+                try {
+                    Gson gson = new Gson();
+                    System.out.println(response.body().string());
+                    switch (response.body().string()) {
+                        case "1":
+                            //todo 通知用户上传成功
+                            break;
+                        case "0":
+                            //todo 通知用户上传失败
+                            break;
+                    }
+                } catch (Exception e) {
+
+                }
+
+
+                return null;
+            }
+
+            @Override
+            public void onError(com.squareup.okhttp.Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Object response) {
+
+            }
+        }, map);
     }
 
 
     private void ossUpdata(final String objectkey, final
     String filepath, final OnUpdaSuccess onUpdaSuccess) {
         OSSClient ossClient = MyApplication.getOSSClient();
-        if (ossClient!=null) {
+        if (ossClient != null) {
             PutObjectRequest put = new PutObjectRequest(TEST_BUCKET, objectkey, filepath);
-            setServiceCallBack(put,ossClient , onUpdaSuccess);
+            setServiceCallBack(put, ossClient, onUpdaSuccess);
         }
-
 
 
     }
@@ -243,12 +316,10 @@ public class CommunicationService extends Service {
     private void ossUpdata(final String objectkey, final
     byte[] bytes, final OnUpdaSuccess onUpdaSuccess) {
         OSSClient ossClient = MyApplication.getOSSClient();
-        if (ossClient!=null) {
+        if (ossClient != null) {
             PutObjectRequest put = new PutObjectRequest(TEST_BUCKET, objectkey, bytes);
             setServiceCallBack(put, MyApplication.getOSSClient(), onUpdaSuccess);
         }
-
-
 
 
     }
@@ -259,7 +330,7 @@ public class CommunicationService extends Service {
         GetObjectRequest request = new GetObjectRequest(TEST_BUCKET, objectKey);
         request.setxOssProcess("image/resize,m_fixed,w_100," + "h_100/quality,q_50");
         OSSClient ossClient = MyApplication.getOSSClient();
-        if (ossClient!=null) {
+        if (ossClient != null) {
             ossClient.asyncGetObject(request, new
                     OSSCompletedCallback<GetObjectRequest, GetObjectResult>() {
                         @Override
@@ -504,7 +575,7 @@ public class CommunicationService extends Service {
     }
 
     private void initWeather(String city) {
-        final String url = Properties.WEATHERREQUESTBODY + city;
+        final String url = ServiceProperties.WEATHERREQUESTBODY + city;
         new Thread(new Runnable() {
             @Override
             public void run() {
