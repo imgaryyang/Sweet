@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -55,10 +56,12 @@ public class PostArticleImgAdapter extends RecyclerView.Adapter<PostArticleImgAd
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
+        ImageButton delte;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.sdv);
+            imageView = itemView.findViewById(R.id.imv_circle_item);
+            delte = itemView.findViewById(R.id.imb_delete);
         }
     }
 

@@ -103,12 +103,7 @@ public class SendCircleActivity extends BaseActivity {
                     return;
 
                 }
-                if (originImages.size() == 0) {
-                    Toast.makeText(SendCircleActivity.this, "请插入图片", Toast
-                            .LENGTH_SHORT).show();
-                    return;
 
-                }
                 myBinder.ossCirclePicUpdata(originImages, desc);
 
 
@@ -182,9 +177,18 @@ public class SendCircleActivity extends BaseActivity {
         rec_selecter.addOnItemTouchListener(new OnRecyclerItemClickListener(rec_selecter) {
 
             @Override
-            public void onItemClick(RecyclerView.ViewHolder vh) {
+            public void onItemImageClick(int position, View view) {
 
             }
+
+            @Override
+            public void onItemDeleteClick(int position, View view) {
+
+                originImages.remove(position);
+                dragImages.remove(position);
+                postArticleImgAdapter.notifyDataSetChanged();
+            }
+
 
             @Override
             public void onItemLongClick(RecyclerView.ViewHolder vh) {

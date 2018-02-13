@@ -6,6 +6,8 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.lucky.sweet.R;
+
 /**
  * 手势监听
  * Created by kuyue on 2017/6/20 上午10:45.
@@ -43,7 +45,21 @@ public abstract class OnRecyclerItemClickListener implements RecyclerView.OnItem
             View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
             if (child != null) {
                 RecyclerView.ViewHolder vh = recyclerView.getChildViewHolder(child);
-                onItemClick(vh);
+                final int layoutPosition = vh.getLayoutPosition();
+                child.findViewById(R.id.imb_delete).setOnClickListener(new View
+                        .OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onItemDeleteClick(layoutPosition, v);
+                    }
+                });
+                child.findViewById(R.id.imv_circle_item).setOnClickListener(new View
+                        .OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onItemImageClick(layoutPosition, v);
+                    }
+                });
             }
             return true;
         }
@@ -57,8 +73,9 @@ public abstract class OnRecyclerItemClickListener implements RecyclerView.OnItem
             }
         }
     }
+    public abstract void onItemImageClick(int position, View view);
 
-    public abstract void onItemClick(RecyclerView.ViewHolder vh);
+    public abstract void onItemDeleteClick(int position, View view);
 
     public abstract void onItemLongClick(RecyclerView.ViewHolder vh);
 
