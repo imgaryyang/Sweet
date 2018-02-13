@@ -44,7 +44,7 @@ public class MultiOrderActivity extends BaseActivity {
         title = (Title) findViewById(R.id.title);
         title.setTitleNameStr("多人订单");
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
-                .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
+                .BUTTON_LEFT,0, "取消");
         title.setOnTitleButtonClickListener(new Title
                 .OnTitleButtonClickListener() {
             @Override

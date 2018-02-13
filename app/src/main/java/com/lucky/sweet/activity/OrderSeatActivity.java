@@ -59,15 +59,14 @@ public class OrderSeatActivity extends BaseActivity {
 
     private void initData() {
         try {
-            ll_order_seat.setBackground(BitmapDrawable.createFromPath(Properties.ORDER_SEAT_BACKGROUND_PATH +
-                    "/background.png"));
+            /*ll_order_seat.setBackground(BitmapDrawable.createFromPath(Properties.ORDER_SEAT_BACKGROUND_PATH +
+                    "/background.png"));*/
             Intent intent = getIntent();
             mer_id = intent.getStringExtra("mer_id");
         } catch (Exception e) {
 
         }
     }
-
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
@@ -115,83 +114,78 @@ public class OrderSeatActivity extends BaseActivity {
                 .OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String phone = et_input_phone.getText().toString().trim();
-                boolean result = RegularUtils.isPhoneNumber(phone);
-                if (result == true) {
-                    AlertDialog dialog = new AlertDialog.Builder(OrderSeatActivity.this)
-//                        .setTitle("标题")
-                            .setMessage("需要提前点菜吗？")
-                            .setNegativeButton("直接订座", new DialogInterface
-                                    .OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int
-                                        which) {
-                                    sendOrderSeatInfo();
-                                    dialog.dismiss();
-                                }
-                            })
-                            .setPositiveButton("提前点菜", new DialogInterface
-                                    .OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int
-                                        which) {
-                                    sendOrderSeatInfo();
-                                    Intent intent = new Intent(OrderSeatActivity
-                                            .this, MerchantActivity.class);
-                                    intent.putExtra("mer_id", mer_id);
-                                    startActivity(intent);
-                                    goNextAnim();
-
-                                }
-                            })
-                            .create();
-                    dialog.show();
-                } else {
-                    Toast.makeText(getApplication(), "手机号不对哦，请重新输入", Toast.LENGTH_SHORT).show();
-                }
-
-
+                verifyOrder();
             }
         });
     }
 
+    private void verifyOrder() {
+        String phone = et_input_phone.getText().toString().trim();
+        boolean result = RegularUtils.isPhoneNumber(phone);
+        if (result == true) {
+            AlertDialog dialog = new AlertDialog.Builder(OrderSeatActivity.this)
+                    .setMessage("需要提前点菜吗？")
+                    .setNegativeButton("直接订座", new DialogInterface
+                            .OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int
+                                which) {
+                            sendOrderSeatInfo();
+                            dialog.dismiss();
+                        }
+                    })
+                    .setPositiveButton("提前点菜", new DialogInterface
+                            .OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int
+                                which) {
+                            sendOrderSeatInfo();
+                            Intent intent = new Intent(OrderSeatActivity
+                                    .this, MerchantActivity.class);
+                            intent.putExtra("mer_id", mer_id);
+                            startActivity(intent);
+                            goNextAnim();
+
+                        }
+                    })
+                    .create();
+            dialog.show();
+        } else {
+            Toast.makeText(getApplication(), "手机号不对哦，请重新输入", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void initTitle() {
-//
-
         ToolBar toolBar = new ToolBar(this);
-        toolBar.setImmersionBar();
-        int statusBarHeight = toolBar.getStatusBarHeight(OrderSeatActivity
-                .this);
-        View view_margin = findViewById(R.id.title_detail);
-        ViewGroup.LayoutParams lp;
-        lp = view_margin.getLayoutParams();
-        lp.height = statusBarHeight;
-        view_margin.setLayoutParams(lp);
-
-
+        toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
         title = (Title) findViewById(R.id.title);
-        title.setTheme(Title.Theme.THEME_TRANSLATE_NODIVIDER);
         title.setTitleNameStr("预订座位");
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
-                .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
+                .BUTTON_LEFT,0, "取消");
+        Title.ButtonInfo buttonRight=new Title.ButtonInfo(true,Title.BUTTON_RIGHT1,0,"完成");
         title.setOnTitleButtonClickListener(new Title
                 .OnTitleButtonClickListener() {
             @Override
             public void onClick(int id, Title.ButtonViewHolder viewHolder) {
-                switch (id) {
+                switch(id)
+                {
                     case Title.BUTTON_LEFT:
                         hintInputKb();
                         finish();
                         goPreAnim();
                         break;
 
+                    case Title.BUTTON_RIGHT1://不好用？
+                        verifyOrder();
+                        break;
                 }
             }
         });
-        title.mSetButtonInfo(buttonLeft);
 
+        title.mSetButtonInfo(buttonLeft);
+        title.mSetButtonInfo(buttonRight);
     }
+
 
     private void sendOrderSeatInfo() {
        /* String time = tv_timeSelect.getText().toString().trim();

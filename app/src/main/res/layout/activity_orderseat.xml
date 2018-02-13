@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/seat_bg"
+    android:background="@mipmap/theme_bg"
     android:orientation="vertical">
 
     <LinearLayout
@@ -12,236 +12,281 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <View
-            android:id="@+id/title_detail"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"/>
-
         <include layout="@layout/layout_title"/>
 
-        <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="37dp"/>-->
-
-        <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:layout_marginTop="30dp"-->
-        <!--android:text="2017-12-19"-->
-        <!--android:textColor="@color/black"-->
-        <!--android:textSize="18dp"/>-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="45dp"
+            android:src="@mipmap/order_seat"/>
 
 
-        <ScrollView
+        <View
             android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="37dp"
-            android:background="@mipmap/orderseat_bg">
+            android:layout_height="0.3px"
+            android:layout_marginTop="45dp"
+            android:background="@color/grayDividerDark"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/white"
+            android:clickable="false"
+            android:focusable="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="27dp"
-                android:orientation="vertical">
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="填写座位信息"
-                    android:textColor="@color/white"
-                    android:textSize="20dp"/>
+                    android:layout_gravity="right|center_vertical"
+                    android:text="时间："
+                    android:textColor="@color/black"
+                    android:textSize="15dp"/>
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tv_timeSelect"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="37dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@null"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:singleLine="true"
+                    android:text="请选择"
+                    android:textSize="15dp"/>
+            </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right|center_vertical"
-                        android:text="时间："
-                        android:textColor="@color/black"
-                        android:textSize="15dp"/>
+        </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="160dp"
-                        android:layout_height="30dp"
-                        android:layout_marginLeft="30dp"
-                        android:background="@drawable/shape_orderseatcontent">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3px"
+            android:layout_marginLeft="15dp"
+            android:background="@color/grayDividerDark"/>
 
-                        <TextView
-                            android:id="@+id/tv_timeSelect"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"
-                            android:background="@null"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="请选择"
-                            android:textSize="15dp"/>
-                    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/white"
+            android:clickable="false"
+            android:focusable="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-                </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-                <LinearLayout
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:text="人数："
+                    android:textColor="@color/black"
+                    android:textSize="15dp"/>
+
+                <EditText
+                    android:id="@+id/edt_num"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@null"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:hint="请填写"
+                    android:inputType="number"
+                    android:singleLine="true"
+                    android:textSize="15dp"/>
+            </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right|center_vertical"
-                        android:text="人数："
-                        android:textColor="@color/black"
-                        android:textSize="15dp"/>
+        </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="160dp"
-                        android:layout_height="30dp"
-                        android:layout_marginLeft="30dp"
-                        android:background="@drawable/shape_orderseatcontent">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3px"
+            android:layout_marginLeft="15dp"
+            android:background="@color/grayDividerDark"/>
 
-                        <EditText
-                            android:id="@+id/edt_num"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"
-                            android:background="@null"
-                            android:gravity="center"
-                            android:hint="请填写"
-                            android:inputType="number"
-                            android:singleLine="true"
-                            android:textSize="15dp"/>
-                    </LinearLayout>
 
-                </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/white"
+            android:clickable="false"
+            android:focusable="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-                <LinearLayout
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:text="姓名："
+                    android:textColor="@color/black"
+                    android:textSize="15dp"/>
+
+                <EditText
+                    android:id="@+id/edt_people_num"
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textSize="15dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3px"
+            android:layout_marginLeft="15dp"
+            android:background="@color/grayDividerDark"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/white"
+            android:clickable="false"
+            android:focusable="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:layout_gravity="right|center_vertical"
+                    android:text="电话："
+                    android:textColor="@color/black"
+                    android:textSize="15dp"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right|center_vertical"
-                        android:text="姓名："
-                        android:textColor="@color/black"
-                        android:textSize="15dp"/>
-
-                    <LinearLayout
-                        android:layout_width="160dp"
-                        android:layout_height="30dp"
-                        android:layout_marginLeft="30dp"
-                        android:background="@drawable/shape_orderseatcontent">
-
-                        <EditText
-                            android:id="@+id/edt_people_num"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"
-                            android:background="@null"
-                            android:singleLine="true"
-                            android:textSize="15dp"/>
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
+                <EditText
+                    android:id="@+id/et_input_phone"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@null"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:singleLine="true"
+                    android:textSize="15dp"/>
+            </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right|center_vertical"
-                        android:text="电话："
-                        android:textColor="@color/black"
-                        android:textSize="15dp"/>
+        </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="160dp"
-                        android:layout_height="30dp"
-                        android:layout_marginLeft="30dp"
-                        android:background="@drawable/shape_orderseatcontent">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3px"
+            android:background="@color/grayDividerDark"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3px"
+            android:layout_marginTop="15dp"
+            android:background="@color/grayDividerDark"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:background="@color/white"
+            android:clickable="false"
+            android:focusable="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/et_input_phone"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"
-                            android:background="@null"
-                            android:inputType="number"
-                            android:maxLength="11"
-                            android:singleLine="true"
-                            android:textSize="15dp"/>
-                    </LinearLayout>
-
-                </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="44dp"
                     android:layout_marginTop="16dp"
                     android:text="备注："
                     android:textSize="15dp"/>
 
-                <LinearLayout
-                    android:layout_width="240dp"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/shape_orderseatcontent">
+                <EditText
+                    android:id="@+id/edt_order_des"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:textSize="15dp"/>
+            </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/edt_order_des"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@null"
-                        android:gravity="left|top"
-                        android:textSize="15dp"/>
+        </LinearLayout>
 
-                </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3px"
+            android:background="@color/grayDividerDark"/>
+
+
+
+        <LinearLayout
+            android:id="@+id/meItemExit"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="94dp"
+            android:background="@color/Myappcolor"
+            android:gravity="center_vertical"
+            android:onClick="onButtonClick"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
 
                 <Button
                     android:id="@+id/btn_order_commit"
-                    android:layout_width="70dp"
+                    android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="35dp"
-                    android:layout_marginTop="15dp"
-                    android:background="@mipmap/btn_orderseat_bg"
-                    android:text="预订"
+                    android:background="@null"
+                    android:text="确认预订"
                     android:textColor="@color/white"
                     android:textSize="16dp"/>
 
             </LinearLayout>
 
-        </ScrollView>
+        </LinearLayout>
 
 
     </LinearLayout>
+
+    <!--</ScrollView>-->
+
+
 </LinearLayout>
+    <!--</LinearLayout>-->
