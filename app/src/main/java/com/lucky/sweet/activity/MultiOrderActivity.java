@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.service.CommunicationService;
-import com.lucky.sweet.views.ShopCarPopWindow;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -23,7 +22,7 @@ public class MultiOrderActivity extends BaseActivity {
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
-
+        myBinder.CreateReserveRoom("1111");
     }
 
     @Override
@@ -41,10 +40,10 @@ public class MultiOrderActivity extends BaseActivity {
     private void initTitle() {
         ToolBar toolBar = new ToolBar(this);
         toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
-        title = (Title) findViewById(R.id.title);
+        title =  findViewById(R.id.title);
         title.setTitleNameStr("多人订单");
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
-                .BUTTON_LEFT,0, "取消");
+                .BUTTON_LEFT, 0, "取消");
         title.setOnTitleButtonClickListener(new Title
                 .OnTitleButtonClickListener() {
             @Override

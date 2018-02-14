@@ -37,6 +37,7 @@ import com.lucky.sweet.handler.LoginRegisterHandler;
 import com.lucky.sweet.handler.OrderSeatHandler;
 import com.lucky.sweet.properties.CircleProperties;
 import com.lucky.sweet.properties.Properties;
+import com.lucky.sweet.properties.ReserveProperties;
 import com.lucky.sweet.properties.ServiceProperties;
 import com.lucky.sweet.utility.HttpUtils;
 import com.lucky.sweet.utility.PanduanNet;
@@ -207,7 +208,7 @@ public class CommunicationService extends Service {
         }
 
 
-        public void ossCirclePicUpdata(final ArrayList<String> paths,String
+        public void ossCirclePicUpdata(final ArrayList<String> paths, String
                 content) {
             final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");// HH:mm:ss
             //获取当前时间
@@ -255,16 +256,54 @@ public class CommunicationService extends Service {
         }
 
         public void sendCircleInfo(String photoPath, String content) {
-            System.out.println(photoPath);
             CommunicationService.this.sendCircleInfo(photoPath, content);
+        }
+
+        public void CreateReserveRoom(String password) {
+            CommunicationService.this.CreateReserveRoom(password);
         }
     }
 
+    private void CreateReserveRoom(String password) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("session", MyApplication.sessionId);
+        map.put("mer_id", MyApplication.USER_ID);
+        map.put("password", password);
+        map.put("old_password", "");
+        HttpUtils.sendOkHttpRequest(ReserveProperties.CREATE_OR_ALTER_ROOM,
+                new com.zhy.http.okhttp.callback.Callback() {
+                    @Override
+                    public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
+                        String string = response.body().string();
+                        switch (string) {
+                            case ReserveProperties.CREATE_OR_ALTER_ROOM_FAIL:
+
+                                break;
+                            default:
+                                break;
+                        }
+                        System.out.println();
+                        return null;
+                    }
+
+                    @Override
+                    public void onError(Request request, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Object response) {
+
+                    }
+                }, map);
+    }
+
+    //todo 确认mer_id
     private void sendCircleInfo(String photoPath, String content) {
         HashMap<String, String> map = new HashMap<>();
         map.put("photo", photoPath);
         map.put("session", MyApplication.sessionId);
-        map.put("mer_id", MyApplication.USER_ID);
+        map.put("mer_id", "1");
         map.put("content", content);
         HttpUtils.sendOkHttpRequest(CircleProperties.SEND_CIRCLE, new com.zhy.http
                 .okhttp.callback.Callback() {
