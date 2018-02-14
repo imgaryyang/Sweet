@@ -33,19 +33,13 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <ImageView
-                            android:id="@+id/imv_back"
-                            android:layout_width="match_parent"
-                            android:layout_height="160dp"
-                            android:background="@mipmap/test_imvback"
-                            android:scaleType="fitXY"/>
 
                         <FrameLayout
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_marginLeft="10dp"
                         android:layout_alignParentLeft="true"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="25dp"
                         android:gravity="center"
                         android:background="@drawable/shape_roundbtn_bg">
 
@@ -62,7 +56,7 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_marginRight="10dp"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="25dp"
                             android:layout_gravity="right"
                             android:gravity="center"
                             android:background="@drawable/shape_roundbtn_bg">
@@ -74,6 +68,13 @@
                                 android:onClick="photoBack"
                                 android:background="@mipmap/circle_star"/>
                         </FrameLayout>
+
+                        <ImageView
+                            android:id="@+id/imv_back"
+                            android:layout_width="match_parent"
+                            android:layout_height="190dp"
+                            android:background="@mipmap/test_imvback"
+                            android:scaleType="fitXY"/>
 
                     </FrameLayout>
 

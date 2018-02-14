@@ -78,8 +78,8 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private TextView tv_circle;
     private TextView tv_weibo;
     private ImageButton ibtn_order_seat;
-    private ImageButton ibtn_weichat;
-    private ImageButton ibtn_weibo;
+    private ImageButton ibtn_orderSingle;
+    private ImageButton ibtn_orderMulti;
     private LinearLayout layout_order_content;
     private LinearLayout ll_orderbtn;
 
@@ -156,8 +156,8 @@ public class StoreParticularInfoActivity extends BaseActivity {
         ll_null = (LinearLayout)findViewById(R.id.ll_null);
         ll_share = (LinearLayout)findViewById(R.id.ll_share);
         ibtn_order_seat = (ImageButton)findViewById(R.id.ibtn_order_seat);
-        ibtn_weichat = (ImageButton)findViewById(R.id.ibtn_weichat);
-        ibtn_weibo = (ImageButton)findViewById(R.id.ibtn_weibo);
+        ibtn_orderSingle = (ImageButton)findViewById(R.id.ibtn_orderSingle);
+        ibtn_orderMulti = (ImageButton)findViewById(R.id.ibtn_orderMulti);
         tv_weichat = (TextView)findViewById(R.id.tv_weichat);
         tv_circle = (TextView)findViewById(R.id.tv_circle);
         tv_weibo = (TextView)findViewById(R.id.tv_weibo);
@@ -171,7 +171,6 @@ public class StoreParticularInfoActivity extends BaseActivity {
         findViewById(R.id.btn_order).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 layout_order_content.setVisibility(View.VISIBLE);
                 startbtnAnim();
 
@@ -222,6 +221,26 @@ public class StoreParticularInfoActivity extends BaseActivity {
                 }.run();
             }
         });
+        ibtn_orderSingle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(StoreParticularInfoActivity
+                        .this, MerchantActivity.class);
+                startActivity(intent);
+                goNextAnim();
+            }
+        });
+
+        ibtn_orderMulti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(StoreParticularInfoActivity
+                        .this, MultiOrderActivity.class);
+                startActivity(intent);
+                goNextAnim();
+            }
+        });
+
     }
 
     private void initTitle() {
@@ -361,9 +380,9 @@ public class StoreParticularInfoActivity extends BaseActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
 
-                ibtn_weichat.setVisibility( View.VISIBLE );
+                ibtn_orderSingle.setVisibility( View.VISIBLE );
                 tv_weichat.setVisibility( View.VISIBLE );
-                ibtn_weichat.startAnimation( T_Anim[2] );
+                ibtn_orderSingle.startAnimation( T_Anim[2] );
                 tv_weichat.startAnimation( T_Anim[2] );
             }
         } );
@@ -372,9 +391,9 @@ public class StoreParticularInfoActivity extends BaseActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
 
-                ibtn_weibo.setVisibility( View.VISIBLE );
+                ibtn_orderMulti.setVisibility( View.VISIBLE );
                 tv_weibo.setVisibility( View.VISIBLE );
-                ibtn_weibo.startAnimation( T_Anim[3] );
+                ibtn_orderMulti.startAnimation( T_Anim[3] );
                 tv_weibo.startAnimation( T_Anim[3] );
             }
         } );
@@ -399,7 +418,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
                 tv_circle.setVisibility( View.GONE );
                 ibtn_order_seat.clearAnimation();
                 tv_circle.clearAnimation();
-                ibtn_weichat.startAnimation( T_Anim[1] );
+                ibtn_orderSingle.startAnimation( T_Anim[1] );
                 tv_circle.startAnimation( T_Anim[1] );
             }
         } );
@@ -408,11 +427,11 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                ibtn_weichat.setVisibility( View.GONE );
+                ibtn_orderSingle.setVisibility( View.GONE );
                 tv_weichat.setVisibility( View.GONE );
-                ibtn_weichat.clearAnimation();
+                ibtn_orderSingle.clearAnimation();
                 tv_weichat.clearAnimation();
-                ibtn_weibo.startAnimation( T_Anim[2] );
+                ibtn_orderMulti.startAnimation( T_Anim[2] );
                 tv_weibo.startAnimation( T_Anim[2] );
 
             }
@@ -421,9 +440,9 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                ibtn_weibo.setVisibility( View.GONE );
+                ibtn_orderMulti.setVisibility( View.GONE );
                 tv_weibo.setVisibility( View.GONE );
-                ibtn_weibo.clearAnimation();
+                ibtn_orderMulti.clearAnimation();
                 tv_weibo.clearAnimation();
                 ll_share.startAnimation( T_Anim[3] );
                 layout_order_content.setVisibility( View.GONE );

@@ -2,6 +2,8 @@ package com.lucky.sweet.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.ShopCarEntity;
@@ -31,6 +33,7 @@ public class MerchantActivity extends BaseActivity {
 
 
     private ProductsFragment fg_shop_car;
+    private Button btn_back;
 
 
     @Override
@@ -86,7 +89,13 @@ public class MerchantActivity extends BaseActivity {
                 overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
             }
         });
-
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                goPreAnim();
+            }
+        });
 
     }
 
@@ -100,6 +109,7 @@ public class MerchantActivity extends BaseActivity {
 
         fg_shop_car = (ProductsFragment) getSupportFragmentManager().findFragmentById(R.id.fg_shop_car);
 
+        btn_back = (Button)findViewById(R.id.btn_back);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

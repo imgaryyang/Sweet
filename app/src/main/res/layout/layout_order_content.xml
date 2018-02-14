@@ -62,7 +62,7 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
                 <ImageButton
-                    android:id="@+id/ibtn_weichat"
+                    android:id="@+id/ibtn_orderSingle"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:background="@mipmap/order_simple"
@@ -92,7 +92,7 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
                 <ImageButton
-                    android:id="@+id/ibtn_weibo"
+                    android:id="@+id/ibtn_orderMulti"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:background="@mipmap/order_more"
