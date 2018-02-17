@@ -11,19 +11,30 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class MuliiOrderInfo {
-
+    public static final String UPDATA = "DATA_CHANGE";
     /**
      * type : 操作类型
-     * name : 用户姓名
-     * do : true加菜/flase减菜
-     * des : 88/菜品ID
+     * name : 用户名
+     * do : boolean用户增加/删除
+     * section : 左位置
+     * position : 右位置
      */
 
     private String type;
     private String name;
     @SerializedName("do")
-    private boolean doX;
-    private int des;
+    private boolean addDis;
+    private int section;
+    private int position;
+    private int item_id;
+
+    public int getItem_id() {
+        return item_id;
+    }
+
+    public void setItem_id(int item_id) {
+        this.item_id = item_id;
+    }
 
     public String getType() {
         return type;
@@ -41,29 +52,34 @@ public class MuliiOrderInfo {
         this.name = name;
     }
 
-    public boolean isDoX() {
-        return doX;
+    public boolean isaddDis() {
+        return addDis;
     }
 
-    public void setDoX(boolean doX) {
-        this.doX = doX;
+    public void setaddDis(boolean addDis) {
+        this.addDis = addDis;
     }
 
-    public int getDes() {
-        return des;
+    public int getSection() {
+        return section;
     }
 
-    public void setDes(int des) {
-        this.des = des;
+    public void setSection(int section) {
+        this.section = section;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     @Override
     public String toString() {
-        return "MuliiOrderInfo{" +
-                "type='" + type + '\'' +
-                ", name='" + name + '\'' +
-                ", doX=" + doX +
-                ", des=" + des +
-                '}';
+        return "{\"type\":\"" + type + "\",\"name\":\"" + name + "\",\"do\":" + addDis +
+                ",\"section\":\"" + section +
+                "\",\"position\":\"" + position + "\"}";
     }
 }

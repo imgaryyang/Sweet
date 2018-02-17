@@ -288,7 +288,7 @@ public class CommunicationService extends Service {
         HashMap<String, String> map = new HashMap<>();
         map.put("session", MyApplication.sessionId);
         map.put("room_id", roomId);
-        map.put("item ", item);
+        map.put("item", item);
         map.put("incr_decr", incr_decr);
         map.put("key_value", key);
         HttpUtils.sendOkHttpRequest(ReserveProperties.UPDATA_MENU,

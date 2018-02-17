@@ -109,11 +109,11 @@ public class MultiOrderActivity extends BaseActivity {
                 break;
 
             case R.id.btn_join_room:
-                String roomId = edt_join_room.getText().toString();
+                final String roomId = edt_join_room.getText().toString();
                 MyApplication.bindPushAccount(roomId, new CommonCallback() {
                     @Override
                     public void onSuccess(String s) {
-                        jionToOrder();
+                        jionToOrder(roomId);
                     }
 
                     @Override
@@ -130,7 +130,7 @@ public class MultiOrderActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(ReservationInfo info) {
-        String request = info.getRoomId();
+        final String request = info.getRoomId();
         tv_room_id.setText(request);
         switch (request) {
             case ReserveProperties.CREATE_OR_ALTER_ROOM_FAIL:
@@ -140,7 +140,7 @@ public class MultiOrderActivity extends BaseActivity {
                 MyApplication.bindPushAccount(request, new CommonCallback() {
                     @Override
                     public void onSuccess(String s) {
-                        jionToOrder();
+                        jionToOrder(request);
                     }
 
                     @Override
@@ -154,10 +154,11 @@ public class MultiOrderActivity extends BaseActivity {
 
     }
 
-    private void jionToOrder() {
+    private void jionToOrder(String roomId) {
         Intent intent = new Intent(MultiOrderActivity.this, MerchantActivity.class);
         intent.putExtra("mer_id", mer_id);
         intent.putExtra("multiOrder", true);
+        intent.putExtra("room_id", roomId);
         startActivity(intent);
     }
 

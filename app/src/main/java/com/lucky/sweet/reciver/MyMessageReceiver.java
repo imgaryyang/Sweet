@@ -8,6 +8,7 @@ import com.alibaba.sdk.android.push.MessageReceiver;
 import com.alibaba.sdk.android.push.notification.CPushMessage;
 import com.google.gson.Gson;
 import com.lucky.sweet.entity.JoinRoomInfo;
+import com.lucky.sweet.entity.MuliiOrderInfo;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -26,25 +27,32 @@ public class MyMessageReceiver extends MessageReceiver {
     public static final String REC_TAG = "receiver";
     private static final String JOIN_ROOM = "join_room";
 
+    private static final String UPDATE_MENU = "update_menu";
+
     @Override
     public void onNotification(Context context, String title, String summary, Map<String, String> extraMap) {
         // TODO 处理推送通知
-        Toast.makeText(context, "Receive notification, title: " + title + ", summary: " + summary + ", extraMap: " + extraMap, Toast.LENGTH_SHORT).show();
 
         Log.e("MyMessageReceiver", "Receive notification, title: " + title + ", summary: " + summary + ", extraMap: " + extraMap);
     }
 
     @Override
     public void onMessage(Context context, CPushMessage cPushMessage) {
-        Toast.makeText(context, "onMessage, messageId: " + cPushMessage.getMessageId() + ", title: " + cPushMessage.getTitle() + ", content:" + cPushMessage.getContent(), Toast.LENGTH_SHORT).show();
         String content = cPushMessage.getContent();
+        Gson gson = new Gson();
         switch (cPushMessage.getTitle()) {
+
+
             case JOIN_ROOM:
-                Gson gson = new Gson();
+
                 JoinRoomInfo joinRoomInfo = gson.fromJson(content, JoinRoomInfo.class);
                 EventBus.getDefault().post(joinRoomInfo);
                 break;
+            case UPDATE_MENU:
 
+                MuliiOrderInfo MuliiOrderInfo = gson.fromJson(content, MuliiOrderInfo.class);
+                EventBus.getDefault().post(MuliiOrderInfo);
+                break;
         }
         Log.e("MyMessageReceiver", "onMessage, messageId: " + cPushMessage.getMessageId() + ", title: " + cPushMessage.getTitle() + ", content:" + cPushMessage.getContent());
     }

@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.model.shoppingcar.ShopMenuAttr;
 import com.lucky.sweet.model.shoppingcar.assistant.onCallBackListener;
 import com.lucky.sweet.model.shoppingcar.mode.ProductType;
 import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
@@ -92,7 +93,7 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
             }
         });
         String picture = product.getPicture();
-        if (picture!=null) {
+        if (picture != null) {
             OssUtils.down(picture, new OssUtils.OnInpustreamBack() {
                 @Override
                 public void inputstreamFinish(InputStream inputStream) {
@@ -111,6 +112,7 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
                 num++;
                 product.setNumber(num);
                 viewHolder.shoppingNum.setText(product.getNumber() + "");
+
                 if (callBackListener != null) {
                     callBackListener.updateProduct(product, "1");
                 } else {
@@ -122,6 +124,10 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
                     //TODO:解决方案，先监听到左边ListView的Item中，然后在开始动画添加
                     mHolderClickListener.onHolderClick(drawable, start_location);
                 }
+                if (onMenuChangedListener != null) {
+                    onMenuChangedListener.onChanged(product.getId()
+                            ,section, position, ShopMenuAttr.ADD);
+                }
             }
         });
         viewHolder.reduce.setOnClickListener(new View.OnClickListener() {
@@ -132,9 +138,15 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
                     num--;
                     product.setNumber(num);
                     viewHolder.shoppingNum.setText(product.getNumber() + "");
+
                     if (callBackListener != null) {
                         callBackListener.updateProduct(product, "2");
                     } else {
+                    }
+                    if (onMenuChangedListener != null) {
+                        onMenuChangedListener.onChanged(product.getId()
+                                ,section, position,
+                                ShopMenuAttr.DELETE);
                     }
                 }
             }
@@ -156,6 +168,12 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
     }
 
     private OnItemDesClickListener onItemDesClickListener;
+    private OnMenuChangedListener onMenuChangedListener;
+
+    public void setOnMenuChangedListener(OnMenuChangedListener onMenuChangedListener) {
+        this.onMenuChangedListener = onMenuChangedListener;
+
+    }
 
     public void setOnItemDesClickListener(OnItemDesClickListener onItemDesClickListener) {
         this.onItemDesClickListener = onItemDesClickListener;
@@ -163,6 +181,10 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
 
     public interface OnItemDesClickListener {
         void onClick(int section, int position);
+    }
+
+    public interface OnMenuChangedListener {
+        void onChanged(int id, int section, int position, ShopMenuAttr add);
     }
 
     class ViewHolder {

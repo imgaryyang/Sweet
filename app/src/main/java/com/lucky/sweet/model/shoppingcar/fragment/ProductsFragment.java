@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,8 +33,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.activity.MerchantActivity;
+import com.lucky.sweet.activity.MyApplication;
+import com.lucky.sweet.entity.MuliiOrderInfo;
 import com.lucky.sweet.entity.ShopCarSingleInformation;
 import com.lucky.sweet.model.shoppingcar.DoubleUtil;
+import com.lucky.sweet.model.shoppingcar.ShopMenuAttr;
 import com.lucky.sweet.model.shoppingcar.adapter.ShopAdapter;
 import com.lucky.sweet.model.shoppingcar.adapter.TestSectionedAdapter;
 import com.lucky.sweet.model.shoppingcar.assistant.ShopToDetailListener;
@@ -136,13 +141,13 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
     };
     private Button btn_back;
     private TextView tv_shopcar_int;
+    private boolean currenType;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater
-                .inflate(R.layout.fragment_classify, container, false);
+        return inflater.inflate(R.layout.fragment_classify, container, false);
     }
 
     @Override
@@ -159,13 +164,35 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         sectionedAdapter = new TestSectionedAdapter(getActivity(), productCategorizes);
         sectionedAdapter.setOnItemDesClickListener(new TestSectionedAdapter.OnItemDesClickListener() {
             @Override
-            public void onClick(int section,int position) {
+            public void onClick(int section, int position) {
                 if (onClickListener != null) {
                     onClickListener.onItemClick(calculateListPositon(section,
                             position, (ArrayList<ProductType>) productCategorizes));
                 }
             }
         });
+        if (currenType)
+            sectionedAdapter.setOnMenuChangedListener(new TestSectionedAdapter.OnMenuChangedListener() {
+                @Override
+                public void onChanged(int id, int section, int position, ShopMenuAttr add) {
+                    FragmentActivity activity = getActivity();
+                    if (activity instanceof MerchantActivity) {
+                        MuliiOrderInfo muliiOrderInfo = new MuliiOrderInfo();
+                        muliiOrderInfo.setSection(section);
+                        muliiOrderInfo.setPosition(position);
+                        muliiOrderInfo.setName(MyApplication.USER_ID);
+                        muliiOrderInfo.setType(MuliiOrderInfo.UPDATA);
+                        muliiOrderInfo.setItem_id(id);
+                        if (add.equals(ShopMenuAttr.ADD)) {
+                            muliiOrderInfo.setaddDis(true);
+                        } else {
+                            muliiOrderInfo.setaddDis(false);
+                        }
+
+                        ((MerchantActivity) activity).upMenuInfo(muliiOrderInfo);
+                    }
+                }
+            });
         sectionedAdapter.SetOnSetHolderClickListener(new TestSectionedAdapter.HolderClickListener() {
 
             @Override
@@ -265,23 +292,23 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
     private void initView() {
 
         animation_viewGroup = createAnimLayout();
-        noData = (TextView) getView().findViewById(R.id.noData);
+        noData = getView().findViewById(R.id.noData);
         tv_shopcar_int = getView().findViewById(R.id.tv_shopcar_int);
-        settlement1 = (TextView) getView().findViewById(R.id.settlement1);
-        parentLayout = (RelativeLayout) getView().findViewById(R.id.parentLayout);
-        shoppingPrise = (TextView) getView().findViewById(R.id.shoppingPrise);
-        shoppingNum = (TextView) getView().findViewById(R.id.shoppingNum);
+        settlement1 = getView().findViewById(R.id.settlement1);
+        parentLayout = getView().findViewById(R.id.parentLayout);
+        shoppingPrise = getView().findViewById(R.id.shoppingPrise);
+        shoppingNum = getView().findViewById(R.id.shoppingNum);
 
-        mainlist = (ListView) getView().findViewById(R.id.classify_mainlist);
-        morelist = (PinnedHeaderListView) getView().findViewById(R.id.classify_morelist);
-        shopping_cart = (ImageView) getView().findViewById(R.id.shopping_cart);
-        defaultText = (TextView) getView().findViewById(R.id.defaultText);
+        mainlist = getView().findViewById(R.id.classify_mainlist);
+        morelist = getView().findViewById(R.id.classify_morelist);
+        shopping_cart = getView().findViewById(R.id.shopping_cart);
+        defaultText = getView().findViewById(R.id.defaultText);
 
-        shoppingListView = (ListView) getView().findViewById(R.id.shopproductListView);
-        cardLayout = (FrameLayout) getView().findViewById(R.id.cardLayout);
-        cardShopLayout = (LinearLayout) getView().findViewById(R.id.cardShopLayout);
+        shoppingListView = getView().findViewById(R.id.shopproductListView);
+        cardLayout = getView().findViewById(R.id.cardLayout);
+        cardShopLayout = getView().findViewById(R.id.cardShopLayout);
         bg_layout = getView().findViewById(R.id.bg_layout);
-        btn_back = (Button) getView().findViewById(R.id.btn_back);
+        btn_back = getView().findViewById(R.id.btn_back);
 
     }
 
@@ -308,6 +335,28 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         return count;
     }
 
+    public void multiOrderUpdata(MuliiOrderInfo info) {
+        System.out.println(info);
+        String name = info.getName();
+        if (!name.equals(MyApplication.USER_ID))
+            Toast.makeText(getActivity(), "感谢这位老铁：" + name + "添加了" + info
+                    .getItem_id(), Toast
+                    .LENGTH_SHORT).show();
+        ShopProduct shopProduct = productCategorizes.get(info.getSection()).getProduct().get(info
+                .getPosition());
+        int number = shopProduct.getNumber();
+        if (info.isaddDis()) {
+            number++;
+        } else {
+            number--;
+        }
+        shopProduct.setNumber(number);
+
+        productCategorizes.get(info.getSection()).getProduct().set(info
+                .getPosition(), shopProduct);
+        sectionedAdapter.notifyDataSetChanged();
+
+    }
 
     /**
      * 回调函数更新购物车和价格显示状态
@@ -347,6 +396,7 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
 
     /**
      * type     1：加菜 2：减菜
+     *
      * @param product
      * @param type
      */
@@ -464,8 +514,7 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
             case R.id.settlement1:
                 if (onClickListener != null) {
                     if (shoppingNum.getVisibility() == View.GONE) {
-                        Toast.makeText(getActivity(), "请添加菜品", Toast
-                                .LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "请添加菜品", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     onClickListener.onClickSubimt(new ShopCarSingleInformation(shoppingPrise.getText()
@@ -633,6 +682,10 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    public void setCurrenType(boolean currenType) {
+        this.currenType = currenType;
     }
 
 

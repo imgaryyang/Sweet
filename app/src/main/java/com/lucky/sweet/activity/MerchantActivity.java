@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.JoinRoomInfo;
+import com.lucky.sweet.entity.MuliiOrderInfo;
 import com.lucky.sweet.entity.ShopCarEntity;
 import com.lucky.sweet.entity.ShopCarSingleInformation;
 import com.lucky.sweet.model.shoppingcar.fragment.ProductsFragment;
@@ -36,6 +37,7 @@ public class MerchantActivity extends BaseActivity {
 
     private ProductsFragment fg_shop_car;
     private Button btn_back;
+    private CommunicationService.MyBinder myBinder;
 
 
     @Override
@@ -43,7 +45,6 @@ public class MerchantActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant);
 
-        boolean multiOrder = getIntent().getBooleanExtra("multiOrder", false);
 
         initToolBar();
 
@@ -70,6 +71,7 @@ public class MerchantActivity extends BaseActivity {
     void onServiceBind(CommunicationService.MyBinder myBinder) {
 
         myBinder.shopCarRequest(getIntent().getStringExtra("mer_id"));
+        this.myBinder = myBinder;
     }
 
 
@@ -112,7 +114,7 @@ public class MerchantActivity extends BaseActivity {
     private void initView() {
 
         fg_shop_car = (ProductsFragment) getSupportFragmentManager().findFragmentById(R.id.fg_shop_car);
-
+        fg_shop_car.setCurrenType(getIntent().getBooleanExtra("multiOrder", false));
         btn_back = findViewById(R.id.btn_back);
     }
 
@@ -146,6 +148,26 @@ public class MerchantActivity extends BaseActivity {
 
         String name = joinRoomInfo.getName();
         if (!name.equals(MyApplication.USER_ID))
-            Toast.makeText(this, "您的好友"+name+"加入房间", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "感谢这位老铁：" + name + "加入房间", Toast.LENGTH_SHORT).show();
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(MuliiOrderInfo info) {
+
+        fg_shop_car.multiOrderUpdata(info);
+
+    }
+
+    public void upMenuInfo(MuliiOrderInfo muliiOrderInfo) {
+
+        String num;
+        if (muliiOrderInfo.isaddDis()) {
+            num = "1";
+        } else {
+            num = "-1";
+        }
+
+        myBinder.dishesMenuUpdata(getIntent().getStringExtra("room_id"),
+                muliiOrderInfo.getItem_id() + "", num, muliiOrderInfo.toString());
+
     }
 }
