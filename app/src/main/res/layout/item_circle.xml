@@ -7,19 +7,19 @@
     xmlns:com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayoutandroid="http://schemas.android.com/tools"
     android:orientation="horizontal">
 
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <com.lucky.sweet.views.CircleImageView
-            android:id="@+id/imv_head"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@mipmap/test_head"/>
+        &lt;!&ndash;<com.lucky.sweet.views.CircleImageView&ndash;&gt;
+            &lt;!&ndash;android:id="@+id/imv_head"&ndash;&gt;
+            &lt;!&ndash;android:layout_width="38dp"&ndash;&gt;
+            &lt;!&ndash;android:layout_height="38dp"&ndash;&gt;
+            &lt;!&ndash;android:layout_gravity="center_horizontal"&ndash;&gt;
+            &lt;!&ndash;android:src="@mipmap/test_head"/>&ndash;&gt;
 
 
         <com.sackcentury.shinebuttonlib.ShineButton
@@ -81,117 +81,118 @@
             app:shine_size="40dp"
             app:siShape="@mipmap/circle_callout"/>
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 
     <LinearLayout
-        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="25dp"
+        android:layout_width="wrap_content"
         android:layout_marginTop="15dp"
-        android:layout_weight="4"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/shape_circle_bg"
-        android:orientation="vertical">
+        android:orientation="horizontal">
+
+        <!--<LinearLayout-->
+            <!--android:layout_weight="1.5"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:gravity="center_horizontal">-->
+
+            <com.lucky.sweet.views.CircleImageView
+                android:id="@+id/imv_head"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/test_head"/>
+
+        <!--</LinearLayout>-->
+
+
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_weight="4"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="我住隔壁我姓王"
+                        android:textColor="#000"
+                        android:textSize="15dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="11:20"
+                        android:layout_marginTop="5dp"
+                        android:textColor="#FF646464"
+                        android:textSize="12dp"/>
+                </LinearLayout>
+
+
+
+                <TextView
+                    android:layout_width="37dp"
+                    android:layout_height="18dp"
+                    android:background="@drawable/shape_level_bg"
+                    android:gravity="center"
+                    android:text="lv.11"
+                    android:textColor="#AACF25"
+                    android:textSize="12dp"/>
+
+
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="我住隔壁我姓王"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp"
+                android:text="装修很不错，关顾着拍照了哈哈，不过菜品也很好吃的！"
                 android:textColor="#000"
-                android:textSize="15dp"/>
+                android:textSize="14dp"/>
 
-            <TextView
-                android:layout_width="37dp"
-                android:layout_height="18dp"
-                android:layout_marginLeft="15dp"
-                android:background="@drawable/shape_level_bg"
-                android:gravity="center"
-                android:text="lv.11"
-                android:textColor="#AACF25"
-                android:textSize="12dp"/>
+            <com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayout
+                android:id="@+id/l_pictures"
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="15dp">
+                <com.lucky.sweet.widgets.ImageViewWatcher.SquareImageView
+                    android:id="@+id/i_picture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"/>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:gravity="right"
-                android:text="11:20"
-                android:textColor="#FF646464"
-                android:textSize="12dp"/>
-
+            </com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayout>
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="15dp"
-            android:text="装修很不错，关顾着拍照了哈哈，不过菜品也很好吃的！"
-            android:textColor="#000"
-            android:textSize="14dp"/>
 
-        <!--<com.lucky.sweet.views.CircleGrideView-->
-        <!--android:id="@+id/grv_circleimg"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:horizontalSpacing="3dp"-->
-        <!--android:numColumns="3"-->
-        <!--android:verticalSpacing="3dp"-->
-        <!--android:layout_marginTop="15dp"-->
-        <!--android:layout_marginLeft="8dp"-->
-        <!--android:layout_marginRight="8dp">-->
-        <!--</com.lucky.sweet.views.CircleGrideView>-->
+
+
 
         <!--<LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp">
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="15dp"
-                android:src="@mipmap/test_one"/>
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="15dp"
-                android:src="@mipmap/test_one"/>
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:src="@mipmap/test_one"/>
-        </LinearLayout>-->
-
-        <com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayout
-            android:id="@+id/l_pictures"
-            android:layout_width="240dp"
-            android:layout_height="240dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="15dp">
-            <com.lucky.sweet.widgets.ImageViewWatcher.SquareImageView
-                android:id="@+id/i_picture"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                android:layout_margin="20dp"/>
-
-        </com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayout>
-
-        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -213,7 +214,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="8dp"
                 android:text="213"/>
-        </LinearLayout>
+        </LinearLayout>-->
 
     </LinearLayout>
 
