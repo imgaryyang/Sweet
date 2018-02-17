@@ -92,8 +92,8 @@ public class MainActivity extends BaseActivity {
                     R.mipmap.tab_store_pressed
             },
             {
-                    R.mipmap.tab_store,
-                    R.mipmap.tab_store_pressed
+                    R.mipmap.tab_circle,
+                    R.mipmap.tab_circle_pressed
             },
 
             {
