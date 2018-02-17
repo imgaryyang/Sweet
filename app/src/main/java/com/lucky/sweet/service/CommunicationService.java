@@ -27,6 +27,7 @@ import com.lucky.sweet.activity.MyApplication;
 import com.lucky.sweet.activity.OrderSeatActivity;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.PerdetermingEntity;
+import com.lucky.sweet.entity.ReservationInfo;
 import com.lucky.sweet.entity.ShopCarEntity;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.entity.StoreDisplayInfo;
@@ -48,6 +49,8 @@ import com.tencent.map.geolocation.TencentLocationManager;
 import com.tencent.map.geolocation.TencentLocationRequest;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -259,15 +262,94 @@ public class CommunicationService extends Service {
             CommunicationService.this.sendCircleInfo(photoPath, content);
         }
 
-        public void CreateReserveRoom(String password) {
-            CommunicationService.this.CreateReserveRoom(password);
+        public void createReserveRoom(String password, String mer_id) {
+
+            CommunicationService.this.createReserveRoom(mer_id, password);
+
+        }
+
+        public void joinInReserveRoom(String roomId, String psw) {
+
+            CommunicationService.this.joinInReserveRoom(roomId, psw);
+
+        }
+
+
+        public void dishesMenuUpdata(String roomId, String item,
+                                     String incr_decr, String key) {
+
+
+            CommunicationService.this.dishesMenuUpdata(roomId, item,
+                    incr_decr, key);
         }
     }
 
-    private void CreateReserveRoom(String password) {
+    private void dishesMenuUpdata(String roomId, String item, String incr_decr, String key) {
         HashMap<String, String> map = new HashMap<>();
         map.put("session", MyApplication.sessionId);
-        map.put("mer_id", MyApplication.USER_ID);
+        map.put("room_id", roomId);
+        map.put("item ", item);
+        map.put("incr_decr", incr_decr);
+        map.put("key_value", key);
+        HttpUtils.sendOkHttpRequest(ReserveProperties.UPDATA_MENU,
+                new com.zhy.http.okhttp.callback.Callback() {
+                    @Override
+                    public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
+                        String string = response.body().string();
+                        Log.i("dis", string);
+                        return null;
+                    }
+
+                    @Override
+                    public void onError(Request request, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Object response) {
+
+                    }
+                }, map);
+    }
+
+    private void joinInReserveRoom(String roomId, String psw) {
+        HashMap<String, String> map = new HashMap<>();
+        try {
+            String userId = MyApplication.USER_ID;
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name", userId);
+            map.put("session", MyApplication.sessionId);
+            map.put("room_id", roomId);
+            map.put("password", psw);
+            map.put("key_value", jsonObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        HttpUtils.sendOkHttpRequest(ReserveProperties.JOIN_IN_ROOM,
+                new com.zhy.http.okhttp.callback.Callback() {
+                    @Override
+                    public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
+                        String string = response.body().string();
+                        Log.i("jionIn", string);
+                        return null;
+                    }
+
+                    @Override
+                    public void onError(Request request, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Object response) {
+
+                    }
+                }, map);
+    }
+
+    private void createReserveRoom(String mer_id, String password) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("session", MyApplication.sessionId);
+        map.put("mer_id", mer_id);
         map.put("password", password);
         map.put("old_password", "");
         HttpUtils.sendOkHttpRequest(ReserveProperties.CREATE_OR_ALTER_ROOM,
@@ -275,14 +357,11 @@ public class CommunicationService extends Service {
                     @Override
                     public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
                         String string = response.body().string();
-                        switch (string) {
-                            case ReserveProperties.CREATE_OR_ALTER_ROOM_FAIL:
 
-                                break;
-                            default:
-                                break;
-                        }
-                        System.out.println();
+                        ReservationInfo reservationInfo = new ReservationInfo();
+                        reservationInfo.setRoomId(string);
+
+                        EventBus.getDefault().post(reservationInfo);
                         return null;
                     }
 

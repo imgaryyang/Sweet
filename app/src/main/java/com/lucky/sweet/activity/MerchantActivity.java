@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.JoinRoomInfo;
 import com.lucky.sweet.entity.ShopCarEntity;
 import com.lucky.sweet.entity.ShopCarSingleInformation;
 import com.lucky.sweet.model.shoppingcar.fragment.ProductsFragment;
@@ -40,6 +42,8 @@ public class MerchantActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant);
+
+        boolean multiOrder = getIntent().getBooleanExtra("multiOrder", false);
 
         initToolBar();
 
@@ -109,7 +113,7 @@ public class MerchantActivity extends BaseActivity {
 
         fg_shop_car = (ProductsFragment) getSupportFragmentManager().findFragmentById(R.id.fg_shop_car);
 
-        btn_back = (Button)findViewById(R.id.btn_back);
+        btn_back = findViewById(R.id.btn_back);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -137,4 +141,11 @@ public class MerchantActivity extends BaseActivity {
         fg_shop_car.initData(productCategorizes);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(JoinRoomInfo joinRoomInfo) {
+
+        String name = joinRoomInfo.getName();
+        if (!name.equals(MyApplication.USER_ID))
+            Toast.makeText(this, "您的好友"+name+"加入房间", Toast.LENGTH_SHORT).show();
+    }
 }

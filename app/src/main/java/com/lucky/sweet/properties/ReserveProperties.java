@@ -12,8 +12,7 @@ public class ReserveProperties {
 
     public static final String CREATE_OR_ALTER_ROOM = "https://thethreestooges" +
             ".cn:666/trolley/update/password";
-    public static final String UPDATA_MENU = "https://thethreestooges" +
-            ".cn:666/trolley/update/menu";
+    public static final String UPDATA_MENU = "https://thethreestooges.cn:666/trolley/update/menu";
     public static final String JOIN_IN_ROOM = "https://thethreestooges" +
             ".cn:666/trolley/show/menu";
     public static final String CREATE_OR_ALTER_ROOM_FAIL = "0";

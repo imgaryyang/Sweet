@@ -198,5 +198,10 @@ public class MyApplication extends Application {
             }
         });
     }
+    public static void bindPushAccount(String account, CommonCallback commonCallback)
+    {
+        pushService.bindAccount(account, commonCallback);
+
+    }
 
 }

@@ -345,6 +345,11 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         setPrise();
     }
 
+    /**
+     * type     1：加菜 2：减菜
+     * @param product
+     * @param type
+     */
     @Override
     public void onUpdateDetailList(ShopProduct product, String type) {
         if (type.equals("1")) {
@@ -450,16 +455,6 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
                     cardShopLayout.setVisibility(View.GONE);
                 }
                 break;
-
-//            case R.id.settlement:
-//                if (productList == null) {
-//                    return;
-//                }
-//                Intent intent = new Intent(getActivity(), SettlementActivity.class);
-//                IntentObjectPool.putObjectExtra(intent, CommonParameter.SETTLEMENT_DETAILS, productList);
-//                IntentObjectPool.putStringExtra(intent,"shopId",shopId);
-//                startActivity(intent);
-//                break;
 
             case R.id.bg_layout:
                 cardLayout.setVisibility(View.GONE);

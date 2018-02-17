@@ -152,17 +152,17 @@ public class StoreParticularInfoActivity extends BaseActivity {
         imv_shop_one = findViewById(R.id.imv_shop_one);
         imv_shop_two = findViewById(R.id.imv_shop_two);
         imv_shop_three = findViewById(R.id.imv_shop_three);
-        ibtn_back = (ImageButton)findViewById(R.id.ibtn_back);
-        ll_null = (LinearLayout)findViewById(R.id.ll_null);
-        ll_share = (LinearLayout)findViewById(R.id.ll_share);
-        ibtn_order_seat = (ImageButton)findViewById(R.id.ibtn_order_seat);
-        ibtn_orderSingle = (ImageButton)findViewById(R.id.ibtn_orderSingle);
-        ibtn_orderMulti = (ImageButton)findViewById(R.id.ibtn_orderMulti);
-        tv_weichat = (TextView)findViewById(R.id.tv_weichat);
-        tv_circle = (TextView)findViewById(R.id.tv_circle);
-        tv_weibo = (TextView)findViewById(R.id.tv_weibo);
-        layout_order_content = (LinearLayout)findViewById(R.id.layout_order_content);
-        ll_orderbtn = (LinearLayout)findViewById(R.id.ll_orderbtn);
+        ibtn_back = (ImageButton) findViewById(R.id.ibtn_back);
+        ll_null = (LinearLayout) findViewById(R.id.ll_null);
+        ll_share = (LinearLayout) findViewById(R.id.ll_share);
+        ibtn_order_seat = (ImageButton) findViewById(R.id.ibtn_order_seat);
+        ibtn_orderSingle = (ImageButton) findViewById(R.id.ibtn_orderSingle);
+        ibtn_orderMulti = (ImageButton) findViewById(R.id.ibtn_orderMulti);
+        tv_weichat = (TextView) findViewById(R.id.tv_weichat);
+        tv_circle = (TextView) findViewById(R.id.tv_circle);
+        tv_weibo = (TextView) findViewById(R.id.tv_weibo);
+        layout_order_content = (LinearLayout) findViewById(R.id.layout_order_content);
+        ll_orderbtn = (LinearLayout) findViewById(R.id.ll_orderbtn);
 
 
 //        StarLevelIndicatorView startIndicator = findViewById(R.id.startIndicator);
@@ -212,7 +212,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
                     public void onBulerBitmapFinish() {
                         Intent intent = new Intent
                                 (StoreParticularInfoActivity.this,
-                                OrderSeatActivity.class);
+                                        OrderSeatActivity.class);
                         intent.putExtra("mer_id", mer_id);
                         startActivity(intent);
 
@@ -236,6 +236,8 @@ public class StoreParticularInfoActivity extends BaseActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(StoreParticularInfoActivity
                         .this, MultiOrderActivity.class);
+                intent.putExtra
+                        ("mer_id", mer_id);
                 startActivity(intent);
                 goNextAnim();
             }
@@ -349,106 +351,104 @@ public class StoreParticularInfoActivity extends BaseActivity {
     }
 
 
-
-
     private void startbtnAnim() {
         //阴影遮罩透明度
-        ll_null.setBackgroundColor( (Color.parseColor( "#6e000000" )) );
+        ll_null.setBackgroundColor((Color.parseColor("#6e000000")));
         int btnNum = 4;
         final Animation[] T_Anim = new Animation[btnNum];
         for (int i = 0; i < btnNum; i++) {
-            T_Anim[i] = new TranslateAnimation( 0f, 0, 350f, 0f );
-            T_Anim[i].setDuration( 85 );
-            T_Anim[i].setInterpolator( new BounceInterpolator() );
-            T_Anim[i].setFillAfter( true );
+            T_Anim[i] = new TranslateAnimation(0f, 0, 350f, 0f);
+            T_Anim[i].setDuration(85);
+            T_Anim[i].setInterpolator(new BounceInterpolator());
+            T_Anim[i].setFillAfter(true);
         }
-        ll_share.startAnimation( T_Anim[0] );
-        T_Anim[0].setAnimationListener( new AnimationListerAdapter() {
+        ll_share.startAnimation(T_Anim[0]);
+        T_Anim[0].setAnimationListener(new AnimationListerAdapter() {
 
             @Override
             public void onAnimationEnd(Animation animation) {
 
-                ibtn_order_seat.setVisibility( View.VISIBLE );
-                tv_circle.setVisibility( View.VISIBLE );
-                ibtn_order_seat.startAnimation( T_Anim[1] );
-                tv_circle.startAnimation( T_Anim[1] );
+                ibtn_order_seat.setVisibility(View.VISIBLE);
+                tv_circle.setVisibility(View.VISIBLE);
+                ibtn_order_seat.startAnimation(T_Anim[1]);
+                tv_circle.startAnimation(T_Anim[1]);
             }
-        } );
+        });
 
-        T_Anim[1].setAnimationListener( new AnimationListerAdapter() {
+        T_Anim[1].setAnimationListener(new AnimationListerAdapter() {
 
             @Override
             public void onAnimationEnd(Animation animation) {
 
-                ibtn_orderSingle.setVisibility( View.VISIBLE );
-                tv_weichat.setVisibility( View.VISIBLE );
-                ibtn_orderSingle.startAnimation( T_Anim[2] );
-                tv_weichat.startAnimation( T_Anim[2] );
+                ibtn_orderSingle.setVisibility(View.VISIBLE);
+                tv_weichat.setVisibility(View.VISIBLE);
+                ibtn_orderSingle.startAnimation(T_Anim[2]);
+                tv_weichat.startAnimation(T_Anim[2]);
             }
-        } );
-        T_Anim[2].setAnimationListener( new AnimationListerAdapter() {
+        });
+        T_Anim[2].setAnimationListener(new AnimationListerAdapter() {
 
             @Override
             public void onAnimationEnd(Animation animation) {
 
-                ibtn_orderMulti.setVisibility( View.VISIBLE );
-                tv_weibo.setVisibility( View.VISIBLE );
-                ibtn_orderMulti.startAnimation( T_Anim[3] );
-                tv_weibo.startAnimation( T_Anim[3] );
+                ibtn_orderMulti.setVisibility(View.VISIBLE);
+                tv_weibo.setVisibility(View.VISIBLE);
+                ibtn_orderMulti.startAnimation(T_Anim[3]);
+                tv_weibo.startAnimation(T_Anim[3]);
             }
-        } );
+        });
 
     }
 
     private void cancelbtnAnim() {
-        ll_null.setBackgroundColor( (Color.parseColor( "#00000000" )) );
+        ll_null.setBackgroundColor((Color.parseColor("#00000000")));
         int btnNum = 4;
         final Animation[] T_Anim = new TranslateAnimation[btnNum];
         for (int i = 0; i < btnNum; i++) {
-            T_Anim[i] = new TranslateAnimation( 0f, 0, 0f, 350f );
-            T_Anim[i].setDuration( 80 );
+            T_Anim[i] = new TranslateAnimation(0f, 0, 0f, 350f);
+            T_Anim[i].setDuration(80);
         }
 
-        ibtn_order_seat.startAnimation( T_Anim[0] );
-        T_Anim[0].setAnimationListener( new AnimationListerAdapter() {
+        ibtn_order_seat.startAnimation(T_Anim[0]);
+        T_Anim[0].setAnimationListener(new AnimationListerAdapter() {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                ibtn_order_seat.setVisibility( View.GONE );
-                tv_circle.setVisibility( View.GONE );
+                ibtn_order_seat.setVisibility(View.GONE);
+                tv_circle.setVisibility(View.GONE);
                 ibtn_order_seat.clearAnimation();
                 tv_circle.clearAnimation();
-                ibtn_orderSingle.startAnimation( T_Anim[1] );
-                tv_circle.startAnimation( T_Anim[1] );
+                ibtn_orderSingle.startAnimation(T_Anim[1]);
+                tv_circle.startAnimation(T_Anim[1]);
             }
-        } );
+        });
 
-        T_Anim[1].setAnimationListener( new AnimationListerAdapter() {
+        T_Anim[1].setAnimationListener(new AnimationListerAdapter() {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                ibtn_orderSingle.setVisibility( View.GONE );
-                tv_weichat.setVisibility( View.GONE );
+                ibtn_orderSingle.setVisibility(View.GONE);
+                tv_weichat.setVisibility(View.GONE);
                 ibtn_orderSingle.clearAnimation();
                 tv_weichat.clearAnimation();
-                ibtn_orderMulti.startAnimation( T_Anim[2] );
-                tv_weibo.startAnimation( T_Anim[2] );
+                ibtn_orderMulti.startAnimation(T_Anim[2]);
+                tv_weibo.startAnimation(T_Anim[2]);
 
             }
-        } );
-        T_Anim[2].setAnimationListener( new AnimationListerAdapter() {
+        });
+        T_Anim[2].setAnimationListener(new AnimationListerAdapter() {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                ibtn_orderMulti.setVisibility( View.GONE );
-                tv_weibo.setVisibility( View.GONE );
+                ibtn_orderMulti.setVisibility(View.GONE);
+                tv_weibo.setVisibility(View.GONE);
                 ibtn_orderMulti.clearAnimation();
                 tv_weibo.clearAnimation();
-                ll_share.startAnimation( T_Anim[3] );
-                layout_order_content.setVisibility( View.GONE );
+                ll_share.startAnimation(T_Anim[3]);
+                layout_order_content.setVisibility(View.GONE);
 
             }
-        } );
+        });
 
     }
 
