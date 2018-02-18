@@ -18,11 +18,8 @@
             android:id="@+id/collapsingToolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="110dp"
-            app:collapsedTitleGravity="left|center_vertical"
-            app:collapsedTitleTextAppearance="@style/CollapsingText"
+            android:fitsSystemWindows="true"
             app:contentScrim="#499607"
-            app:expandedTitleMarginBottom="30dp"
-            app:expandedTitleTextAppearance="@style/ExtendText"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
@@ -302,6 +299,7 @@
                         android:layout_marginRight="15dp"
                         android:layout_marginTop="5dp"
                         android:clipChildren="false"/>
+
                     <ProgressBar
                         android:id="@+id/pb_fun_loading"
                         android:layout_width="@dimen/dimen_20_dp"

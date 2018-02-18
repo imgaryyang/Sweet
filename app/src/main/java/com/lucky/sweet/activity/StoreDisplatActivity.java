@@ -63,7 +63,7 @@ public class StoreDisplatActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_storedisplay);
         ButterKnife.bind(this);
-
+        EventBus.getDefault().register(this);
 
         initViews();
 
@@ -76,7 +76,6 @@ public class StoreDisplatActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -95,7 +94,7 @@ public class StoreDisplatActivity extends BaseActivity {
     private void initTitle() {
         ToolBar toolBar = new ToolBar(this);
         toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
-        title = (Title) findViewById(R.id.title);
+        title =  findViewById(R.id.title);
 
         Intent intent = getIntent();
         if (intent.getStringExtra("tv_moreFood") != null && intent.getStringExtra("tv_moreFood").equals("Food")) {
@@ -199,7 +198,7 @@ public class StoreDisplatActivity extends BaseActivity {
     public void Event(StoreDisplayInfo info) {
 
         displayList = info.getMer_list();
-
+        System.out.println("displayList" + displayList);
         adapter = new ShowInfoListViewAdapter(displayList, this);
         lv_storeInfo.setAdapter(adapter);
 
@@ -214,7 +213,9 @@ public class StoreDisplatActivity extends BaseActivity {
         circle = list.getCircle();
         classify = list.getClassify();
         order = list.getOrder();
-
+        System.out.println("circle:"+circle);
+        System.out.println("classify:"+classify);
+        System.out.println("order:"+order);
         businessArea = circle.get(0);
         rankType = classify.get(0);
         recreationType = order.get(0);

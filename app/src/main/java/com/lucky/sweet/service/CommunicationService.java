@@ -296,7 +296,7 @@ public class CommunicationService extends Service {
                     @Override
                     public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
                         String string = response.body().string();
-                        Log.i("dis", string);
+
                         return null;
                     }
 
@@ -397,6 +397,9 @@ public class CommunicationService extends Service {
                             break;
                         case "0":
                             //todo 通知用户上传失败
+                            break;
+                        case "250":
+                            //todo session过期
                             break;
                     }
                 } catch (Exception e) {
@@ -584,12 +587,13 @@ public class CommunicationService extends Service {
         HttpUtils.sendOkHttpRequest(Properties.DISPLAYSEARCHTITLE, new com.zhy.http.okhttp
                 .callback.Callback() {
             @Override
-            public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
+            public Object parseNetworkResponse(com.squareup.okhttp.Response response)  {
                 try {
                     Gson gson = new Gson();
-
                     //todo 修改商品展示检索栏
-                    StoreDisplaySearchEntity storeDisplaySearchEntity = gson.fromJson(response.body().string(), StoreDisplaySearchEntity.class);
+                    StoreDisplaySearchEntity storeDisplaySearchEntity = gson.fromJson(response.body().string().replace("null","")
+                            , StoreDisplaySearchEntity.class);
+
                     EventBus.getDefault().post(storeDisplaySearchEntity);
 
                 } catch (Exception e) {
@@ -708,6 +712,7 @@ public class CommunicationService extends Service {
                     public void onResponse(Call call, Response response) throws IOException {
 
                         Gson gson = new Gson();
+
                         WeatherInfo weatherInfo = gson.fromJson(response.body().string(), WeatherInfo.class);
                         EventBus.getDefault().post(weatherInfo);
 

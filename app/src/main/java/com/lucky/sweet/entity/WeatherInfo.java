@@ -12,6 +12,7 @@ import java.util.List;
 
 public class WeatherInfo {
 
+
     private List<HeWeather6Bean> HeWeather6;
 
     public List<HeWeather6Bean> getHeWeather6() {
@@ -24,10 +25,10 @@ public class WeatherInfo {
 
     public static class HeWeather6Bean {
         /**
-         * basic : {"cid":"CN101070201","location":"大连","parent_city":"大连","admin_area":"辽宁","cnty":"中国","lat":"38.91458893","lon":"121.61862183","tz":"+8.0"}
-         * update : {"loc":"2017-12-12 17:51","utc":"2017-12-12 09:51"}
+         * basic : {"cid":"CN101070101","location":"沈阳","parent_city":"沈阳","admin_area":"辽宁","cnty":"中国","lat":"41.79676819","lon":"123.42909241","tz":"+8.0"}
+         * update : {"loc":"2018-02-18 19:49","utc":"2018-02-18 11:49"}
          * status : ok
-         * now : {"cloud":"0","cond_code":"104","cond_txt":"阴","fl":"-15","hum":"44","pcpn":"0","pres":"1032","tmp":"-6","vis":"10","wind_deg":"357","wind_dir":"北风","wind_sc":"微风","wind_spd":"10"}
+         * now : {"cloud":"25","cond_code":"101","cond_txt":"多云","fl":"-12","hum":"24","pcpn":"0.0","pres":"1025","tmp":"-3","vis":"6","wind_deg":"1","wind_dir":"北风","wind_sc":"微风","wind_spd":"10"}
          */
 
         private BasicBean basic;
@@ -69,13 +70,13 @@ public class WeatherInfo {
 
         public static class BasicBean {
             /**
-             * cid : CN101070201
-             * location : 大连
-             * parent_city : 大连
+             * cid : CN101070101
+             * location : 沈阳
+             * parent_city : 沈阳
              * admin_area : 辽宁
              * cnty : 中国
-             * lat : 38.91458893
-             * lon : 121.61862183
+             * lat : 41.79676819
+             * lon : 123.42909241
              * tz : +8.0
              */
 
@@ -155,8 +156,8 @@ public class WeatherInfo {
 
         public static class UpdateBean {
             /**
-             * loc : 2017-12-12 17:51
-             * utc : 2017-12-12 09:51
+             * loc : 2018-02-18 19:49
+             * utc : 2018-02-18 11:49
              */
 
             private String loc;
@@ -181,16 +182,16 @@ public class WeatherInfo {
 
         public static class NowBean {
             /**
-             * cloud : 0
-             * cond_code : 104
-             * cond_txt : 阴
-             * fl : -15
-             * hum : 44
-             * pcpn : 0
-             * pres : 1032
-             * tmp : -6
-             * vis : 10
-             * wind_deg : 357
+             * cloud : 25
+             * cond_code : 101
+             * cond_txt : 多云
+             * fl : -12
+             * hum : 24
+             * pcpn : 0.0
+             * pres : 1025
+             * tmp : -3
+             * vis : 6
+             * wind_deg : 1
              * wind_dir : 北风
              * wind_sc : 微风
              * wind_spd : 10
