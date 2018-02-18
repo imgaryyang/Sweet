@@ -93,14 +93,7 @@ public class ImCircleFragment extends Fragment implements
         final ArrayList<CharSequence> charSequences = new ArrayList<CharSequence>(Arrays.asList(title));
 
         sc_picker.setData(charSequences);
-        ArrayList<String> objects = new ArrayList<String>();
-        objects.add("");
-        objects.add("");
-        objects.add("");
-        objects.add("");
-        objects.add("");
-        objects.add("");
-        lv_circle.setAdapter(new CircleListViewAdapter(objects, getActivity()
+        lv_circle.setAdapter(new CircleListViewAdapter(getActivity()
         ).setCallBack(this));
 
 
@@ -113,7 +106,7 @@ public class ImCircleFragment extends Fragment implements
                 getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
             }
         });
-        vImageWatcher = (ImageWatcher)  view.findViewById(R.id.imv_watcger);
+        vImageWatcher =   view.findViewById(R.id.imv_watcger);
         // 如果是透明状态栏，你需要给ImageWatcher标记 一个偏移值，以修正点击ImageView查看的启动动画的Y轴起点的不正确
 //        vImageWatcher.setTranslucentStatus(!isTranslucentStatus ?
 //                ImageViewWatcherUtils.calcStatusBarHeight(getContext()) : 0);

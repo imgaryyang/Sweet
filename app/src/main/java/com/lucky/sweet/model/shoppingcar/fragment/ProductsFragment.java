@@ -336,25 +336,28 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
     }
 
     public void multiOrderUpdata(MuliiOrderInfo info) {
-        System.out.println(info);
-        String name = info.getName();
-        if (!name.equals(MyApplication.USER_ID))
-            Toast.makeText(getActivity(), "感谢这位老铁：" + name + "添加了" + info
-                    .getItem_id(), Toast
-                    .LENGTH_SHORT).show();
-        ShopProduct shopProduct = productCategorizes.get(info.getSection()).getProduct().get(info
-                .getPosition());
-        int number = shopProduct.getNumber();
-        if (info.isaddDis()) {
-            number++;
-        } else {
-            number--;
-        }
-        shopProduct.setNumber(number);
 
-        productCategorizes.get(info.getSection()).getProduct().set(info
-                .getPosition(), shopProduct);
-        sectionedAdapter.notifyDataSetChanged();
+
+        String name = info.getName();
+        if (!name.equals(MyApplication.USER_ID)) {
+            ShopProduct shopProduct = productCategorizes.get(info.getSection()).getProduct().get(info
+                    .getPosition());
+            Toast.makeText(getActivity(), "感谢这位老铁：" + name + "添加了" + shopProduct.getGoods(), Toast.LENGTH_SHORT).show();
+            int number = shopProduct.getNumber();
+            if (info.isaddDis()) {
+                number = number + 1;
+                updateProduct(shopProduct,"1");
+            } else if (number != 0) {
+                number = number - 1;
+                updateProduct(shopProduct,"2");
+
+            }
+            shopProduct.setNumber(number);
+            productCategorizes.get(info.getSection()).getProduct().set(info.getPosition(), shopProduct);
+            sectionedAdapter.notifyDataSetChanged();
+            morelist.notify();
+        }
+
 
     }
 

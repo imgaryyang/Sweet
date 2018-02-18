@@ -27,11 +27,8 @@ public class CircleListViewAdapter extends BaseAdapter {
     private final ArrayList<Integer> integers;
     private MessagePicturesLayout.Callback mcallback;
 
-    public CircleListViewAdapter(List<String> datas, Context context) {
-        this.datas = datas;
+    public CircleListViewAdapter(Context context) {
         this.context = context;
-
-
         integers = new ArrayList<>();
         integers.add(R.mipmap.test1);
         integers.add(R.mipmap.test2);
@@ -46,12 +43,12 @@ public class CircleListViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return datas.size();
+        return 6;
     }
 
     @Override
     public Object getItem(int position) {
-        return datas.get(position);
+        return position;
     }
 
     @Override

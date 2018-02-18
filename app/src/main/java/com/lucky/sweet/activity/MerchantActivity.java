@@ -161,13 +161,12 @@ public class MerchantActivity extends BaseActivity {
 
         String num;
         if (muliiOrderInfo.isaddDis()) {
-            num = "1";
+            num="1";
         } else {
-            num = "-1";
+            num="-1";
         }
 
-        myBinder.dishesMenuUpdata(getIntent().getStringExtra("room_id"),
-                muliiOrderInfo.getItem_id() + "", num, muliiOrderInfo.toString());
+        myBinder.dishesMenuUpdata(getIntent().getStringExtra("room_id"), muliiOrderInfo.getItem_id() + "", num, muliiOrderInfo.toString());
 
     }
 }

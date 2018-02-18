@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
@@ -152,17 +153,17 @@ public class StoreParticularInfoActivity extends BaseActivity {
         imv_shop_one = findViewById(R.id.imv_shop_one);
         imv_shop_two = findViewById(R.id.imv_shop_two);
         imv_shop_three = findViewById(R.id.imv_shop_three);
-        ibtn_back = (ImageButton) findViewById(R.id.ibtn_back);
-        ll_null = (LinearLayout) findViewById(R.id.ll_null);
-        ll_share = (LinearLayout) findViewById(R.id.ll_share);
-        ibtn_order_seat = (ImageButton) findViewById(R.id.ibtn_order_seat);
-        ibtn_orderSingle = (ImageButton) findViewById(R.id.ibtn_orderSingle);
-        ibtn_orderMulti = (ImageButton) findViewById(R.id.ibtn_orderMulti);
-        tv_weichat = (TextView) findViewById(R.id.tv_weichat);
-        tv_circle = (TextView) findViewById(R.id.tv_circle);
-        tv_weibo = (TextView) findViewById(R.id.tv_weibo);
-        layout_order_content = (LinearLayout) findViewById(R.id.layout_order_content);
-        ll_orderbtn = (LinearLayout) findViewById(R.id.ll_orderbtn);
+        ibtn_back =  findViewById(R.id.ibtn_back);
+        ll_null =  findViewById(R.id.ll_null);
+        ll_share =  findViewById(R.id.ll_share);
+        ibtn_order_seat =  findViewById(R.id.ibtn_order_seat);
+        ibtn_orderSingle = findViewById(R.id.ibtn_orderSingle);
+        ibtn_orderMulti =  findViewById(R.id.ibtn_orderMulti);
+        tv_weichat =  findViewById(R.id.tv_weichat);
+        tv_circle =  findViewById(R.id.tv_circle);
+        tv_weibo =  findViewById(R.id.tv_weibo);
+        layout_order_content =  findViewById(R.id.layout_order_content);
+        ll_orderbtn = findViewById(R.id.ll_orderbtn);
 
 
 //        StarLevelIndicatorView startIndicator = findViewById(R.id.startIndicator);
@@ -178,14 +179,8 @@ public class StoreParticularInfoActivity extends BaseActivity {
         });
 
         ListView lv_circle = (ListView) findViewById(R.id.lv_circle);
-        ArrayList<String> objects = new ArrayList<String>();
-        objects.add("");
-        objects.add("");
-        objects.add("");
-        objects.add("");
-        objects.add("");
-        objects.add("");
-        lv_circle.setAdapter(new CircleListViewAdapter(objects, this));
+
+        lv_circle.setAdapter(new CircleListViewAdapter(this));
         setListViewHeightBasedOnChildren(lv_circle);
 
         ibtn_back.setOnClickListener(new View.OnClickListener() {
@@ -206,6 +201,11 @@ public class StoreParticularInfoActivity extends BaseActivity {
         ibtn_order_seat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (MyApplication.sessionId.equals("")) {
+                    Toast.makeText(StoreParticularInfoActivity.this,"请先登陆",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 new BlurBitmapThread(StoreParticularInfoActivity.this,
                         ll_store_part_info, 20) {
                     @Override
@@ -224,6 +224,11 @@ public class StoreParticularInfoActivity extends BaseActivity {
         ibtn_orderSingle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (MyApplication.sessionId.equals("")) {
+                    Toast.makeText(StoreParticularInfoActivity.this,"请先登陆",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent(StoreParticularInfoActivity
                         .this, MerchantActivity.class);
                 startActivity(intent);
@@ -234,6 +239,11 @@ public class StoreParticularInfoActivity extends BaseActivity {
         ibtn_orderMulti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (MyApplication.sessionId.equals("")) {
+                    Toast.makeText(StoreParticularInfoActivity.this,"请先登陆",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent(StoreParticularInfoActivity
                         .this, MultiOrderActivity.class);
                 intent.putExtra
@@ -248,29 +258,6 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private void initTitle() {
         ToolBar toolBar = new ToolBar(this);
         toolBar.setStatusBarDarkMode();
-        /*title = (Title) findViewById(R.id.title);
-        title.setTitleNameStr("");
-        title.setTheme(THEME_TRANSLATE);
-        Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
-                .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
-        Title.ButtonInfo buttonRight = new Title.ButtonInfo(true, Title
-                .BUTTON_RIGHT1, R.mipmap.circle_star, null);
-        title.setOnTitleButtonClickListener(new Title
-                .OnTitleButtonClickListener() {
-            @Override
-            public void onClick(int id, Title.ButtonViewHolder viewHolder) {
-                switch (id) {
-                    case Title.BUTTON_LEFT:
-                        hintInputKb();
-                        finish();
-                        goPreAnim();
-                        break;
-
-                }
-            }
-        });
-        title.mSetButtonInfo(buttonLeft);
-        title.mSetButtonInfo(buttonRight);*/
 
     }
 

@@ -113,10 +113,8 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
                 product.setNumber(num);
                 viewHolder.shoppingNum.setText(product.getNumber() + "");
 
-                if (callBackListener != null) {
-                    callBackListener.updateProduct(product, "1");
-                } else {
-                }
+                if (callBackListener != null) callBackListener.updateProduct(product, "1");
+
                 if (mHolderClickListener != null) {
                     int[] start_location = new int[2];
                     viewHolder.shoppingNum.getLocationInWindow(start_location);//获取点击商品图片的位置
@@ -124,10 +122,8 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
                     //TODO:解决方案，先监听到左边ListView的Item中，然后在开始动画添加
                     mHolderClickListener.onHolderClick(drawable, start_location);
                 }
-                if (onMenuChangedListener != null) {
-                    onMenuChangedListener.onChanged(product.getId()
-                            ,section, position, ShopMenuAttr.ADD);
-                }
+                if (onMenuChangedListener != null) onMenuChangedListener.onChanged(product.getId(),section, position, ShopMenuAttr.ADD);
+
             }
         });
         viewHolder.reduce.setOnClickListener(new View.OnClickListener() {
@@ -139,15 +135,10 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
                     product.setNumber(num);
                     viewHolder.shoppingNum.setText(product.getNumber() + "");
 
-                    if (callBackListener != null) {
-                        callBackListener.updateProduct(product, "2");
-                    } else {
-                    }
-                    if (onMenuChangedListener != null) {
-                        onMenuChangedListener.onChanged(product.getId()
-                                ,section, position,
-                                ShopMenuAttr.DELETE);
-                    }
+                    if (callBackListener != null) callBackListener.updateProduct(product, "2");
+
+                    if (onMenuChangedListener != null) onMenuChangedListener.onChanged(product.getId(),section, position, ShopMenuAttr.DELETE);
+
                 }
             }
         });
