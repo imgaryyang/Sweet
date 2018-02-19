@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.SearchSpinnerAdapter;
@@ -63,11 +64,10 @@ public class StoreDisplatActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_storedisplay);
         ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
+
 
         initViews();
 
-        setListener();
 
         initTitle();
 
@@ -76,6 +76,7 @@ public class StoreDisplatActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -86,15 +87,16 @@ public class StoreDisplatActivity extends BaseActivity {
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
-
-        myBinder.requestStoreDisplayInfo("聚餐宴请", "全部", MyApplication.CURRENT_CITY, "最新搜录", "0");
         this.myBinder = myBinder;
+
+        myBinder.requestStoreDisplayInfo("", "","", "0");
+        myBinder.requestStoreSearch();
     }
 
     private void initTitle() {
         ToolBar toolBar = new ToolBar(this);
         toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
-        title =  findViewById(R.id.title);
+        title = findViewById(R.id.title);
 
         Intent intent = getIntent();
         if (intent.getStringExtra("tv_moreFood") != null && intent.getStringExtra("tv_moreFood").equals("Food")) {
@@ -127,17 +129,24 @@ public class StoreDisplatActivity extends BaseActivity {
     }
 
 
-    private void sendSearChRequest() {
-
-    }
-
     //设置监听事件，将来商家列表的排序都在这里面处理
     private void setListener() {
         sp_BusinessArea.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            Boolean flag = false;
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (!flag) {
+                    if (position == 0) {
+
+                        flag = true;
+                        return;
+                    }
+                }
+
                 businessArea = circle.get(position);
-                sendSearChRequest();
+
+                requestSearchItem(false);
             }
 
             @Override
@@ -147,10 +156,20 @@ public class StoreDisplatActivity extends BaseActivity {
         });
 
         sp_RecreationType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            Boolean flag = false;
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (!flag) {
+                    if (position == 0) {
+
+                        flag = true;
+                        return;
+                    }
+                }
+
                 recreationType = classify.get(position);
-                sendSearChRequest();
+                requestSearchItem(false);
 
             }
 
@@ -161,10 +180,20 @@ public class StoreDisplatActivity extends BaseActivity {
         });
 
         sp_RankType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            Boolean flag = false;
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (!flag) {
+                    if (position == 0) {
+
+                        flag = true;
+                        return;
+                    }
+                }
+
                 rankType = order.get(position);
-                sendSearChRequest();
+                requestSearchItem(false);
 
             }
 
@@ -186,6 +215,16 @@ public class StoreDisplatActivity extends BaseActivity {
         sw_store_info.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
+                switch (direction.name()) {
+                    case "TOP":
+                        requestSearchItem(true);
+                        break;
+                    case "BOTTOM":
+                        requestSearchItem(false);
+                        Toast.makeText(StoreDisplatActivity.this, "加载更多",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                }
 
             }
         });
@@ -196,9 +235,10 @@ public class StoreDisplatActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(StoreDisplayInfo info) {
-
+        if (sw_store_info.isRefreshing()) {
+            sw_store_info.setRefreshing(false);
+        }
         displayList = info.getMer_list();
-        System.out.println("displayList" + displayList);
         adapter = new ShowInfoListViewAdapter(displayList, this);
         lv_storeInfo.setAdapter(adapter);
 
@@ -213,9 +253,7 @@ public class StoreDisplatActivity extends BaseActivity {
         circle = list.getCircle();
         classify = list.getClassify();
         order = list.getOrder();
-        System.out.println("circle:"+circle);
-        System.out.println("classify:"+classify);
-        System.out.println("order:"+order);
+
         businessArea = circle.get(0);
         rankType = classify.get(0);
         recreationType = order.get(0);
@@ -225,6 +263,21 @@ public class StoreDisplatActivity extends BaseActivity {
         sp_RecreationType.setAdapter(new SearchSpinnerAdapter(classify, this));
 
         sp_RankType.setAdapter(new SearchSpinnerAdapter(order, this));
+        setListener();
+
+    }
+
+    private int CURRENT_PAGE_NUM = 0;
+
+    private void requestSearchItem(boolean isRefresh) {
+        String page = "0";
+        if (!isRefresh) {
+            CURRENT_PAGE_NUM++;
+            page = String.valueOf(CURRENT_PAGE_NUM);
+        }
+        myBinder.requestStoreDisplayInfo(recreationType, businessArea,
+                rankType, page);
+
     }
 
 

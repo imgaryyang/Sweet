@@ -194,10 +194,14 @@ public class CommunicationService extends Service {
             });
         }
 
-        public void requestStoreDisplayInfo(String project, String circle, String city, String rank, String num) {
+        public void requestStoreDisplayInfo(String project, String circle, String rank, String num) {
 
-            getStoreDisplayInfo(project, circle, city, rank, num);
-            getStoreDisplaySearchTitle(city);
+            getStoreDisplayInfo(project, circle, rank, num);
+
+        }
+
+        public void requestStoreSearch() {
+            getStoreDisplaySearchTitle();
 
         }
 
@@ -581,17 +585,17 @@ public class CommunicationService extends Service {
         }, map);
     }
 
-    private void getStoreDisplaySearchTitle(String city) {
+    private void getStoreDisplaySearchTitle() {
         HashMap<String, String> map = new HashMap<>();
-        map.put("city", city);
+        map.put("city", MyApplication.CURRENT_CITY);
         HttpUtils.sendOkHttpRequest(Properties.DISPLAYSEARCHTITLE, new com.zhy.http.okhttp
                 .callback.Callback() {
             @Override
-            public Object parseNetworkResponse(com.squareup.okhttp.Response response)  {
+            public Object parseNetworkResponse(com.squareup.okhttp.Response response) {
                 try {
                     Gson gson = new Gson();
                     //todo 修改商品展示检索栏
-                    StoreDisplaySearchEntity storeDisplaySearchEntity = gson.fromJson(response.body().string().replace("null","")
+                    StoreDisplaySearchEntity storeDisplaySearchEntity = gson.fromJson(response.body().string().replace("null", "")
                             , StoreDisplaySearchEntity.class);
 
                     EventBus.getDefault().post(storeDisplaySearchEntity);
@@ -794,11 +798,11 @@ public class CommunicationService extends Service {
     }
 
 
-    private void getStoreDisplayInfo(String project, String circle, String city, String rank, String num) {
+    private void getStoreDisplayInfo(String project, String circle, String rank, String num) {
         final HashMap<String, String> map = new HashMap<>();
         map.put("small_project", project);
         map.put("circle", circle);
-        map.put("city", city);
+        map.put("city", MyApplication.CURRENT_CITY);
         map.put("rank", rank);
         map.put("num_start", num);
         new Thread() {
