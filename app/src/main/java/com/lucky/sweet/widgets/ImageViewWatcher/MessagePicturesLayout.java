@@ -1,6 +1,7 @@
 package com.lucky.sweet.widgets.ImageViewWatcher;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -9,9 +10,10 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
+import com.lucky.sweet.utility.OssUtils;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,7 +108,13 @@ public class MessagePicturesLayout extends FrameLayout implements View.OnClickLi
                 mVisiblePictureList.add(iPicture);
                 iPicture.setLayoutParams(lpChildImage);
                 iPicture.setBackgroundResource(R.drawable.default_picture);
-                Glide.with(getContext()).load(dataList.get(i)).into(iPicture);
+                OssUtils.down(dataList.get(i), new OssUtils.OnInpustreamBack() {
+                    @Override
+                    public void inputstreamFinish(InputStream inputStream) {
+                        iPicture.setImageBitmap(BitmapFactory.decodeStream(inputStream));
+                    }
+                });
+
                 iPicture.setTranslationX((i % column) * (imageSize + mSpace));
                 iPicture.setTranslationY((i / column) * (imageSize + mSpace));
             } else {

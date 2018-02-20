@@ -225,14 +225,15 @@ public class CommunicationService extends Service {
             final Date date = new Date(System.currentTimeMillis());
             JsonArray jsonElements = new JsonArray();
             for (int i = 0; i < paths.size(); i++) {
-                final int finalI = i;
+                final String path = paths.get(i);
+                String[] split = path.split("\\.");
                 final String ossPath = CircleProperties.SEND_CIRCLE_PIC_OSS_PAHT +
-                        MyApplication.USER_ID + "/" + simpleDateFormat.format(date) + "/" + i + ".png";
+                        MyApplication.USER_ID + "/" + simpleDateFormat.format(date) + "/" + i + split[split.length - 1];
                 jsonElements.add(ossPath);
                 new Thread() {
                     @Override
                     public void run() {
-                        ossUpdata(ossPath, paths.get(finalI));
+                        ossUpdata(ossPath, path);
                     }
                 }.start();
             }
@@ -290,9 +291,9 @@ public class CommunicationService extends Service {
                     incr_decr, key);
         }
 
-        public void requestCircleInfo(String type,String loacation) {
+        public void requestCircleInfo(String type, String loacation) {
 
-            CommunicationService.this.requestCircleInfo(type,loacation);
+            CommunicationService.this.requestCircleInfo(type, loacation);
         }
 
         public void sendCircledetailsInfo(String circle_id) {
@@ -330,8 +331,7 @@ public class CommunicationService extends Service {
                 }, map);
     }
 
-
-    private void requestCircleInfo(String type,String loacation ) {
+    private void requestCircleInfo(String type, String loacation) {
         HashMap<String, String> map = new HashMap<>();
         map.put("type", type);
         map.put("session", MyApplication.sessionId);
@@ -341,6 +341,7 @@ public class CommunicationService extends Service {
                     @Override
                     public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
                         String string = response.body().string();
+                        System.out.println(string);
                         Gson gson = new Gson();
                         CircleMainInfo circleMainInfo = gson.fromJson(string, CircleMainInfo.class);
                         EventBus.getDefault().post(circleMainInfo);
@@ -471,25 +472,7 @@ public class CommunicationService extends Service {
                 .okhttp.callback.Callback() {
             @Override
             public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
-                try {
-                    Gson gson = new Gson();
-                    System.out.println(response.body().string());
-                    switch (response.body().string()) {
-                        case "1":
-                            //todo 通知用户上传成功
-                            break;
-                        case "0":
-                            //todo 通知用户上传失败
-                            break;
-                        case "250":
-                            //todo session过期
-                            break;
-                    }
-                } catch (Exception e) {
-
-                }
-
-
+                EventBus.getDefault().post(response.body().string());
                 return null;
             }
 

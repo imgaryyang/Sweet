@@ -65,8 +65,7 @@ public class CircleListViewAdapter extends BaseAdapter {
             viewHolder.messPicLayout.setCallback(mcallback);
             viewHolder.person_name = convertView.findViewById(R.id.tv_circle_person_name);
             viewHolder.content = convertView.findViewById(R.id.tv_circle_content);
-            viewHolder.sendText = convertView.findViewById(R.id
-                    .tv_circle_send_time);
+            viewHolder.sendText = convertView.findViewById(R.id.tv_circle_send_time);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -76,7 +75,7 @@ public class CircleListViewAdapter extends BaseAdapter {
         viewHolder.content.setText(datas.get(position).getContent());
         viewHolder.person_name.setText(datas.get(position).getNikcname());
         viewHolder.sendText.setText(datas.get(position).getCreate_time());
-        //  viewHolder.messPicLayout.set(datas.get(position).getPhoto_url());
+        viewHolder.messPicLayout.set(datas.get(position).getPhoto_url());
 
         return convertView;
 

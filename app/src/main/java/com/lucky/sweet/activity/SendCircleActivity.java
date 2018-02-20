@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.hys.utils.InitCacheFileUtils;
+import com.hys.utils.ToastUtils;
 import com.lucky.sweet.R;
 import com.lucky.sweet.model.dragrecycleview.CompressPictureRunnable;
 import com.lucky.sweet.model.dragrecycleview.MyCallBack;
@@ -27,6 +28,9 @@ import com.lucky.sweet.widgets.ToolBar;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,20 +82,19 @@ public class SendCircleActivity extends BaseActivity {
         seletctPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ( originImages.size() ==9)
-                {
+                if (originImages.size() == 9) {
                     Toast.makeText(SendCircleActivity.this, "选择图片已到上限", Toast.LENGTH_SHORT).show();
 
-                }else
+                } else
 
-                Matisse.from(SendCircleActivity.this)
-                        .choose(MimeType.allOf())
-                        .countable(true)
-                        .maxSelectable(IMAGE_SIZE - originImages.size())
-                        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                        .thumbnailScale(0.85f)
-                        .imageEngine(new GlideEngine())
-                        .forResult(REQUEST_CODE_CHOOSE);
+                    Matisse.from(SendCircleActivity.this)
+                            .choose(MimeType.allOf())
+                            .countable(true)
+                            .maxSelectable(IMAGE_SIZE - originImages.size())
+                            .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                            .thumbnailScale(0.85f)
+                            .imageEngine(new GlideEngine())
+                            .forResult(REQUEST_CODE_CHOOSE);
             }
         });
         findViewById(R.id.btn_send_circle).setOnClickListener(new View.OnClickListener() {
@@ -101,10 +104,9 @@ public class SendCircleActivity extends BaseActivity {
                 if (desc.equals("")) {
                     Toast.makeText(SendCircleActivity.this, "请输入文字描述", Toast.LENGTH_SHORT).show();
                     return;
-
                 }
 
-                myBinder.ossCirclePicUpdata(originImages, desc);
+                 myBinder.ossCirclePicUpdata(originImages, desc);
 
 
             }
@@ -128,6 +130,24 @@ public class SendCircleActivity extends BaseActivity {
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
         this.myBinder = myBinder;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(String string) {
+        switch (string) {
+            case "1":
+                ToastUtils.getInstance().show(this, "发送成功");
+                finish();
+                //todo 通知用户上传成功
+                break;
+            case "0":
+                ToastUtils.getInstance().show(this, "发送失败");
+                //todo 通知用户上传失败
+                break;
+            case "250":
+                //todo session过期
+                break;
+        }
     }
 
     private void initTitle() {

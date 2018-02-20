@@ -13,6 +13,7 @@ import java.util.List;
 
 public class CircleMainInfo {
 
+
     private List<CircleListBean> circle_list;
 
     public List<CircleListBean> getCircle_list() {
@@ -23,19 +24,20 @@ public class CircleMainInfo {
         this.circle_list = circle_list;
     }
 
-    public static class CircleListBean implements Serializable {
+    public static class CircleListBean implements Serializable{
         /**
-         * circle_id : 5_4
-         * user_id : 5
+         * circle_id : 4_7
+         * user_id : 4
          * mer_id : 1
-         * content : 总该长大，总该试着去成熟，放弃一些曾经你以为不可分离的东西，即使这个过程漫长且难捱，当做睡前关上的灯。
-         * create_time : 2018-02-13 14:10:52
-         * nikcname : 阿元测试
-         * exp : 500
+         * content : 女孩让我帮她寄快递，给了我一个空纸箱让我打包，我好奇的问她：“这是寄给谁的”她说：“我喜欢很久的一个男生”我懵了一下：“可是里面没有东西啊”她说：有些东西只有我自己能看见。我一听更懵逼了，问她到底是什么，她说：“一箱情愿”。
+         * create_time : 2018-02-13 14:50:07
+         * nikcname : 大外只有一个浩南
+         * exp : 200
          * relation_sign : 2
          * mer_name : 老板娘烤肉店
-         * photo_url : []
+         * photo_url : ["sweet/circle/chinn96@163.com/20180213143508/1.png","sweet/circle/chinn96@163.com/20180213143508/1.png"]
          * comment : []
+         * comment_num : 0
          */
 
         private String circle_id;
@@ -47,7 +49,8 @@ public class CircleMainInfo {
         private String exp;
         private String relation_sign;
         private String mer_name;
-        private List<?> photo_url;
+        private int comment_num;
+        private List<String> photo_url;
         private List<?> comment;
 
         public String getCircle_id() {
@@ -122,11 +125,19 @@ public class CircleMainInfo {
             this.mer_name = mer_name;
         }
 
-        public List<?> getPhoto_url() {
+        public int getComment_num() {
+            return comment_num;
+        }
+
+        public void setComment_num(int comment_num) {
+            this.comment_num = comment_num;
+        }
+
+        public List<String> getPhoto_url() {
             return photo_url;
         }
 
-        public void setPhoto_url(List<?> photo_url) {
+        public void setPhoto_url(List<String> photo_url) {
             this.photo_url = photo_url;
         }
 
