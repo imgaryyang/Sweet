@@ -17,3 +17,4 @@ public class ReserveProperties {
             ".cn:666/trolley/show/menu";
     public static final String CREATE_OR_ALTER_ROOM_FAIL = "0";
 }
+

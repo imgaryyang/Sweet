@@ -4,13 +4,14 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.CircleMainInfo;
 import com.lucky.sweet.views.CircleImageView;
 import com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayout;
 import com.lucky.sweet.widgets.ImageViewWatcher.SquareImageView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,28 +23,24 @@ import java.util.List;
  */
 
 public class CircleListViewAdapter extends BaseAdapter {
-    private List<String> datas;
+    private List<CircleMainInfo.CircleListBean> datas;
     private Context context;
-    private final ArrayList<Integer> integers;
     private MessagePicturesLayout.Callback mcallback;
 
-    public CircleListViewAdapter(Context context) {
+    public CircleListViewAdapter(Context context, List<CircleMainInfo.CircleListBean> circle_list) {
         this.context = context;
-        integers = new ArrayList<>();
-        integers.add(R.mipmap.test1);
-        integers.add(R.mipmap.test2);
-        integers.add(R.mipmap.test3);
-        integers.add(R.mipmap.test4);
+        datas = circle_list;
+
     }
 
-    public CircleListViewAdapter setCallBack(MessagePicturesLayout.Callback mcallback){
+    public CircleListViewAdapter setCallBack(MessagePicturesLayout.Callback mcallback) {
         this.mcallback = mcallback;
         return this;
     }
 
     @Override
     public int getCount() {
-        return 6;
+        return datas.size();
     }
 
     @Override
@@ -66,14 +63,20 @@ public class CircleListViewAdapter extends BaseAdapter {
             viewHolder.messPicLayout = convertView.findViewById(R.id.l_pictures);
             viewHolder.i_picture = convertView.findViewById(R.id.i_picture);
             viewHolder.messPicLayout.setCallback(mcallback);
+            viewHolder.person_name = convertView.findViewById(R.id.tv_circle_person_name);
+            viewHolder.content = convertView.findViewById(R.id.tv_circle_content);
+            viewHolder.sendText = convertView.findViewById(R.id
+                    .tv_circle_send_time);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
         viewHolder.imv_head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
-
-        viewHolder.messPicLayout.set(integers);
+        viewHolder.content.setText(datas.get(position).getContent());
+        viewHolder.person_name.setText(datas.get(position).getNikcname());
+        viewHolder.sendText.setText(datas.get(position).getCreate_time());
+        //  viewHolder.messPicLayout.set(datas.get(position).getPhoto_url());
 
         return convertView;
 
@@ -83,6 +86,9 @@ public class CircleListViewAdapter extends BaseAdapter {
         CircleImageView imv_head;
         MessagePicturesLayout messPicLayout;
         SquareImageView i_picture;
+        TextView person_name;
+        TextView content;
+        TextView sendText;
     }
 
 }

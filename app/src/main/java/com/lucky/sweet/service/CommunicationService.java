@@ -25,6 +25,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.lucky.sweet.activity.MyApplication;
 import com.lucky.sweet.activity.OrderSeatActivity;
+import com.lucky.sweet.entity.CircleDetail;
+import com.lucky.sweet.entity.CircleMainInfo;
+import com.lucky.sweet.entity.JoinInRoomMenu;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.PerdetermingEntity;
 import com.lucky.sweet.entity.ReservationInfo;
@@ -286,6 +289,75 @@ public class CommunicationService extends Service {
             CommunicationService.this.dishesMenuUpdata(roomId, item,
                     incr_decr, key);
         }
+
+        public void requestCircleInfo(String type,String loacation) {
+
+            CommunicationService.this.requestCircleInfo(type,loacation);
+        }
+
+        public void sendCircledetailsInfo(String circle_id) {
+            CommunicationService.this.sendCircledetailsInfo(circle_id);
+
+        }
+    }
+
+    private void sendCircledetailsInfo(String circle_id) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("circle_id", circle_id);
+        map.put("session", MyApplication.sessionId);
+        HttpUtils.sendOkHttpRequest(CircleProperties.CIRCLE_CONTENT_DETAILS,
+                new com.zhy.http.okhttp.callback.Callback() {
+                    @Override
+                    public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
+                        String string = response.body().string();
+                        Gson gson = new Gson();
+
+                        EventBus.getDefault().post(gson.fromJson(string, CircleDetail.class));
+
+
+                        return null;
+                    }
+
+                    @Override
+                    public void onError(Request request, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Object response) {
+
+                    }
+                }, map);
+    }
+
+
+    private void requestCircleInfo(String type,String loacation ) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("type", type);
+        map.put("session", MyApplication.sessionId);
+        map.put("start", loacation);
+        HttpUtils.sendOkHttpRequest(CircleProperties.CIRCLE_MAIN_SHOW,
+                new com.zhy.http.okhttp.callback.Callback() {
+                    @Override
+                    public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
+                        String string = response.body().string();
+                        Gson gson = new Gson();
+                        CircleMainInfo circleMainInfo = gson.fromJson(string, CircleMainInfo.class);
+                        EventBus.getDefault().post(circleMainInfo);
+                        return null;
+                    }
+
+                    @Override
+                    public void onError(Request request, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Object response) {
+
+                    }
+                }, map);
+
     }
 
     private void dishesMenuUpdata(String roomId, String item, String incr_decr, String key) {
@@ -332,9 +404,16 @@ public class CommunicationService extends Service {
         HttpUtils.sendOkHttpRequest(ReserveProperties.JOIN_IN_ROOM,
                 new com.zhy.http.okhttp.callback.Callback() {
                     @Override
-                    public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
-                        String string = response.body().string();
-                        Log.i("jionIn", string);
+                    public Object parseNetworkResponse(com.squareup.okhttp
+                                                               .Response response) {
+                        try {
+                            String string = response.body().string();
+                            Gson gson = new Gson();
+                            EventBus.getDefault().post(gson.fromJson(string, JoinInRoomMenu.class));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                         return null;
                     }
 

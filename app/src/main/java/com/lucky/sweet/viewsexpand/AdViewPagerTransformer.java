@@ -1,5 +1,6 @@
 package com.lucky.sweet.viewsexpand;
 
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
@@ -12,27 +13,30 @@ import android.view.View;
  */
 
 public class AdViewPagerTransformer implements ViewPager.PageTransformer {
+
+    private static final float SCALE_MAX = 0.8f;
+    private static final float ALPHA_MAX = 0.6f;
+
     @Override
     public void transformPage(View page, float position) {
-
-        //左边0~-90度,右边90~0度,
-        //左边x 0~-width，右边x width~0；
-        if (position < -1) {
-
-        } else if (position <= 1) // a页滑动至b页 ； a页从 0.0 ~ -1 ；b页从1 ~ 0.0
-        { // [-1,1]
-            if (position < 0)//滑动中左边页面
-            {
-                page.setPivotX(page.getMeasuredWidth());
-                page.setRotationY(position * 90);
-            } else//滑动中右边页面
-            {
-                page.setPivotX(0);
-                page.setRotationY(position * 90);
-            }
-
-        } else { // (1,+Infinity]
-
+        float scale = (position < 0)
+                ? ((1 - SCALE_MAX) * position + 1)
+                : ((SCALE_MAX - 1) * position + 1);
+        float alpha = (position < 0)
+                ? ((1 - ALPHA_MAX) * position + 1)
+                : ((ALPHA_MAX - 1) * position + 1);
+        //为了滑动过程中，page间距不变，这里做了处理
+        if(position < 0) {
+            ViewCompat.setPivotX(page, page.getWidth());
+            ViewCompat.setPivotY(page, page.getHeight() / 2);
+        } else {
+            ViewCompat.setPivotX(page, 0);
+            ViewCompat.setPivotY(page, page.getHeight() / 2);
         }
+        ViewCompat.setScaleX(page, scale);
+        ViewCompat.setScaleY(page, scale);
+        ViewCompat.setAlpha(page, Math.abs(alpha));
     }
+
+
 }

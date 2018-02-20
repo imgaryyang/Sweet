@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.alibaba.sdk.android.push.CommonCallback;
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.JoinInRoomMenu;
 import com.lucky.sweet.entity.ReservationInfo;
 import com.lucky.sweet.properties.ReserveProperties;
 import com.lucky.sweet.service.CommunicationService;
@@ -51,6 +52,7 @@ public class MultiOrderActivity extends BaseActivity {
     private Title title = null;
     private CommunicationService.MyBinder myBinder;
     private String mer_id;
+    private String roomId;
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
@@ -109,20 +111,11 @@ public class MultiOrderActivity extends BaseActivity {
                 break;
 
             case R.id.btn_join_room:
-                final String roomId = edt_join_room.getText().toString();
-                MyApplication.bindPushAccount(roomId, new CommonCallback() {
-                    @Override
-                    public void onSuccess(String s) {
-                        jionToOrder(roomId);
-                    }
 
-                    @Override
-                    public void onFailed(String s, String s1) {
-                        Toast.makeText(MultiOrderActivity.this, "加入房间失败，请重试", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                roomId = edt_join_room.getText().toString();
 
                 myBinder.joinInReserveRoom(roomId.trim(), edt_join_sec.getText().toString().trim());
+
                 break;
 
         }
@@ -140,7 +133,7 @@ public class MultiOrderActivity extends BaseActivity {
                 MyApplication.bindPushAccount(request, new CommonCallback() {
                     @Override
                     public void onSuccess(String s) {
-                        jionToOrder(request);
+                        jionToOrder(request, null);
                     }
 
                     @Override
@@ -154,12 +147,33 @@ public class MultiOrderActivity extends BaseActivity {
 
     }
 
-    private void jionToOrder(String roomId) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(final JoinInRoomMenu menu) {
+
+        MyApplication.bindPushAccount(roomId, new CommonCallback() {
+            @Override
+            public void onSuccess(String s) {
+                jionToOrder(roomId, menu);
+
+            }
+
+
+            @Override
+            public void onFailed(String s, String s1) {
+                Toast.makeText(MultiOrderActivity.this, "加入房间失败，请重试", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void jionToOrder(String roomId, JoinInRoomMenu menu) {
         Intent intent = new Intent(MultiOrderActivity.this, MerchantActivity.class);
         intent.putExtra("mer_id", mer_id);
         intent.putExtra("multiOrder", true);
         intent.putExtra("room_id", roomId);
+        intent.putExtra("menu", menu);
         startActivity(intent);
+
     }
 
 

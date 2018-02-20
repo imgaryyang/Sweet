@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.JoinInRoomMenu;
 import com.lucky.sweet.entity.JoinRoomInfo;
 import com.lucky.sweet.entity.MuliiOrderInfo;
 import com.lucky.sweet.entity.ShopCarEntity;
@@ -21,7 +22,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Qiuyue on 2018/1/3.
@@ -38,6 +41,7 @@ public class MerchantActivity extends BaseActivity {
     private ProductsFragment fg_shop_car;
     private Button btn_back;
     private CommunicationService.MyBinder myBinder;
+    private JoinInRoomMenu info;
 
 
     @Override
@@ -45,7 +49,11 @@ public class MerchantActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant);
 
+        Serializable menu = getIntent().getSerializableExtra("menu");
+        if (menu != null && menu instanceof JoinInRoomMenu) {
+            info = (JoinInRoomMenu) menu;
 
+        }
         initToolBar();
 
         initView();
@@ -120,6 +128,10 @@ public class MerchantActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(ShopCarEntity entity) {
+        if (info != null) {
+            List<ShopCarEntity.TrolleyInfoBean> trolley_info = entity.getTrolley_info();
+
+                    }
         ArrayList<ProductType> productCategorizes = new ArrayList<>();
 
         for (ShopCarEntity.TrolleyInfoBean entiy : entity.getTrolley_info()) {
@@ -150,6 +162,7 @@ public class MerchantActivity extends BaseActivity {
         if (!name.equals(MyApplication.USER_ID))
             Toast.makeText(this, "感谢这位老铁：" + name + "加入房间", Toast.LENGTH_SHORT).show();
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(MuliiOrderInfo info) {
 
@@ -161,9 +174,9 @@ public class MerchantActivity extends BaseActivity {
 
         String num;
         if (muliiOrderInfo.isaddDis()) {
-            num="1";
+            num = "1";
         } else {
-            num="-1";
+            num = "-1";
         }
 
         myBinder.dishesMenuUpdata(getIntent().getStringExtra("room_id"), muliiOrderInfo.getItem_id() + "", num, muliiOrderInfo.toString());

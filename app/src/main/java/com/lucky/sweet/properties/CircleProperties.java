@@ -18,6 +18,9 @@ public class CircleProperties {
 
     public static final String FLOW_PEOPLE = "https://thethreestooges" +
             ".cn:666/circle/attention";
-
+    public static final String CIRCLE_MAIN_SHOW = "https://thethreestooges" +
+            ".cn:666/circle/circle/show";
+    public static  final String
+            CIRCLE_CONTENT_DETAILS="https://thethreestooges.cn:666/circle/comment_particular";
     public static final String SEND_CIRCLE_PIC_OSS_PAHT = "sweet/circle/";
 }

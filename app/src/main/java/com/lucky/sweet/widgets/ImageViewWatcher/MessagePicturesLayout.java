@@ -11,8 +11,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
-import com.lucky.sweet.entity.CirclePicData;
-import com.lucky.sweet.widgets.ImageViewWatcher.SquareImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +31,7 @@ public class MessagePicturesLayout extends FrameLayout implements View.OnClickLi
 
     private Callback mCallback;
     private boolean isInit;
-    private List<Integer> mDataList;
+    private List<String> mDataList;
 
 
     public MessagePicturesLayout(Context context, @Nullable AttributeSet attrs) {
@@ -49,7 +47,7 @@ public class MessagePicturesLayout extends FrameLayout implements View.OnClickLi
 //        for (int i = 0; i < CirclePicData.get().size(); i++) {
 //                  mDataList.add( CirclePicData.get().get(i).getPictureList())
 //        }
-        for (int i = 0; i <9; i++) {
+        for (int i = 0; i < 9; i++) {
             ImageView squareImageView = new SquareImageView(context);
             squareImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
@@ -59,10 +57,9 @@ public class MessagePicturesLayout extends FrameLayout implements View.OnClickLi
         }
 
 
-
     }
 
-    public void set(List<Integer> urlList) {
+    public void set(List<String> urlList) {
         mDataList = urlList;
         if (isInit) {
             notifyDataChanged();
@@ -71,7 +68,7 @@ public class MessagePicturesLayout extends FrameLayout implements View.OnClickLi
     }
 
     private void notifyDataChanged() {
-        final List<Integer> dataList = mDataList;
+        final List<String> dataList = mDataList;
         final int urlListSize = dataList != null ? mDataList.size() : 0;
 
         /*if (mDataList == null || mDataList.size() != urlListSize) {
@@ -99,7 +96,6 @@ public class MessagePicturesLayout extends FrameLayout implements View.OnClickLi
 
         lpChildImage.width = imageSize;
         lpChildImage.height = lpChildImage.width;
-
 
 
         mVisiblePictureList.clear();
@@ -130,7 +126,8 @@ public class MessagePicturesLayout extends FrameLayout implements View.OnClickLi
     }
 
     public interface Callback {
-        void onThumbPictureClick(ImageView i, List<ImageView> imageGroupList, List<Integer> urlList);
+        void onThumbPictureClick(ImageView i, List<ImageView> imageGroupList,
+                                 List<String> urlList);
     }
 
     public void setCallback(Callback callback) {

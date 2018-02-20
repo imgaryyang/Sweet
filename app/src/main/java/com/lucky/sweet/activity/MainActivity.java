@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.alibaba.sdk.android.oss.model.GetObjectResult;
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.CircleMainInfo;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.WeatherInfo;
 import com.lucky.sweet.fragment.ImCircleFragment;
@@ -63,7 +64,7 @@ public class MainActivity extends BaseActivity {
 
             myBinder.requestImStoreInfo(MainActivity.this);
             myBinder.getPersonPortrait(USER_PORTRAIT_PATH);
-
+            myBinder.requestCircleInfo("朋友","0");
         }
         this.myBinder = myBinder;
 
@@ -200,6 +201,11 @@ public class MainActivity extends BaseActivity {
     public void Event(GetObjectResult result)
     {
         meFragment.upPersonPortrait(result.getObjectContent());
+
+    }    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(CircleMainInfo info)
+    {
+        circleFragment.initData(info);
 
     }
 

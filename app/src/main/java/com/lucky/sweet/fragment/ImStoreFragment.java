@@ -261,7 +261,8 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
     public void setShowInfo(MainStoreInfo showInfo) {
 
-
+        vp_ad.setPageMargin(15);//设置page间间距，自行根据需求设置
+        vp_ad.setOffscreenPageLimit(3);//>=3
         vp_ad.setAdapter(new AdViewPagerAdapter(getContext(), showInfo
                 .getAdvertising()));
         in_vp_ad.initIndicator(showInfo.getAdvertising().size());

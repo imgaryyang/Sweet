@@ -85,7 +85,7 @@ public class ImageWatcher extends FrameLayout implements GestureDetector.OnGestu
     private ImagePagerAdapter adapter;
     private ViewPager vPager;
     private List<ImageView> mImageGroupList;
-    private List<Integer> mUrlList;
+    private List<String > mUrlList;
     private int initPosition;
     private int mPagerPositionOffsetPixels;
     private FrameLayout frameLayout;
@@ -109,7 +109,8 @@ public class ImageWatcher extends FrameLayout implements GestureDetector.OnGestu
      * @param imageGroupList 被点击的ImageView的所在列表，加载图片时会提前展示列表中已经下载完成的thumb图片
      * @param urlList        被加载的图片url列表，数量必须大于等于 imageGroupList.size。 且顺序应当和imageGroupList保持一致
      */
-    public void show(ImageView i, List<ImageView> imageGroupList, final List<Integer> urlList) {
+    public void show(ImageView i, List<ImageView> imageGroupList, final
+    List<String> urlList) {
         /*if (i == null || imageGroupList == null || urlList == null || imageGroupList.size() < 1 ||
                 urlList.size() < imageGroupList.size()) {
             *//*String info = "i[" + i + "]";

@@ -35,7 +35,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -180,7 +179,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
         ListView lv_circle = (ListView) findViewById(R.id.lv_circle);
 
-        lv_circle.setAdapter(new CircleListViewAdapter(this));
+       /* lv_circle.setAdapter(new CircleListViewAdapter(this, info.getCircle_list()));*/
         setListViewHeightBasedOnChildren(lv_circle);
 
         ibtn_back.setOnClickListener(new View.OnClickListener() {
