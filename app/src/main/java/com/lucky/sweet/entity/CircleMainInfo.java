@@ -31,12 +31,12 @@ public class CircleMainInfo {
          * mer_id : 1
          * content : 女孩让我帮她寄快递，给了我一个空纸箱让我打包，我好奇的问她：“这是寄给谁的”她说：“我喜欢很久的一个男生”我懵了一下：“可是里面没有东西啊”她说：有些东西只有我自己能看见。我一听更懵逼了，问她到底是什么，她说：“一箱情愿”。
          * create_time : 2018-02-13 14:50:07
+         * like_num : 0
          * nikcname : 大外只有一个浩南
          * exp : 200
          * relation_sign : 2
          * mer_name : 老板娘烤肉店
-         * photo_url : ["sweet/circle/chinn96@163.com/20180213143508/1.png","sweet/circle/chinn96@163.com/20180213143508/1.png"]
-         * comment : []
+         * photo_url : ["sweet/circle/chinn96@163.com/20180213143508/0.png","sweet/circle/chinn96@163.com/20180213143508/0.png"]
          * comment_num : 0
          */
 
@@ -45,13 +45,13 @@ public class CircleMainInfo {
         private String mer_id;
         private String content;
         private String create_time;
+        private String like_num;
         private String nikcname;
         private String exp;
         private String relation_sign;
         private String mer_name;
         private int comment_num;
         private List<String> photo_url;
-        private List<?> comment;
 
         public String getCircle_id() {
             return circle_id;
@@ -91,6 +91,14 @@ public class CircleMainInfo {
 
         public void setCreate_time(String create_time) {
             this.create_time = create_time;
+        }
+
+        public String getLike_num() {
+            return like_num;
+        }
+
+        public void setLike_num(String like_num) {
+            this.like_num = like_num;
         }
 
         public String getNikcname() {
@@ -139,14 +147,6 @@ public class CircleMainInfo {
 
         public void setPhoto_url(List<String> photo_url) {
             this.photo_url = photo_url;
-        }
-
-        public List<?> getComment() {
-            return comment;
-        }
-
-        public void setComment(List<?> comment) {
-            this.comment = comment;
         }
     }
 }
