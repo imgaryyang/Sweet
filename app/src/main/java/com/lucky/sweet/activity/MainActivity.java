@@ -154,6 +154,9 @@ public class MainActivity extends BaseActivity {
         super.onNewIntent(intent);
 
     }
+    public void sendCircleLikeIt(String mer_id){
+        myBinder.circleLikeIt(mer_id);
+    }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 

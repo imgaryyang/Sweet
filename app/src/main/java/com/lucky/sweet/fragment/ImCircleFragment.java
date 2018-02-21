@@ -25,8 +25,6 @@ import com.lucky.sweet.widgets.ImageViewWatcher.ImageWatcher;
 import com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayout;
 import com.lucky.sweet.widgets.ToolBar;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -47,11 +45,14 @@ public class ImCircleFragment extends Fragment implements
     private ListView lv_circle;
     private CircleListViewAdapter circleListViewAdapter;
     private List<CircleMainInfo.CircleListBean> circle_list;
+    private MainActivity activity;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        if (getActivity() instanceof MainActivity) {
+            activity = (MainActivity) getActivity();
+        }
         View view = inflater.inflate(R.layout.fragment_imcircle, container, false);
         imv_head = view.findViewById(R.id.imv_head);
         imv_head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
@@ -145,6 +146,12 @@ public class ImCircleFragment extends Fragment implements
     public void initData(CircleMainInfo info) {
         circle_list = info.getCircle_list();
         circleListViewAdapter = new CircleListViewAdapter(getActivity(), circle_list).setCallBack(this);
+        circleListViewAdapter.setOnLikeItClickListener(new CircleListViewAdapter.OnLikeItClickListener() {
+            @Override
+            public void meridBack(String mer_id) {
+                activity.sendCircleLikeIt(mer_id);
+            }
+        });
         lv_circle.setAdapter(circleListViewAdapter);
     }
 

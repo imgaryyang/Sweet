@@ -300,6 +300,36 @@ public class CommunicationService extends Service {
             CommunicationService.this.sendCircledetailsInfo(circle_id);
 
         }
+
+        public void circleLikeIt(String circle_id) {
+            CommunicationService.this.circleLikeIt(circle_id);
+        }
+    }
+
+    private void circleLikeIt(String circle_id) {
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("circle_id", circle_id);
+        map.put("session", MyApplication.sessionId);
+        HttpUtils.sendOkHttpRequest(CircleProperties.LIKE_POINT,
+                new com.zhy.http.okhttp.callback.Callback() {
+                    @Override
+                    public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
+                        String string = response.body().string();
+                        System.out.println(string);
+                        return null;
+                    }
+
+                    @Override
+                    public void onError(Request request, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Object response) {
+
+                    }
+                }, map);
     }
 
     private void sendCircledetailsInfo(String circle_id) {
@@ -342,8 +372,12 @@ public class CommunicationService extends Service {
                     public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
                         String string = response.body().string();
                         System.out.println(string);
+                        if (string.equals("250")){
+                            return null;
+                        }
                         Gson gson = new Gson();
-                        CircleMainInfo circleMainInfo = gson.fromJson(string, CircleMainInfo.class);
+                        CircleMainInfo circleMainInfo = gson.fromJson
+                                (string, CircleMainInfo.class);
                         EventBus.getDefault().post(circleMainInfo);
                         return null;
                     }

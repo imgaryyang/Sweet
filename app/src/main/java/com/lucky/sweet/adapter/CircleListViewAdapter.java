@@ -11,6 +11,7 @@ import com.lucky.sweet.entity.CircleMainInfo;
 import com.lucky.sweet.views.CircleImageView;
 import com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayout;
 import com.lucky.sweet.widgets.ImageViewWatcher.SquareImageView;
+import com.sackcentury.shinebuttonlib.ShineButton;
 
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class CircleListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
         if (convertView == null) {
             convertView = View.inflate(context, R.layout.item_circle, null);
@@ -68,8 +69,8 @@ public class CircleListViewAdapter extends BaseAdapter {
             viewHolder.sendText = convertView.findViewById(R.id.tv_circle_send_time);
             viewHolder.merName = convertView.findViewById(R.id.tv_circle_mername);
             viewHolder.flowShow = convertView.findViewById(R.id.tv_circle_likenum);
-            viewHolder.likenum = convertView.findViewById(R.id
-                    .tv_circle_flownum);
+            viewHolder.button = convertView.findViewById(R.id.po_image3);
+            viewHolder.likenum = convertView.findViewById(R.id.tv_circle_flownum);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -81,13 +82,21 @@ public class CircleListViewAdapter extends BaseAdapter {
         viewHolder.person_name.setText(datas.get(position).getNikcname());
         viewHolder.sendText.setText(datas.get(position).getCreate_time());
         viewHolder.messPicLayout.set(datas.get(position).getPhoto_url());
+        viewHolder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onLikeItClickListener != null) {
+                    onLikeItClickListener.meridBack(datas.get(position).getCircle_id());
+                }
+            }
+        });
         viewHolder.flowShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TextView tv_flow = (TextView) v;
                 if (tv_flow.getText().equals("关注")) {
                     tv_flow.setText("已关注");
-                }else {
+                } else {
                     tv_flow.setText("关注");
                 }
             }
@@ -95,6 +104,17 @@ public class CircleListViewAdapter extends BaseAdapter {
         return convertView;
 
     }
+
+    public interface OnLikeItClickListener {
+        void meridBack(String  mer_id);
+    }
+
+    private OnLikeItClickListener onLikeItClickListener;
+
+    public void setOnLikeItClickListener(OnLikeItClickListener onLikeItClickListener) {
+        this.onLikeItClickListener = onLikeItClickListener;
+    }
+
 
     static public class ViewHolder {
         CircleImageView imv_head;
@@ -105,6 +125,7 @@ public class CircleListViewAdapter extends BaseAdapter {
         TextView sendText;
         TextView merName;
         TextView flowShow;
+        ShineButton button;
         TextView likenum;
     }
 
