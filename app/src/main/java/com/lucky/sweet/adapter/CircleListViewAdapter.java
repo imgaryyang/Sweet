@@ -66,7 +66,8 @@ public class CircleListViewAdapter extends BaseAdapter {
             viewHolder.person_name = convertView.findViewById(R.id.tv_circle_person_name);
             viewHolder.content = convertView.findViewById(R.id.tv_circle_content);
             viewHolder.sendText = convertView.findViewById(R.id.tv_circle_send_time);
-            viewHolder.merName=convertView.findViewById(R.id.tv_circle_mername);
+            viewHolder.merName = convertView.findViewById(R.id.tv_circle_mername);
+            viewHolder.flowShow = convertView.findViewById(R.id.tv_circle_flow);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -77,7 +78,17 @@ public class CircleListViewAdapter extends BaseAdapter {
         viewHolder.person_name.setText(datas.get(position).getNikcname());
         viewHolder.sendText.setText(datas.get(position).getCreate_time());
         viewHolder.messPicLayout.set(datas.get(position).getPhoto_url());
-
+        viewHolder.flowShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView tv_flow = (TextView) v;
+                if (tv_flow.getText().equals("关注")) {
+                    tv_flow.setText("已关注");
+                }else {
+                    tv_flow.setText("关注");
+                }
+            }
+        });
         return convertView;
 
     }
@@ -90,6 +101,7 @@ public class CircleListViewAdapter extends BaseAdapter {
         TextView content;
         TextView sendText;
         TextView merName;
+        TextView flowShow;
     }
 
 }

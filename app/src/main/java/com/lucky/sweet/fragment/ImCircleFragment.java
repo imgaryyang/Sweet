@@ -91,7 +91,7 @@ public class ImCircleFragment extends Fragment implements
 
         lv_circle = view.findViewById(R.id.lv_circle);
 
-        TitleIndicatorView circle_titie_search = view.findViewById(R.id.circle_titie_search);
+        TitleIndicatorView circle_titie_search = view.findViewById(R.id.circle_titie_sarch);
         circle_titie_search.initializationData(title);
 
         lv_circle.setOnItemClickListener(new AdapterView.OnItemClickListener() {
