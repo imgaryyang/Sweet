@@ -62,7 +62,7 @@
             android:name="TencentMapSDK"
             android:value="DUSBZ-LL63F-FOIJI-J2GW4-TWNFT-FEFBB"/>
 
-        <activity android:name=".activity.StoreDisplatActivity"/>
+        <activity android:name=".activity.StoreDisplayActivity"/>
         <activity android:name=".activity.SetUserInfoActivity"/>
         <activity android:name=".activity.SplashActivity">
             <intent-filter>

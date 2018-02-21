@@ -13,8 +13,8 @@ import com.lucky.sweet.views.CircleImageView;
 
 import java.util.ArrayList;
 
-public class TestStackAdapter extends
-        StackAdapter<TestStackAdapter.viewHolder> {
+public class VipCardAdapter extends
+        StackAdapter<VipCardAdapter.viewHolder> {
 
     private ArrayList<VipCardInfo> arrayList;
 
@@ -26,7 +26,7 @@ public class TestStackAdapter extends
             R.color.bg_vip_card_color_fifth,
     };
 
-    public TestStackAdapter(Context context, ArrayList<VipCardInfo> arrayList) {
+    public VipCardAdapter(Context context, ArrayList<VipCardInfo> arrayList) {
         super(context);
         this.arrayList = arrayList;
         updateData(arrayList.size());

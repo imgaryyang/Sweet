@@ -22,7 +22,7 @@ import android.widget.TextView;
 import com.lucky.sweet.R;
 import com.lucky.sweet.activity.CaptureActivity;
 import com.lucky.sweet.activity.MainSearchActiviy;
-import com.lucky.sweet.activity.StoreDisplatActivity;
+import com.lucky.sweet.activity.StoreDisplayActivity;
 import com.lucky.sweet.activity.StoreParticularInfoActivity;
 import com.lucky.sweet.adapter.AdViewPagerAdapter;
 import com.lucky.sweet.adapter.RecFoodRecommendAdapter;
@@ -219,7 +219,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onReleaseFingerToUpload() {
 
-                Intent intent = new Intent(context, StoreDisplatActivity.class);
+                Intent intent = new Intent(context, StoreDisplayActivity.class);
                 intent.putExtra("tv_moreFood", "Food");
                 intent.putExtra("city", tv_location.getText().toString().trim());
 
@@ -237,7 +237,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onReleaseFingerToUpload() {
 
-                Intent intent = new Intent(context, StoreDisplatActivity.class);
+                Intent intent = new Intent(context, StoreDisplayActivity.class);
                 intent.putExtra("tv_moreRelax", "Relax");
                 intent.putExtra("city", tv_location.getText().toString().trim());
 
@@ -299,7 +299,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         Intent intent;
         switch (v.getId()) {
             case R.id.tv_moreFood:
-                intent = new Intent(getActivity(), StoreDisplatActivity.class);
+                intent = new Intent(getActivity(), StoreDisplayActivity.class);
                 intent.putExtra("tv_moreFood", "Food");
                 intent.putExtra("city", tv_location.getText().toString().trim());
 
@@ -307,7 +307,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
                 getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
                 break;
             case R.id.tv_moreRelax:
-                intent = new Intent(getActivity(), StoreDisplatActivity.class);
+                intent = new Intent(getActivity(), StoreDisplayActivity.class);
                 intent.putExtra("tv_moreRelax", "Relax");
                 intent.putExtra("city", tv_location.getText().toString().trim());
 
