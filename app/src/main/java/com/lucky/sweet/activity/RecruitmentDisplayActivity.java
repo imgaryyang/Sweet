@@ -6,6 +6,7 @@ import android.view.View;
 import com.lucky.sweet.R;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.views.PictureDisplayLayout;
+import com.lucky.sweet.views.TitleIndicatorView;
 import com.lucky.sweet.widgets.ToolBar;
 
 import java.util.ArrayList;
@@ -13,7 +14,8 @@ import java.util.ArrayList;
 public class RecruitmentDisplayActivity extends BaseActivity {
 
     private PictureDisplayLayout photo_show;
-
+    private TitleIndicatorView titie_search;
+    private String[] title={"菜品" ,"环境","其他"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,8 @@ public class RecruitmentDisplayActivity extends BaseActivity {
 
     private void initView() {
         photo_show = findViewById(R.id.ll_cover_photo_show);
-    
+        titie_search = findViewById(R.id.titie_search);
+        titie_search.initializationData(title);
         ArrayList<String> strings = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             strings.add("");

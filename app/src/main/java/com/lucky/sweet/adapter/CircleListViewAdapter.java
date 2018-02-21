@@ -66,11 +66,12 @@ public class CircleListViewAdapter extends BaseAdapter {
             viewHolder.person_name = convertView.findViewById(R.id.tv_circle_person_name);
             viewHolder.content = convertView.findViewById(R.id.tv_circle_content);
             viewHolder.sendText = convertView.findViewById(R.id.tv_circle_send_time);
+            viewHolder.merName=convertView.findViewById(R.id.tv_circle_mername);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
+        viewHolder.merName.setText(datas.get(position).getMer_name());
         viewHolder.imv_head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
         viewHolder.content.setText(datas.get(position).getContent());
         viewHolder.person_name.setText(datas.get(position).getNikcname());
@@ -88,6 +89,7 @@ public class CircleListViewAdapter extends BaseAdapter {
         TextView person_name;
         TextView content;
         TextView sendText;
+        TextView merName;
     }
 
 }

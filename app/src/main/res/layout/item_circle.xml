@@ -252,6 +252,7 @@
                     android:background="@mipmap/circle_place"/>
 
                 <TextView
+                    android:id="@+id/tv_circle_mername"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

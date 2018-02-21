@@ -31,6 +31,9 @@ public class TitleIndicatorView extends LinearLayout implements View.OnClickList
 
     private static final int CURRENT_ITEM = 25;
     private static final int OTHER_ITEM = 15;
+    private TextView tv_dishes_title;
+    private TextView tv_dishes_over;
+    private TextView tv_other;
 
     public TitleIndicatorView(Context context) {
         super(context);
@@ -54,9 +57,9 @@ public class TitleIndicatorView extends LinearLayout implements View.OnClickList
     private void initView(Context context) {
         LayoutInflater.from(context).inflate(R.layout
                 .item_title_indicator_view, this);
-        TextView tv_dishes_title = findViewById(R.id.tv_dishes_title);
-        TextView tv_dishes_over = findViewById(R.id.tv_dishes_over);
-        TextView tv_other = findViewById(R.id.tv_other);
+        tv_dishes_title = findViewById(R.id.tv_dishes_title);
+        tv_dishes_over = findViewById(R.id.tv_dishes_over);
+        tv_other = findViewById(R.id.tv_other);
 
         tv_dishes_title.getPaint().setFakeBoldText(true);
 
@@ -72,6 +75,14 @@ public class TitleIndicatorView extends LinearLayout implements View.OnClickList
         arrayList.add(tv_dishes_over);
         arrayList.add(tv_other);
 
+    }
+
+    public void initializationData(String[] title) {
+        if (title.length==3) {
+            tv_dishes_title.setText(title[0]);
+            tv_dishes_over.setText(title[1]);
+            tv_other.setText(title[2]);
+        }
     }
 
     public interface OnTitleListener {

@@ -13,6 +13,7 @@
         android:layout_height="wrap_content">
 
         <com.lucky.sweet.views.TitleIndicatorView
+            android:id="@+id/titie_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

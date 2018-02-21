@@ -20,6 +20,7 @@ import com.lucky.sweet.activity.SendCircleActivity;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
 import com.lucky.sweet.entity.CircleMainInfo;
 import com.lucky.sweet.views.CircleImageView;
+import com.lucky.sweet.views.TitleIndicatorView;
 import com.lucky.sweet.widgets.ImageViewWatcher.ImageWatcher;
 import com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayout;
 import com.lucky.sweet.widgets.ToolBar;
@@ -27,8 +28,6 @@ import com.lucky.sweet.widgets.ToolBar;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import cn.forward.androids.views.StringScrollPicker;
 
 /**
  * Created by Qiuyue on 2017/11/15.
@@ -91,10 +90,9 @@ public class ImCircleFragment extends Fragment implements
     private void initView(View view) {
 
         lv_circle = view.findViewById(R.id.lv_circle);
-        final StringScrollPicker sc_picker = view.findViewById(R.id.sc_picker);
-        final ArrayList<CharSequence> charSequences = new ArrayList<CharSequence>(Arrays.asList(title));
 
-        sc_picker.setData(charSequences);
+        TitleIndicatorView circle_titie_search = view.findViewById(R.id.circle_titie_search);
+        circle_titie_search.initializationData(title);
 
         lv_circle.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

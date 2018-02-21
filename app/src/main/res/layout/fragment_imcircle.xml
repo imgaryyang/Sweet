@@ -41,17 +41,10 @@
                 android:layout_marginTop="12dp"
                 android:orientation="horizontal">
 
-                <cn.forward.androids.views.StringScrollPicker
-                    android:id="@+id/sc_picker"
-                    android:layout_width="150dp"
-                    android:layout_height="20dp"
-                    app:spv_center_item_position="0"
-                    app:spv_is_circulation="true"
-                    app:spv_max_text_size="20dp"
-                    app:spv_min_text_size="15dp"
-                    app:spv_orientation="horizontal"
-                    />
-
+                <com.lucky.sweet.views.TitleIndicatorView
+                    android:id="@+id/circle_titie_sarch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
                 <com.lucky.sweet.views.CircleImageView
                     android:id="@+id/imv_head"
