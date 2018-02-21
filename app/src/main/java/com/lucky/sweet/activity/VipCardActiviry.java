@@ -8,7 +8,7 @@ import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 import com.lucky.sweet.widgets.cardstack.CardStackView;
-import com.lucky.sweet.widgets.cardstack.TestStackAdapter;
+import com.lucky.sweet.widgets.cardstack.VipCardAdapter;
 
 import java.util.ArrayList;
 
@@ -62,7 +62,7 @@ public class VipCardActiviry extends BaseActivity {
             objects.add(new VipCardInfo());
         }
 
-        final TestStackAdapter objectStackAdapter = new TestStackAdapter(this, objects);
+        final VipCardAdapter objectStackAdapter = new VipCardAdapter(this, objects);
         cardStackView.setAdapter(objectStackAdapter);
         cardStackView.setItemExpendListener(new CardStackView.ItemExpendListener() {
             @Override

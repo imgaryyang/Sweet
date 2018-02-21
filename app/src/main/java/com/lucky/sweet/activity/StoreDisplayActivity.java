@@ -37,7 +37,7 @@ import butterknife.ButterKnife;
 // ( (oo) )  ( (oo) )  ( (oo) )
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
-public class StoreDisplatActivity extends BaseActivity {
+public class StoreDisplayActivity extends BaseActivity {
 
     private Title title = null;
     @Bind(R.id.sp_businessarea)
@@ -206,7 +206,7 @@ public class StoreDisplatActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(StoreDisplatActivity.this, StoreParticularInfoActivity.class);
+                Intent intent = new Intent(StoreDisplayActivity.this, StoreParticularInfoActivity.class);
                 intent.putExtra("shopid", displayList.get(position).getMer_id());
                 startActivity(intent);
                 goNextAnim();
@@ -221,7 +221,7 @@ public class StoreDisplatActivity extends BaseActivity {
                         break;
                     case "BOTTOM":
                         requestSearchItem(false);
-                        Toast.makeText(StoreDisplatActivity.this, "加载更多",
+                        Toast.makeText(StoreDisplayActivity.this, "加载更多",
                                 Toast.LENGTH_SHORT).show();
                         break;
                 }

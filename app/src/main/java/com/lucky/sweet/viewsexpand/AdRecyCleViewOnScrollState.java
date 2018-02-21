@@ -7,8 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.activity.StoreDisplatActivity;
-import com.lucky.sweet.adapter.RecFoodRecommendAdapter;
+import com.lucky.sweet.activity.StoreDisplayActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -59,14 +58,14 @@ public class AdRecyCleViewOnScrollState extends RecyclerView.OnScrollListener {
                             switch (type) {
                                 case FOOD:
                                     intent = new Intent(context,
-                                            StoreDisplatActivity.class);
+                                            StoreDisplayActivity.class);
                                     intent.putExtra("tv_moreFood", "Food");
                                     context.startActivity(intent);
                                     ((Activity) context).overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
                                     break;
                                 case FUN:
                                     intent = new Intent(context,
-                                            StoreDisplatActivity.class);
+                                            StoreDisplayActivity.class);
                                     intent.putExtra("tv_moreRelax", "Relax");
                                     context.startActivity(intent);
                                     ((Activity) context).overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
