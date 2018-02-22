@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.alibaba.sdk.android.oss.model.GetObjectResult;
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.CircleLikePoint;
 import com.lucky.sweet.entity.CircleMainInfo;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.WeatherInfo;
@@ -154,8 +155,8 @@ public class MainActivity extends BaseActivity {
         super.onNewIntent(intent);
 
     }
-    public void sendCircleLikeIt(String mer_id){
-        myBinder.circleLikeIt(mer_id);
+    public void sendCircleLikeIt(String mer_id, int position){
+        myBinder.circleLikeIt(mer_id,position);
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -205,10 +206,17 @@ public class MainActivity extends BaseActivity {
     {
         meFragment.upPersonPortrait(result.getObjectContent());
 
-    }    @Subscribe(threadMode = ThreadMode.MAIN)
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(CircleMainInfo info)
     {
         circleFragment.initData(info);
+
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(CircleLikePoint circleLikePoint)
+    {
+        circleFragment.likeCallback(circleLikePoint);
 
     }
 

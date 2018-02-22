@@ -18,6 +18,7 @@ import com.lucky.sweet.activity.MainActivity;
 import com.lucky.sweet.activity.PersonalCircleActivity;
 import com.lucky.sweet.activity.SendCircleActivity;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
+import com.lucky.sweet.entity.CircleLikePoint;
 import com.lucky.sweet.entity.CircleMainInfo;
 import com.lucky.sweet.views.CircleImageView;
 import com.lucky.sweet.views.TitleIndicatorView;
@@ -54,16 +55,6 @@ public class ImCircleFragment extends Fragment implements
             activity = (MainActivity) getActivity();
         }
         View view = inflater.inflate(R.layout.fragment_imcircle, container, false);
-        imv_head = view.findViewById(R.id.imv_head);
-        imv_head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
-        imv_head.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), SendCircleActivity.class);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
-            }
-        });
 
         initView(view);
 
@@ -89,6 +80,17 @@ public class ImCircleFragment extends Fragment implements
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void initView(View view) {
+        imv_head = view.findViewById(R.id.imv_head);
+
+        imv_head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
+        imv_head.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SendCircleActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+            }
+        });
 
         lv_circle = view.findViewById(R.id.lv_circle);
 
@@ -148,11 +150,31 @@ public class ImCircleFragment extends Fragment implements
         circleListViewAdapter = new CircleListViewAdapter(getActivity(), circle_list).setCallBack(this);
         circleListViewAdapter.setOnLikeItClickListener(new CircleListViewAdapter.OnLikeItClickListener() {
             @Override
-            public void meridBack(String mer_id) {
-                activity.sendCircleLikeIt(mer_id);
+            public void meridBack(String mer_id, int position) {
+                activity.sendCircleLikeIt(mer_id, position);
             }
         });
         lv_circle.setAdapter(circleListViewAdapter);
+    }
+
+    public void likeCallback(CircleLikePoint request) {
+        switch (request.getRequest()) {
+            case "1":
+                int position = request.getPosition();
+                CircleMainInfo.CircleListBean circleListBean = circle_list.get(position);
+                String like_num = circleListBean.getLike_num();
+                circleListBean.setLike_num(Integer.parseInt(like_num) + 1 + "");
+                circle_list.set(position,circleListBean);
+                break;
+            case "0":
+                break;
+            case "250":
+                break;
+            default:
+                break;
+
+        }
+
     }
 
 

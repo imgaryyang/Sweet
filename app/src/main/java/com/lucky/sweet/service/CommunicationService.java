@@ -26,6 +26,7 @@ import com.google.gson.JsonArray;
 import com.lucky.sweet.activity.MyApplication;
 import com.lucky.sweet.activity.OrderSeatActivity;
 import com.lucky.sweet.entity.CircleDetail;
+import com.lucky.sweet.entity.CircleLikePoint;
 import com.lucky.sweet.entity.CircleMainInfo;
 import com.lucky.sweet.entity.JoinInRoomMenu;
 import com.lucky.sweet.entity.MainStoreInfo;
@@ -301,12 +302,12 @@ public class CommunicationService extends Service {
 
         }
 
-        public void circleLikeIt(String circle_id) {
-            CommunicationService.this.circleLikeIt(circle_id);
+        public void circleLikeIt(String circle_id, int position) {
+            CommunicationService.this.circleLikeIt(circle_id,position);
         }
     }
 
-    private void circleLikeIt(String circle_id) {
+    private void circleLikeIt(final String circle_id, final int position) {
 
         HashMap<String, String> map = new HashMap<>();
         map.put("circle_id", circle_id);
@@ -315,8 +316,11 @@ public class CommunicationService extends Service {
                 new com.zhy.http.okhttp.callback.Callback() {
                     @Override
                     public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
-                        String string = response.body().string();
-                        System.out.println(string);
+                        CircleLikePoint circleLikePoint = new CircleLikePoint();
+                        circleLikePoint.setPosition(position);
+                        circleLikePoint.setRequest(response.body().string());
+
+                        EventBus.getDefault().post(circleLikePoint);
                         return null;
                     }
 

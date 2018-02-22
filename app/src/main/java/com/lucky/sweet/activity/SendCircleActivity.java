@@ -29,6 +29,7 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -62,20 +63,32 @@ public class SendCircleActivity extends BaseActivity {
     private ItemTouchHelper itemTouchHelper;
     private EditText et_description;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sendcircle);
         InitCacheFileUtils.initImgDir(FILE_DIR_NAME, FILE_IMG_NAME);//清除图片缓存
-
         initViews();
 
         initTitle();
 
-
         initEvent();
     }
 
+    @Override
+    protected void onResume() {
+        EventBus.getDefault().register(this);
+
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        EventBus.getDefault().unregister(this);
+
+        super.onPause();
+    }
 
     private void initEvent() {
 

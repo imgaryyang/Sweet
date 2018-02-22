@@ -70,23 +70,33 @@ public class CircleListViewAdapter extends BaseAdapter {
             viewHolder.merName = convertView.findViewById(R.id.tv_circle_mername);
             viewHolder.flowShow = convertView.findViewById(R.id.tv_circle_likenum);
             viewHolder.button = convertView.findViewById(R.id.po_image3);
-            viewHolder.likenum = convertView.findViewById(R.id.tv_circle_flownum);
+            viewHolder.likeNum = convertView.findViewById(R.id.tv_circle_like_num);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+
         viewHolder.merName.setText(datas.get(position).getMer_name());
-        viewHolder.likenum.setText(datas.get(position).getLike_num());
+        viewHolder.likeNum.setText(datas.get(position).getLike_num());
         viewHolder.imv_head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
         viewHolder.content.setText(datas.get(position).getContent());
         viewHolder.person_name.setText(datas.get(position).getNikcname());
         viewHolder.sendText.setText(datas.get(position).getCreate_time());
         viewHolder.messPicLayout.set(datas.get(position).getPhoto_url());
+        final ViewHolder finalViewHolder = viewHolder;
         viewHolder.button.setOnClickListener(new View.OnClickListener() {
+            Boolean flag = true;
+
             @Override
             public void onClick(View v) {
                 if (onLikeItClickListener != null) {
-                    onLikeItClickListener.meridBack(datas.get(position).getCircle_id());
+                    if (flag) {
+
+                        finalViewHolder.likeNum.setText(Integer.parseInt(datas.get(position).getLike_num()) + 1 + "");
+                        onLikeItClickListener.meridBack(datas.get(position)
+                                .getCircle_id(), position);
+                        flag = false;
+                    }
                 }
             }
         });
@@ -106,7 +116,7 @@ public class CircleListViewAdapter extends BaseAdapter {
     }
 
     public interface OnLikeItClickListener {
-        void meridBack(String  mer_id);
+        void meridBack(String mer_id, int position);
     }
 
     private OnLikeItClickListener onLikeItClickListener;
@@ -126,7 +136,7 @@ public class CircleListViewAdapter extends BaseAdapter {
         TextView merName;
         TextView flowShow;
         ShineButton button;
-        TextView likenum;
+        TextView likeNum;
     }
 
 }

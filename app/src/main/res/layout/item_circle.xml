@@ -70,14 +70,14 @@
                     android:text="+11"
                     android:textColor="@color/white"
                     android:textSize="10dp"
-                    android:id="@+id/tv_circle_flownum"/>
+                    android:id="@+id/tv_circle_like_num"/>
 
                 <com.sackcentury.shinebuttonlib.ShineButton
                     android:id="@+id/po_image3"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_alignStart="@+id/imv_head"
-                    android:layout_alignTop="@+id/tv_circle_flownum"
+                    android:layout_alignTop="@+id/tv_circle_like_num"
                     android:layout_marginTop="20dp"
                     app:btn_color="@android:color/darker_gray"
                     app:btn_fill_color="#AACF25"
