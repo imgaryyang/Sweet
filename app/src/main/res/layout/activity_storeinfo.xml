@@ -252,7 +252,7 @@
                         android:layout_height="80dp"
                         android:layout_margin="16dp"
                         android:layout_weight="1"
-                        android:background="@mipmap/test_one"/>
+                />
 
                     <ImageView
                         android:id="@+id/imv_shop_two"
@@ -260,7 +260,7 @@
                         android:layout_height="80dp"
                         android:layout_margin="16dp"
                         android:layout_weight="1"
-                        android:background="@mipmap/test_second"/>
+                         />
 
                     <ImageView
                         android:id="@+id/imv_shop_three"
@@ -268,7 +268,7 @@
                         android:layout_height="80dp"
                         android:layout_margin="16dp"
                         android:layout_weight="1"
-                        android:background="@mipmap/test_third"/>
+                     />
 
                 </LinearLayout>
 

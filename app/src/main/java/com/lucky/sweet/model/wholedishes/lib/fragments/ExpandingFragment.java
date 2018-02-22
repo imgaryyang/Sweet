@@ -54,9 +54,9 @@ public abstract class ExpandingFragment extends Fragment {
                     .commit();
         }
 
-        back = (CardView) view.findViewById(R.id.back);
-        front = (CardView) view.findViewById(R.id.front);
-        layout3 = (CardView) view.findViewById(R.id.bottomLayout);
+        back =  view.findViewById(R.id.back);
+        front =  view.findViewById(R.id.front);
+        layout3 = view.findViewById(R.id.bottomLayout);
         view.setOnClickListener(new OnClick());
         setupDownGesture(view);
 

@@ -1,7 +1,5 @@
 package com.lucky.sweet.activity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -81,11 +79,6 @@ public class DetailedDishesActivity extends BaseActivity {
 
     }
 
-    public static Intent newInstance(Context context) {
-        Intent intent = new Intent(context, DetailedDishesActivity.class);
-        //intent.putExtra(EXTRA_TRAVEL, travel);
-        return intent;
-    }
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {

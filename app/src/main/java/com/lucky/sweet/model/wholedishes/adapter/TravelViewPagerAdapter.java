@@ -3,9 +3,9 @@ package com.lucky.sweet.model.wholedishes.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
+import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
 import com.lucky.sweet.model.wholedishes.fragments.TravelExpandingFragment;
 import com.lucky.sweet.model.wholedishes.lib.ExpandingViewPagerAdapter;
-import com.lucky.sweet.model.wholedishes.model.Travel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,27 +16,28 @@ import java.util.List;
  */
 public class TravelViewPagerAdapter extends ExpandingViewPagerAdapter {
 
-    List<Travel> travels;
+    List<ShopProduct> shopProductList;
 
-    public TravelViewPagerAdapter(FragmentManager fm) {
+    public TravelViewPagerAdapter(FragmentManager fm, ArrayList<ShopProduct> data) {
         super(fm);
-        travels = new ArrayList<>();
+        shopProductList = new ArrayList<>();
+        addAll(data);
     }
 
-    public void addAll(List<Travel> travels) {
-        this.travels.addAll(travels);
+    private void addAll(List<ShopProduct> travels) {
+        this.shopProductList.addAll(travels);
         notifyDataSetChanged();
     }
 
     @Override
     public Fragment getItem(int position) {
-        Travel travel = travels.get(position);
-        return TravelExpandingFragment.newInstance(travel);
+        ShopProduct ShopProduct = shopProductList.get(position);
+        return TravelExpandingFragment.newInstance(ShopProduct);
     }
 
     @Override
     public int getCount() {
-        return travels.size();
+        return shopProductList.size();
     }
 
 }

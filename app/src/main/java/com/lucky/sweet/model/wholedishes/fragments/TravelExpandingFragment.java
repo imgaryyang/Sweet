@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
+import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
 import com.lucky.sweet.model.wholedishes.lib.fragments.ExpandingFragment;
-import com.lucky.sweet.model.wholedishes.model.Travel;
 
 
 /**
@@ -16,13 +16,15 @@ import com.lucky.sweet.model.wholedishes.model.Travel;
 public class TravelExpandingFragment extends ExpandingFragment {
 
     static final String ARG_TRAVEL = "ARG_TRAVEL";
-    Travel travel;
+    ShopProduct product;
+    public TravelExpandingFragment(){
 
-    public static TravelExpandingFragment newInstance(Travel travel){
+    }
+    public static TravelExpandingFragment newInstance(ShopProduct product){
         TravelExpandingFragment fragment = new TravelExpandingFragment();
-       /* Bundle args = new Bundle();
-        args.putParcelable(ARG_TRAVEL, travel);
-        fragment.setArguments(args);*/
+        Bundle args = new Bundle();
+        args.putParcelable(ARG_TRAVEL, product);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -31,7 +33,7 @@ public class TravelExpandingFragment extends ExpandingFragment {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         if(args != null) {
-            travel = args.getParcelable(ARG_TRAVEL);
+            product = args.getParcelable(ARG_TRAVEL);
         }
     }
 
@@ -41,7 +43,7 @@ public class TravelExpandingFragment extends ExpandingFragment {
      */
     @Override
     public Fragment getFragmentTop() {
-        return FragmentTop.newInstance(travel);
+        return FragmentTop.newInstance(product.getPicture());
     }
 
     /**
@@ -50,6 +52,6 @@ public class TravelExpandingFragment extends ExpandingFragment {
      */
     @Override
     public Fragment getFragmentBottom() {
-        return FragmentBottom.newInstance();
+        return FragmentBottom.newInstance(product);
     }
 }

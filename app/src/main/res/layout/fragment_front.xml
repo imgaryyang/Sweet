@@ -4,9 +4,9 @@
                 android:background="@color/transparent">
 
     <ImageView
+        android:id="@+id/imv_itme_whole_dis"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:background="@mipmap/distest"/>
+        android:layout_centerInParent="true"/>
 
 </RelativeLayout>

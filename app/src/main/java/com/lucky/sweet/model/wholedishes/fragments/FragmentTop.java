@@ -1,23 +1,31 @@
 package com.lucky.sweet.model.wholedishes.fragments;
 
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.model.wholedishes.model.Travel;
+import com.lucky.sweet.utility.OssUtils;
+
+import java.io.InputStream;
 
 public class FragmentTop extends Fragment {
 
     static final String ARG_TRAVEL = "ARG_TRAVEL";
+    private String path;
+    public FragmentTop(){}
 
-    public static FragmentTop newInstance(Travel travel) {
+    public static FragmentTop newInstance(String path) {
         Bundle args = new Bundle();
+        Log.i(ARG_TRAVEL,path);
         FragmentTop fragmentTop = new FragmentTop();
-        args.putParcelable(ARG_TRAVEL, travel);
+        args.putString(ARG_TRAVEL, path);
         fragmentTop.setArguments(args);
         return fragmentTop;
     }
@@ -26,7 +34,9 @@ public class FragmentTop extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
+
         if (args != null) {
+            path = (String) args.get(ARG_TRAVEL);
 
         }
     }
@@ -42,4 +52,22 @@ public class FragmentTop extends Fragment {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        final ImageView topImage = getView().findViewById(R.id.imv_itme_whole_dis);
+        if (path != null) {
+            OssUtils.down(path, new OssUtils.OnInpustreamBack() {
+                @Override
+                public void inputstreamFinish(InputStream inputStream) {
+
+                    topImage.setImageBitmap(BitmapFactory.decodeStream
+                            (inputStream));
+
+                }
+            });
+
+
+        }
+    }
 }

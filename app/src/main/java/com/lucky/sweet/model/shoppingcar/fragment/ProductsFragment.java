@@ -159,6 +159,7 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
 
     public void initData(ArrayList<ProductType> data) {
         productCategorizes = data;
+
         productList = new ArrayList<>();
         strings = new ArrayList<>();
         sectionedAdapter = new TestSectionedAdapter(getActivity(), productCategorizes);

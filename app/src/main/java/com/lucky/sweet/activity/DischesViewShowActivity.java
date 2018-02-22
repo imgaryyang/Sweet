@@ -7,21 +7,21 @@ import android.view.View;
 import android.widget.Button;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
 import com.lucky.sweet.model.wholedishes.adapter.TravelViewPagerAdapter;
 import com.lucky.sweet.model.wholedishes.lib.ExpandingPagerFactory;
 import com.lucky.sweet.model.wholedishes.lib.fragments.ExpandingFragment;
-import com.lucky.sweet.model.wholedishes.model.Travel;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.ToolBar;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DischesViewShowActivity extends BaseActivity implements
         ExpandingFragment.OnExpandingClickListener {
 
     private Button btn_cancle;
     private ViewPager vp_dishes;
+    private ArrayList<ShopProduct> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,7 @@ public class DischesViewShowActivity extends BaseActivity implements
                 finish();
             }
         });
+
         vp_dishes.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -70,22 +71,14 @@ public class DischesViewShowActivity extends BaseActivity implements
         });
     }
 
-    private List<Travel> generateTravelList() {
-
-        List<Travel> travels = new ArrayList<>();
-        for (int i = 0; i < 20; ++i) {
-            travels.add(new Travel("Seychelles", R.mipmap.test_product));
-        }
-
-        return travels;
-    }
-
     private void initData() {
-        TravelViewPagerAdapter adapter = new TravelViewPagerAdapter(getSupportFragmentManager());
-        adapter.addAll(generateTravelList());
+
         Intent intent = getIntent();
 
-        int positon = intent.getIntExtra("POSITON", 0);
+        int positon = intent.getIntExtra("position", 0);
+        data = (ArrayList<ShopProduct>) intent.getSerializableExtra("data");
+        TravelViewPagerAdapter adapter = new TravelViewPagerAdapter(getSupportFragmentManager(), data);
+
 
         ExpandingPagerFactory.setupViewPager(vp_dishes);
         vp_dishes.setAdapter(adapter);
@@ -114,7 +107,9 @@ public class DischesViewShowActivity extends BaseActivity implements
 
     @Override
     public void onExpandingClick(View v) {
-        startActivity(new Intent(this, DetailedDishesActivity.class));
+        ShopProduct shopProduct = data.get(vp_dishes.getCurrentItem());
+        Intent intent = new Intent(this, DetailedDishesActivity.class);
+        startActivity(intent);
         overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
     }
 }

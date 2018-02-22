@@ -11,8 +11,6 @@ import java.util.List;
  */
 
 public class ShopCarEntity {
-
-
     private List<TrolleyInfoBean> trolley_info;
 
     public List<TrolleyInfoBean> getTrolley_info() {
@@ -26,8 +24,8 @@ public class ShopCarEntity {
     public static class TrolleyInfoBean {
         /**
          * class_id : 43
-         * name : 热菜
-         * item : [{"item_id":"52","name":"馒头","photo":"\r\nsweet/person/portrait/chinn96@163.com.png","univalence":"2","stick_time":"19","description":"馒头，又称之为馍、蒸馍，中国特色传统面食之一，是一种用面粉发酵蒸成的食品，形圆而隆起"},{"item_id":"51","name":"米饭","photo":"\r\nsweet/person/portrait/chinn96@163.com.png","univalence":"1","stick_time":"18","description":"米饭，是中国人日常饮食中的主角之一，中国南方主食。米饭可与五味调配，几乎可以供给全身所需营养"},{"item_id":"53","name":"小米粥","photo":"\r\nsweet/person/portrait/chinn96@163.com.png","univalence":"3","stick_time":null,"description":"小米粥是以小米作为主要食材熬制而成的粥，口味清淡，清香味，具有简单易制"},{"item_id":"60","name":"清蒸鲈鱼","photo":"11111","univalence":"","stick_time":null,"description":"168"},{"item_id":"61","name":"爆炒猪肝","photo":"11111","univalence":"","stick_time":null,"description":"58"},{"item_id":"62","name":"爆炒猪肝","photo":"11111","univalence":"","stick_time":null,"description":"58"},{"item_id":"63","name":"红烧鱼","photo":"11111","univalence":"","stick_time":null,"description":"39"}]
+         * name : 饮料
+         * item : [{"item_id":"52","name":"馒头","photo":"\r\nsweet/person/portrait/chinn96@163.com.png","univalence":"2","stick_time":"19","description":"馒头，又称之为馍、蒸馍，中国特色传统面食之一，是一种用面粉发酵蒸成的食品，形圆而隆起"},{"item_id":"51","name":"米饭","photo":"\r\nsweet/person/portrait/chinn96@163.com.png","univalence":"1","stick_time":"18","description":"米饭，是中国人日常饮食中的主角之一，中国南方主食。米饭可与五味调配，几乎可以供给全身所需营养"},{"item_id":"53","name":"小米粥","photo":"\r\nsweet/person/portrait/chinn96@163.com.png","univalence":"3","stick_time":null,"description":"小米粥是以小米作为主要食材熬制而成的粥，口味清淡，清香味，具有简单易制"},{"item_id":"60","name":"清蒸鲈鱼","photo":"11111","univalence":"1","stick_time":null,"description":"168"},{"item_id":"61","name":"爆炒猪肝","photo":"11111","univalence":"2","stick_time":null,"description":"58"},{"item_id":"62","name":"爆炒猪肝","photo":"11111","univalence":"3","stick_time":null,"description":"58"}]
          */
 
         private String class_id;

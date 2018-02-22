@@ -303,7 +303,7 @@ public class CommunicationService extends Service {
         }
 
         public void circleLikeIt(String circle_id, int position) {
-            CommunicationService.this.circleLikeIt(circle_id,position);
+            CommunicationService.this.circleLikeIt(circle_id, position);
         }
     }
 
@@ -375,14 +375,18 @@ public class CommunicationService extends Service {
                     @Override
                     public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
                         String string = response.body().string();
-                        System.out.println(string);
-                        if (string.equals("250")){
+                        if (string.equals("250")) {
                             return null;
                         }
-                        Gson gson = new Gson();
-                        CircleMainInfo circleMainInfo = gson.fromJson
-                                (string, CircleMainInfo.class);
-                        EventBus.getDefault().post(circleMainInfo);
+                        try {
+                            Gson gson = new Gson();
+                            CircleMainInfo circleMainInfo = gson.fromJson
+                                    (string, CircleMainInfo.class);
+                            EventBus.getDefault().post(circleMainInfo);
+                        } catch (Exception e) {
+
+                        }
+
                         return null;
                     }
 
@@ -448,6 +452,7 @@ public class CommunicationService extends Service {
                         try {
                             String string = response.body().string();
                             Gson gson = new Gson();
+                            Log.i("joinInReserveRoom", string);
                             EventBus.getDefault().post(gson.fromJson(string, JoinInRoomMenu.class));
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -479,7 +484,6 @@ public class CommunicationService extends Service {
                     @Override
                     public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
                         String string = response.body().string();
-
                         ReservationInfo reservationInfo = new ReservationInfo();
                         reservationInfo.setRoomId(string);
 
@@ -661,9 +665,8 @@ public class CommunicationService extends Service {
                 String string = response.body().string();
 
                 try {
-                    Gson gson = new Gson();
-                    ShopCarEntity shopCarEntity = gson.fromJson(string, ShopCarEntity.class);
-                    EventBus.getDefault().post(shopCarEntity);
+                    System.out.println(string);
+                    EventBus.getDefault().post(new Gson().fromJson(string, ShopCarEntity.class));
                 } catch (Exception e) {
 
                     if (string.equals("250")) {

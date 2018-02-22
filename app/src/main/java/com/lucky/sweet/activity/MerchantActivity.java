@@ -24,7 +24,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Qiuyue on 2018/1/3.
@@ -98,7 +97,8 @@ public class MerchantActivity extends BaseActivity {
             public void onItemClick(int position) {
                 Intent intent = new Intent(MerchantActivity.this,
                         DischesViewShowActivity.class);
-                intent.putExtra("POSITON", position);
+                intent.putExtra("position", position);
+                intent.putExtra("data", shopProduct);
                 startActivity(intent);
                 overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
             }
@@ -126,14 +126,12 @@ public class MerchantActivity extends BaseActivity {
         btn_back = findViewById(R.id.btn_back);
     }
 
+    private ArrayList<ShopProduct> shopProduct = new ArrayList();
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(ShopCarEntity entity) {
-        if (info != null) {
-            List<ShopCarEntity.TrolleyInfoBean> trolley_info = entity.getTrolley_info();
 
-                    }
         ArrayList<ProductType> productCategorizes = new ArrayList<>();
-
         for (ShopCarEntity.TrolleyInfoBean entiy : entity.getTrolley_info()) {
             ProductType productCategorize = new ProductType();
             productCategorize.setType(entiy.getName());
@@ -145,7 +143,9 @@ public class MerchantActivity extends BaseActivity {
                 product.setGoods(item.getName());
                 product.setPrice(item.getUnivalence());
                 product.setPicture(item.getPhoto());
+                product.setDes(item.getDescription());
                 shopProductsAll.add(product);
+                shopProduct.add(product);
             }
             productCategorize.setProduct(shopProductsAll);
             productCategorizes.add(productCategorize);
