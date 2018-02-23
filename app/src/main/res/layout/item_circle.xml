@@ -44,6 +44,7 @@
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="15dp"
                     android:src="@mipmap/test_head"/>
 
@@ -53,6 +54,7 @@
                     android:layout_height="16dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="55dp"
+                    android:layout_centerHorizontal="true"
                     android:background="@drawable/shape_concern_bg"
                     android:gravity="center"
                     android:text="lv.11"
@@ -76,9 +78,9 @@
                     android:id="@+id/po_image3"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:layout_alignStart="@+id/imv_head"
-                    android:layout_alignTop="@+id/tv_circle_like_num"
-                    android:layout_marginTop="20dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="40dp"
                     app:btn_color="@android:color/darker_gray"
                     app:btn_fill_color="#AACF25"
                     app:enable_flashing="true"
@@ -138,6 +140,7 @@
                         android:background="@drawable/shape_concern_greenbg"
                         android:gravity="center"
                         android:text="关注"
+                        android:layout_marginTop="3dp"
                         android:textColor="#AACF25"
                         android:textSize="12dp"/>
 
