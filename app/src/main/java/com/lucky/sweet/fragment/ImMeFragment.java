@@ -18,6 +18,7 @@ import android.widget.Button;
 import com.lucky.sweet.R;
 import com.lucky.sweet.activity.CropIwaActivity;
 import com.lucky.sweet.activity.MainActivity;
+import com.lucky.sweet.activity.MyApplication;
 import com.lucky.sweet.activity.MyCommentActivity;
 import com.lucky.sweet.activity.SetUserInfoActivity;
 import com.lucky.sweet.activity.VipCardActiviry;
@@ -154,14 +155,17 @@ public class ImMeFragment extends Fragment {
         imv_head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Matisse.from(ImMeFragment.this)
-                        .choose(MimeType.allOf())
-                        .countable(true)
-                        .maxSelectable(1)
-                        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                        .thumbnailScale(0.85f)
-                        .imageEngine(new GlideEngine())
-                        .forResult(REQUEST_CODE_CHOOSE);
+                if (!MyApplication.sessionId.equals("")) {
+                    Matisse.from(ImMeFragment.this)
+                            .choose(MimeType.allOf())
+                            .countable(true)
+                            .maxSelectable(1)
+                            .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                            .thumbnailScale(0.85f)
+                            .imageEngine(new GlideEngine())
+                            .forResult(REQUEST_CODE_CHOOSE);
+                }
+
             }
         });
     }

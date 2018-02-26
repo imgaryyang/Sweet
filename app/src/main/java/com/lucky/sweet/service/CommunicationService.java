@@ -375,6 +375,8 @@ public class CommunicationService extends Service {
                     @Override
                     public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
                         String string = response.body().string();
+                        Log.i("circle",string);
+
                         if (string.equals("250")) {
                             return null;
                         }

@@ -117,7 +117,7 @@ public class MainActivity extends BaseActivity {
         TabFragmentAdapter mAdapter = new TabFragmentAdapter(getSupportFragmentManager(), fragments);
         ViewPager mPager = findViewById(R.id.tab_pager);
         //设置当前可见Item左右可见page数，次范围内不会被销毁
-        mPager.setOffscreenPageLimit(1);
+        mPager.setOffscreenPageLimit(3);
         mPager.setAdapter(mAdapter);
 
         mTabLayout = findViewById(R.id.ll_tab_container);
