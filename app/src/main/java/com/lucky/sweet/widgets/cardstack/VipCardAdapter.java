@@ -1,6 +1,7 @@
 package com.lucky.sweet.widgets.cardstack;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -8,15 +9,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.entity.VipCardInfo;
+import com.lucky.sweet.activity.StoreParticularInfoActivity;
+import com.lucky.sweet.entity.PersonVipCard;
 import com.lucky.sweet.views.CircleImageView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class VipCardAdapter extends
         StackAdapter<VipCardAdapter.viewHolder> {
 
-    private ArrayList<VipCardInfo> arrayList;
+    private List<PersonVipCard.VipListBean> arrayList;
+    private Context context;
 
     public static Integer[] TEST_DATAS = new Integer[]{
             R.color.bg_vip_card_color_first,
@@ -26,8 +29,9 @@ public class VipCardAdapter extends
             R.color.bg_vip_card_color_fifth,
     };
 
-    public VipCardAdapter(Context context, ArrayList<VipCardInfo> arrayList) {
+    public VipCardAdapter(Context context, List<PersonVipCard.VipListBean> arrayList) {
         super(context);
+        this.context = context;
         this.arrayList = arrayList;
         updateData(arrayList.size());
     }
@@ -37,7 +41,33 @@ public class VipCardAdapter extends
 
         viewHolder viewHolder = (viewHolder) holder;
         viewHolder.mLayout.getBackground().setColorFilter(ContextCompat.getColor(getContext(), TEST_DATAS[position % TEST_DATAS.length]), PorterDuff.Mode.SRC_IN);
+        final PersonVipCard.VipListBean vipListBean = arrayList.get(position);
 
+        viewHolder.id.setText(vipListBean.getVip_date_id());
+        viewHolder.shopName.setText(vipListBean.getName());
+        viewHolder.vipdes.setText(vipListBean.getVip_describe());
+        viewHolder.phone.setText(vipListBean.getPhone());
+        viewHolder.desLevel.setText(vipListBean.getVIP_name());
+        String vip_name = vipListBean.getVIP_name();
+
+        if (!vip_name.equals("")) {
+            viewHolder.level.setText(vip_name);
+            viewHolder.desLevel.setText(vip_name);
+
+        } else {
+            viewHolder.level.setText("暂无");
+            viewHolder.desLevel.setText("暂无");
+        }
+        viewHolder.inter.setText(vipListBean.getIntegral());
+        viewHolder.enterShop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, StoreParticularInfoActivity
+                        .class);
+                intent.putExtra("shopid", vipListBean.getMer_id());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -52,13 +82,18 @@ public class VipCardAdapter extends
         View mLayout;
         View mContainerContent;
 
-        TextView levelName;
+
         TextView shopName;
         TextView shopLocation;
         TextView id;
         TextView level;
+        TextView enterShop;
+        TextView vipdes;
+        TextView phone;
+        TextView inter;
+        TextView desLevel;
 
-        CircleImageView imv_list_card_title;
+        CircleImageView pic;
 
         public viewHolder(View view) {
             super(view);
@@ -66,14 +101,19 @@ public class VipCardAdapter extends
             mLayout = view.findViewById(R.id.frame_list_card_item);
             mContainerContent = view.findViewById(R.id.container_list_content);
 
-            imv_list_card_title = view.findViewById(R.id.imv_list_card_title);
-            imv_list_card_title.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
+            pic = view.findViewById(R.id.imv_list_card_title);
+            pic.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
 
             shopName = view.findViewById(R.id.tv_list_card_shopname);
             shopLocation = view.findViewById(R.id.tv_list_card_shoplocation);
-            levelName = view.findViewById(R.id.tv_list_card_user_levelname);
+
             level = view.findViewById(R.id.tv_list_card_userlevel);
             id = view.findViewById(R.id.tv_list_card_user_id);
+            vipdes = view.findViewById(R.id.tv_person_vip_des);
+            desLevel = view.findViewById(R.id.tv_person_vip_des_level);
+            enterShop = view.findViewById(R.id.tv_person_vip_enter_shop);
+            inter = view.findViewById(R.id.tv_person_vip_inter);
+            phone = view.findViewById(R.id.tv_person_vip_phone);
         }
 
         @Override

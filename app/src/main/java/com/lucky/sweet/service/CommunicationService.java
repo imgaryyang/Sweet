@@ -31,6 +31,7 @@ import com.lucky.sweet.entity.CircleMainInfo;
 import com.lucky.sweet.entity.JoinInRoomMenu;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.PerdetermingEntity;
+import com.lucky.sweet.entity.PersonVipCard;
 import com.lucky.sweet.entity.ReservationInfo;
 import com.lucky.sweet.entity.ShopCarEntity;
 import com.lucky.sweet.entity.StoreDetailedInfo;
@@ -41,6 +42,7 @@ import com.lucky.sweet.entity.WeatherInfo;
 import com.lucky.sweet.handler.LoginRegisterHandler;
 import com.lucky.sweet.handler.OrderSeatHandler;
 import com.lucky.sweet.properties.CircleProperties;
+import com.lucky.sweet.properties.PersonProperties;
 import com.lucky.sweet.properties.Properties;
 import com.lucky.sweet.properties.ReserveProperties;
 import com.lucky.sweet.properties.ServiceProperties;
@@ -305,6 +307,35 @@ public class CommunicationService extends Service {
         public void circleLikeIt(String circle_id, int position) {
             CommunicationService.this.circleLikeIt(circle_id, position);
         }
+        public void requestPersonVipCard(){
+            CommunicationService.this.requestPersonVipCard();
+        }
+    }
+
+    private void requestPersonVipCard() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("session", MyApplication.sessionId);
+        HttpUtils.sendOkHttpRequest(PersonProperties.PERSON_VIP_CARD,
+                new com.zhy.http.okhttp.callback.Callback() {
+                    @Override
+                    public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
+                        Gson gson = new Gson();
+                        String trim = response.body().string().trim();
+                        PersonVipCard personVipCard = gson.fromJson(trim, PersonVipCard.class);
+                        EventBus.getDefault().post(personVipCard);
+                        return null;
+                    }
+
+                    @Override
+                    public void onError(Request request, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Object response) {
+
+                    }
+                }, map);
     }
 
     private void circleLikeIt(final String circle_id, final int position) {
@@ -851,8 +882,6 @@ public class CommunicationService extends Service {
 
                         if (city.contains("市"))
                             initWeather(city.substring(0, city.length() - 1));
-
-                        System.out.println("纬度" + tencentLocation.getLatitude() + "经度" + tencentLocation.getLongitude());
 
                         initShopInfo(tencentLocation.getLatitude(), tencentLocation.getLongitude());
                     }

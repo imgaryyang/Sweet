@@ -1,21 +1,43 @@
 package com.lucky.sweet.activity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.entity.VipCardInfo;
+import com.lucky.sweet.entity.PersonVipCard;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 import com.lucky.sweet.widgets.cardstack.CardStackView;
 import com.lucky.sweet.widgets.cardstack.VipCardAdapter;
 
-import java.util.ArrayList;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.List;
+
 
 public class VipCardActiviry extends BaseActivity {
 
     private CardStackView cardStackView;
+    private TextView tv_vip_null;
+    private TextView tv_person_vip_null;
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +52,7 @@ public class VipCardActiviry extends BaseActivity {
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
-
+        myBinder.requestPersonVipCard();
     }
 
     private void initTitle() {
@@ -57,19 +79,26 @@ public class VipCardActiviry extends BaseActivity {
         ToolBar toolBar = new ToolBar(this);
         toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
         cardStackView = findViewById(R.id.stackview_vip_card);
-        ArrayList<VipCardInfo> objects = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            objects.add(new VipCardInfo());
-        }
+        tv_person_vip_null = findViewById(R.id.tv_person_vip_null);
 
-        final VipCardAdapter objectStackAdapter = new VipCardAdapter(this, objects);
-        cardStackView.setAdapter(objectStackAdapter);
         cardStackView.setItemExpendListener(new CardStackView.ItemExpendListener() {
             @Override
             public void onItemExpend(boolean expend) {
 
             }
         });
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(PersonVipCard info) {
+        List<PersonVipCard.VipListBean> vip_list = info.getVip_list();
+        if (vip_list.size()!=0) {
+            VipCardAdapter objectStackAdapter = new VipCardAdapter(this,vip_list);
+            cardStackView.setAdapter(objectStackAdapter);
+            tv_person_vip_null.setVisibility(View.GONE);
+        }
+        cardStackView.setVisibility(View.GONE);
 
     }
 }

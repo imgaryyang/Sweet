@@ -23,6 +23,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_gravity="center"/>
             <TextView
+                android:id="@+id/tv_person_vip_inter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
@@ -53,6 +54,7 @@
                 android:layout_gravity="center"/>
 
             <TextView
+                android:id="@+id/tv_person_vip_des_level"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
@@ -82,6 +84,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_gravity="center"/>
             <TextView
+                android:id="@+id/tv_person_vip_enter_shop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
@@ -94,6 +97,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tv_person_vip_des"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="本店会员消费满188元享8.8折哦！积分可对换礼品！会员生日当天进店消费有礼品赠送，会员优惠最终解释权归店铺所有。"
@@ -116,6 +120,7 @@
             android:textColor="@color/black"
             android:textSize="15dp"/>
         <TextView
+            android:id="@+id/tv_person_vip_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="15640907890"
