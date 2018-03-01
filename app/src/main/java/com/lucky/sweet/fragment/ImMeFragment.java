@@ -17,6 +17,7 @@ import android.widget.Button;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.activity.CropIwaActivity;
+import com.lucky.sweet.activity.HistoricalOderActivity;
 import com.lucky.sweet.activity.MainActivity;
 import com.lucky.sweet.activity.MyApplication;
 import com.lucky.sweet.activity.MyCommentActivity;
@@ -125,6 +126,14 @@ public class ImMeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), MyCommentActivity.class));
+                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+
+            }
+        });
+        view.findViewById(R.id.rl_hisorder).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), HistoricalOderActivity.class));
                 getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
 
             }

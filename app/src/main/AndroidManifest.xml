@@ -101,6 +101,7 @@
         </activity>
         <activity android:name=".activity.MyCommentActivity"/>
         <activity android:name=".activity.MultiOrderActivity"/>
+        <activity android:name=".activity.HistoricalOderActivity"/>
 
         <activity android:name=".activity.CropIwaActivity">
         </activity>

@@ -130,7 +130,7 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:id="@+id/rl_mycomment"
+                    android:id="@+id/rl_hisorder"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -171,7 +171,7 @@
                             android:layout_below="@id/tv_count1"
                             android:layout_marginLeft="10dp"
                             android:layout_toRightOf="@id/imv_ic1"
-                            android:text="我的评论"
+                            android:text="历史订单"
                             android:textColor="@color/black"
                             android:textSize="14dp"/>
 
@@ -306,6 +306,7 @@
                     android:background="@color/grayDividerDark"/>
 
                 <RelativeLayout
+                    android:id="@+id/rl_mycomment"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -346,7 +347,7 @@
                             android:layout_below="@id/tv_count5"
                             android:layout_marginLeft="10dp"
                             android:layout_toRightOf="@id/imv_ic5"
-                            android:text="我的赞"
+                            android:text="我的评价"
                             android:textColor="@color/black"
                             android:textSize="14dp"/>
 
@@ -363,7 +364,7 @@
                 android:layout_height="1px"
                 android:background="@color/grayDividerDark"/>
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:background="@color/white"
@@ -461,7 +462,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/grayDividerDark"/>
+                android:background="@color/grayDividerDark"/>-->
 
             <!--<Button
                 android:layout_width="wrap_content"

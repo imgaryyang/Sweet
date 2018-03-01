@@ -6,7 +6,7 @@ import java.util.List;
  * Created by C on 2018/2/27.
  */
 
-public class PersonVipCard {
+public class VipCardInfo {
 
     private List<VipListBean> vip_list;
 

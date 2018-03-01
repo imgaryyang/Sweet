@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.activity.StoreParticularInfoActivity;
-import com.lucky.sweet.entity.PersonVipCard;
+import com.lucky.sweet.entity.VipCardInfo;
 import com.lucky.sweet.views.CircleImageView;
 
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
 public class VipCardAdapter extends
         StackAdapter<VipCardAdapter.viewHolder> {
 
-    private List<PersonVipCard.VipListBean> arrayList;
+    private List<VipCardInfo.VipListBean> arrayList;
     private Context context;
 
     public static Integer[] TEST_DATAS = new Integer[]{
@@ -29,7 +29,7 @@ public class VipCardAdapter extends
             R.color.bg_vip_card_color_fifth,
     };
 
-    public VipCardAdapter(Context context, List<PersonVipCard.VipListBean> arrayList) {
+    public VipCardAdapter(Context context, List<VipCardInfo.VipListBean> arrayList) {
         super(context);
         this.context = context;
         this.arrayList = arrayList;
@@ -41,7 +41,7 @@ public class VipCardAdapter extends
 
         viewHolder viewHolder = (viewHolder) holder;
         viewHolder.mLayout.getBackground().setColorFilter(ContextCompat.getColor(getContext(), TEST_DATAS[position % TEST_DATAS.length]), PorterDuff.Mode.SRC_IN);
-        final PersonVipCard.VipListBean vipListBean = arrayList.get(position);
+        final VipCardInfo.VipListBean vipListBean = arrayList.get(position);
 
         viewHolder.id.setText(vipListBean.getVip_date_id());
         viewHolder.shopName.setText(vipListBean.getName());

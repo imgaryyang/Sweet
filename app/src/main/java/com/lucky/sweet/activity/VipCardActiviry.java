@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.entity.PersonVipCard;
+import com.lucky.sweet.entity.VipCardInfo;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
@@ -91,8 +91,8 @@ public class VipCardActiviry extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void Event(PersonVipCard info) {
-        List<PersonVipCard.VipListBean> vip_list = info.getVip_list();
+    public void Event(VipCardInfo info) {
+        List<VipCardInfo.VipListBean> vip_list = info.getVip_list();
         if (vip_list.size()!=0) {
             VipCardAdapter objectStackAdapter = new VipCardAdapter(this,vip_list);
             cardStackView.setAdapter(objectStackAdapter);

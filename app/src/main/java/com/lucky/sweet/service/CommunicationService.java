@@ -31,7 +31,7 @@ import com.lucky.sweet.entity.CircleMainInfo;
 import com.lucky.sweet.entity.JoinInRoomMenu;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.PerdetermingEntity;
-import com.lucky.sweet.entity.PersonVipCard;
+import com.lucky.sweet.entity.VipCardInfo;
 import com.lucky.sweet.entity.ReservationInfo;
 import com.lucky.sweet.entity.ShopCarEntity;
 import com.lucky.sweet.entity.StoreDetailedInfo;
@@ -321,7 +321,7 @@ public class CommunicationService extends Service {
                     public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
                         Gson gson = new Gson();
                         String trim = response.body().string().trim();
-                        PersonVipCard personVipCard = gson.fromJson(trim, PersonVipCard.class);
+                        VipCardInfo personVipCard = gson.fromJson(trim, VipCardInfo.class);
                         EventBus.getDefault().post(personVipCard);
                         return null;
                     }
