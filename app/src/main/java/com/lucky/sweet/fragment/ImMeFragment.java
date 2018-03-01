@@ -22,6 +22,7 @@ import com.lucky.sweet.activity.MainActivity;
 import com.lucky.sweet.activity.MyApplication;
 import com.lucky.sweet.activity.MyCommentActivity;
 import com.lucky.sweet.activity.SetUserInfoActivity;
+import com.lucky.sweet.activity.SettingActivity;
 import com.lucky.sweet.activity.VipCardActiviry;
 import com.lucky.sweet.views.CircleImageView;
 import com.lucky.sweet.widgets.ToolBar;
@@ -115,7 +116,7 @@ public class ImMeFragment extends Fragment {
         btn_setUserInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), SetUserInfoActivity.class);
+                Intent intent = new Intent(getActivity(), SettingActivity.class);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
 
