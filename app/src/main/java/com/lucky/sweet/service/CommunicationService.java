@@ -830,9 +830,7 @@ public class CommunicationService extends Service {
             request.setInterval(3000);
             request.setRequestLevel(TencentLocationRequest.REQUEST_LEVEL_ADMIN_AREA);
             int requestCode = locationManager.requestLocationUpdates(request, mListener);
-            if (requestCode == 0) {
 
-            }
         }
     }
 

@@ -3,10 +3,15 @@ package com.lucky.sweet.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,17 +22,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.activity.CaptureActivity;
+import com.lucky.sweet.activity.MainActivity;
 import com.lucky.sweet.activity.MainSearchActiviy;
+import com.lucky.sweet.activity.MyApplication;
 import com.lucky.sweet.activity.StoreDisplayActivity;
 import com.lucky.sweet.activity.StoreParticularInfoActivity;
 import com.lucky.sweet.adapter.AdViewPagerAdapter;
 import com.lucky.sweet.adapter.RecFoodRecommendAdapter;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.WeatherInfo;
+import com.lucky.sweet.utility.BlurBitmapUtil;
 import com.lucky.sweet.utility.HiddenAnimUtils;
 import com.lucky.sweet.views.GradualChangeLinearLayout;
 import com.lucky.sweet.views.IndicatorView;
@@ -74,6 +83,9 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
     private IndicatorView in_vp_ad;
     private RecycleViewRefresh ref_recy_food;
     private RecycleViewRefresh ref_recy_fun;
+    private RelativeLayout rl_store_method;
+    private FloatingActionButton float_btn;
+    private CoordinatorLayout cdl_cover;
 
     @Override
     public void onAttach(Context context) {
@@ -162,6 +174,9 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         ref_recy_fun.setMoveViews(pb_fun_loading);
         collapsingToolbarLayout = view.findViewById(R.id.collapsingToolbarLayout);
         in_vp_ad = view.findViewById(R.id.in_vp_ad);
+        float_btn = view.findViewById(R.id.float_btn);
+        cdl_cover = view.findViewById(R.id.cdl_cover);
+        rl_store_method = view.findViewById(R.id.rl_store_method);
         collapsingToolbarLayout.setContentScrim(getResources().getDrawable(R.drawable.search_bg));
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -177,6 +192,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initEvent() {
+        float_btn.setOnClickListener(this);
         tv_moreFood.setOnClickListener(this);
         tv_moreRelax.setOnClickListener(this);
         btn_qrcodescan.setOnClickListener(this);
@@ -314,7 +330,16 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
                 break;
+            case R.id.float_btn:
 
+                Bitmap bitmap = BlurBitmapUtil.blurBitmap(getContext(), BlurBitmapUtil.takeScreenshot((MainActivity) getActivity(), cdl_cover), 25);
+
+                rl_store_method.setBackground( new BitmapDrawable(getResources(), bitmap));
+                    if (rl_store_method.getVisibility() == View.VISIBLE) {
+                    rl_store_method.setVisibility(View.GONE);
+                } else
+                    rl_store_method.setVisibility(View.VISIBLE);
+                break;
         }
 
     }
