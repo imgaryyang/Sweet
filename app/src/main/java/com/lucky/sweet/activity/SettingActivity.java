@@ -36,6 +36,7 @@ public class SettingActivity extends BaseActivity {
         initTitle();
         initData();
         initViews();
+        onClick();
     }
 
     @Override
@@ -130,6 +131,16 @@ public class SettingActivity extends BaseActivity {
                     startActivity(new Intent(SettingActivity.this, UserLoginActivity.class));
                     return;
                 }
+            }
+        });
+    }
+
+    private void onClick(){
+        findViewById(R.id.ll_setUserInfo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingActivity.this, VipCardActiviry.class));
+                overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
             }
         });
     }
