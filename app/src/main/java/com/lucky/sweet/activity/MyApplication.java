@@ -61,8 +61,6 @@ public class MyApplication extends Application {
         super.onCreate();
         context = getApplicationContext();
 
-       // initSession();
-
         initOssClient();
 
         initBroadCastReceiver();
@@ -117,7 +115,7 @@ public class MyApplication extends Application {
         CURRENT_CITY = city;
     }
 
-    public static void initSession() {
+    public static void initSession(final OnOssClient onOssClient) {
         final SharedPreferences config = context.getSharedPreferences("config",
                 MODE_PRIVATE);
         if (config.getBoolean("logined", false)) {
@@ -136,7 +134,16 @@ public class MyApplication extends Application {
                         Response response = client.newCall(request).execute();
                         if (response.isSuccessful()) {
                             sessionId = response.body().string();
-                            System.out.println("session:" + sessionId);
+                            Log.i("Session", sessionId);
+                            if (onOssClient != null) {
+
+                                onOssClient.onClient(true);
+                            }
+                        } else {
+                            if (onOssClient != null) {
+
+                                onOssClient.onClient(false);
+                            }
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -180,8 +187,15 @@ public class MyApplication extends Application {
             }
         });
     }
+
+    public interface OnOssClient {
+        void onClient(Boolean flag);
+    }
+
     private static final String TAG = "Init";
+
     private static CloudPushService pushService;
+
     private void initCloudChannel(Context applicationContext) {
         PushServiceFactory.init(applicationContext);
         pushService = PushServiceFactory.getCloudPushService
@@ -198,8 +212,8 @@ public class MyApplication extends Application {
             }
         });
     }
-    public static void bindPushAccount(String account, CommonCallback commonCallback)
-    {
+
+    public static void bindPushAccount(String account, CommonCallback commonCallback) {
         pushService.bindAccount(account, commonCallback);
 
     }

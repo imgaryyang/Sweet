@@ -17,6 +17,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -298,7 +299,8 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         });
         funAdapter.setOnItemClickListener(new RecFoodRecommendAdapter.OnItemClickListener() {
             @Override
-            public void onItemClickListener(String shopId) {
+            public void onItemClickListener(String shopId)
+            {
                 Intent intent = new Intent(getActivity(), StoreParticularInfoActivity.class);
                 intent.putExtra("shopid", shopId);
                 startActivity(intent);

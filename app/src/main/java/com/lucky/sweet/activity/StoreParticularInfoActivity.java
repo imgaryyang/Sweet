@@ -3,6 +3,7 @@ package com.lucky.sweet.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -177,7 +178,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
             }
         });
 
-        ListView lv_circle = (ListView) findViewById(R.id.lv_circle);
+        ListView lv_circle = findViewById(R.id.lv_circle);
 
        /* lv_circle.setAdapter(new CircleListViewAdapter(this, info.getCircle_list()));*/
         setListViewHeightBasedOnChildren(lv_circle);

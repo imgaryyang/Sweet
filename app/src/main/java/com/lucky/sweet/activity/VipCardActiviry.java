@@ -1,6 +1,7 @@
 package com.lucky.sweet.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -94,11 +95,12 @@ public class VipCardActiviry extends BaseActivity {
     public void Event(VipCardInfo info) {
         List<VipCardInfo.VipListBean> vip_list = info.getVip_list();
         if (vip_list.size()!=0) {
+            Log.i("size",vip_list.size()+"");
             VipCardAdapter objectStackAdapter = new VipCardAdapter(this,vip_list);
             cardStackView.setAdapter(objectStackAdapter);
             tv_person_vip_null.setVisibility(View.GONE);
-        }
-        cardStackView.setVisibility(View.GONE);
+        }else cardStackView.setVisibility(View.GONE);
+
 
     }
 }

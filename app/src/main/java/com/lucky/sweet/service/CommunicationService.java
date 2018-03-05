@@ -23,6 +23,7 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.lucky.sweet.utility.MyOkhttpHelper;
 import com.lucky.sweet.activity.MyApplication;
 import com.lucky.sweet.activity.OrderSeatActivity;
 import com.lucky.sweet.entity.CircleDetail;
@@ -48,7 +49,6 @@ import com.lucky.sweet.properties.ReserveProperties;
 import com.lucky.sweet.properties.ServiceProperties;
 import com.lucky.sweet.utility.HttpUtils;
 import com.lucky.sweet.utility.PanduanNet;
-import com.squareup.okhttp.Request;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
@@ -307,7 +307,8 @@ public class CommunicationService extends Service {
         public void circleLikeIt(String circle_id, int position) {
             CommunicationService.this.circleLikeIt(circle_id, position);
         }
-        public void requestPersonVipCard(){
+
+        public void requestPersonVipCard() {
             CommunicationService.this.requestPersonVipCard();
         }
     }
@@ -316,24 +317,17 @@ public class CommunicationService extends Service {
         HashMap<String, String> map = new HashMap<>();
         map.put("session", MyApplication.sessionId);
         HttpUtils.sendOkHttpRequest(PersonProperties.PERSON_VIP_CARD,
-                new com.zhy.http.okhttp.callback.Callback() {
+                new MyOkhttpHelper() {
+
                     @Override
-                    public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
-                        Gson gson = new Gson();
-                        String trim = response.body().string().trim();
-                        VipCardInfo personVipCard = gson.fromJson(trim, VipCardInfo.class);
-                        EventBus.getDefault().post(personVipCard);
-                        return null;
+                    public void onResponseSuccessfulString(String string) {
+
+                        EventBus.getDefault().post(new Gson().fromJson(string, VipCardInfo.class));
                     }
 
                     @Override
-                    public void onError(Request request, Exception e) {
-
-                    }
-
-                    @Override
-                    public void onResponse(Object response) {
-
+                    public void afterNewRequestSession() {
+                        requestPersonVipCard();
                     }
                 }, map);
     }
@@ -344,99 +338,64 @@ public class CommunicationService extends Service {
         map.put("circle_id", circle_id);
         map.put("session", MyApplication.sessionId);
         HttpUtils.sendOkHttpRequest(CircleProperties.LIKE_POINT,
-                new com.zhy.http.okhttp.callback.Callback() {
+                new MyOkhttpHelper() {
+
                     @Override
-                    public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
+                    public void onResponseSuccessfulString(String string) {
                         CircleLikePoint circleLikePoint = new CircleLikePoint();
                         circleLikePoint.setPosition(position);
-                        circleLikePoint.setRequest(response.body().string());
-
+                        circleLikePoint.setRequest(string);
                         EventBus.getDefault().post(circleLikePoint);
-                        return null;
                     }
 
                     @Override
-                    public void onError(Request request, Exception e) {
-
-                    }
-
-                    @Override
-                    public void onResponse(Object response) {
-
+                    public void afterNewRequestSession() {
+                        circleLikeIt(circle_id, position);
                     }
                 }, map);
     }
 
-    private void sendCircledetailsInfo(String circle_id) {
+    private void sendCircledetailsInfo(final String circle_id) {
         HashMap<String, String> map = new HashMap<>();
         map.put("circle_id", circle_id);
         map.put("session", MyApplication.sessionId);
         HttpUtils.sendOkHttpRequest(CircleProperties.CIRCLE_CONTENT_DETAILS,
-                new com.zhy.http.okhttp.callback.Callback() {
+                new MyOkhttpHelper() {
+
                     @Override
-                    public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
-                        String string = response.body().string();
-                        Gson gson = new Gson();
-
-                        EventBus.getDefault().post(gson.fromJson(string, CircleDetail.class));
-
-
-                        return null;
+                    public void onResponseSuccessfulString(String string) {
+                        EventBus.getDefault().post(new Gson().fromJson(string, CircleDetail.class));
                     }
 
                     @Override
-                    public void onError(Request request, Exception e) {
-
-                    }
-
-                    @Override
-                    public void onResponse(Object response) {
-
+                    public void afterNewRequestSession() {
+                        sendCircledetailsInfo(circle_id);
                     }
                 }, map);
     }
 
-    private void requestCircleInfo(String type, String loacation) {
+    private void requestCircleInfo(final String type, final String location) {
         HashMap<String, String> map = new HashMap<>();
         map.put("type", type);
         map.put("session", MyApplication.sessionId);
-        map.put("start", loacation);
+        map.put("start", location);
         HttpUtils.sendOkHttpRequest(CircleProperties.CIRCLE_MAIN_SHOW,
-                new com.zhy.http.okhttp.callback.Callback() {
+                new MyOkhttpHelper() {
                     @Override
-                    public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
-                        String string = response.body().string();
-                        Log.i("circle",string);
+                    public void onResponseSuccessfulString(String string) {
 
-                        if (string.equals("250")) {
-                            return null;
-                        }
-                        try {
-                            Gson gson = new Gson();
-                            CircleMainInfo circleMainInfo = gson.fromJson
-                                    (string, CircleMainInfo.class);
-                            EventBus.getDefault().post(circleMainInfo);
-                        } catch (Exception e) {
-
-                        }
-
-                        return null;
+                        EventBus.getDefault().post(new Gson().fromJson(string, CircleMainInfo.class));
                     }
 
                     @Override
-                    public void onError(Request request, Exception e) {
-
-                    }
-
-                    @Override
-                    public void onResponse(Object response) {
-
+                    public void afterNewRequestSession() {
+                        requestCircleInfo(type, location);
                     }
                 }, map);
 
     }
 
-    private void dishesMenuUpdata(String roomId, String item, String incr_decr, String key) {
+    private void dishesMenuUpdata(final String roomId, final String item, final String incr_decr, final String key) {
         HashMap<String, String> map = new HashMap<>();
         map.put("session", MyApplication.sessionId);
         map.put("room_id", roomId);
@@ -444,29 +403,23 @@ public class CommunicationService extends Service {
         map.put("incr_decr", incr_decr);
         map.put("key_value", key);
         HttpUtils.sendOkHttpRequest(ReserveProperties.UPDATA_MENU,
-                new com.zhy.http.okhttp.callback.Callback() {
+                new MyOkhttpHelper() {
                     @Override
-                    public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
-                        String string = response.body().string();
+                    public void onResponseSuccessfulString(String string) {
 
-                        return null;
+                        EventBus.getDefault().post(new Gson().fromJson(string, CircleMainInfo.class));
                     }
 
                     @Override
-                    public void onError(Request request, Exception e) {
-
-                    }
-
-                    @Override
-                    public void onResponse(Object response) {
-
+                    public void afterNewRequestSession() {
+                        dishesMenuUpdata(roomId, item, incr_decr, key);
                     }
                 }, map);
     }
 
-    private void joinInReserveRoom(String roomId, String psw) {
-        HashMap<String, String> map = new HashMap<>();
+    private void joinInReserveRoom(final String roomId, final String psw) {
         try {
+            HashMap<String, String> map = new HashMap<>();
             String userId = MyApplication.USER_ID;
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("name", userId);
@@ -474,91 +427,65 @@ public class CommunicationService extends Service {
             map.put("room_id", roomId);
             map.put("password", psw);
             map.put("key_value", jsonObject.toString());
+
+        HttpUtils.sendOkHttpRequest(ReserveProperties.JOIN_IN_ROOM,
+                new MyOkhttpHelper() {
+
+                    @Override
+                    public void onResponseSuccessfulString(String string) {
+
+                        EventBus.getDefault().post(new Gson().fromJson(string, JoinInRoomMenu.class));
+                    }
+
+                    @Override
+                    public void afterNewRequestSession() {
+                        joinInReserveRoom(roomId, psw);
+                    }
+                }, map);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        HttpUtils.sendOkHttpRequest(ReserveProperties.JOIN_IN_ROOM,
-                new com.zhy.http.okhttp.callback.Callback() {
-                    @Override
-                    public Object parseNetworkResponse(com.squareup.okhttp
-                                                               .Response response) {
-                        try {
-                            String string = response.body().string();
-                            Gson gson = new Gson();
-                            Log.i("joinInReserveRoom", string);
-                            EventBus.getDefault().post(gson.fromJson(string, JoinInRoomMenu.class));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                        return null;
-                    }
-
-                    @Override
-                    public void onError(Request request, Exception e) {
-
-                    }
-
-                    @Override
-                    public void onResponse(Object response) {
-
-                    }
-                }, map);
     }
 
-    private void createReserveRoom(String mer_id, String password) {
+    private void createReserveRoom(final String mer_id, final String password) {
         HashMap<String, String> map = new HashMap<>();
         map.put("session", MyApplication.sessionId);
         map.put("mer_id", mer_id);
         map.put("password", password);
         map.put("old_password", "");
         HttpUtils.sendOkHttpRequest(ReserveProperties.CREATE_OR_ALTER_ROOM,
-                new com.zhy.http.okhttp.callback.Callback() {
-                    @Override
-                    public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
-                        String string = response.body().string();
-                        ReservationInfo reservationInfo = new ReservationInfo();
-                        reservationInfo.setRoomId(string);
+                new MyOkhttpHelper() {
 
-                        EventBus.getDefault().post(reservationInfo);
-                        return null;
+                    @Override
+                    public void onResponseSuccessfulString(String string) {
+
+                        EventBus.getDefault().post(new Gson().fromJson(string, ReservationInfo.class));
                     }
 
                     @Override
-                    public void onError(Request request, Exception e) {
-
-                    }
-
-                    @Override
-                    public void onResponse(Object response) {
-
+                    public void afterNewRequestSession() {
+                        createReserveRoom(mer_id, password);
                     }
                 }, map);
     }
 
     //todo 确认mer_id
-    private void sendCircleInfo(String photoPath, String content) {
+    private void sendCircleInfo(final String photoPath, final String content) {
         HashMap<String, String> map = new HashMap<>();
         map.put("photo", photoPath);
         map.put("session", MyApplication.sessionId);
         map.put("mer_id", "1");
         map.put("content", content);
-        HttpUtils.sendOkHttpRequest(CircleProperties.SEND_CIRCLE, new com.zhy.http
-                .okhttp.callback.Callback() {
+        HttpUtils.sendOkHttpRequest(CircleProperties.SEND_CIRCLE, new MyOkhttpHelper() {
+
             @Override
-            public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
-                EventBus.getDefault().post(response.body().string());
-                return null;
+            public void onResponseSuccessfulString(String string) {
+                EventBus.getDefault().post(string);
             }
 
             @Override
-            public void onError(com.squareup.okhttp.Request request, Exception e) {
-
-            }
-
-            @Override
-            public void onResponse(Object response) {
-
+            public void afterNewRequestSession() {
+                sendCircleInfo(photoPath, content);
             }
         }, map);
     }
@@ -655,7 +582,7 @@ public class CommunicationService extends Service {
     }
 
 
-    private void requestOrderSeatInfo(String time, String num, String peopleNum, String photo, String des) {
+    private void requestOrderSeatInfo(final String time, final String num, final String peopleNum, final String photo, final String des) {
         HashMap<String, String> map = new HashMap<>();
         map.put("tim", time);
         map.put("num", num);
@@ -663,60 +590,36 @@ public class CommunicationService extends Service {
         map.put("photo", photo);
         map.put("des", des);
         map.put("session", MyApplication.sessionId);
-        HttpUtils.sendOkHttpRequest(Properties.MAINSHOWPLAYTPATH, new com.zhy.http.okhttp.callback.Callback() {
+        HttpUtils.sendOkHttpRequest(Properties.MAINSHOWPLAYTPATH, new MyOkhttpHelper() {
             @Override
-            public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
-                try {
-                    Gson gson = new Gson();
-                    System.out.println(response.toString());
-                } catch (Exception e) {
-                    Log.e("Service", "requestOrder");
-                }
-                return null;
+            public void onResponseSuccessfulString(String string) {
+                EventBus.getDefault().post(string);
             }
 
             @Override
-            public void onError(com.squareup.okhttp.Request request, Exception e) {
-
+            public void afterNewRequestSession() {
+                requestOrderSeatInfo(time, num, peopleNum, photo, des);
             }
 
-            @Override
-            public void onResponse(Object response) {
-
-            }
         }, map);
     }
 
-    private void requestShopCarInfo(String mer_id) {
-        HashMap<String, String> map = new HashMap<>();
+    private void requestShopCarInfo(final String mer_id) {
+        final HashMap<String, String> map = new HashMap<>();
         map.put("mer_id", "1");
         map.put("session", MyApplication.sessionId);
-        HttpUtils.sendOkHttpRequest(Properties.SHOP_CAR, new com.zhy.http.okhttp
-                .callback.Callback() {
-            @Override
-            public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
-                String string = response.body().string();
-
-                try {
-                    System.out.println(string);
-                    EventBus.getDefault().post(new Gson().fromJson(string, ShopCarEntity.class));
-                } catch (Exception e) {
-
-                    if (string.equals("250")) {
-                        System.out.println("session过期");
-                    }
-                }
-                return null;
-            }
+        HttpUtils.sendOkHttpRequest(Properties.SHOP_CAR, new MyOkhttpHelper() {
 
             @Override
-            public void onError(com.squareup.okhttp.Request request, Exception e) {
+            public void onResponseSuccessfulString(String string) {
+
+                EventBus.getDefault().post(new Gson().fromJson(string, ShopCarEntity.class));
 
             }
 
             @Override
-            public void onResponse(Object response) {
-
+            public void afterNewRequestSession() {
+                requestShopCarInfo(mer_id);
             }
         }, map);
     }
@@ -724,33 +627,14 @@ public class CommunicationService extends Service {
     private void getStoreDisplaySearchTitle() {
         HashMap<String, String> map = new HashMap<>();
         map.put("city", MyApplication.CURRENT_CITY);
-        HttpUtils.sendOkHttpRequest(Properties.DISPLAYSEARCHTITLE, new com.zhy.http.okhttp
-                .callback.Callback() {
+        HttpUtils.sendOkHttpRequest(Properties.DISPLAYSEARCHTITLE, new MyOkhttpHelper() {
             @Override
-            public Object parseNetworkResponse(com.squareup.okhttp.Response response) {
-                try {
-                    Gson gson = new Gson();
-                    //todo 修改商品展示检索栏
-                    StoreDisplaySearchEntity storeDisplaySearchEntity = gson.fromJson(response.body().string().replace("null", "")
-                            , StoreDisplaySearchEntity.class);
-
-                    EventBus.getDefault().post(storeDisplaySearchEntity);
-
-                } catch (Exception e) {
-                    Log.e("Service", "StoreDisplay");
-                }
-
-                return null;
+            public void onResponseSuccessfulString(String string) {
+                EventBus.getDefault().post(new Gson().fromJson(string, StoreDisplaySearchEntity.class));
             }
-
             @Override
-            public void onError(com.squareup.okhttp.Request request, Exception e) {
-
-            }
-
-            @Override
-            public void onResponse(Object response) {
-
+            public void afterNewRequestSession() {
+                getStoreDisplaySearchTitle();
             }
         }, map);
     }
@@ -789,30 +673,15 @@ public class CommunicationService extends Service {
         HashMap<String, String> map = new HashMap<>();
         map.put("long", String.valueOf(lon));
         map.put("lat", String.valueOf(lat));
-        HttpUtils.sendOkHttpRequest(Properties.MAINSHOWPLAYTPATH, new com.zhy.http.okhttp.callback.Callback() {
+        HttpUtils.sendOkHttpRequest(Properties.MAINSHOWPLAYTPATH, new MyOkhttpHelper() {
+
             @Override
-            public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
-                try {
-                    Gson gson = new Gson();
-                    MainStoreInfo mainStoreInfo = gson.fromJson(response.body().string(), MainStoreInfo.class);
-                    EventBus.getDefault().post(mainStoreInfo);
-
-                } catch (Exception e) {
-                    Log.e("Service", "initShopInfo");
-                }
-
-
-                return null;
+            public void onResponseSuccessfulString(String string) {
+                EventBus.getDefault().post(new Gson().fromJson(string, MainStoreInfo.class));
             }
-
             @Override
-            public void onError(com.squareup.okhttp.Request request, Exception e) {
-
-            }
-
-            @Override
-            public void onResponse(Object response) {
-
+            public void afterNewRequestSession() {
+                initShopInfo(lat,lon);
             }
         }, map);
 
@@ -880,7 +749,7 @@ public class CommunicationService extends Service {
 
                         if (city.contains("市"))
                             initWeather(city.substring(0, city.length() - 1));
-
+                        System.out.println("cityLocation");
                         initShopInfo(tencentLocation.getLatitude(), tencentLocation.getLongitude());
                     }
                     stopLocation();
@@ -898,30 +767,22 @@ public class CommunicationService extends Service {
     }
 
 
-    private void getParticularInfo(String shopid) {
+    private void getParticularInfo(final String shopid) {
         final HashMap<String, String> map = new HashMap<>();
         map.put("mer_id", shopid);
         new Thread() {
             @Override
             public void run() {
                 HttpUtils.sendOkHttpRequest(Properties.STOREDETAILEDPATH, new
-                        com.zhy.http.okhttp.callback.Callback() {
+                        MyOkhttpHelper() {
+
                             @Override
-                            public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
-                                String string = response.body().string();
-                                Gson gson = new Gson();
-                                EventBus.getDefault().post(gson.fromJson(string, StoreDetailedInfo.class));
-                                return null;
+                            public void onResponseSuccessfulString(String string) {
+                                EventBus.getDefault().post(new Gson().fromJson(string, StoreDetailedInfo.class));
                             }
-
                             @Override
-                            public void onError(Request request, Exception e) {
-
-                            }
-
-                            @Override
-                            public void onResponse(Object response) {
-
+                            public void afterNewRequestSession() {
+                                getParticularInfo(shopid);
                             }
                         }, map);
             }
@@ -930,7 +791,7 @@ public class CommunicationService extends Service {
     }
 
 
-    private void getStoreDisplayInfo(String project, String circle, String rank, String num) {
+    private void getStoreDisplayInfo(final String project, final String circle, final String rank, final String num) {
         final HashMap<String, String> map = new HashMap<>();
         map.put("small_project", project);
         map.put("circle", circle);
@@ -941,26 +802,16 @@ public class CommunicationService extends Service {
             @Override
             public void run() {
                 HttpUtils.sendOkHttpRequest(Properties.DISPLAYMAINSHOWPATH, new
-                        com.zhy.http.okhttp.callback.Callback() {
+                        MyOkhttpHelper() {
                             @Override
-                            public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
-                                String string = response.body().string();
-                                Gson gson = new Gson();
-
-                                EventBus.getDefault().post(gson.fromJson(string, StoreDisplayInfo.class));
-
-                                return null;
+                            public void onResponseSuccessfulString(String string) {
+                                EventBus.getDefault().post(new Gson().fromJson(string, StoreDisplayInfo.class));
+                            }
+                            @Override
+                            public void afterNewRequestSession() {
+                                getStoreDisplayInfo(project,circle,rank,num);
                             }
 
-                            @Override
-                            public void onError(Request request, Exception e) {
-
-                            }
-
-                            @Override
-                            public void onResponse(Object response) {
-
-                            }
                         }, map);
             }
         }.start();
