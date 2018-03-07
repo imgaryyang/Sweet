@@ -1,6 +1,9 @@
 package com.lucky.sweet.activity;
 
 import android.content.Context;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -250,12 +253,32 @@ public class StoreParticularInfoActivity extends BaseActivity {
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Intent intent = new Intent(StoreParticularInfoActivity
+                /*Intent intent = new Intent(StoreParticularInfoActivity
                         .this, MultiOrderActivity.class);
                 intent.putExtra
                         ("mer_id", mer_id);
                 startActivity(intent);
-                goNextAnim();
+                goNextAnim();*/
+                new AlertDialog.Builder(StoreParticularInfoActivity.this)
+                        .setMessage("请选择加入方式")
+                        .setPositiveButton("加入房间", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(StoreParticularInfoActivity.this, JoinRoomActivity.class);
+                                startActivityForResult(intent, 0);
+                                goNextAnim();
+                            }
+                        })
+                        .setNegativeButton("创建房间", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(StoreParticularInfoActivity.this, CreateRoomActivity.class);
+                                startActivityForResult(intent, 0);
+                                goNextAnim();
+                            }
+                        })
+                        .create()
+                        .show();
             }
         });
 

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@mipmap/theme_bg">
+
+    <include layout="@layout/layout_title"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_level_bg"
+        android:layout_margin="10dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/Myappcolor"
+            android:textSize="14dp"
+            android:layout_margin="10dp"
+            android:text="温馨提示：输入房间密码后，将分配您房间号码，把号码告诉你的好朋友，就可以加入您的房间与您一起点餐了哦！"/>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp">
+
+        <EditText
+            android:id="@+id/input_password"
+            android:layout_width="match_parent"
+            android:layout_height="31dp"
+            android:background="@drawable/selector_line_et_bg"
+            android:textSize="15dp"
+            android:inputType="textVisiblePassword"
+            android:paddingBottom="5dp"
+            android:textColorHint="@color/__picker_black_40"/>
+
+        <Button
+            android:id="@+id/bt_cancle_second"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:background="@mipmap/dialog_btn_input_cancle"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_weight="1.8"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0_dp"
+        android:gravity="center">
+        <Button
+            android:layout_width="@dimen/dimen_280_dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_btn_order"
+            android:text="取消订单"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>
