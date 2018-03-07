@@ -22,30 +22,6 @@ import static com.lucky.sweet.properties.ServiceProperties.TEST_BUCKET;
  */
 
 public class OssUtils {
-    public interface OnInpustreamBack {
-        void inputstreamFinish(InputStream inputStream);
-    }
-
-    public static void down(final String objectKey,
-                            final OnInpustreamBack onInpustreamBack) {
-
-        GetObjectRequest request = new GetObjectRequest(TEST_BUCKET, objectKey.trim());
-        MyApplication.getOSSClient().asyncGetObject(request, new
-                OSSCompletedCallback<GetObjectRequest, GetObjectResult>() {
-                    @Override
-                    public void onSuccess(GetObjectRequest request, GetObjectResult result) {
-                        onInpustreamBack.inputstreamFinish(result.getObjectContent());
-
-                    }
-
-                    @Override
-                    public void onFailure(GetObjectRequest request, ClientException clientException, ServiceException serviceException) {
-
-
-                    }
-                });
-
-    }
 
     public static String getOSSExtranetPath(String objectKey) {
         String path="";
