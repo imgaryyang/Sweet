@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -84,7 +85,6 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
     private IndicatorView in_vp_ad;
     private RecycleViewRefresh ref_recy_food;
     private RecycleViewRefresh ref_recy_fun;
-    private FloatingActionButton float_btn;
     private RelativeLayout rl_store_method;
     private FloatingActionButton float_btn;
     private CoordinatorLayout cdl_cover;
