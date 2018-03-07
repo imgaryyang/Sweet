@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.alibaba.sdk.android.oss.OSS;
+import com.alibaba.sdk.android.oss.common.utils.OSSUtils;
+import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
 import com.lucky.sweet.utility.OssUtils;
 
@@ -108,19 +111,12 @@ public class MessagePicturesLayout extends FrameLayout implements View.OnClickLi
                 mVisiblePictureList.add(iPicture);
                 iPicture.setLayoutParams(lpChildImage);
                 iPicture.setBackgroundResource(R.drawable.default_picture);
-                OssUtils.down(dataList.get(i), new OssUtils.OnInpustreamBack() {
-                    @Override
-                    public void inputstreamFinish(InputStream inputStream) {
-                        iPicture.setImageBitmap(BitmapFactory.decodeStream(inputStream));
-                    }
-                });
-
+                Glide.with(getContext()).load(OssUtils.getOSSExtranetPath(dataList.get(i))) .placeholder(R.mipmap.about_sweet).error(R.mipmap.ic_changepwd).into(iPicture);
                 iPicture.setTranslationX((i % column) * (imageSize + mSpace));
                 iPicture.setTranslationY((i / column) * (imageSize + mSpace));
             } else {
                 iPicture.setVisibility(View.GONE);
             }
-
 
         }
         getLayoutParams().height = imageSize * row + mSpace * (row - 1);

@@ -42,7 +42,7 @@ public class Properties {
 
     public static final String ORDERSUBMITPATH = "https://thethreestooges.cn:666/order/order/submit";
 
-    public static final String SHOP_CAR = "https://thethreestooges" + ".cn:666/trolley/trolley_show";
+    public static final String SHOP_CAR = "https://thethreestooges.cn:666/trolley/show/menu";
 
 
 

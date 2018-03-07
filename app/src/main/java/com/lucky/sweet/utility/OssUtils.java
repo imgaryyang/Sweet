@@ -25,12 +25,9 @@ public class OssUtils {
     }
 
     public static void down(final String objectKey,
-                            final OnInpustreamBack onInpustreamBack)
+                            final OnInpustreamBack onInpustreamBack) {
 
-    {
-
-        GetObjectRequest request = new GetObjectRequest(TEST_BUCKET,
-                objectKey.trim());
+        GetObjectRequest request = new GetObjectRequest(TEST_BUCKET, objectKey.trim());
         MyApplication.getOSSClient().asyncGetObject(request, new
                 OSSCompletedCallback<GetObjectRequest, GetObjectResult>() {
                     @Override
@@ -46,6 +43,16 @@ public class OssUtils {
                     }
                 });
 
+    }
 
+    public static String getOSSExtranetPath(String objectKey) {
+        String path="";
+        try {
+            path = MyApplication.getOSSClient().presignConstrainedObjectURL(TEST_BUCKET, objectKey, 30);
+
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
+        return path;
     }
 }

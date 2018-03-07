@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
 import com.lucky.sweet.utility.OssUtils;
 
@@ -19,11 +20,13 @@ public class FragmentTop extends Fragment {
 
     static final String ARG_TRAVEL = "ARG_TRAVEL";
     private String path;
-    public FragmentTop(){}
+
+    public FragmentTop() {
+    }
 
     public static FragmentTop newInstance(String path) {
         Bundle args = new Bundle();
-        Log.i(ARG_TRAVEL,path);
+        Log.i(ARG_TRAVEL, path);
         FragmentTop fragmentTop = new FragmentTop();
         args.putString(ARG_TRAVEL, path);
         fragmentTop.setArguments(args);
@@ -57,16 +60,8 @@ public class FragmentTop extends Fragment {
         super.onStart();
         final ImageView topImage = getView().findViewById(R.id.imv_itme_whole_dis);
         if (path != null) {
-            OssUtils.down(path, new OssUtils.OnInpustreamBack() {
-                @Override
-                public void inputstreamFinish(InputStream inputStream) {
 
-                    topImage.setImageBitmap(BitmapFactory.decodeStream
-                            (inputStream));
-
-                }
-            });
-
+            Glide.with(getActivity()).load(path).into(topImage);
 
         }
     }

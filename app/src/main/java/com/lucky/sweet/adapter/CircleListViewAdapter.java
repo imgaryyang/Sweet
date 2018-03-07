@@ -93,8 +93,7 @@ public class CircleListViewAdapter extends BaseAdapter {
                     if (flag) {
 
                         finalViewHolder.likeNum.setText(Integer.parseInt(datas.get(position).getLike_num()) + 1 + "");
-                        onLikeItClickListener.meridBack(datas.get(position)
-                                .getCircle_id(), position);
+                        onLikeItClickListener.meridBack(datas.get(position).getCircle_id(), position);
                         flag = false;
                     }
                 }

@@ -458,8 +458,9 @@ public class CommunicationService extends Service {
 
                     @Override
                     public void onResponseSuccessfulString(String string) {
-
-                        EventBus.getDefault().post(new Gson().fromJson(string, ReservationInfo.class));
+                        ReservationInfo reservationInfo = new ReservationInfo();
+                        reservationInfo.setRoomId(string);
+                        EventBus.getDefault().post(reservationInfo);
                     }
 
                     @Override
@@ -612,8 +613,9 @@ public class CommunicationService extends Service {
 
             @Override
             public void onResponseSuccessfulString(String string) {
+                Log.i("shop_car",string);
 
-                EventBus.getDefault().post(new Gson().fromJson(string, ShopCarEntity.class));
+               // EventBus.getDefault().post(new Gson().fromJson(string, ShopCarEntity.class));
 
             }
 
