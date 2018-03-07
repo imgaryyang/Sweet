@@ -23,6 +23,7 @@ public class FloatPageActivity extends BaseActivity {
     private View view_null1;
     private View view_null2;
     private Button btn_wait;
+    private Button btn_join;
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
@@ -61,6 +62,15 @@ public class FloatPageActivity extends BaseActivity {
                 goNextAnim();
             }
         });
+        btn_join.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(FloatPageActivity.this,
+                        JoinRoomActivity.class);
+                startActivity(intent);
+                goNextAnim();
+            }
+        });
     }
 
     private void initViews() {
@@ -69,6 +79,7 @@ public class FloatPageActivity extends BaseActivity {
         view_null1 = (View) findViewById(R.id.view_null1);
         view_null2 = (View) findViewById(R.id.view_null2);
         btn_wait = (Button) findViewById(R.id.btn_wait);
+        btn_join = (Button) findViewById(R.id.btn_join);
     }
 
 }

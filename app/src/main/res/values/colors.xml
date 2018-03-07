@@ -395,5 +395,6 @@
     <color name="bg_vip_card_color_third">#90a250</color>
     <color name="bg_vip_card_color_fourth">#506031</color>
     <color name="bg_vip_card_color_fifth">#333242</color>
+    <color name="__picker_black_40">#282828</color>
 
 </resources>
