@@ -103,6 +103,8 @@
         <activity android:name=".activity.MultiOrderActivity"/>
         <activity android:name=".activity.HistoricalOderActivity"/>
         <activity android:name=".activity.SettingActivity"/>
+        <activity android:name=".activity.FloatPageActivity"/>
+        <activity android:name=".activity.WaitOrderActivity"/>
 
         <activity android:name=".activity.CropIwaActivity">
         </activity>
