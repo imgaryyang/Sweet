@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.activity.CaptureActivity;
+import com.lucky.sweet.activity.FloatPageActivity;
 import com.lucky.sweet.activity.MainSearchActiviy;
 import com.lucky.sweet.activity.StoreDisplayActivity;
 import com.lucky.sweet.activity.StoreParticularInfoActivity;
@@ -74,6 +76,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
     private IndicatorView in_vp_ad;
     private RecycleViewRefresh ref_recy_food;
     private RecycleViewRefresh ref_recy_fun;
+    private FloatingActionButton float_btn;
 
     @Override
     public void onAttach(Context context) {
@@ -164,6 +167,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         in_vp_ad = view.findViewById(R.id.in_vp_ad);
         collapsingToolbarLayout.setContentScrim(getResources().getDrawable(R.drawable.search_bg));
 
+        float_btn = view.findViewById(R.id.float_btn);
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            ToolBar toolBar = new ToolBar(getActivity());
 //            toolBar.setStatusBarDarkMode();
@@ -194,6 +198,13 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
                 Intent intent = new Intent(getActivity(), MainSearchActiviy.class);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.act_up, R.anim.act_down);
+            }
+        });
+        float_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), FloatPageActivity.class);
+                startActivity(intent);
             }
         });
         vp_ad.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
