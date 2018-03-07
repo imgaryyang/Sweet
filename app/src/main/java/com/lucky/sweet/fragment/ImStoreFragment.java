@@ -58,7 +58,7 @@ import java.io.InputStream;
 // ( (oo) )  ( (oo) )  ( (oo) )
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
-public class ImStoreFragment extends BaseFragment implements View.OnClickListener {
+public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
     private ViewPager vp_ad;
     private MySearchView msv_search;
@@ -97,7 +97,7 @@ public class ImStoreFragment extends BaseFragment implements View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_imstore, container, false);
-
+        this.context = getContext();
         initView(view);
 
         initData();
@@ -119,6 +119,7 @@ public class ImStoreFragment extends BaseFragment implements View.OnClickListene
             String tmp = info.getHeWeather6().get(0).getNow
                     ().getTmp();
             tv_weathertype.setText(cond_txt + " " + tmp);
+            System.out.println(info.getHeWeather6().get(0).getNow().getCond_code());
             InputStream open = context.getAssets().open("weather/w" + info.getHeWeather6().get(0).getNow().getCond_code() + ".png");
             imv_weather.setImageBitmap(BitmapFactory.decodeStream(open));
 
@@ -299,14 +300,14 @@ public class ImStoreFragment extends BaseFragment implements View.OnClickListene
         foodAdapter.setOnItemClickListener(new RecFoodRecommendAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(String shopId) {
-                StoreParticularInfoActivity.inStance(context,shopId);
+                StoreParticularInfoActivity.inStance(context, shopId);
 
             }
         });
         funAdapter.setOnItemClickListener(new RecFoodRecommendAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(String shopId) {
-                StoreParticularInfoActivity.inStance(context,shopId);
+                StoreParticularInfoActivity.inStance(context, shopId);
 
             }
         });
