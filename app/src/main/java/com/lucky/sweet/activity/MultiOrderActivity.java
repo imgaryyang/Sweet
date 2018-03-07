@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.alibaba.sdk.android.push.CommonCallback;
 import com.lucky.sweet.R;
-import com.lucky.sweet.entity.JoinInRoomMenu;
+import com.lucky.sweet.entity.JoinInRoomInfo;
 import com.lucky.sweet.entity.ReservationInfo;
 import com.lucky.sweet.properties.ReserveProperties;
 import com.lucky.sweet.service.CommunicationService;
@@ -133,7 +133,7 @@ public class MultiOrderActivity extends BaseActivity {
                 MyApplication.bindPushAccount(request, new CommonCallback() {
                     @Override
                     public void onSuccess(String s) {
-                        jionToOrder(request, null);
+                        jionToOrder(request);
                     }
 
                     @Override
@@ -148,12 +148,34 @@ public class MultiOrderActivity extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void Event(final JoinInRoomMenu menu) {
+    public void Event(final JoinInRoomInfo menu) {
 
         MyApplication.bindPushAccount(roomId, new CommonCallback() {
             @Override
             public void onSuccess(String s) {
-                jionToOrder(roomId, menu);
+                if (menu.getState()) {
+                    jionToOrder(roomId);
+                    Toast.makeText(MultiOrderActivity.this, "加入房间成功", Toast.LENGTH_SHORT).show();
+                }else
+                    Toast.makeText(MultiOrderActivity.this, "密码或房间有误", Toast.LENGTH_SHORT).show();
+
+            }
+
+
+            @Override
+            public void onFailed(String s, String s1) {
+                Toast.makeText(MultiOrderActivity.this, "加入房间失败，请重试", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(String menu) {
+
+        MyApplication.bindPushAccount(roomId, new CommonCallback() {
+            @Override
+            public void onSuccess(String s) {
+                jionToOrder(roomId);
 
             }
 
@@ -166,12 +188,12 @@ public class MultiOrderActivity extends BaseActivity {
 
     }
 
-    private void jionToOrder(String roomId, JoinInRoomMenu menu) {
+    private void jionToOrder(String roomId) {
         Intent intent = new Intent(MultiOrderActivity.this, MerchantActivity.class);
         intent.putExtra("mer_id", mer_id);
         intent.putExtra("multiOrder", true);
         intent.putExtra("room_id", roomId);
-        intent.putExtra("menu", menu);
+      /*  intent.putExtra("menu", menu);*/
         startActivity(intent);
 
     }

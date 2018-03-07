@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
 import com.lucky.sweet.model.shoppingcar.ShopMenuAttr;
 import com.lucky.sweet.model.shoppingcar.assistant.onCallBackListener;
@@ -93,16 +95,10 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
             }
         });
         String picture = product.getPicture();
-        if (picture != null) {
-            OssUtils.down(picture, new OssUtils.OnInpustreamBack() {
-                @Override
-                public void inputstreamFinish(InputStream inputStream) {
-                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                    viewHolder.head.setImageBitmap(bitmap);
-
-                }
-            });
-        }
+        Log.i("path",OssUtils.getOSSExtranetPath(picture));
+  /*      if (picture != null) {
+           Glide.with(context).load().into(viewHolder.head);
+        }*/
 
 
         viewHolder.increase.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +118,8 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
                     //TODO:解决方案，先监听到左边ListView的Item中，然后在开始动画添加
                     mHolderClickListener.onHolderClick(drawable, start_location);
                 }
-                if (onMenuChangedListener != null) onMenuChangedListener.onChanged(product.getId(),section, position, ShopMenuAttr.ADD);
+                if (onMenuChangedListener != null)
+                    onMenuChangedListener.onChanged(product.getId(), section, position, ShopMenuAttr.ADD);
 
             }
         });
@@ -137,7 +134,8 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
 
                     if (callBackListener != null) callBackListener.updateProduct(product, "2");
 
-                    if (onMenuChangedListener != null) onMenuChangedListener.onChanged(product.getId(),section, position, ShopMenuAttr.DELETE);
+                    if (onMenuChangedListener != null)
+                        onMenuChangedListener.onChanged(product.getId(), section, position, ShopMenuAttr.DELETE);
 
                 }
             }

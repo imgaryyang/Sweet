@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.entity.JoinInRoomMenu;
+import com.lucky.sweet.entity.JoinInRoomInfo;
 import com.lucky.sweet.entity.JoinRoomInfo;
 import com.lucky.sweet.entity.MuliiOrderInfo;
 import com.lucky.sweet.entity.ShopCarEntity;
@@ -40,7 +40,7 @@ public class MerchantActivity extends BaseActivity {
     private ProductsFragment fg_shop_car;
     private Button btn_back;
     private CommunicationService.MyBinder myBinder;
-    private JoinInRoomMenu info;
+    private JoinInRoomInfo info;
 
 
     @Override
@@ -49,8 +49,8 @@ public class MerchantActivity extends BaseActivity {
         setContentView(R.layout.activity_merchant);
 
         Serializable menu = getIntent().getSerializableExtra("menu");
-        if (menu != null && menu instanceof JoinInRoomMenu) {
-            info = (JoinInRoomMenu) menu;
+        if (menu != null && menu instanceof JoinInRoomInfo) {
+            info = (JoinInRoomInfo) menu;
 
         }
         initToolBar();
@@ -132,12 +132,12 @@ public class MerchantActivity extends BaseActivity {
     public void Event(ShopCarEntity entity) {
 
         ArrayList<ProductType> productCategorizes = new ArrayList<>();
-        for (ShopCarEntity.TrolleyInfoBean entiy : entity.getTrolley_info()) {
+        for (ShopCarEntity.ItemListBean entiy : entity.getItem_list()) {
             ProductType productCategorize = new ProductType();
             productCategorize.setType(entiy.getName());
             ArrayList shopProductsAll = new ArrayList<>();
 
-            for (ShopCarEntity.TrolleyInfoBean.ItemBean item : entiy.getItem()) {
+            for (ShopCarEntity.ItemListBean.ItemBean item : entiy.getItem()) {
                 ShopProduct product = new ShopProduct();
                 product.setId(Integer.parseInt(item.getItem_id()));
                 product.setGoods(item.getName());

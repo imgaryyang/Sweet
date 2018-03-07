@@ -1,5 +1,6 @@
 package com.lucky.sweet.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -84,6 +85,11 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private LinearLayout layout_order_content;
     private LinearLayout ll_orderbtn;
 
+    public synchronized static void inStance(Context context, String shopId) {
+        Intent intent = new Intent(context, StoreParticularInfoActivity.class);
+        intent.putExtra("shopid", shopId);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,16 +159,16 @@ public class StoreParticularInfoActivity extends BaseActivity {
         imv_shop_one = findViewById(R.id.imv_shop_one);
         imv_shop_two = findViewById(R.id.imv_shop_two);
         imv_shop_three = findViewById(R.id.imv_shop_three);
-        ibtn_back =  findViewById(R.id.ibtn_back);
-        ll_null =  findViewById(R.id.ll_null);
-        ll_share =  findViewById(R.id.ll_share);
-        ibtn_order_seat =  findViewById(R.id.ibtn_order_seat);
+        ibtn_back = findViewById(R.id.ibtn_back);
+        ll_null = findViewById(R.id.ll_null);
+        ll_share = findViewById(R.id.ll_share);
+        ibtn_order_seat = findViewById(R.id.ibtn_order_seat);
         ibtn_orderSingle = findViewById(R.id.ibtn_orderSingle);
-        ibtn_orderMulti =  findViewById(R.id.ibtn_orderMulti);
-        tv_weichat =  findViewById(R.id.tv_weichat);
-        tv_circle =  findViewById(R.id.tv_circle);
-        tv_weibo =  findViewById(R.id.tv_weibo);
-        layout_order_content =  findViewById(R.id.layout_order_content);
+        ibtn_orderMulti = findViewById(R.id.ibtn_orderMulti);
+        tv_weichat = findViewById(R.id.tv_weichat);
+        tv_circle = findViewById(R.id.tv_circle);
+        tv_weibo = findViewById(R.id.tv_weibo);
+        layout_order_content = findViewById(R.id.layout_order_content);
         ll_orderbtn = findViewById(R.id.ll_orderbtn);
 
 
@@ -202,7 +208,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 if (MyApplication.sessionId.equals("")) {
-                    Toast.makeText(StoreParticularInfoActivity.this,"请先登陆",
+                    Toast.makeText(StoreParticularInfoActivity.this, "请先登陆",
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -225,7 +231,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 if (MyApplication.sessionId.equals("")) {
-                    Toast.makeText(StoreParticularInfoActivity.this,"请先登陆",
+                    Toast.makeText(StoreParticularInfoActivity.this, "请先登陆",
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -240,7 +246,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 if (MyApplication.sessionId.equals("")) {
-                    Toast.makeText(StoreParticularInfoActivity.this,"请先登陆",
+                    Toast.makeText(StoreParticularInfoActivity.this, "请先登陆",
                             Toast.LENGTH_SHORT).show();
                     return;
                 }

@@ -58,7 +58,7 @@ import java.io.InputStream;
 // ( (oo) )  ( (oo) )  ( (oo) )
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
-public class ImStoreFragment extends Fragment implements View.OnClickListener {
+public class ImStoreFragment extends BaseFragment implements View.OnClickListener {
 
     private ViewPager vp_ad;
     private MySearchView msv_search;
@@ -97,7 +97,6 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_imstore, container, false);
-        context = getContext();
 
         initView(view);
 
@@ -300,19 +299,15 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         foodAdapter.setOnItemClickListener(new RecFoodRecommendAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(String shopId) {
-                Intent intent = new Intent(getActivity(), StoreParticularInfoActivity.class);
-                intent.putExtra("shopid", shopId);
-                startActivity(intent);
+                StoreParticularInfoActivity.inStance(context,shopId);
 
             }
         });
         funAdapter.setOnItemClickListener(new RecFoodRecommendAdapter.OnItemClickListener() {
             @Override
-            public void onItemClickListener(String shopId)
-            {
-                Intent intent = new Intent(getActivity(), StoreParticularInfoActivity.class);
-                intent.putExtra("shopid", shopId);
-                startActivity(intent);
+            public void onItemClickListener(String shopId) {
+                StoreParticularInfoActivity.inStance(context,shopId);
+
             }
         });
         rec_foodStore.setAdapter(foodAdapter);
@@ -345,8 +340,8 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
                 Bitmap bitmap = BlurBitmapUtil.blurBitmap(getContext(), BlurBitmapUtil.takeScreenshot((MainActivity) getActivity(), cdl_cover), 25);
 
-                rl_store_method.setBackground( new BitmapDrawable(getResources(), bitmap));
-                    if (rl_store_method.getVisibility() == View.VISIBLE) {
+                rl_store_method.setBackground(new BitmapDrawable(getResources(), bitmap));
+                if (rl_store_method.getVisibility() == View.VISIBLE) {
                     rl_store_method.setVisibility(View.GONE);
                 } else
                     rl_store_method.setVisibility(View.VISIBLE);

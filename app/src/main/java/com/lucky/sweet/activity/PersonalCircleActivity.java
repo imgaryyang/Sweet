@@ -41,7 +41,9 @@ public class PersonalCircleActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_circle);
         circle_info = (CircleMainInfo.CircleListBean) getIntent().getSerializableExtra("circle_info");
-        circle_id = circle_info.getCircle_id();
+        if (circle_info != null) {
+            circle_id = circle_info.getCircle_id();
+        }
         initTitle();
         initViews();
         initDatas();
@@ -68,7 +70,10 @@ public class PersonalCircleActivity extends BaseActivity {
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
-        myBinder.sendCircledetailsInfo(circle_id);
+        if (circle_id!=null) {
+
+            myBinder.sendCircledetailsInfo(circle_id);
+        }
     }
 
     private void initViews() {
@@ -83,7 +88,7 @@ public class PersonalCircleActivity extends BaseActivity {
     }
 
     private void initTitle() {
-        title =  findViewById(R.id.title);
+        title = findViewById(R.id.title);
         title.setTitleNameStr("评论");
         title.setTheme(Title.Theme.THEME_TRANSLATE);
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title

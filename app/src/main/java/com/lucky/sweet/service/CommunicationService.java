@@ -23,18 +23,18 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.lucky.sweet.entity.ShopCarEntity;
 import com.lucky.sweet.utility.MyOkhttpHelper;
 import com.lucky.sweet.activity.MyApplication;
 import com.lucky.sweet.activity.OrderSeatActivity;
 import com.lucky.sweet.entity.CircleDetail;
 import com.lucky.sweet.entity.CircleLikePoint;
 import com.lucky.sweet.entity.CircleMainInfo;
-import com.lucky.sweet.entity.JoinInRoomMenu;
+import com.lucky.sweet.entity.JoinInRoomInfo;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.PerdetermingEntity;
 import com.lucky.sweet.entity.VipCardInfo;
 import com.lucky.sweet.entity.ReservationInfo;
-import com.lucky.sweet.entity.ShopCarEntity;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.entity.StoreDisplayInfo;
 import com.lucky.sweet.entity.StoreDisplaySearchEntity;
@@ -407,7 +407,7 @@ public class CommunicationService extends Service {
                     @Override
                     public void onResponseSuccessfulString(String string) {
 
-                        EventBus.getDefault().post(new Gson().fromJson(string, CircleMainInfo.class));
+
                     }
 
                     @Override
@@ -428,20 +428,21 @@ public class CommunicationService extends Service {
             map.put("password", psw);
             map.put("key_value", jsonObject.toString());
 
-        HttpUtils.sendOkHttpRequest(ReserveProperties.JOIN_IN_ROOM,
-                new MyOkhttpHelper() {
+            HttpUtils.sendOkHttpRequest(ReserveProperties.JOIN_IN_ROOM_TEST,
+                    new MyOkhttpHelper() {
 
-                    @Override
-                    public void onResponseSuccessfulString(String string) {
+                        @Override
+                        public void onResponseSuccessfulString(String string) {
 
-                        EventBus.getDefault().post(new Gson().fromJson(string, JoinInRoomMenu.class));
-                    }
+                            EventBus.getDefault().post(new JoinInRoomInfo(string));
 
-                    @Override
-                    public void afterNewRequestSession() {
-                        joinInReserveRoom(roomId, psw);
-                    }
-                }, map);
+                        }
+
+                        @Override
+                        public void afterNewRequestSession() {
+                            joinInReserveRoom(roomId, psw);
+                        }
+                    }, map);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -609,13 +610,13 @@ public class CommunicationService extends Service {
         final HashMap<String, String> map = new HashMap<>();
         map.put("mer_id", "1");
         map.put("session", MyApplication.sessionId);
+        map.put("key_value", "{}");
         HttpUtils.sendOkHttpRequest(Properties.SHOP_CAR, new MyOkhttpHelper() {
 
             @Override
             public void onResponseSuccessfulString(String string) {
-                Log.i("shop_car",string);
 
-               // EventBus.getDefault().post(new Gson().fromJson(string, ShopCarEntity.class));
+                EventBus.getDefault().post(new Gson().fromJson(string, ShopCarEntity.class));
 
             }
 
@@ -634,6 +635,7 @@ public class CommunicationService extends Service {
             public void onResponseSuccessfulString(String string) {
                 EventBus.getDefault().post(new Gson().fromJson(string, StoreDisplaySearchEntity.class));
             }
+
             @Override
             public void afterNewRequestSession() {
                 getStoreDisplaySearchTitle();
@@ -681,9 +683,10 @@ public class CommunicationService extends Service {
             public void onResponseSuccessfulString(String string) {
                 EventBus.getDefault().post(new Gson().fromJson(string, MainStoreInfo.class));
             }
+
             @Override
             public void afterNewRequestSession() {
-                initShopInfo(lat,lon);
+                initShopInfo(lat, lon);
             }
         }, map);
 
@@ -782,6 +785,7 @@ public class CommunicationService extends Service {
                             public void onResponseSuccessfulString(String string) {
                                 EventBus.getDefault().post(new Gson().fromJson(string, StoreDetailedInfo.class));
                             }
+
                             @Override
                             public void afterNewRequestSession() {
                                 getParticularInfo(shopid);
@@ -809,9 +813,10 @@ public class CommunicationService extends Service {
                             public void onResponseSuccessfulString(String string) {
                                 EventBus.getDefault().post(new Gson().fromJson(string, StoreDisplayInfo.class));
                             }
+
                             @Override
                             public void afterNewRequestSession() {
-                                getStoreDisplayInfo(project,circle,rank,num);
+                                getStoreDisplayInfo(project, circle, rank, num);
                             }
 
                         }, map);

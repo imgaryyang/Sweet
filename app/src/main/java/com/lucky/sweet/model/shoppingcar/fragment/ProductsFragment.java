@@ -343,13 +343,16 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         if (!name.equals(MyApplication.USER_ID)) {
             ShopProduct shopProduct = productCategorizes.get(info.getSection()).getProduct().get(info
                     .getPosition());
-            Toast.makeText(getActivity(), "感谢这位老铁：" + name + "添加了" + shopProduct.getGoods(), Toast.LENGTH_SHORT).show();
             int number = shopProduct.getNumber();
             if (info.isaddDis()) {
                 number = number + 1;
+                Toast.makeText(getActivity(), "感谢这位老铁：" + name + "添加了一份" + shopProduct.getGoods(), Toast.LENGTH_SHORT).show();
+
                 updateProduct(shopProduct,"1");
             } else if (number != 0) {
                 number = number - 1;
+                Toast.makeText(getActivity(), "感谢这位老铁：" + name + "取消了一份" + shopProduct.getGoods(), Toast.LENGTH_SHORT).show();
+
                 updateProduct(shopProduct,"2");
 
             }
