@@ -49,7 +49,6 @@ public class MyMessageReceiver extends MessageReceiver {
                 EventBus.getDefault().post(joinRoomInfo);
                 break;
             case UPDATE_MENU:
-
                 MuliiOrderInfo MuliiOrderInfo = gson.fromJson(content, MuliiOrderInfo.class);
                 EventBus.getDefault().post(MuliiOrderInfo);
                 break;

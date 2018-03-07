@@ -88,10 +88,13 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private LinearLayout layout_order_content;
     private LinearLayout ll_orderbtn;
 
-    public synchronized static void inStance(Context context, String shopId) {
-        Intent intent = new Intent(context, StoreParticularInfoActivity.class);
-        intent.putExtra("shopid", shopId);
-        context.startActivity(intent);
+    public static void inStance(Context context, String shopId) {
+
+            Intent intent = new Intent(context, StoreParticularInfoActivity.class);
+            intent.putExtra("shopid", shopId);
+            context.startActivity(intent);
+
+
     }
 
     @Override

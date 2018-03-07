@@ -193,7 +193,6 @@ public class MultiOrderActivity extends BaseActivity {
         intent.putExtra("mer_id", mer_id);
         intent.putExtra("multiOrder", true);
         intent.putExtra("room_id", roomId);
-      /*  intent.putExtra("menu", menu);*/
         startActivity(intent);
 
     }

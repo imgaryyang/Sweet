@@ -40,19 +40,13 @@ public class MerchantActivity extends BaseActivity {
     private ProductsFragment fg_shop_car;
     private Button btn_back;
     private CommunicationService.MyBinder myBinder;
-    private JoinInRoomInfo info;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant);
 
-        Serializable menu = getIntent().getSerializableExtra("menu");
-        if (menu != null && menu instanceof JoinInRoomInfo) {
-            info = (JoinInRoomInfo) menu;
 
-        }
         initToolBar();
 
         initView();

@@ -95,10 +95,10 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
             }
         });
         String picture = product.getPicture();
-        Log.i("path",OssUtils.getOSSExtranetPath(picture));
-  /*      if (picture != null) {
-           Glide.with(context).load().into(viewHolder.head);
-        }*/
+
+        if (picture != null) {
+           Glide.with(context).load(OssUtils.getOSSExtranetPath(picture)).into(viewHolder.head);
+        }
 
 
         viewHolder.increase.setOnClickListener(new View.OnClickListener() {

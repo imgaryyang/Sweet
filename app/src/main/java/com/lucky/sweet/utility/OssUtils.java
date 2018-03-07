@@ -1,5 +1,7 @@
 package com.lucky.sweet.utility;
 
+import android.util.Log;
+
 import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.ServiceException;
 import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
@@ -49,7 +51,7 @@ public class OssUtils {
         String path="";
         try {
             path = MyApplication.getOSSClient().presignConstrainedObjectURL(TEST_BUCKET, objectKey, 30);
-
+            Log.i("path",path);
         } catch (ClientException e) {
             e.printStackTrace();
         }
