@@ -51,7 +51,8 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
                 break;
         }
         AdapterSize = data.size();
-        inflater = LayoutInflater.from(context);
+       inflater = LayoutInflater.from(context);
+
     }
 
 

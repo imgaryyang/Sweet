@@ -1,5 +1,6 @@
 package com.lucky.sweet.utility;
 
+import com.google.gson.JsonSyntaxException;
 import com.lucky.sweet.activity.MyApplication;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -19,16 +20,19 @@ public abstract class MyOkhttpHelper extends Callback {
     @Override
     public Object parseNetworkResponse(Response response) throws IOException {
         String stringResponse = response.body().string();
-        if (stringResponse.equals("250")) {
-            MyApplication.initSession(new MyApplication.OnOssClient() {
-                @Override
-                public void onClient(Boolean flag) {
-                    if (flag) {
-                        afterNewRequestSession();
+        try{
+            if (stringResponse.equals("250")) {
+                MyApplication.initSession(new MyApplication.OnOssClient() {
+                    @Override
+                    public void onClient(Boolean flag) {
+                        if (flag) {
+                            afterNewRequestSession();
+                        }
                     }
-                }
-            });
-        } else onResponseSuccessfulString(stringResponse.trim());
+                });
+            } else onResponseSuccessfulString(stringResponse.trim());
+        }catch (JsonSyntaxException e){}
+
         return null;
     }
 
