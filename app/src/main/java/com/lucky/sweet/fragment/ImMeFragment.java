@@ -21,6 +21,7 @@ import com.lucky.sweet.activity.HistoricalOderActivity;
 import com.lucky.sweet.activity.MainActivity;
 import com.lucky.sweet.activity.MyApplication;
 import com.lucky.sweet.activity.MyCommentActivity;
+import com.lucky.sweet.activity.MyLikeStoreActivity;
 import com.lucky.sweet.activity.SetUserInfoActivity;
 import com.lucky.sweet.activity.SettingActivity;
 import com.lucky.sweet.activity.VipCardActiviry;
@@ -137,6 +138,14 @@ public class ImMeFragment extends Fragment {
                 startActivity(new Intent(getActivity(), HistoricalOderActivity.class));
                 getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
 
+            }
+        });
+
+        view.findViewById(R.id.myLikeStore).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), MyLikeStoreActivity.class));
+                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
             }
         });
 

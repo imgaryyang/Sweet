@@ -129,6 +129,7 @@
                 android:layout_height="70dp"
                 android:orientation="horizontal">
 
+
                 <RelativeLayout
                     android:id="@+id/rl_hisorder"
                     android:layout_width="0dp"
@@ -251,6 +252,7 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
+                    android:id="@+id/myLikeStore"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
