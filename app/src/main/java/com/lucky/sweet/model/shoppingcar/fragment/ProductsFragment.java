@@ -163,35 +163,29 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         productList = new ArrayList<>();
         strings = new ArrayList<>();
         sectionedAdapter = new TestSectionedAdapter(getActivity(), productCategorizes);
-        sectionedAdapter.setOnItemDesClickListener(new TestSectionedAdapter.OnItemDesClickListener() {
-            @Override
-            public void onClick(int section, int position) {
-                if (onClickListener != null) {
-                    onClickListener.onItemClick(calculateListPositon(section,
-                            position, (ArrayList<ProductType>) productCategorizes));
-                }
+        sectionedAdapter.setOnItemDesClickListener((section, position) -> {
+            if (onClickListener != null) {
+                onClickListener.onItemClick(calculateListPositon(section,
+                        position, (ArrayList<ProductType>) productCategorizes));
             }
         });
         if (currenType)
-            sectionedAdapter.setOnMenuChangedListener(new TestSectionedAdapter.OnMenuChangedListener() {
-                @Override
-                public void onChanged(int id, int section, int position, ShopMenuAttr add) {
-                    FragmentActivity activity = getActivity();
-                    if (activity instanceof MerchantActivity) {
-                        MuliiOrderInfo muliiOrderInfo = new MuliiOrderInfo();
-                        muliiOrderInfo.setSection(section);
-                        muliiOrderInfo.setPosition(position);
-                        muliiOrderInfo.setName(MyApplication.USER_ID);
-                        muliiOrderInfo.setType(MuliiOrderInfo.UPDATA);
-                        muliiOrderInfo.setItem_id(id);
-                        if (add.equals(ShopMenuAttr.ADD)) {
-                            muliiOrderInfo.setaddDis(true);
-                        } else {
-                            muliiOrderInfo.setaddDis(false);
-                        }
-
-                        ((MerchantActivity) activity).upMenuInfo(muliiOrderInfo);
+            sectionedAdapter.setOnMenuChangedListener((id, section, position, add) -> {
+                FragmentActivity activity = getActivity();
+                if (activity instanceof MerchantActivity) {
+                    MuliiOrderInfo muliiOrderInfo = new MuliiOrderInfo();
+                    muliiOrderInfo.setSection(section);
+                    muliiOrderInfo.setPosition(position);
+                    muliiOrderInfo.setName(MyApplication.USER_ID);
+                    muliiOrderInfo.setType(MuliiOrderInfo.UPDATA);
+                    muliiOrderInfo.setItem_id(id);
+                    if (add.equals(ShopMenuAttr.ADD)) {
+                        muliiOrderInfo.setaddDis(true);
+                    } else {
+                        muliiOrderInfo.setaddDis(false);
                     }
+
+                    ((MerchantActivity) activity).upMenuInfo(muliiOrderInfo);
                 }
             });
         sectionedAdapter.SetOnSetHolderClickListener(new TestSectionedAdapter.HolderClickListener() {

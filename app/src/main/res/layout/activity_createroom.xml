@@ -59,12 +59,35 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_0_dp"
         android:layout_weight="1.8"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_create_room_showRoomId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <Button
             android:layout_width="@dimen/dimen_280_dp"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_btn_order"
+            android:onClick="submitCreate"
+            android:text="创建房间"
+            android:textColor="@color/white" />
+
+        <Button
+            android:layout_width="@dimen/dimen_280_dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_btn_order"
+            android:onClick="addRoom"
+            android:text="加入房间"
+            android:textColor="@color/white" />
+
+        <Button
+            android:layout_width="@dimen/dimen_280_dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_btn_order"
+            android:onClick="cancelCreate"
             android:text="取消订单"
             android:textColor="@color/white" />
     </LinearLayout>

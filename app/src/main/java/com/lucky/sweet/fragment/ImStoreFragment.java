@@ -83,8 +83,8 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private IndicatorView in_vp_ad;
-    private RecycleViewRefresh ref_recy_food;
-    private RecycleViewRefresh ref_recy_fun;
+/*    private RecycleViewRefresh ref_recy_food;
+    private RecycleViewRefresh ref_recy_fun;*/
     private RelativeLayout rl_store_method;
     private FloatingActionButton float_btn;
     private CoordinatorLayout cdl_cover;
@@ -167,10 +167,10 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         rec_funStore = view.findViewById(R.id.rec_funStore);
         //rec_ad_show = view.findViewById(R.id.rec_ad_show);
         btn_qrcodescan = view.findViewById(R.id.btn_qrcodescan);
-        ref_recy_food = view.findViewById(R.id.ref_recy_food);
+/*        ref_recy_food = view.findViewById(R.id.ref_recy_food);*/
    /*       View inc_recycle_more_food = view.findViewById(R.id.pb_food_loading);
       ref_recy_food.setMoveViews(inc_recycle_more_food);*/
-        ref_recy_fun = view.findViewById(R.id.ref_recy_fun);
+/*        ref_recy_fun = view.findViewById(R.id.ref_recy_fun);*/
    /*       View pb_fun_loading = view.findViewById(R.id.pb_fun_loading);
       ref_recy_fun.setMoveViews(pb_fun_loading);*/
         collapsingToolbarLayout = view.findViewById(R.id.collapsingToolbarLayout);

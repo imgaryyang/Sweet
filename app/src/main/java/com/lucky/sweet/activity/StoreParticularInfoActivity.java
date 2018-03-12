@@ -90,9 +90,9 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
     public static void inStance(Context context, String shopId) {
 
-            Intent intent = new Intent(context, StoreParticularInfoActivity.class);
-            intent.putExtra("shopid", shopId);
-            context.startActivity(intent);
+        Intent intent = new Intent(context, StoreParticularInfoActivity.class);
+        intent.putExtra("shopid", shopId);
+        context.startActivity(intent);
 
 
     }
@@ -258,27 +258,22 @@ public class StoreParticularInfoActivity extends BaseActivity {
                 }
                 /*Intent intent = new Intent(StoreParticularInfoActivity
                         .this, MultiOrderActivity.class);
-                intent.putExtra
-                        ("mer_id", mer_id);
+
                 startActivity(intent);
                 goNextAnim();*/
                 new AlertDialog.Builder(StoreParticularInfoActivity.this)
                         .setMessage("请选择加入方式")
-                        .setPositiveButton("加入房间", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(StoreParticularInfoActivity.this, JoinRoomActivity.class);
-                                startActivityForResult(intent, 0);
-                                goNextAnim();
-                            }
+                        .setPositiveButton("加入房间", (dialog, which) -> {
+                            Intent intent = new Intent(StoreParticularInfoActivity.this, JoinRoomActivity.class);
+                            intent.putExtra("mer_id", mer_id);
+                            startActivityForResult(intent, 0);
+                            goNextAnim();
                         })
-                        .setNegativeButton("创建房间", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(StoreParticularInfoActivity.this, CreateRoomActivity.class);
-                                startActivityForResult(intent, 0);
-                                goNextAnim();
-                            }
+                        .setNegativeButton("创建房间", (dialog, which) -> {
+                            Intent intent = new Intent(StoreParticularInfoActivity.this, CreateRoomActivity.class);
+                            intent.putExtra("mer_id", mer_id);
+                            startActivityForResult(intent, 0);
+                            goNextAnim();
                         })
                         .create()
                         .show();

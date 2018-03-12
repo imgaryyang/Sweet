@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.activity.CropIwaActivity;
@@ -49,6 +50,7 @@ public class ImMeFragment extends Fragment {
     private MainActivity activity;
     public final static int CROP_PHOTO = 1000;
     private Bitmap bitmap;
+    private TextView flowNum;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -78,6 +80,10 @@ public class ImMeFragment extends Fragment {
         imv_head.setImageBitmap(bitmap);
     }
 
+    public void upDataPersonInfo(String num) {
+        flowNum.setText(num);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -105,7 +111,7 @@ public class ImMeFragment extends Fragment {
     private void initView(View view) {
 
         btn_setUserInfo = view.findViewById(R.id.btn_setUserInfo);
-
+        flowNum = view.findViewById(R.id.tv_person_show_flow_num);
         view.findViewById(R.id.rl_vipcard).setOnClickListener(v -> {
             startActivity(new Intent(getActivity(), VipCardActiviry.class));
             getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
@@ -129,16 +135,13 @@ public class ImMeFragment extends Fragment {
 
         });
 
-        view.findViewById(R.id.myLikeStore).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), MyLikeStoreActivity.class));
-                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
-            }
+        view.findViewById(R.id.myLikeStore).setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), MyLikeStoreActivity.class));
+            getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
         });
 
         imv_head = view.findViewById(R.id.imv_head);
-        if (bitmap!=null) {
+        if (bitmap != null) {
             imv_head.setImageBitmap(bitmap);
         }
         imv_head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
@@ -159,21 +162,18 @@ public class ImMeFragment extends Fragment {
     private final static int REQUEST_CODE_CHOOSE = 10000;
 
     private void initEvent() {
-        imv_head.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!MyApplication.sessionId.equals("")) {
-                    Matisse.from(ImMeFragment.this)
-                            .choose(MimeType.allOf())
-                            .countable(true)
-                            .maxSelectable(1)
-                            .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                            .thumbnailScale(0.85f)
-                            .imageEngine(new GlideEngine())
-                            .forResult(REQUEST_CODE_CHOOSE);
-                }
-
+        imv_head.setOnClickListener(v -> {
+            if (!MyApplication.sessionId.equals("")) {
+                Matisse.from(ImMeFragment.this)
+                        .choose(MimeType.allOf())
+                        .countable(true)
+                        .maxSelectable(1)
+                        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                        .thumbnailScale(0.85f)
+                        .imageEngine(new GlideEngine())
+                        .forResult(REQUEST_CODE_CHOOSE);
             }
+
         });
     }
 

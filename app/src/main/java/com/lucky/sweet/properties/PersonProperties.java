@@ -6,4 +6,6 @@ package com.lucky.sweet.properties;
 
 public class PersonProperties {
     public static final String PERSON_VIP_CARD = "https://thethreestooges.cn:666/vip/vip/list";
+
+    public static final String FOLW_FRIEND = "https://thethreestooges.cn:666/trolley/attent/list";
 }

@@ -11,6 +11,7 @@ import com.alibaba.sdk.android.oss.model.GetObjectResult;
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.CircleLikePoint;
 import com.lucky.sweet.entity.CircleMainInfo;
+import com.lucky.sweet.entity.FlowPeople;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.WeatherInfo;
 import com.lucky.sweet.fragment.ImCircleFragment;
@@ -65,7 +66,8 @@ public class MainActivity extends BaseActivity {
 
             myBinder.requestImStoreInfo(MainActivity.this);
             myBinder.getPersonPortrait(USER_PORTRAIT_PATH);
-            myBinder.requestCircleInfo("朋友","0");
+            myBinder.getFlowFriends();
+            myBinder.requestCircleInfo("朋友", "0");
         }
         this.myBinder = myBinder;
 
@@ -155,8 +157,9 @@ public class MainActivity extends BaseActivity {
         super.onNewIntent(intent);
 
     }
-    public void sendCircleLikeIt(String mer_id, int position){
-        myBinder.circleLikeIt(mer_id,position);
+
+    public void sendCircleLikeIt(String mer_id, int position) {
+        myBinder.circleLikeIt(mer_id, position);
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -202,22 +205,26 @@ public class MainActivity extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void Event(GetObjectResult result)
-    {
+    public void Event(GetObjectResult result) {
         meFragment.upPersonPortrait(result.getObjectContent());
 
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void Event(CircleMainInfo info)
-    {
+    public void Event(CircleMainInfo info) {
         circleFragment.initData(info);
 
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void Event(CircleLikePoint circleLikePoint)
-    {
+    public void Event(CircleLikePoint circleLikePoint) {
         circleFragment.likeCallback(circleLikePoint);
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(FlowPeople people) {
+        meFragment.upDataPersonInfo(people.getAttent_list().size()+"");
     }
 
 

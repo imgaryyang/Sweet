@@ -23,22 +23,22 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.lucky.sweet.entity.ShopCarEntity;
-import com.lucky.sweet.utility.MyOkhttpHelper;
 import com.lucky.sweet.activity.MyApplication;
 import com.lucky.sweet.activity.OrderSeatActivity;
 import com.lucky.sweet.entity.CircleDetail;
 import com.lucky.sweet.entity.CircleLikePoint;
 import com.lucky.sweet.entity.CircleMainInfo;
+import com.lucky.sweet.entity.FlowPeople;
 import com.lucky.sweet.entity.JoinInRoomInfo;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.PerdetermingEntity;
-import com.lucky.sweet.entity.VipCardInfo;
 import com.lucky.sweet.entity.ReservationInfo;
+import com.lucky.sweet.entity.ShopCarEntity;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.entity.StoreDisplayInfo;
 import com.lucky.sweet.entity.StoreDisplaySearchEntity;
 import com.lucky.sweet.entity.UserLoginInfo;
+import com.lucky.sweet.entity.VipCardInfo;
 import com.lucky.sweet.entity.WeatherInfo;
 import com.lucky.sweet.handler.LoginRegisterHandler;
 import com.lucky.sweet.handler.OrderSeatHandler;
@@ -48,6 +48,7 @@ import com.lucky.sweet.properties.Properties;
 import com.lucky.sweet.properties.ReserveProperties;
 import com.lucky.sweet.properties.ServiceProperties;
 import com.lucky.sweet.utility.HttpUtils;
+import com.lucky.sweet.utility.MyOkhttpHelper;
 import com.lucky.sweet.utility.PanduanNet;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
@@ -90,6 +91,7 @@ public class CommunicationService extends Service {
     public IBinder onBind(Intent intent) {
         return new MyBinder();
     }
+
 
     public class MyBinder extends Binder {
         /**
@@ -220,7 +222,6 @@ public class CommunicationService extends Service {
             CommunicationService.this.ossUpdata(objectkey, filepath, null);
         }
 
-
         public void ossCirclePicUpdata(final ArrayList<String> paths, String
                 content) {
             final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");// HH:mm:ss
@@ -289,7 +290,6 @@ public class CommunicationService extends Service {
         public void dishesMenuUpdata(String roomId, String item,
                                      String incr_decr, String key) {
 
-
             CommunicationService.this.dishesMenuUpdata(roomId, item,
                     incr_decr, key);
         }
@@ -311,6 +311,26 @@ public class CommunicationService extends Service {
         public void requestPersonVipCard() {
             CommunicationService.this.requestPersonVipCard();
         }
+
+        public void getFlowFriends() {
+            CommunicationService.this.getFlowFriends();
+        }
+    }
+
+    private void getFlowFriends() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("session", MyApplication.sessionId);
+        HttpUtils.sendOkHttpRequest(PersonProperties.FOLW_FRIEND, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+                EventBus.getDefault().post(new Gson().fromJson(string, FlowPeople.class));
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+
+            }
+        }, map);
     }
 
     private void requestPersonVipCard() {
@@ -433,7 +453,7 @@ public class CommunicationService extends Service {
 
                         @Override
                         public void onResponseSuccessfulString(String string) {
-
+                            System.out.println(string);
                             EventBus.getDefault().post(new JoinInRoomInfo(string));
 
                         }
@@ -453,8 +473,7 @@ public class CommunicationService extends Service {
         map.put("session", MyApplication.sessionId);
         map.put("mer_id", mer_id);
         map.put("password", password);
-        map.put("old_password", "");
-        HttpUtils.sendOkHttpRequest(ReserveProperties.CREATE_OR_ALTER_ROOM,
+        HttpUtils.sendOkHttpRequest(ReserveProperties.CREATE_ROOM,
                 new MyOkhttpHelper() {
 
                     @Override
@@ -708,31 +727,25 @@ public class CommunicationService extends Service {
 
     private void initWeather(String city) {
         final String url = ServiceProperties.WEATHERREQUESTBODY + city;
-        new Thread(new Runnable() {
+        new Thread(() -> HttpUtils.sendOkHttpRequest(url, new Callback() {
             @Override
-            public void run() {
+            public void onFailure(Call call, IOException e) {
 
-                HttpUtils.sendOkHttpRequest(url, new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-
-                        Gson gson = new Gson();
-
-                        WeatherInfo weatherInfo = gson.fromJson(response.body().string(), WeatherInfo.class);
-                        EventBus.getDefault().post(weatherInfo);
-
-
-                    }
-
-
-                });
             }
-        }).start();
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                Gson gson = new Gson();
+
+                WeatherInfo weatherInfo = gson.fromJson(response.body().string(), WeatherInfo.class);
+                EventBus.getDefault().post(weatherInfo);
+
+
+            }
+
+
+        })).start();
 
     }
 
