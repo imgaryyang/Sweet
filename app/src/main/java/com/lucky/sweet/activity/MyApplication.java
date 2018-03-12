@@ -50,17 +50,14 @@ public class MyApplication extends Application {
 
     public static String CURRENT_CITY = "大连市";
     public static String USER_ID = "";
-
-    public static String KEY_ID = "";
-    public static String SECRET_KEY_ID = "";
-    public static String TOKEN = "";
-
+    private static SharedPreferences config;
 
     @Override
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-
+        config = context.getSharedPreferences("config",
+                MODE_PRIVATE);
         initOssClient();
 
         initBroadCastReceiver();
@@ -74,25 +71,22 @@ public class MyApplication extends Application {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(netBroadcastReceiver, intentFilter);
-        netBroadcastReceiver.setNetEvent(new NetBroadcastReceiver.NetEvent() {
-            @Override
-            public void onNetChange(int netMobile) {
-                switch (netMobile) {
-                    case NetBroadcastReceiver.NETWORK_MOBILE:
+        netBroadcastReceiver.setNetEvent(netMobile -> {
+            switch (netMobile) {
+                case NetBroadcastReceiver.NETWORK_MOBILE:
 
-                        break;
-                    case NetBroadcastReceiver.NETWORK_NONE:
-                        Toast.makeText(context, "暂无网络", Toast.LENGTH_SHORT).show();
-                        break;
-                    case NetBroadcastReceiver.NETWORK_WIFI:
+                    break;
+                case NetBroadcastReceiver.NETWORK_NONE:
+                    Toast.makeText(context, "暂无网络", Toast.LENGTH_SHORT).show();
+                    break;
+                case NetBroadcastReceiver.NETWORK_WIFI:
 
-                        break;
+                    break;
 
-                    default:
-                        break;
-                }
-
+                default:
+                    break;
             }
+
         });
     }
 
@@ -116,8 +110,7 @@ public class MyApplication extends Application {
     }
 
     public static void initSession(final OnOssClient onOssClient) {
-        final SharedPreferences config = context.getSharedPreferences("config",
-                MODE_PRIVATE);
+
         if (config.getBoolean("logined", false)) {
             USER_ID = config.getString("Id", "");
             final String psw = config.getString("Psw", "");
@@ -200,6 +193,7 @@ public class MyApplication extends Application {
         PushServiceFactory.init(applicationContext);
         pushService = PushServiceFactory.getCloudPushService
                 ();
+
         pushService.register(applicationContext, new CommonCallback() {
             @Override
             public void onSuccess(String response) {
@@ -211,11 +205,22 @@ public class MyApplication extends Application {
                 Log.d(TAG, "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
             }
         });
+        if (config.getBoolean("logined", false)) {
+            String username = config.getString("username", "");
+            if (username.equals("")) pushService.bindAccount(username, new CommonCallback() {
+                @Override
+                public void onSuccess(String s) {
+                    Log.i("ClodePush", "Success");
+                }
+                @Override
+                public void onFailed(String s, String s1) {
+                    Log.i("ClodePush", "onFailed");
+
+                }
+            });
+
+        }
     }
 
-    public static void bindPushAccount(String account, CommonCallback commonCallback) {
-        pushService.bindAccount(account, commonCallback);
-
-    }
 
 }

@@ -97,12 +97,9 @@ public class MerchantActivity extends BaseActivity {
                 overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
             }
         });
-        btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                goPreAnim();
-            }
+        btn_back.setOnClickListener(view -> {
+            finish();
+            goPreAnim();
         });
 
     }

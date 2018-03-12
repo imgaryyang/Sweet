@@ -13,13 +13,13 @@ import java.util.List;
 public class ShopCarEntity {
 
     /**
-     * item_list : [{"class_id":"43","name":"热菜","item":[{"item_id":"52","name":"馒头","photo":"\r\nsweet/person/portrait/chinn96@163.com.png","univalence":"2","stick_time":"19","description":"馒头，又称之为馍、蒸馍，中国特色传统面食之一，是一种用面粉发酵蒸成的食品，形圆而隆起","num":"0","discount":1},{"item_id":"51","name":"米饭","photo":"\r\nsweet/person/portrait/chinn96@163.com.png","univalence":"1","stick_time":"18","description":"米饭，是中国人日常饮食中的主角之一，中国南方主食。米饭可与五味调配，几乎可以供给全身所需营养","num":"0","discount":"1"},{"item_id":"53","name":"小米粥","photo":"\r\nsweet/person/portrait/chinn96@163.com.png","univalence":"3","stick_time":null,"description":"小米粥是以小米作为主要食材熬制而成的粥，口味清淡，清香味，具有简单易制","num":"0","discount":"3"},{"item_id":"60","name":"清蒸鲈鱼","photo":"11111","univalence":"1","stick_time":null,"description":"168","num":"0","discount":"1"},{"item_id":"61","name":"爆炒猪肝","photo":"11111","univalence":"2","stick_time":null,"description":"58","num":"0","discount":"2"},{"item_id":"62","name":"爆炒猪肝","photo":"11111","univalence":"3","stick_time":null,"description":"58","num":"0","discount":"3"},{"item_id":"111","name":"寿司","photo":"/storage/emulated/0/20180307_182418.jpg","univalence":"180","stick_time":null,"description":"","num":"0","discount":"180"}]},{"class_id":"44","name":"饮料","item":[{"item_id":"109","name":"海参","photo":"/storage/emulated/0/20180218_153034.jpg","univalence":"80","stick_time":null,"description":"鲜美不油腻","num":"0","discount":"80"},{"item_id":"110","name":"碳烤腰果","photo":"/storage/emulated/0/20180220_001618.jpg","univalence":"不油腻，很香","stick_time":null,"description":"35","num":"0","discount":"不油腻，很香"}]},{"class_id":"48","name":"主食","item":[{"item_id":"72","name":"炭烧腰果","photo":"11111","univalence":"3","stick_time":null,"description":"","num":"0","discount":"3"},{"item_id":"73","name":"红烧土豆","photo":"11111","univalence":"1.5","stick_time":null,"description":"","num":"0","discount":"1.5"}]}]
-     * VIP_name : vip2
-     * discount : 0.5
+     * item_list : [{"class_id":"43","name":"热菜","item":[{"item_id":"53","name":"小米粥","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"3","stick_time":null,"description":"小米粥是以小米作为主要食材熬制而成的粥，口味清淡，清香味，具有简单易制","discount_singe":"0","discount":"1","discount_result":"3"},{"item_id":"60","name":"清蒸鲈鱼","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"1","stick_time":null,"description":"168","discount_singe":"0","discount":"1","discount_result":"1"},{"item_id":"61","name":"爆炒猪肝","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"2","stick_time":null,"description":"58","discount_singe":"0","discount":"1","discount_result":"2"},{"item_id":"62","name":"爆炒猪肝","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"3","stick_time":null,"description":"58","discount_singe":"0","discount":"1","discount_result":"3"},{"item_id":"63","name":"红烧鱼","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"1.5","stick_time":null,"description":"39","discount_singe":"1","discount":"0.8","discount_result":"1.2"},{"item_id":"111","name":"寿司","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"180","stick_time":null,"description":"","discount_singe":"0","discount":"1","discount_result":"180"},{"item_id":"113","name":"清蒸西兰花","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"15","stick_time":null,"description":"","discount_singe":"0","discount":"1","discount_result":"15"}]},{"class_id":"44","name":"饮料","item":[{"item_id":"66","name":"红烧鱼","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"1","stick_time":null,"description":"美味多汁","discount_singe":"1","discount":"0.5","discount_result":"0.5"},{"item_id":"67","name":"红烧肉","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"2","stick_time":null,"description":"30","discount_singe":"1","discount":"0.5","discount_result":"1"},{"item_id":"68","name":"红烧排骨","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"3","stick_time":null,"description":"40","discount_singe":"1","discount":"0.5","discount_result":"1.5"},{"item_id":"70","name":"土豆泥","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"1","stick_time":null,"description":"2","discount_singe":"1","discount":"0.8","discount_result":"0.8"},{"item_id":"109","name":"海参","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"80","stick_time":null,"description":"鲜美不油腻","discount_singe":"0","discount":"1","discount_result":"80"},{"item_id":"110","name":"碳烤腰果","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"20","stick_time":null,"description":"35","discount_singe":"0","discount":"1","discount_result":"20"}]},{"class_id":"48","name":"主食","item":[{"item_id":"72","name":"炭烧腰果","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"3","stick_time":null,"description":"","discount_singe":"0","discount":"1","discount_result":"3"},{"item_id":"73","name":"红烧土豆","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"1.5","stick_time":null,"description":"","discount_singe":"0","discount":"1","discount_result":"1.5"}]}]
+     * VIP_name : vip1
+     * vip_discount : 0.8
      */
 
     private String VIP_name;
-    private String discount;
+    private String vip_discount;
     private List<ItemListBean> item_list;
 
     public String getVIP_name() {
@@ -30,12 +30,12 @@ public class ShopCarEntity {
         this.VIP_name = VIP_name;
     }
 
-    public String getDiscount() {
-        return discount;
+    public String getVip_discount() {
+        return vip_discount;
     }
 
-    public void setDiscount(String discount) {
-        this.discount = discount;
+    public void setVip_discount(String vip_discount) {
+        this.vip_discount = vip_discount;
     }
 
     public List<ItemListBean> getItem_list() {
@@ -50,7 +50,7 @@ public class ShopCarEntity {
         /**
          * class_id : 43
          * name : 热菜
-         * item : [{"item_id":"52","name":"馒头","photo":"\r\nsweet/person/portrait/chinn96@163.com.png","univalence":"2","stick_time":"19","description":"馒头，又称之为馍、蒸馍，中国特色传统面食之一，是一种用面粉发酵蒸成的食品，形圆而隆起","num":"0","discount":1},{"item_id":"51","name":"米饭","photo":"\r\nsweet/person/portrait/chinn96@163.com.png","univalence":"1","stick_time":"18","description":"米饭，是中国人日常饮食中的主角之一，中国南方主食。米饭可与五味调配，几乎可以供给全身所需营养","num":"0","discount":"1"},{"item_id":"53","name":"小米粥","photo":"\r\nsweet/person/portrait/chinn96@163.com.png","univalence":"3","stick_time":null,"description":"小米粥是以小米作为主要食材熬制而成的粥，口味清淡，清香味，具有简单易制","num":"0","discount":"3"},{"item_id":"60","name":"清蒸鲈鱼","photo":"11111","univalence":"1","stick_time":null,"description":"168","num":"0","discount":"1"},{"item_id":"61","name":"爆炒猪肝","photo":"11111","univalence":"2","stick_time":null,"description":"58","num":"0","discount":"2"},{"item_id":"62","name":"爆炒猪肝","photo":"11111","univalence":"3","stick_time":null,"description":"58","num":"0","discount":"3"},{"item_id":"111","name":"寿司","photo":"/storage/emulated/0/20180307_182418.jpg","univalence":"180","stick_time":null,"description":"","num":"0","discount":"180"}]
+         * item : [{"item_id":"53","name":"小米粥","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"3","stick_time":null,"description":"小米粥是以小米作为主要食材熬制而成的粥，口味清淡，清香味，具有简单易制","discount_singe":"0","discount":"1","discount_result":"3"},{"item_id":"60","name":"清蒸鲈鱼","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"1","stick_time":null,"description":"168","discount_singe":"0","discount":"1","discount_result":"1"},{"item_id":"61","name":"爆炒猪肝","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"2","stick_time":null,"description":"58","discount_singe":"0","discount":"1","discount_result":"2"},{"item_id":"62","name":"爆炒猪肝","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"3","stick_time":null,"description":"58","discount_singe":"0","discount":"1","discount_result":"3"},{"item_id":"63","name":"红烧鱼","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"1.5","stick_time":null,"description":"39","discount_singe":"1","discount":"0.8","discount_result":"1.2"},{"item_id":"111","name":"寿司","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"180","stick_time":null,"description":"","discount_singe":"0","discount":"1","discount_result":"180"},{"item_id":"113","name":"清蒸西兰花","photo":"merchant/1151803550@qq.com/item/20180213_110455.jpg","univalence":"15","stick_time":null,"description":"","discount_singe":"0","discount":"1","discount_result":"15"}]
          */
 
         private String class_id;
@@ -83,25 +83,26 @@ public class ShopCarEntity {
 
         public static class ItemBean {
             /**
-             * item_id : 52
-             * name : 馒头
-             * photo :
-             * sweet/person/portrait/chinn96@163.com.png
-             * univalence : 2
-             * stick_time : 19
-             * description : 馒头，又称之为馍、蒸馍，中国特色传统面食之一，是一种用面粉发酵蒸成的食品，形圆而隆起
-             * num : 0
+             * item_id : 53
+             * name : 小米粥
+             * photo : merchant/1151803550@qq.com/item/20180213_110455.jpg
+             * univalence : 3
+             * stick_time : null
+             * description : 小米粥是以小米作为主要食材熬制而成的粥，口味清淡，清香味，具有简单易制
+             * discount_singe : 0
              * discount : 1
+             * discount_result : 3
              */
 
             private String item_id;
             private String name;
             private String photo;
             private String univalence;
-            private String stick_time;
+            private Object stick_time;
             private String description;
-            private String num;
+            private String discount_singe;
             private String discount;
+            private String discount_result;
 
             public String getItem_id() {
                 return item_id;
@@ -135,11 +136,11 @@ public class ShopCarEntity {
                 this.univalence = univalence;
             }
 
-            public String getStick_time() {
+            public Object getStick_time() {
                 return stick_time;
             }
 
-            public void setStick_time(String stick_time) {
+            public void setStick_time(Object stick_time) {
                 this.stick_time = stick_time;
             }
 
@@ -151,12 +152,12 @@ public class ShopCarEntity {
                 this.description = description;
             }
 
-            public String getNum() {
-                return num;
+            public String getDiscount_singe() {
+                return discount_singe;
             }
 
-            public void setNum(String num) {
-                this.num = num;
+            public void setDiscount_singe(String discount_singe) {
+                this.discount_singe = discount_singe;
             }
 
             public String getDiscount() {
@@ -165,6 +166,14 @@ public class ShopCarEntity {
 
             public void setDiscount(String discount) {
                 this.discount = discount;
+            }
+
+            public String getDiscount_result() {
+                return discount_result;
+            }
+
+            public void setDiscount_result(String discount_result) {
+                this.discount_result = discount_result;
             }
         }
     }

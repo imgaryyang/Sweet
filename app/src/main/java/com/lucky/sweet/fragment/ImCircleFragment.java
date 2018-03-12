@@ -83,13 +83,10 @@ public class ImCircleFragment extends Fragment implements
         imv_head = view.findViewById(R.id.imv_head);
 
         imv_head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
-        imv_head.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), SendCircleActivity.class);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
-            }
+        imv_head.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), SendCircleActivity.class);
+            startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
         });
 
         lv_circle = view.findViewById(R.id.lv_circle);
@@ -97,16 +94,12 @@ public class ImCircleFragment extends Fragment implements
         TitleIndicatorView circle_titie_search = view.findViewById(R.id.circle_titie_sarch);
         circle_titie_search.initializationData(title);
 
-        lv_circle.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view,
-                                    int i, long l) {
-                Intent intent = new Intent(getActivity(), PersonalCircleActivity.class);
+        lv_circle.setOnItemClickListener((adapterView, view1, i, l) -> {
+            Intent intent = new Intent(getActivity(), PersonalCircleActivity.class);
 
-                intent.putExtra("circle_info", circle_list.get(i));
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
-            }
+            intent.putExtra("circle_info", circle_list.get(i));
+            startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
         });
         vImageWatcher = view.findViewById(R.id.imv_watcger);
         // 如果是透明状态栏，你需要给ImageWatcher标记 一个偏移值，以修正点击ImageView查看的启动动画的Y轴起点的不正确
@@ -120,11 +113,8 @@ public class ImCircleFragment extends Fragment implements
 
 
         //长按
-        vImageWatcher.setOnPictureLongPressListener(new ImageWatcher.OnPictureLongPressListener() {
-            @Override
-            public void onPictureLongPress() {
+        vImageWatcher.setOnPictureLongPressListener(() -> {
 
-            }
         });
         //是否用手势
         vImageWatcher.setOnGesture(true);
@@ -148,12 +138,8 @@ public class ImCircleFragment extends Fragment implements
     public void initData(CircleMainInfo info) {
         circle_list = info.getCircle_list();
         circleListViewAdapter = new CircleListViewAdapter(getActivity(), circle_list).setCallBack(this);
-        circleListViewAdapter.setOnLikeItClickListener(new CircleListViewAdapter.OnLikeItClickListener() {
-            @Override
-            public void meridBack(String mer_id, int position) {
-                activity.sendCircleLikeIt(mer_id, position);
-            }
-        });
+        circleListViewAdapter.setOnLikeItClickListener(
+                (mer_id, position) -> activity.sendCircleLikeIt(mer_id, position));
         lv_circle.setAdapter(circleListViewAdapter);
     }
 

@@ -85,15 +85,11 @@ public class MultiOrderActivity extends BaseActivity {
         title.setTitleNameStr("多人订单");
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
                 .BUTTON_LEFT, 0, "取消");
-        title.setOnTitleButtonClickListener(new Title
-                .OnTitleButtonClickListener() {
-            @Override
-            public void onClick(int id, Title.ButtonViewHolder viewHolder) {
-                switch (id) {
-                    case Title.BUTTON_LEFT:
-                        finish();
-                        break;
-                }
+        title.setOnTitleButtonClickListener((id, viewHolder) -> {
+            switch (id) {
+                case Title.BUTTON_LEFT:
+                    finish();
+                    break;
             }
         });
 
@@ -129,19 +125,7 @@ public class MultiOrderActivity extends BaseActivity {
             case ReserveProperties.CREATE_OR_ALTER_ROOM_FAIL:
                 Toast.makeText(this, "申请房间失败请重试", Toast.LENGTH_SHORT).show();
                 break;
-            default:
-                MyApplication.bindPushAccount(request, new CommonCallback() {
-                    @Override
-                    public void onSuccess(String s) {
-                        jionToOrder(request);
-                    }
 
-                    @Override
-                    public void onFailed(String s, String s1) {
-
-                    }
-                });
-                break;
         }
 
 
@@ -150,41 +134,13 @@ public class MultiOrderActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(final JoinInRoomInfo menu) {
 
-        MyApplication.bindPushAccount(roomId, new CommonCallback() {
-            @Override
-            public void onSuccess(String s) {
-                if (menu.getState()) {
-                    jionToOrder(roomId);
-                    Toast.makeText(MultiOrderActivity.this, "加入房间成功", Toast.LENGTH_SHORT).show();
-                }else
-                    Toast.makeText(MultiOrderActivity.this, "密码或房间有误", Toast.LENGTH_SHORT).show();
 
-            }
-
-
-            @Override
-            public void onFailed(String s, String s1) {
-                Toast.makeText(MultiOrderActivity.this, "加入房间失败，请重试", Toast.LENGTH_SHORT).show();
-            }
-        });
 
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(String menu) {
 
-        MyApplication.bindPushAccount(roomId, new CommonCallback() {
-            @Override
-            public void onSuccess(String s) {
-                jionToOrder(roomId);
 
-            }
-
-
-            @Override
-            public void onFailed(String s, String s1) {
-                Toast.makeText(MultiOrderActivity.this, "加入房间失败，请重试", Toast.LENGTH_SHORT).show();
-            }
-        });
 
     }
 

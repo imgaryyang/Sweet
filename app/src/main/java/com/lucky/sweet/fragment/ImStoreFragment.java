@@ -134,8 +134,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        hiddenAnimUtils = HiddenAnimUtils.newInstance(getContext(), ll_se,
-                msv_search, displayMetrics.heightPixels);
+        hiddenAnimUtils = HiddenAnimUtils.newInstance(getContext(), ll_se, msv_search, displayMetrics.heightPixels);
 
         vp_ad.setPageTransformer(true, new AdViewPagerTransformer());
 
@@ -169,11 +168,11 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         //rec_ad_show = view.findViewById(R.id.rec_ad_show);
         btn_qrcodescan = view.findViewById(R.id.btn_qrcodescan);
         ref_recy_food = view.findViewById(R.id.ref_recy_food);
-        View inc_recycle_more_food = view.findViewById(R.id.pb_food_loading);
-        ref_recy_food.setMoveViews(inc_recycle_more_food);
+   /*       View inc_recycle_more_food = view.findViewById(R.id.pb_food_loading);
+      ref_recy_food.setMoveViews(inc_recycle_more_food);*/
         ref_recy_fun = view.findViewById(R.id.ref_recy_fun);
-        View pb_fun_loading = view.findViewById(R.id.pb_fun_loading);
-        ref_recy_fun.setMoveViews(pb_fun_loading);
+   /*       View pb_fun_loading = view.findViewById(R.id.pb_fun_loading);
+      ref_recy_fun.setMoveViews(pb_fun_loading);*/
         collapsingToolbarLayout = view.findViewById(R.id.collapsingToolbarLayout);
         in_vp_ad = view.findViewById(R.id.in_vp_ad);
         float_btn = view.findViewById(R.id.float_btn);
@@ -199,28 +198,19 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         tv_moreFood.setOnClickListener(this);
         tv_moreRelax.setOnClickListener(this);
         btn_qrcodescan.setOnClickListener(this);
-        btn_qrcodescan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CaptureActivity.class);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
-            }
+        btn_qrcodescan.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), CaptureActivity.class);
+            startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
         });
-        msv_search.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MainSearchActiviy.class);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.act_up, R.anim.act_down);
-            }
+        msv_search.setOnSearchClickListener(v -> {
+            Intent intent = new Intent(getActivity(), MainSearchActiviy.class);
+            startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.act_up, R.anim.act_down);
         });
-        float_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), FloatPageActivity.class);
-                startActivity(intent);
-            }
+        float_btn.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), FloatPageActivity.class);
+            startActivity(intent);
         });
         vp_ad.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -241,7 +231,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
             }
         });
-        ref_recy_food.setOnPullToLeftListener(new RecycleViewRefresh.OnPullToLeftListener() {
+        /*ref_recy_food.setOnPullToLeftListener(new RecycleViewRefresh.OnPullToLeftListener() {
             @Override
             public void onReleaseFingerToUpload() {
 
@@ -276,7 +266,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
             public void onStartToUpload() {
 
             }
-        });
+        });*/
     }
 
     @Override
@@ -297,20 +287,8 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         RecFoodRecommendAdapter funAdapter = new RecFoodRecommendAdapter
                 (context, RecFoodRecommendAdapter.FUN, showInfo.getRecreation());
 
-        foodAdapter.setOnItemClickListener(new RecFoodRecommendAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClickListener(String shopId) {
-                StoreParticularInfoActivity.inStance(context, shopId);
-
-            }
-        });
-        funAdapter.setOnItemClickListener(new RecFoodRecommendAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClickListener(String shopId) {
-                StoreParticularInfoActivity.inStance(context, shopId);
-
-            }
-        });
+        foodAdapter.setOnItemClickListener(shopId -> StoreParticularInfoActivity.inStance(context, shopId));
+        funAdapter.setOnItemClickListener(shopId -> StoreParticularInfoActivity.inStance(context, shopId));
         rec_foodStore.setAdapter(foodAdapter);
         rec_funStore.setAdapter(funAdapter);
 

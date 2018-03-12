@@ -610,12 +610,10 @@ public class CommunicationService extends Service {
         final HashMap<String, String> map = new HashMap<>();
         map.put("mer_id", "1");
         map.put("session", MyApplication.sessionId);
-        map.put("key_value", "{}");
         HttpUtils.sendOkHttpRequest(Properties.SHOP_CAR, new MyOkhttpHelper() {
 
             @Override
             public void onResponseSuccessfulString(String string) {
-
                 EventBus.getDefault().post(new Gson().fromJson(string, ShopCarEntity.class));
 
             }

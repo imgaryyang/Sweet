@@ -106,39 +106,27 @@ public class ImMeFragment extends Fragment {
 
         btn_setUserInfo = view.findViewById(R.id.btn_setUserInfo);
 
-        view.findViewById(R.id.rl_vipcard).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), VipCardActiviry.class));
-                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+        view.findViewById(R.id.rl_vipcard).setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), VipCardActiviry.class));
+            getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
 
-            }
         });
-        btn_setUserInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), SettingActivity.class);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+        btn_setUserInfo.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), SettingActivity.class);
+            startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
 
-            }
         });
 
-        view.findViewById(R.id.rl_mycomment).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), MyCommentActivity.class));
-                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+        view.findViewById(R.id.rl_mycomment).setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), MyCommentActivity.class));
+            getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
 
-            }
         });
-        view.findViewById(R.id.rl_hisorder).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), HistoricalOderActivity.class));
-                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+        view.findViewById(R.id.rl_hisorder).setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), HistoricalOderActivity.class));
+            getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
 
-            }
         });
 
         view.findViewById(R.id.myLikeStore).setOnClickListener(new View.OnClickListener() {

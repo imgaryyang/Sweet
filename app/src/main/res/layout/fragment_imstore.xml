@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -236,12 +235,10 @@
                             android:overScrollMode="never"
                             android:scrollbars="none" />
 
-
-                        <ProgressBar
-                            android:id="@+id/pb_food_loading"
-                            android:layout_width="@dimen/dimen_20_dp"
-                            android:layout_height="@dimen/dimen_20_dp"
-                            android:layout_gravity="center_vertical" />
+                        <include
+                            layout="@layout/pull_to_refresh"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
                     </com.lucky.sweet.widgets.dragload.RecycleViewRefresh>
 
 
@@ -327,12 +324,12 @@
     </android.support.design.widget.CoordinatorLayout>
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/rl_store_method"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:visibility="gone">
 
         <Button
             android:id="@+id/imb_istore_searchroom"
@@ -353,13 +350,13 @@
             android:text="搜索房间" />
 
         <Button
-            android:background="@mipmap/wait_order"
             android:id="@+id/imb_istore_waitorder"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/imb_istore_searchroom"
-            android:layout_marginEnd="108dp" />
+            android:layout_marginEnd="108dp"
+            android:background="@mipmap/wait_order" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -370,6 +367,7 @@
             android:text="等待订单" />
 
     </RelativeLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/float_btn"
         android:layout_width="wrap_content"
@@ -382,4 +380,4 @@
         app:fabSize="normal"
         app:pressedTranslationZ="22dp"
         app:rippleColor="#ff0" />
-</RelativeLayout >
+</RelativeLayout>
