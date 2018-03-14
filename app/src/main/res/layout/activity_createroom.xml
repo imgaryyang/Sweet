@@ -61,11 +61,10 @@
         android:layout_weight="1.8"
         android:gravity="center"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_create_room_showRoomId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lv_add_friend"/>
 
         <Button
             android:layout_width="@dimen/dimen_280_dp"

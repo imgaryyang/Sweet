@@ -18,6 +18,10 @@ public class ReserveProperties {
     public static final String JOIN_IN_ROOM = "https://thethreestooges.cn:666/trolley/show/menu";
 
     public static final String JOIN_IN_ROOM_TEST = "https://thethreestooges.cn:666/trolley/pw/ver";
+
+    public static final String INVITATION_FRIEND = "https://thethreestooges.cn:666/trolley/attent/invite";
+
+
     public static final String CREATE_OR_ALTER_ROOM_FAIL = "0";
 }
 

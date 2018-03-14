@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.common.utils.OSSUtils;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lucky.sweet.R;
 import com.lucky.sweet.utility.OssUtils;
 
@@ -112,7 +111,7 @@ public class MessagePicturesLayout extends FrameLayout implements View.OnClickLi
                 mVisiblePictureList.add(iPicture);
                 iPicture.setLayoutParams(lpChildImage);
                 iPicture.setBackgroundResource(R.drawable.default_picture);
-                Glide.with(getContext()).load(OssUtils.getOSSExtranetPath(dataList.get(i))).diskCacheStrategy(DiskCacheStrategy.ALL).into(iPicture);
+                Glide.with(getContext()).load(OssUtils.getOSSExtranetPath(dataList.get(i))).into(iPicture);
                 iPicture.setTranslationX((i % column) * (imageSize + mSpace));
                 iPicture.setTranslationY((i / column) * (imageSize + mSpace));
             } else {

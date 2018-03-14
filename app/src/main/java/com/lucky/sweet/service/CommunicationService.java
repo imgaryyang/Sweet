@@ -315,6 +315,28 @@ public class CommunicationService extends Service {
         public void getFlowFriends() {
             CommunicationService.this.getFlowFriends();
         }
+
+        public void invitationFriend(String user_id) {
+            CommunicationService.this.invitationFriend(user_id);
+        }
+    }
+
+    private void invitationFriend(String inviteUserId) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("invite_user_id", inviteUserId);
+        map.put("session", MyApplication.sessionId);
+        map.put("key_value", "????");
+        HttpUtils.sendOkHttpRequest(ReserveProperties.INVITATION_FRIEND,new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+                invitationFriend(inviteUserId);
+            }
+        }, map);
     }
 
     private void getFlowFriends() {

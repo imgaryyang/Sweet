@@ -4,10 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Contacts;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.adapter.FlowFriendAdapter;
+import com.lucky.sweet.entity.FlowPeople;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.ReservationInfo;
 import com.lucky.sweet.service.CommunicationService;
@@ -17,6 +21,8 @@ import com.lucky.sweet.widgets.ToolBar;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.List;
 
 /**
  * Created by Qiuyue on 2018/3/7.
@@ -32,7 +38,8 @@ public class CreateRoomActivity extends BaseActivity {
     private EditText input_password;
     private CommunicationService.MyBinder myBinder;
     private String mer_id;
-    private TextView roomId;
+
+    private ListView lv_add_friend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +56,8 @@ public class CreateRoomActivity extends BaseActivity {
 
     private void initView() {
         input_password = findViewById(R.id.input_password);
-        roomId = findViewById(R.id.tv_create_room_showRoomId);
+
+        lv_add_friend = findViewById(R.id.lv_add_friend);
         initTitle();
     }
 
@@ -96,17 +104,26 @@ public class CreateRoomActivity extends BaseActivity {
 
     }
 
-    public void addRoom(View v) {
-        myBinder.joinInReserveRoom(roomId.getText().toString(),input_password.getText().toString().trim() );
-    }
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
         this.myBinder = myBinder;
+        myBinder.getFlowFriends();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(ReservationInfo reservationInfo) {
-        roomId.setText(reservationInfo.getRoomId());
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(FlowPeople info) {
+        List<FlowPeople.AttentListBean> attent_list = info.getAttent_list();
+        FlowFriendAdapter flowFriendAdapter = new FlowFriendAdapter(attent_list, this);
+        lv_add_friend.setAdapter(flowFriendAdapter);
+        lv_add_friend.setOnItemClickListener((parent, view, position, id) -> {
+            myBinder.invitationFriend(attent_list.get(position).getUser_id());
+
+        });
     }
 }
