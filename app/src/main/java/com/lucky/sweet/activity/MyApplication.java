@@ -193,7 +193,22 @@ public class MyApplication extends Application {
         PushServiceFactory.init(applicationContext);
         pushService = PushServiceFactory.getCloudPushService
                 ();
+        if (config.getBoolean("logined", false)) {
+            String username = config.getString("username", "");
+            if (!username.equals("")) pushService.bindAccount(username, new CommonCallback() {
+                @Override
+                public void onSuccess(String s) {
+                    Log.i("ClodePush", "Success");
+                }
 
+                @Override
+                public void onFailed(String s, String s1) {
+                    Log.i("ClodePush", "onFailed");
+
+                }
+            });
+
+        }
         pushService.register(applicationContext, new CommonCallback() {
             @Override
             public void onSuccess(String response) {
@@ -205,21 +220,7 @@ public class MyApplication extends Application {
                 Log.d(TAG, "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
             }
         });
-        if (config.getBoolean("logined", false)) {
-            String username = config.getString("username", "");
-            if (username.equals("")) pushService.bindAccount(username, new CommonCallback() {
-                @Override
-                public void onSuccess(String s) {
-                    Log.i("ClodePush", "Success");
-                }
-                @Override
-                public void onFailed(String s, String s1) {
-                    Log.i("ClodePush", "onFailed");
 
-                }
-            });
-
-        }
     }
 
 

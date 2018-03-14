@@ -188,14 +188,7 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
                     ((MerchantActivity) activity).upMenuInfo(muliiOrderInfo);
                 }
             });
-        sectionedAdapter.SetOnSetHolderClickListener(new TestSectionedAdapter.HolderClickListener() {
-
-            @Override
-            public void onHolderClick(Drawable drawable, int[] start_location) {
-                doAnim(drawable, start_location);
-            }
-
-        });
+        sectionedAdapter.SetOnSetHolderClickListener((drawable, start_location) -> doAnim(drawable, start_location));
 
         for (ProductType type : productCategorizes) {
             strings.add(type.getType());
@@ -211,30 +204,24 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         shoppingListView.setAdapter(shopAdapter);
         shopAdapter.setShopToDetailListener(this);
 
-        mainlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mainlist.setOnItemClickListener((arg0, view, position, arg3) -> {
+            isScroll = false;
 
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View view,
-                                    int position, long arg3) {
-                isScroll = false;
-
-                for (int i = 0; i < mainlist.getChildCount(); i++) {
-                    if (i == position) {
-                        mainlist.getChildAt(i).setBackgroundColor(
-                                Color.rgb(255, 255, 255));
-                    } else {
-                        mainlist.getChildAt(i).setBackgroundColor(
-                                Color.TRANSPARENT);
-                    }
+            for (int i = 0; i < mainlist.getChildCount(); i++) {
+                if (i == position) {
+                    mainlist.getChildAt(i).setBackgroundColor(
+                            Color.rgb(255, 255, 255));
+                } else {
+                    mainlist.getChildAt(i).setBackgroundColor(
+                            Color.TRANSPARENT);
                 }
-
-                int rightSection = 0;
-                for (int i = 0; i < position; i++) {
-                    rightSection += sectionedAdapter.getCountForSection(i) + 1;
-                }
-                morelist.setSelection(rightSection);
-
             }
+
+            int rightSection = 0;
+            for (int i = 0; i < position; i++) {
+                rightSection += sectionedAdapter.getCountForSection(i) + 1;
+            }
+            morelist.setSelection(rightSection);
 
         });
 
@@ -268,13 +255,10 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
             }
         });
 
-        btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().finish();
-                getActivity().overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        btn_back.setOnClickListener(view -> {
+            getActivity().finish();
+            getActivity().overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
 
-            }
         });
 
         bg_layout.setOnClickListener(this);

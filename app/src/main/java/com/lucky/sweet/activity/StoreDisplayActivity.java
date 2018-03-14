@@ -52,12 +52,13 @@ public class StoreDisplayActivity extends BaseActivity {
     private ShowInfoListViewAdapter adapter;
     private CommunicationService.MyBinder myBinder;
     private List<StoreDisplayInfo.MerListBean> displayList;
-    private String businessArea;
-    private String rankType;
-    private String recreationType;
+    private String businessArea="";
+    private String rankType="";
+    private String recreationType="";
     private List<String> circle;
     private List<String> classify;
     private List<String> order;
+    private int num = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +66,7 @@ public class StoreDisplayActivity extends BaseActivity {
         setContentView(R.layout.activity_storedisplay);
         ButterKnife.bind(this);
 
-
         initViews();
-
 
         initTitle();
 
@@ -89,7 +88,7 @@ public class StoreDisplayActivity extends BaseActivity {
     void onServiceBind(CommunicationService.MyBinder myBinder) {
         this.myBinder = myBinder;
 
-        myBinder.requestStoreDisplayInfo("", "","", "0");
+        myBinder.requestStoreDisplayInfo("", "", "", num + "");
         myBinder.requestStoreSearch();
     }
 
@@ -108,16 +107,12 @@ public class StoreDisplayActivity extends BaseActivity {
         intent.getStringExtra("city");
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
                 .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
-        title.setOnTitleButtonClickListener(new Title
-                .OnTitleButtonClickListener() {
-            @Override
-            public void onClick(int id, Title.ButtonViewHolder viewHolder) {
-                switch (id) {
-                    case Title.BUTTON_LEFT:
-                        finish();
-                        goPreAnim();
-                        break;
-                }
+        title.setOnTitleButtonClickListener((id, viewHolder) -> {
+            switch (id) {
+                case Title.BUTTON_LEFT:
+                    finish();
+                    goPreAnim();
+                    break;
             }
         });
         title.mSetButtonInfo(buttonLeft);
@@ -202,31 +197,27 @@ public class StoreDisplayActivity extends BaseActivity {
 
             }
         });
-        lv_storeInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        lv_storeInfo.setOnItemClickListener((parent, view, position, id) -> {
 
-                Intent intent = new Intent(StoreDisplayActivity.this, StoreParticularInfoActivity.class);
-                intent.putExtra("shopid", displayList.get(position).getMer_id());
-                startActivity(intent);
-                goNextAnim();
-            }
+            Intent intent = new Intent(StoreDisplayActivity.this, StoreParticularInfoActivity.class);
+            intent.putExtra("shopid", displayList.get(position).getMer_id());
+            startActivity(intent);
+            goNextAnim();
         });
-        sw_store_info.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh(SwipyRefreshLayoutDirection direction) {
-                switch (direction.name()) {
-                    case "TOP":
-                        requestSearchItem(true);
-                        break;
-                    case "BOTTOM":
-                        requestSearchItem(false);
-                        Toast.makeText(StoreDisplayActivity.this, "加载更多",
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                }
-
+        sw_store_info.setOnRefreshListener(direction -> {
+            switch (direction.name()) {
+                case "TOP":
+                    num=0;
+                    requestSearchItem(true);
+                    break;
+                case "BOTTOM":
+                    requestSearchItem(false);
+                    num++;
+                    myBinder.requestStoreDisplayInfo(recreationType, businessArea, rankType, num+"");
+                    Toast.makeText(StoreDisplayActivity.this, "加载更多", Toast.LENGTH_SHORT).show();
+                    break;
             }
+
         });
 
 
@@ -238,9 +229,17 @@ public class StoreDisplayActivity extends BaseActivity {
         if (sw_store_info.isRefreshing()) {
             sw_store_info.setRefreshing(false);
         }
-        displayList = info.getMer_list();
-        adapter = new ShowInfoListViewAdapter(displayList, this);
-        lv_storeInfo.setAdapter(adapter);
+        if (adapter == null) {
+            displayList = info.getMer_list();
+            adapter = new ShowInfoListViewAdapter(displayList, this);
+            lv_storeInfo.setAdapter(adapter);
+        } else if (info != null) {
+            displayList.addAll(info.getMer_list());
+            adapter.notifyDataSetChanged();
+        }else {
+            Toast.makeText(this, "暂时无数据", Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 
@@ -254,15 +253,16 @@ public class StoreDisplayActivity extends BaseActivity {
         classify = list.getClassify();
         order = list.getOrder();
 
-        businessArea = circle.get(0);
-        rankType = classify.get(0);
-        recreationType = order.get(0);
+        circle.add(0,"请选这商圈");
+        classify.add(0,"请选这类型");
+        order.add(0,"请选择排序方式");
 
         sp_BusinessArea.setAdapter(new SearchSpinnerAdapter(circle, this));
 
         sp_RecreationType.setAdapter(new SearchSpinnerAdapter(classify, this));
 
         sp_RankType.setAdapter(new SearchSpinnerAdapter(order, this));
+
         setListener();
 
     }
@@ -275,8 +275,7 @@ public class StoreDisplayActivity extends BaseActivity {
             CURRENT_PAGE_NUM++;
             page = String.valueOf(CURRENT_PAGE_NUM);
         }
-        myBinder.requestStoreDisplayInfo(recreationType, businessArea,
-                rankType, page);
+        myBinder.requestStoreDisplayInfo(recreationType, businessArea, rankType, page);
 
     }
 

@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lucky.sweet.R;
 import com.lucky.sweet.model.shoppingcar.ShopMenuAttr;
 import com.lucky.sweet.model.shoppingcar.assistant.onCallBackListener;
@@ -86,42 +87,37 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
         viewHolder.name.setText(product.getGoods());
         viewHolder.prise.setText(String.valueOf(product.getPrice()));
         viewHolder.shoppingNum.setText(String.valueOf(product.getNumber()));
-        viewHolder.back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onItemDesClickListener != null) {
-                    onItemDesClickListener.onClick(section, position);
-                }
+        viewHolder.back.setOnClickListener(v -> {
+            if (onItemDesClickListener != null) {
+                onItemDesClickListener.onClick(section, position);
             }
         });
         String picture = product.getPicture();
 
         if (picture != null) {
-           Glide.with(context).load(OssUtils.getOSSExtranetPath(picture)).into(viewHolder.head);
+            Glide.with(context).load(OssUtils.getOSSExtranetPath(picture)).preload();
+            Glide.with(context).load(OssUtils.getOSSExtranetPath(picture)).diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.head);
         }
 
 
-        viewHolder.increase.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int num = product.getNumber();
-                num++;
-                product.setNumber(num);
-                viewHolder.shoppingNum.setText(product.getNumber() + "");
+        viewHolder.increase.setOnClickListener(v -> {
+            int num = product.getNumber();
+            num++;
+            product.setNumber(num);
+            viewHolder.shoppingNum.setText(product.getNumber() + "");
 
-                if (callBackListener != null) callBackListener.updateProduct(product, "1");
+            if (callBackListener != null) callBackListener.updateProduct(product, "1");
 
-                if (mHolderClickListener != null) {
-                    int[] start_location = new int[2];
-                    viewHolder.shoppingNum.getLocationInWindow(start_location);//获取点击商品图片的位置
-                    Drawable drawable = context.getResources().getDrawable(R.mipmap.add_product);//复制一个新的商品图标
-                    //TODO:解决方案，先监听到左边ListView的Item中，然后在开始动画添加
-                    mHolderClickListener.onHolderClick(drawable, start_location);
-                }
-                if (onMenuChangedListener != null)
-                    onMenuChangedListener.onChanged(product.getId(), section, position, ShopMenuAttr.ADD);
-
+            if (mHolderClickListener != null) {
+                int[] start_location = new int[2];
+                viewHolder.shoppingNum.getLocationInWindow(start_location);//获取点击商品图片的位置
+                Drawable drawable = context.getResources().getDrawable(R.mipmap.add_product);//复制一个新的商品图标
+                //TODO:解决方案，先监听到左边ListView的Item中，然后在开始动画添加
+                mHolderClickListener.onHolderClick(drawable, start_location);
             }
+            if (onMenuChangedListener != null)
+                onMenuChangedListener.onChanged(product.getId(), section, position, ShopMenuAttr.ADD);
+
         });
         viewHolder.reduce.setOnClickListener(new View.OnClickListener() {
             @Override

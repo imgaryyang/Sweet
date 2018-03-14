@@ -822,6 +822,7 @@ public class CommunicationService extends Service {
                         MyOkhttpHelper() {
                             @Override
                             public void onResponseSuccessfulString(String string) {
+                                System.out.println(string);
                                 EventBus.getDefault().post(new Gson().fromJson(string, StoreDisplayInfo.class));
                             }
 

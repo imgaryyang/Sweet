@@ -99,15 +99,12 @@ public class CircleListViewAdapter extends BaseAdapter {
                 }
             }
         });
-        viewHolder.flowShow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView tv_flow = (TextView) v;
-                if (tv_flow.getText().equals("关注")) {
-                    tv_flow.setText("已关注");
-                } else {
-                    tv_flow.setText("关注");
-                }
+        viewHolder.flowShow.setOnClickListener(v -> {
+            TextView tv_flow = (TextView) v;
+            if (tv_flow.getText().equals("关注")) {
+                tv_flow.setText("已关注");
+            } else {
+                tv_flow.setText("关注");
             }
         });
         return convertView;
