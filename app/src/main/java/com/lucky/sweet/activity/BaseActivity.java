@@ -16,11 +16,14 @@ import com.lucky.sweet.R;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.views.SlidingLayoutView;
 
+import org.greenrobot.eventbus.EventBus;
+
 public abstract class BaseActivity extends AppCompatActivity {
 
     public static String sessionId = "";
 
     private MyConn conn = new MyConn();
+    private Boolean isBindEventBus = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
+    public void setIsBindEventBus() {
+        isBindEventBus = true;
+    }
 
     private void bindService() {
 
@@ -42,6 +48,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (isBindEventBus) {
+            EventBus.getDefault().register(this);
+        }
         bindService();
 
     }
@@ -49,6 +58,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        if (isBindEventBus) {
+            EventBus.getDefault().unregister(this);
+        }
         unbindService(conn);
     }
 

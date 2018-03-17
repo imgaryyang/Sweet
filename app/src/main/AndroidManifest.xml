@@ -45,13 +45,13 @@
         android:roundIcon="@mipmap/haha"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Slide">
-        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.MainActivity" />
         <activity
             android:name=".activity.BaseActivity"
             android:label="@string/title_activity_basic"
-            android:theme="@style/AppTheme"/>
-        <activity android:name=".activity.UserLoginActivity"/>
-        <activity android:name=".activity.UserRegisterActivity"/>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.UserLoginActivity" />
+        <activity android:name=".activity.UserRegisterActivity" />
         <activity
             android:name=".activity.StoreParticularInfoActivity"
             android:launchMode="singleTop" />
@@ -73,21 +73,21 @@
         <activity
             android:name=".activity.OrderActivity"
             android:label="@string/title_activity_order"
-            android:theme="@style/AppTheme"/>
-        <activity android:name=".activity.MainSearchActiviy"/>
-        <activity android:name=".activity.MerchantActivity"/>
-        <activity android:name=".activity.OrderSubmitActivity"/>
-        <activity android:name=".activity.RecruitmentDisplayActivity"/>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.MainSearchActiviy" />
+        <activity android:name=".activity.MerchantActivity" />
+        <activity android:name=".activity.OrderSubmitActivity" />
+        <activity android:name=".activity.RecruitmentDisplayActivity" />
         <activity android:name=".activity.CaptureActivity" />
-        <activity android:name=".activity.VipCardActiviry"/>
+        <activity android:name=".activity.VipCardActiviry" />
         <activity android:name=".activity.PersonalCircleActivity" />
 
         <service android:name=".service.CommunicationService" />
 
         <activity android:name=".activity.SendCircleActivity" />
-        <activity android:name=".activity.DetailedDishesActivity"/>
-        <activity android:name=".activity.DischesViewShowActivity"/>
-        <activity android:name=".activity.SettlementActivity"/>
+        <activity android:name=".activity.DetailedDishesActivity" />
+        <activity android:name=".activity.DischesViewShowActivity" />
+        <activity android:name=".activity.SettlementActivity" />
         <activity android:name=".activity.MyCommentActivity" />
         <activity android:name=".activity.MultiOrderActivity" />
         <activity android:name=".activity.HistoricalOderActivity" />
@@ -96,9 +96,8 @@
         <activity android:name=".activity.WaitOrderActivity" />
         <activity android:name=".activity.JoinRoomActivity" />
         <activity android:name=".activity.CreateRoomActivity" />
-
-        <activity android:name=".activity.CropIwaActivity"/>
-        <activity android:name=".activity.MyLikeStoreActivity"/>
+        <activity android:name=".activity.CropIwaActivity" />
+        <activity android:name=".activity.MyLikeStoreActivity" />
 
         <meta-data
             android:name="com.alibaba.app.appkey"
@@ -119,6 +118,12 @@
                 <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".activity.DetailOrderActivity"
+            android:launchMode="singleTop">
+
+        </activity>
     </application>
 
 </manifest>

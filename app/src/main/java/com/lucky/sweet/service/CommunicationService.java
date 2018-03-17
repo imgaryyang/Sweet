@@ -25,13 +25,16 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.lucky.sweet.activity.MyApplication;
 import com.lucky.sweet.activity.OrderSeatActivity;
+import com.lucky.sweet.entity.AlterOrderInfo;
 import com.lucky.sweet.entity.CircleDetail;
 import com.lucky.sweet.entity.CircleLikePoint;
 import com.lucky.sweet.entity.CircleMainInfo;
+import com.lucky.sweet.entity.DetailOrderInfo;
 import com.lucky.sweet.entity.FlowPeople;
 import com.lucky.sweet.entity.JoinInRoomInfo;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.PerdetermingEntity;
+import com.lucky.sweet.entity.PersonInfo;
 import com.lucky.sweet.entity.ReservationInfo;
 import com.lucky.sweet.entity.ShopCarEntity;
 import com.lucky.sweet.entity.StoreDetailedInfo;
@@ -184,6 +187,13 @@ public class CommunicationService extends Service {
         public void requestShopDisplay(String mer_id) {
 
             CommunicationService.this.getParticularInfo(mer_id);
+
+        }
+
+        public void getParticularCircleInfo(String mer_id, int start) {
+            CommunicationService.this.getParticularCircleInfo(mer_id, start);
+
+
         }
 
         public void requestPerdeterming(OrderSeatActivity activity) {
@@ -319,6 +329,70 @@ public class CommunicationService extends Service {
         public void invitationFriend(String user_id) {
             CommunicationService.this.invitationFriend(user_id);
         }
+
+        public void getPersonInfo() {
+            CommunicationService.this.getPersonInfo();
+        }
+
+        public void getAlterOrder() {
+            CommunicationService.this.getAlterOrder();
+        }
+
+        public void getDetailedOrderInfo(String indent_id) {
+            CommunicationService.this.getDetailedOrderInfo(indent_id);
+        }
+    }
+
+    private void getDetailedOrderInfo(String indent_id) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("session", MyApplication.sessionId);
+        map.put("indent_id", indent_id);
+        HttpUtils.sendOkHttpRequest(PersonProperties.DETAILED_ORDER_INFO, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+                System.out.println(string);
+                EventBus.getDefault().post(new Gson().fromJson(string, DetailOrderInfo.class));
+
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+                getPersonInfo();
+            }
+        }, map);
+    }
+
+    public void getAlterOrder() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("session", MyApplication.sessionId);
+        HttpUtils.sendOkHttpRequest(PersonProperties.ALTER_ORDER, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+
+                EventBus.getDefault().post(new Gson().fromJson(string, AlterOrderInfo.class));
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+                getPersonInfo();
+            }
+        }, map);
+    }
+
+    public void getPersonInfo() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("session", MyApplication.sessionId);
+        HttpUtils.sendOkHttpRequest(PersonProperties.PERSON_INFO, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+                EventBus.getDefault().post(new Gson().fromJson(string, PersonInfo.class));
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+                getPersonInfo();
+            }
+        }, map);
     }
 
     private void invitationFriend(String inviteUserId) {
@@ -326,7 +400,7 @@ public class CommunicationService extends Service {
         map.put("invite_user_id", inviteUserId);
         map.put("session", MyApplication.sessionId);
         map.put("key_value", "????");
-        HttpUtils.sendOkHttpRequest(ReserveProperties.INVITATION_FRIEND,new MyOkhttpHelper() {
+        HttpUtils.sendOkHttpRequest(ReserveProperties.INVITATION_FRIEND, new MyOkhttpHelper() {
             @Override
             public void onResponseSuccessfulString(String string) {
 
@@ -372,6 +446,8 @@ public class CommunicationService extends Service {
                         requestPersonVipCard();
                     }
                 }, map);
+
+
     }
 
     private void circleLikeIt(final String circle_id, final int position) {
@@ -829,6 +905,33 @@ public class CommunicationService extends Service {
 
     }
 
+    private void getParticularCircleInfo(final String shopId, int start) {
+        final HashMap<String, String> map = new HashMap<>();
+        map.put("mer_id", "1");
+        map.put("session", MyApplication.sessionId);
+        map.put("start", start + "");
+        new Thread() {
+            @Override
+            public void run() {
+                HttpUtils.sendOkHttpRequest(CircleProperties.SHOP_CIRCLE, new
+                        MyOkhttpHelper() {
+
+                            @Override
+                            public void onResponseSuccessfulString(String string) {
+
+                                EventBus.getDefault().post(new Gson().fromJson(string, CircleMainInfo.class));
+                            }
+
+                            @Override
+                            public void afterNewRequestSession() {
+                                getParticularCircleInfo(shopId, start);
+                            }
+                        }, map);
+            }
+        }.start();
+
+    }
+
 
     private void getStoreDisplayInfo(final String project, final String circle, final String rank, final String num) {
         final HashMap<String, String> map = new HashMap<>();
@@ -946,7 +1049,7 @@ public class CommunicationService extends Service {
                         message.obj = info;
                         handler.sendMessage(message);
                     } else {
-                        System.out.println("发送失败");
+
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

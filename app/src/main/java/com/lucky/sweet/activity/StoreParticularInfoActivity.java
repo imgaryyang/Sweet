@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
+import com.lucky.sweet.entity.CircleMainInfo;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.thread.BlurBitmapThread;
@@ -87,6 +88,8 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private ImageButton ibtn_orderMulti;
     private LinearLayout layout_order_content;
     private LinearLayout ll_orderbtn;
+    public int num = 0;
+    private ListView lv_circle;
 
     public static void inStance(Context context, String shopId) {
 
@@ -101,7 +104,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_storeinfo);
-
+        setIsBindEventBus();
         initView();
 
         initEvent();
@@ -110,12 +113,14 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
     }
 
+
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
         Intent intent = getIntent();
         mer_id = intent.getStringExtra("shopid");
-
         myBinder.requestShopDisplay(mer_id);
+        myBinder.getParticularCircleInfo(mer_id, num);
+
     }
 
 
@@ -190,9 +195,9 @@ public class StoreParticularInfoActivity extends BaseActivity {
             }
         });
 
-        ListView lv_circle = findViewById(R.id.lv_circle);
+        lv_circle = findViewById(R.id.lv_circle);
 
-       /* lv_circle.setAdapter(new CircleListViewAdapter(this, info.getCircle_list()));*/
+
         setListViewHeightBasedOnChildren(lv_circle);
 
         ibtn_back.setOnClickListener(new View.OnClickListener() {
@@ -288,16 +293,10 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        EventBus.getDefault().register(this);
-    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(CircleMainInfo info) {
+        lv_circle.setAdapter(new CircleListViewAdapter(this, info.getCircle_list()));
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        EventBus.getDefault().unregister(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

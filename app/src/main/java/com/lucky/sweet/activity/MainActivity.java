@@ -13,6 +13,7 @@ import com.lucky.sweet.entity.CircleLikePoint;
 import com.lucky.sweet.entity.CircleMainInfo;
 import com.lucky.sweet.entity.FlowPeople;
 import com.lucky.sweet.entity.MainStoreInfo;
+import com.lucky.sweet.entity.PersonInfo;
 import com.lucky.sweet.entity.WeatherInfo;
 import com.lucky.sweet.fragment.ImCircleFragment;
 import com.lucky.sweet.fragment.ImMeFragment;
@@ -43,22 +44,8 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-
+        setIsBindEventBus();
     }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        EventBus.getDefault().register(this);
-
-    }
-
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
@@ -67,7 +54,9 @@ public class MainActivity extends BaseActivity {
             myBinder.requestImStoreInfo(MainActivity.this);
             myBinder.getPersonPortrait(USER_PORTRAIT_PATH);
             myBinder.getFlowFriends();
-            myBinder.requestCircleInfo("朋友", "0");
+            myBinder.requestCircleInfo("今日", "0");
+            myBinder.getPersonInfo();
+
         }
         this.myBinder = myBinder;
 
@@ -223,8 +212,8 @@ public class MainActivity extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void Event(FlowPeople people) {
-        meFragment.upDataPersonInfo(people.getAttent_list().size()+"");
+    public void Event(PersonInfo info) {
+        meFragment.upDataPersonInfo(info);
     }
 
 

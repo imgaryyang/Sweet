@@ -45,8 +45,10 @@ public class CreateRoomActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_createroom);
+        setIsBindEventBus();
         initView();
         initData();
+
     }
 
     private void initData() {
@@ -61,17 +63,7 @@ public class CreateRoomActivity extends BaseActivity {
         initTitle();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        EventBus.getDefault().unregister(this);
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        EventBus.getDefault().register(this);
-    }
 
     private void initTitle() {
         ToolBar toolBar = new ToolBar(this);

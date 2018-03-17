@@ -22,12 +22,9 @@ public abstract class MyOkhttpHelper extends Callback {
         String stringResponse = response.body().string();
         try{
             if (stringResponse.equals("250")) {
-                MyApplication.initSession(new MyApplication.OnOssClient() {
-                    @Override
-                    public void onClient(Boolean flag) {
-                        if (flag) {
-                            afterNewRequestSession();
-                        }
+                MyApplication.initSession(flag -> {
+                    if (flag) {
+                        afterNewRequestSession();
                     }
                 });
             } else onResponseSuccessfulString(stringResponse.trim());

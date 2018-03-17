@@ -155,7 +155,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tv_count1"
+                            android:id="@+id/tv_historical_order"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignTop="@id/imv_ic1"
@@ -169,7 +169,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/imv_ic1"
-                            android:layout_below="@id/tv_count1"
+                            android:layout_below="@id/tv_historical_order"
                             android:layout_marginLeft="10dp"
                             android:layout_toRightOf="@id/imv_ic1"
                             android:text="历史订单"
@@ -212,7 +212,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tv_count"
+                            android:id="@+id/tv_person_vip_card_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignTop="@id/imv_ic"
@@ -226,7 +226,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/imv_ic"
-                            android:layout_below="@id/tv_count"
+                            android:layout_below="@id/tv_person_vip_card_count"
                             android:layout_marginLeft="10dp"
                             android:layout_toRightOf="@id/imv_ic"
                             android:text="会员卡"
@@ -276,7 +276,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tv_count4"
+                            android:id="@+id/tv_person_colloct_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignTop="@id/imv_ic4"
@@ -290,7 +290,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/imv_ic4"
-                            android:layout_below="@id/tv_count4"
+                            android:layout_below="@id/tv_person_colloct_num"
                             android:layout_marginLeft="10dp"
                             android:layout_toRightOf="@id/imv_ic4"
                             android:text="我的收藏"
@@ -332,7 +332,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tv_count5"
+                            android:id="@+id/tv_person_tal_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignTop="@id/imv_ic5"
@@ -346,7 +346,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/imv_ic5"
-                            android:layout_below="@id/tv_count5"
+                            android:layout_below="@id/tv_person_tal_count"
                             android:layout_marginLeft="10dp"
                             android:layout_toRightOf="@id/imv_ic5"
                             android:text="我的评价"
@@ -389,7 +389,7 @@
                         android:src="@mipmap/ic_me_item"/>
 
                     <TextView
-                        android:id="@+id/tv_count7"
+                        android:id="@+id/tv_person_vip_card_count7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@id/imv_ic7"
@@ -403,7 +403,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@id/imv_ic7"
-                        android:layout_below="@id/tv_count7"
+                        android:layout_below="@id/tv_person_vip_card_count7"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/imv_ic7"
                         android:text="我的订单"
@@ -434,7 +434,7 @@
                         android:src="@mipmap/ic_me_item"/>
 
                     <TextView
-                        android:id="@+id/tv_count2"
+                        android:id="@+id/tv_person_vip_card_count2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@id/imv_ic2"
@@ -448,7 +448,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@id/imv_ic2"
-                        android:layout_below="@id/tv_count2"
+                        android:layout_below="@id/tv_person_vip_card_count2"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/imv_ic2"
                         android:text="我的好友"

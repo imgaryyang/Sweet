@@ -26,6 +26,7 @@ import com.lucky.sweet.activity.MyLikeStoreActivity;
 import com.lucky.sweet.activity.SetUserInfoActivity;
 import com.lucky.sweet.activity.SettingActivity;
 import com.lucky.sweet.activity.VipCardActiviry;
+import com.lucky.sweet.entity.PersonInfo;
 import com.lucky.sweet.views.CircleImageView;
 import com.lucky.sweet.widgets.ToolBar;
 import com.zhihu.matisse.Matisse;
@@ -51,6 +52,13 @@ public class ImMeFragment extends Fragment {
     public final static int CROP_PHOTO = 1000;
     private Bitmap bitmap;
     private TextView flowNum;
+    private TextView funsNum;
+    private TextView userName;
+
+    private TextView vipCardNum;
+    private TextView orderNum;
+    private TextView talNum;
+    private TextView colletCount;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -80,10 +88,6 @@ public class ImMeFragment extends Fragment {
         imv_head.setImageBitmap(bitmap);
     }
 
-    public void upDataPersonInfo(String num) {
-        flowNum.setText(num);
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -94,8 +98,7 @@ public class ImMeFragment extends Fragment {
                 case REQUEST_CODE_CHOOSE:
                     Uri uri = Matisse.obtainResult(data).get(0);
 
-                    Intent intent = new Intent(getActivity(),
-                            CropIwaActivity.class);
+                    Intent intent = new Intent(getActivity(), CropIwaActivity.class);
                     intent.putExtra("img_uri", uri.toString());
                     activity.startActivityForResult(intent, CROP_PHOTO);
                     break;
@@ -111,7 +114,15 @@ public class ImMeFragment extends Fragment {
     private void initView(View view) {
 
         btn_setUserInfo = view.findViewById(R.id.btn_setUserInfo);
+        orderNum = view.findViewById(R.id.tv_historical_order);
         flowNum = view.findViewById(R.id.tv_person_show_flow_num);
+        funsNum = view.findViewById(R.id.tv_person_show_funs_num);
+
+        vipCardNum = view.findViewById(R.id.tv_person_vip_card_count);
+        colletCount = view.findViewById(R.id.tv_person_colloct_num);
+        talNum = view.findViewById(R.id.tv_person_tal_count);
+        userName = view.findViewById(R.id.tv_userName);
+
         view.findViewById(R.id.rl_vipcard).setOnClickListener(v -> {
             startActivity(new Intent(getActivity(), VipCardActiviry.class));
             getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
@@ -177,4 +188,15 @@ public class ImMeFragment extends Fragment {
         });
     }
 
+    public void upDataPersonInfo(PersonInfo info) {
+        userName.setText(info.getNickname());
+        funsNum.setText(info.getAttention_to_me_num());
+        flowNum.setText(info.getMe_to_attention_num());
+        vipCardNum.setText(info.getVip_card_num());
+        talNum.setText(info.getComment_num());
+        colletCount.setText(info.getComment_num());
+        if (!info.getPhoto().equals("")) {
+
+        }
+    }
 }
