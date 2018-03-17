@@ -7,7 +7,6 @@ import java.util.List;
  */
 
 public class AlterOrderInfo {
-
     private List<UnfinishIndentListBean> unfinish_indent_list;
 
     public List<UnfinishIndentListBean> getUnfinish_indent_list() {
@@ -20,20 +19,22 @@ public class AlterOrderInfo {
 
     public static class UnfinishIndentListBean {
         /**
-         * indent_id : 305013
-         * create_time : 2018-03-12 18:03:28
-         * mer_id : 3
+         * indent_id : 10501
+         * create_time : 2018-03-11 15:22:25
+         * mer_id : 1
          * type_sign : 0
-         * money : null
-         * mer_name : 老
+         * money :
+         * mer_name : 老板娘烤肉店
+         * photo :
          */
 
         private String indent_id;
         private String create_time;
         private String mer_id;
         private String type_sign;
-        private Object money;
+        private String money;
         private String mer_name;
+        private String photo;
 
         public String getIndent_id() {
             return indent_id;
@@ -67,11 +68,11 @@ public class AlterOrderInfo {
             this.type_sign = type_sign;
         }
 
-        public Object getMoney() {
+        public String getMoney() {
             return money;
         }
 
-        public void setMoney(Object money) {
+        public void setMoney(String money) {
             this.money = money;
         }
 
@@ -81,6 +82,14 @@ public class AlterOrderInfo {
 
         public void setMer_name(String mer_name) {
             this.mer_name = mer_name;
+        }
+
+        public String getPhoto() {
+            return photo;
+        }
+
+        public void setPhoto(String photo) {
+            this.photo = photo;
         }
     }
 }

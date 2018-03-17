@@ -25,8 +25,8 @@ import java.util.Map;
 public class MyMessageReceiver extends MessageReceiver {
     // 消息接收部分的LOG_TAG
     public static final String REC_TAG = "receiver";
-    private static final String JOIN_ROOM = "join_room";
 
+    private static final String JOIN_ROOM = "join_room";
     private static final String UPDATE_MENU = "update_menu";
 
     @Override
@@ -41,7 +41,6 @@ public class MyMessageReceiver extends MessageReceiver {
         String content = cPushMessage.getContent();
         Gson gson = new Gson();
         switch (cPushMessage.getTitle()) {
-
 
             case JOIN_ROOM:
 

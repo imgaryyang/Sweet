@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.StoreDisplayInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -73,26 +74,16 @@ public class ShowInfoListViewAdapter extends BaseAdapter {
         TextView tv_shop_title;
         TextView tv_shop_des;
 
+
         public void onBindInfo(StoreDisplayInfo.MerListBean info, Context context) {
+            ImageView[] imageViews = new ImageView[]{imv_shop_dis_fir, imv_shop_dis_sec, imv_shop_dis_the};
             Glide.with(context).load(info.getSurface()).into(imv_shop_sur);
             List<String> environment = info.getEnvironment();
-            //todo 完善逻辑
-            for (int i = 0; i < environment.size(); i++) {
-                switch (i) {
-                    case 0:
-                        Glide.with(context).load(environment.get(i)).into(imv_shop_dis_fir);
-                        break;
-                    case 1:
-                        Glide.with(context).load(environment.get(i)).into(imv_shop_dis_sec);
-
-                        break;
-                    case 2:
-                        Glide.with(context).load(environment.get(i)).into(imv_shop_dis_the);
-
-                        break;
+            if (environment != null) {
+                for (int i = 0; i < environment.size(); i++) {
+                    Glide.with(context).load(environment.get(i)).into(imageViews[i]);
                 }
             }
-
             tv_shop_title.setText(info.getName());
 
         }

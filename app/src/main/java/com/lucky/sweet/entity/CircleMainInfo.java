@@ -1,5 +1,7 @@
 package com.lucky.sweet.entity;
 
+import com.lucky.sweet.utility.OssUtils;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -24,7 +26,9 @@ public class CircleMainInfo {
         this.circle_list = circle_list;
     }
 
-    public static class CircleListBean implements Serializable{
+    public static class CircleListBean implements Serializable {
+        private boolean transHttpPath = false;
+
         /**
          * circle_id : 4_7
          * user_id : 4
@@ -141,7 +145,17 @@ public class CircleMainInfo {
             this.comment_num = comment_num;
         }
 
+
         public List<String> getPhoto_url() {
+            if (!transHttpPath) {
+                transHttpPath = true;
+                for (int i = 0; i < photo_url.size(); i++) {
+                    String path = photo_url.get(i);
+                    if (!path.contains("http")) {
+                        photo_url.set(i, OssUtils.getOSSExtranetPath(path));
+                    }
+                }
+            }
             return photo_url;
         }
 

@@ -1,6 +1,7 @@
 package com.lucky.sweet.activity;
 
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -52,9 +53,9 @@ public class StoreDisplayActivity extends BaseActivity {
     private ShowInfoListViewAdapter adapter;
     private CommunicationService.MyBinder myBinder;
     private List<StoreDisplayInfo.MerListBean> displayList;
-    private String businessArea="";
-    private String rankType="";
-    private String recreationType="";
+    private String businessArea = "";
+    private String rankType = "";
+    private String recreationType = "";
     private List<String> circle;
     private List<String> classify;
     private List<String> order;
@@ -64,6 +65,7 @@ public class StoreDisplayActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_storedisplay);
+        setIsBindEventBus();
         ButterKnife.bind(this);
 
         initViews();
@@ -72,23 +74,10 @@ public class StoreDisplayActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        EventBus.getDefault().unregister(this);
-    }
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
         this.myBinder = myBinder;
-
-        myBinder.requestStoreDisplayInfo("", "", "", num + "");
         myBinder.requestStoreSearch();
     }
 
@@ -207,13 +196,13 @@ public class StoreDisplayActivity extends BaseActivity {
         sw_store_info.setOnRefreshListener(direction -> {
             switch (direction.name()) {
                 case "TOP":
-                    num=0;
+                    num = 0;
                     requestSearchItem(true);
                     break;
                 case "BOTTOM":
                     requestSearchItem(false);
                     num++;
-                    myBinder.requestStoreDisplayInfo(recreationType, businessArea, rankType, num+"");
+                    myBinder.requestStoreDisplayInfo(recreationType, businessArea, rankType, num + "");
                     Toast.makeText(StoreDisplayActivity.this, "加载更多", Toast.LENGTH_SHORT).show();
                     break;
             }
@@ -236,7 +225,7 @@ public class StoreDisplayActivity extends BaseActivity {
         } else if (info != null) {
             displayList.addAll(info.getMer_list());
             adapter.notifyDataSetChanged();
-        }else {
+        } else {
             Toast.makeText(this, "暂时无数据", Toast.LENGTH_SHORT).show();
         }
 
@@ -252,11 +241,9 @@ public class StoreDisplayActivity extends BaseActivity {
         circle = list.getCircle();
         classify = list.getClassify();
         order = list.getOrder();
-
-        circle.add(0,"请选这商圈");
-        classify.add(0,"请选这类型");
-        order.add(0,"请选择排序方式");
-
+        businessArea = circle.get(0);
+        rankType = classify.get(0);
+        recreationType = order.get(0);
         sp_BusinessArea.setAdapter(new SearchSpinnerAdapter(circle, this));
 
         sp_RecreationType.setAdapter(new SearchSpinnerAdapter(classify, this));
@@ -264,6 +251,8 @@ public class StoreDisplayActivity extends BaseActivity {
         sp_RankType.setAdapter(new SearchSpinnerAdapter(order, this));
 
         setListener();
+
+        myBinder.requestStoreDisplayInfo(businessArea,rankType ,recreationType , num + "");
 
     }
 

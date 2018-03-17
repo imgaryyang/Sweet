@@ -40,11 +40,17 @@ public class HisOrderAdapter extends BaseAdapter {
         public void updata(AlterOrderInfo.UnfinishIndentListBean info) {
             shopName.setText(info.getMer_name());
             String[] split = info.getCreate_time().split(" ");
-            if (split.length==2) {
+            if (split.length == 2) {
                 time.setText(split[0]);
                 data.setText(split[1]);
             }
-            cost.setText(info.getMoney() + "");
+            String money;
+            if (info.getMoney() == null) {
+                money = "暂无付款";
+            } else {
+                money = (String) info.getMoney();
+            }
+            cost.setText(money);
             String attr;
             switch (info.getType_sign()) {
                 case "0":
@@ -105,7 +111,6 @@ public class HisOrderAdapter extends BaseAdapter {
         } else {
             viewHolder = (HisOrderAdapter.ViewHolder) convertView.getTag();
         }
-
 
         viewHolder.updata(datas.get(position));
 

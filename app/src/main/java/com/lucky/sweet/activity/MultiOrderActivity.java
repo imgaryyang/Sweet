@@ -6,20 +6,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.sdk.android.push.CommonCallback;
 import com.lucky.sweet.R;
-import com.lucky.sweet.entity.JoinInRoomInfo;
-import com.lucky.sweet.entity.ReservationInfo;
-import com.lucky.sweet.properties.ReserveProperties;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -103,7 +96,7 @@ public class MultiOrderActivity extends BaseActivity {
                 break;
 
             case R.id.btn_create_room:
-                myBinder.createReserveRoom(edt_create_room.getText().toString().trim(), mer_id);
+                myBinder.createReserveRoom(mer_id);
                 break;
 
             case R.id.btn_join_room:
@@ -115,42 +108,6 @@ public class MultiOrderActivity extends BaseActivity {
                 break;
 
         }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void Event(ReservationInfo info) {
-        final String request = info.getRoomId();
-        tv_room_id.setText(request);
-        switch (request) {
-            case ReserveProperties.CREATE_OR_ALTER_ROOM_FAIL:
-                Toast.makeText(this, "申请房间失败请重试", Toast.LENGTH_SHORT).show();
-                break;
-
-        }
-
-
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void Event(final JoinInRoomInfo menu) {
-
-
-
-    }
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void Event(String menu) {
-
-
-
-    }
-
-    private void jionToOrder(String roomId) {
-        Intent intent = new Intent(MultiOrderActivity.this, MerchantActivity.class);
-        intent.putExtra("mer_id", mer_id);
-        intent.putExtra("multiOrder", true);
-        intent.putExtra("room_id", roomId);
-        startActivity(intent);
-
     }
 
 

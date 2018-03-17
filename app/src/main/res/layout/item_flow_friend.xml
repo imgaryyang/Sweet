@@ -4,24 +4,25 @@
     android:layout_height="wrap_content">
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:src="@drawable/selector_item_click"
-        android:id="@+id/imageView" />
+        android:src="@mipmap/test_product" />
 
     <TextView
         android:id="@+id/tv_flow_friend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button"
-        android:layout_alignBottom="@+id/button"
+        android:layout_alignBaseline="@+id/btn_in_frinde"
+        android:layout_alignBottom="@+id/btn_in_frinde"
         android:layout_toEndOf="@+id/imageView"
         android:text="姓名" />
 
     <Button
+        android:id="@+id/btn_in_frinde"
         android:layout_width="@dimen/dimen_45_dp"
         android:layout_height="45dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:id="@+id/button" />
+        android:background="@mipmap/wait_order" />
 </RelativeLayout>

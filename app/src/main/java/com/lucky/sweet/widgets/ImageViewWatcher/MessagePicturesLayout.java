@@ -111,7 +111,7 @@ public class MessagePicturesLayout extends FrameLayout implements View.OnClickLi
                 mVisiblePictureList.add(iPicture);
                 iPicture.setLayoutParams(lpChildImage);
                 iPicture.setBackgroundResource(R.drawable.default_picture);
-                Glide.with(getContext()).load(OssUtils.getOSSExtranetPath(dataList.get(i))).into(iPicture);
+                Glide.with(getContext()).load(dataList.get(i)).into(iPicture);
                 iPicture.setTranslationX((i % column) * (imageSize + mSpace));
                 iPicture.setTranslationY((i / column) * (imageSize + mSpace));
             } else {

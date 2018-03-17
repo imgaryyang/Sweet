@@ -161,7 +161,6 @@
                             android:layout_alignTop="@id/imv_ic1"
                             android:layout_marginLeft="11dp"
                             android:layout_toRightOf="@id/imv_ic1"
-                            android:text="4"
                             android:textColor="@color/black"
                             android:textSize="14dp" />
 

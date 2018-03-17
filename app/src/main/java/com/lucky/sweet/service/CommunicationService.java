@@ -35,7 +35,6 @@ import com.lucky.sweet.entity.JoinInRoomInfo;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.PerdetermingEntity;
 import com.lucky.sweet.entity.PersonInfo;
-import com.lucky.sweet.entity.ReservationInfo;
 import com.lucky.sweet.entity.ShopCarEntity;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.entity.StoreDisplayInfo;
@@ -284,9 +283,9 @@ public class CommunicationService extends Service {
             CommunicationService.this.sendCircleInfo(photoPath, content);
         }
 
-        public void createReserveRoom(String password, String mer_id) {
+        public void createReserveRoom(String mer_id) {
 
-            CommunicationService.this.createReserveRoom(mer_id, password);
+            CommunicationService.this.createReserveRoom(mer_id);
 
         }
 
@@ -413,7 +412,7 @@ public class CommunicationService extends Service {
         HttpUtils.sendOkHttpRequest(PersonProperties.ALTER_ORDER, new MyOkhttpHelper() {
             @Override
             public void onResponseSuccessfulString(String string) {
-
+                System.out.println(string);
                 EventBus.getDefault().post(new Gson().fromJson(string, AlterOrderInfo.class));
             }
 
@@ -448,6 +447,7 @@ public class CommunicationService extends Service {
         HttpUtils.sendOkHttpRequest(ReserveProperties.INVITATION_FRIEND, new MyOkhttpHelper() {
             @Override
             public void onResponseSuccessfulString(String string) {
+                System.out.println(string + "invitaion");
 
             }
 
@@ -541,7 +541,7 @@ public class CommunicationService extends Service {
         HashMap<String, String> map = new HashMap<>();
         map.put("type", type);
         map.put("session", MyApplication.sessionId);
-        map.put("start", location+"");
+        map.put("start", location + "");
         HttpUtils.sendOkHttpRequest(CircleProperties.CIRCLE_MAIN_SHOW,
                 new MyOkhttpHelper() {
                     @Override
@@ -591,12 +591,11 @@ public class CommunicationService extends Service {
             map.put("password", psw);
             map.put("key_value", jsonObject.toString());
 
-            HttpUtils.sendOkHttpRequest(ReserveProperties.JOIN_IN_ROOM_TEST,
+            HttpUtils.sendOkHttpRequest(ReserveProperties.JOIN_IN_ROOM,
                     new MyOkhttpHelper() {
 
                         @Override
                         public void onResponseSuccessfulString(String string) {
-                            System.out.println(string);
                             EventBus.getDefault().post(new JoinInRoomInfo(string));
 
                         }
@@ -611,24 +610,22 @@ public class CommunicationService extends Service {
         }
     }
 
-    private void createReserveRoom(final String mer_id, final String password) {
+    private void createReserveRoom(final String mer_id) {
         HashMap<String, String> map = new HashMap<>();
         map.put("session", MyApplication.sessionId);
         map.put("mer_id", mer_id);
-        map.put("password", password);
         HttpUtils.sendOkHttpRequest(ReserveProperties.CREATE_ROOM,
                 new MyOkhttpHelper() {
 
                     @Override
                     public void onResponseSuccessfulString(String string) {
-                        ReservationInfo reservationInfo = new ReservationInfo();
-                        reservationInfo.setRoomId(string);
-                        EventBus.getDefault().post(reservationInfo);
+                        System.out.println(string);
+
                     }
 
                     @Override
                     public void afterNewRequestSession() {
-                        createReserveRoom(mer_id, password);
+                        createReserveRoom(mer_id);
                     }
                 }, map);
     }
@@ -793,6 +790,7 @@ public class CommunicationService extends Service {
         HttpUtils.sendOkHttpRequest(Properties.DISPLAYSEARCHTITLE, new MyOkhttpHelper() {
             @Override
             public void onResponseSuccessfulString(String string) {
+                System.out.println(string);
                 EventBus.getDefault().post(new Gson().fromJson(string, StoreDisplaySearchEntity.class));
             }
 

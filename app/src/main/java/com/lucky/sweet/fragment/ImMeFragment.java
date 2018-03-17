@@ -111,6 +111,7 @@ public class ImMeFragment extends Fragment {
     }
 
 
+
     private void initView(View view) {
 
         btn_setUserInfo = view.findViewById(R.id.btn_setUserInfo);
@@ -194,7 +195,9 @@ public class ImMeFragment extends Fragment {
         flowNum.setText(info.getMe_to_attention_num());
         vipCardNum.setText(info.getVip_card_num());
         talNum.setText(info.getComment_num());
-        colletCount.setText(info.getComment_num());
+        orderNum.setText(info.getIndent_num());
+        System.out.println(info.getIndent_num());
+        colletCount.setText(info.getCollect());
         if (!info.getPhoto().equals("")) {
 
         }

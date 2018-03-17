@@ -95,8 +95,7 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
         String picture = product.getPicture();
 
         if (picture != null) {
-            Glide.with(context).load(OssUtils.getOSSExtranetPath(picture)).preload();
-            Glide.with(context).load(OssUtils.getOSSExtranetPath(picture)).diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.head);
+            Glide.with(context).load(picture).diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.head);
         }
 
 

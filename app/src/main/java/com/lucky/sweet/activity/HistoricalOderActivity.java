@@ -41,10 +41,10 @@ public class HistoricalOderActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historicalorder);
+        setIsBindEventBus();
         initTitle();
         initViews();
         initEvent();
-        setIsBindEventBus();
     }
 
     private void initEvent() {

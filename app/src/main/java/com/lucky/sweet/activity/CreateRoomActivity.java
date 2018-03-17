@@ -1,24 +1,19 @@
 package com.lucky.sweet.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Contacts;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.FlowFriendAdapter;
 import com.lucky.sweet.entity.FlowPeople;
-import com.lucky.sweet.entity.MainStoreInfo;
-import com.lucky.sweet.entity.ReservationInfo;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -35,11 +30,12 @@ import java.util.List;
 
 public class CreateRoomActivity extends BaseActivity {
     private Title title = null;
-    private EditText input_password;
+
     private CommunicationService.MyBinder myBinder;
     private String mer_id;
-
+    private final static String SHOPID = "mer_id";
     private ListView lv_add_friend;
+    private FlowFriendAdapter flowFriendAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,18 +47,22 @@ public class CreateRoomActivity extends BaseActivity {
 
     }
 
+    public final static void newInStrance(Activity activity, String mer_id) {
+        Intent intent = new Intent(activity, CreateRoomActivity.class);
+        intent.putExtra("mer_id", mer_id);
+        activity.startActivity(intent);
+    }
+
     private void initData() {
         Intent intent = getIntent();
-        mer_id = intent.getStringExtra("mer_id");
+        mer_id = intent.getStringExtra(SHOPID);
     }
 
     private void initView() {
-        input_password = findViewById(R.id.input_password);
 
         lv_add_friend = findViewById(R.id.lv_add_friend);
         initTitle();
     }
-
 
 
     private void initTitle() {
@@ -86,10 +86,9 @@ public class CreateRoomActivity extends BaseActivity {
     }
 
     public void submitCreate(View v) {
-        String password = input_password.getText().toString().trim();
-        if (!password.equals("")) {
-            myBinder.createReserveRoom(password, mer_id);
-        }
+
+        myBinder.createReserveRoom(mer_id);
+
     }
 
     public void cancelCreate(View v) {
@@ -103,19 +102,17 @@ public class CreateRoomActivity extends BaseActivity {
         myBinder.getFlowFriends();
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void Event(ReservationInfo reservationInfo) {
-
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(FlowPeople info) {
         List<FlowPeople.AttentListBean> attent_list = info.getAttent_list();
-        FlowFriendAdapter flowFriendAdapter = new FlowFriendAdapter(attent_list, this);
+        flowFriendAdapter = new FlowFriendAdapter(attent_list, this);
         lv_add_friend.setAdapter(flowFriendAdapter);
-        lv_add_friend.setOnItemClickListener((parent, view, position, id) -> {
-            myBinder.invitationFriend(attent_list.get(position).getUser_id());
 
+        flowFriendAdapter.setOnInvitationClick(userId -> {
+            Toast.makeText(this, userId, Toast.LENGTH_SHORT).show();
+            myBinder.invitationFriend(userId);
         });
+
     }
 }

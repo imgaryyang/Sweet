@@ -2,12 +2,9 @@ package com.lucky.sweet.activity;
 
 import android.content.Context;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -37,7 +34,6 @@ import com.tencent.mapsdk.raster.model.MarkerOptions;
 import com.tencent.tencentmap.mapsdk.map.MapView;
 import com.tencent.tencentmap.mapsdk.map.TencentMap;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -91,7 +87,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
     public int num = 0;
     private ListView lv_circle;
 
-    public static void inStance(Context context, String shopId) {
+    public static void newInStance(Context context, String shopId) {
 
         Intent intent = new Intent(context, StoreParticularInfoActivity.class);
         intent.putExtra("shopid", shopId);
@@ -186,13 +182,10 @@ public class StoreParticularInfoActivity extends BaseActivity {
 //        StarLevelIndicatorView startIndicator = findViewById(R.id.startIndicator);
 //        startIndicator.initStarNumber(4);
         map = findViewById(R.id.map);
-        findViewById(R.id.btn_order).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                layout_order_content.setVisibility(View.VISIBLE);
-                startbtnAnim();
+        findViewById(R.id.btn_order).setOnClickListener(v -> {
+            layout_order_content.setVisibility(View.VISIBLE);
+            startbtnAnim();
 
-            }
         });
 
         lv_circle = findViewById(R.id.lv_circle);
@@ -275,9 +268,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
                             goNextAnim();
                         })
                         .setNegativeButton("创建房间", (dialog, which) -> {
-                            Intent intent = new Intent(StoreParticularInfoActivity.this, CreateRoomActivity.class);
-                            intent.putExtra("mer_id", mer_id);
-                            startActivityForResult(intent, 0);
+                            CreateRoomActivity.newInStrance(StoreParticularInfoActivity.this, mer_id);
                             goNextAnim();
                         })
                         .create()

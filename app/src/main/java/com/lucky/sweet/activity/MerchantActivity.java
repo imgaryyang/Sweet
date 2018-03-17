@@ -45,7 +45,7 @@ public class MerchantActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant);
-
+        setIsBindEventBus();
 
         initToolBar();
 
@@ -55,18 +55,7 @@ public class MerchantActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        EventBus.getDefault().register(this);
-    }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        EventBus.getDefault().unregister(this);
-
-    }
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {

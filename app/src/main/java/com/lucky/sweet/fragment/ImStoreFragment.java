@@ -1,12 +1,10 @@
 package com.lucky.sweet.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -17,7 +15,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +28,6 @@ import com.lucky.sweet.activity.CaptureActivity;
 import com.lucky.sweet.activity.FloatPageActivity;
 import com.lucky.sweet.activity.MainActivity;
 import com.lucky.sweet.activity.MainSearchActiviy;
-import com.lucky.sweet.activity.MyApplication;
 import com.lucky.sweet.activity.StoreDisplayActivity;
 import com.lucky.sweet.activity.StoreParticularInfoActivity;
 import com.lucky.sweet.adapter.AdViewPagerAdapter;
@@ -44,7 +40,6 @@ import com.lucky.sweet.views.GradualChangeLinearLayout;
 import com.lucky.sweet.views.IndicatorView;
 import com.lucky.sweet.views.MySearchView;
 import com.lucky.sweet.viewsexpand.AdViewPagerTransformer;
-import com.lucky.sweet.widgets.dragload.RecycleViewRefresh;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -287,8 +282,8 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         RecFoodRecommendAdapter funAdapter = new RecFoodRecommendAdapter
                 (context, RecFoodRecommendAdapter.FUN, showInfo.getRecreation());
 
-        foodAdapter.setOnItemClickListener(shopId -> StoreParticularInfoActivity.inStance(context, shopId));
-        funAdapter.setOnItemClickListener(shopId -> StoreParticularInfoActivity.inStance(context, shopId));
+        foodAdapter.setOnItemClickListener(shopId -> StoreParticularInfoActivity.newInStance(context, shopId));
+        funAdapter.setOnItemClickListener(shopId -> StoreParticularInfoActivity.newInStance(context, shopId));
         rec_foodStore.setAdapter(foodAdapter);
         rec_funStore.setAdapter(funAdapter);
 

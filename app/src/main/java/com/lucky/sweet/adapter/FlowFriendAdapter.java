@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.lucky.sweet.R;
@@ -18,6 +19,7 @@ import java.util.List;
 public class FlowFriendAdapter extends BaseAdapter {
     private List<FlowPeople.AttentListBean> attent_list;
     private Context context;
+    private OnInvitationClick onInvitationClick;
 
     public FlowFriendAdapter(List<FlowPeople.AttentListBean> attent_list, Context context) {
         this.attent_list = attent_list;
@@ -49,16 +51,32 @@ public class FlowFriendAdapter extends BaseAdapter {
             convertView = View.inflate(context, R.layout.item_flow_friend, null);
             viewHolder = new ViewHolder();
             viewHolder.name = convertView.findViewById(R.id.tv_flow_friend);
+            viewHolder.invitation = convertView.findViewById(R.id.btn_in_frinde);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.name.setText(attentListBean.getNickname());
+        viewHolder.invitation.setOnClickListener(v -> {
+            if (onInvitationClick!=null) {
+                onInvitationClick.onClick(attent_list.get(position).getUser_id());
+            }
+        });
         return convertView;
+    }
+
+    public interface OnInvitationClick {
+        void onClick(String userId);
+    }
+
+
+    public void setOnInvitationClick(OnInvitationClick onInvitationClick) {
+        this.onInvitationClick = onInvitationClick;
     }
 
     static public class ViewHolder {
         TextView name;
+        Button invitation;
     }
 
 }
