@@ -341,6 +341,51 @@ public class CommunicationService extends Service {
         public void getDetailedOrderInfo(String indent_id) {
             CommunicationService.this.getDetailedOrderInfo(indent_id);
         }
+
+        public void getWaitOrder() {
+            CommunicationService.this.getWaitOrder();
+        }
+
+        public void cancelOrder(String mer_id, String indent_id) {
+            CommunicationService.this.cancelOrder(mer_id, indent_id);
+        }
+    }
+
+    private void cancelOrder(String mer_id, String indent_id) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("session", MyApplication.sessionId);
+        map.put("mer_id", mer_id);
+        map.put("indent_id", indent_id);
+        HttpUtils.sendOkHttpRequest(ReserveProperties.CANCEL_OREDER, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+                getPersonInfo();
+            }
+        }, map);
+
+    }
+
+    public void getWaitOrder() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("session", MyApplication.sessionId);
+        HttpUtils.sendOkHttpRequest(ReserveProperties.WAIT_ORDER, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+                System.out.println(string);
+                EventBus.getDefault().post(new Gson().fromJson(string, AlterOrderInfo.class));
+
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+                getPersonInfo();
+            }
+        }, map);
     }
 
     private void getDetailedOrderInfo(String indent_id) {

@@ -57,8 +57,14 @@ public class HisOrderAdapter extends BaseAdapter {
                 case "2":
                     attr = "店铺取消订单";
                     break;
+                case "3":
+                    attr = "已确认等待客户前往";
+                    break;
                 case "4":
                     attr = "完成订单";
+                    break;
+                case "5":
+                    attr = "等待接单";
                     break;
                 default:
                     attr = "等待";
