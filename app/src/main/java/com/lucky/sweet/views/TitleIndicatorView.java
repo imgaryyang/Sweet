@@ -25,9 +25,9 @@ public class TitleIndicatorView extends LinearLayout implements View.OnClickList
 
     private ArrayList<TextView> arrayList = new ArrayList<>();
 
-    private static final int FIRST_ITEM = 1;
-    private static final int SECOND_ITEM = 2;
-    private static final int THIRD_ITEM = 3;
+    private static final int FIRST_ITEM = 0;
+    private static final int SECOND_ITEM = 1;
+    private static final int THIRD_ITEM = 2;
 
     private static final int CURRENT_ITEM = 25;
     private static final int OTHER_ITEM = 15;

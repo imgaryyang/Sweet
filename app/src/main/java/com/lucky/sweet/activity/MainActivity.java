@@ -49,15 +49,13 @@ public class MainActivity extends BaseActivity {
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
-        if (this.myBinder == null) {
-
-            myBinder.requestImStoreInfo(MainActivity.this);
+        if (!MyApplication.sessionId.equals("")){
             myBinder.getPersonPortrait(USER_PORTRAIT_PATH);
             myBinder.getFlowFriends();
-            myBinder.requestCircleInfo("今日", "0");
+            myBinder.requestCircleInfo("朋友", 0);
             myBinder.getPersonInfo();
-
         }
+        myBinder.requestImStoreInfo(MainActivity.this);
         this.myBinder = myBinder;
 
     }
@@ -171,6 +169,10 @@ public class MainActivity extends BaseActivity {
         mTabLayout.setVisibility(View.VISIBLE);
     }
 
+    public void ChangeCircleDate(String type, int start) {
+
+        myBinder.requestCircleInfo(type, start);
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(WeatherInfo info) {

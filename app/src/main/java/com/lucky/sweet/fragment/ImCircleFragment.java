@@ -40,6 +40,7 @@ import java.util.List;
 public class ImCircleFragment extends Fragment implements
         MessagePicturesLayout.Callback {
     //    private Title title = null;
+
     private static final String[] title = {"朋友", "今日", "广场"};
     private CircleImageView imv_head;
     private ImageWatcher vImageWatcher;
@@ -47,6 +48,8 @@ public class ImCircleFragment extends Fragment implements
     private CircleListViewAdapter circleListViewAdapter;
     private List<CircleMainInfo.CircleListBean> circle_list;
     private MainActivity activity;
+    private int currentPage = 0;
+    private String currentTitle = "朋友";
 
     @Nullable
     @Override
@@ -93,7 +96,16 @@ public class ImCircleFragment extends Fragment implements
 
         TitleIndicatorView circle_titie_search = view.findViewById(R.id.circle_titie_sarch);
         circle_titie_search.initializationData(title);
+        circle_titie_search.setOnTitleListener(type -> {
 
+            String titleType = title[type];
+            if (!titleType.equals(currentTitle)) {
+                currentTitle = titleType;
+                currentPage = 0;
+                activity.ChangeCircleDate(titleType, currentPage);
+
+            }
+        });
         lv_circle.setOnItemClickListener((adapterView, view1, i, l) -> {
             Intent intent = new Intent(getActivity(), PersonalCircleActivity.class);
 
@@ -102,6 +114,7 @@ public class ImCircleFragment extends Fragment implements
             getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
         });
         vImageWatcher = view.findViewById(R.id.imv_watcger);
+
         // 如果是透明状态栏，你需要给ImageWatcher标记 一个偏移值，以修正点击ImageView查看的启动动画的Y轴起点的不正确
 //        vImageWatcher.setTranslucentStatus(!isTranslucentStatus ?
 //                ImageViewWatcherUtils.calcStatusBarHeight(getContext()) : 0);
@@ -150,7 +163,7 @@ public class ImCircleFragment extends Fragment implements
                 CircleMainInfo.CircleListBean circleListBean = circle_list.get(position);
                 String like_num = circleListBean.getLike_num();
                 circleListBean.setLike_num(Integer.parseInt(like_num) + 1 + "");
-                circle_list.set(position,circleListBean);
+                circle_list.set(position, circleListBean);
                 break;
             case "0":
                 break;

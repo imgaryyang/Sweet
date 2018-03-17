@@ -304,7 +304,7 @@ public class CommunicationService extends Service {
                     incr_decr, key);
         }
 
-        public void requestCircleInfo(String type, String loacation) {
+        public void requestCircleInfo(String type, int loacation) {
 
             CommunicationService.this.requestCircleInfo(type, loacation);
         }
@@ -537,11 +537,11 @@ public class CommunicationService extends Service {
                 }, map);
     }
 
-    private void requestCircleInfo(final String type, final String location) {
+    private void requestCircleInfo(final String type, final int location) {
         HashMap<String, String> map = new HashMap<>();
         map.put("type", type);
         map.put("session", MyApplication.sessionId);
-        map.put("start", location);
+        map.put("start", location+"");
         HttpUtils.sendOkHttpRequest(CircleProperties.CIRCLE_MAIN_SHOW,
                 new MyOkhttpHelper() {
                     @Override
