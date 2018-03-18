@@ -793,7 +793,7 @@ public class CommunicationService extends Service {
         final HashMap<String, String> map = new HashMap<>();
 
         map.put("session", MyApplication.sessionId);
-        map.put("room_id", room_id);
+        map.put("room_id", "1");
         map.put("key_value", key_value);
         HttpUtils.sendOkHttpRequest(Properties.SHOP_CAR, new MyOkhttpHelper() {
 
@@ -934,7 +934,7 @@ public class CommunicationService extends Service {
 
                         if (city.contains("市"))
                             initWeather(city.substring(0, city.length() - 1));
-                        System.out.println("cityLocation");
+                        MyApplication.setCurrentLatAndLon(tencentLocation.getLatitude(), tencentLocation.getLongitude());
                         initShopInfo(tencentLocation.getLatitude(), tencentLocation.getLongitude());
                     }
                     stopLocation();

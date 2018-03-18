@@ -170,17 +170,6 @@
                         android:textColor="@color/black"
                         android:textSize="15dp"/>
 
-                    <TextView
-                        android:id="@+id/tv_moreFood"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="180dp"
-                        android:clickable="true"
-                        android:gravity="right|center"
-                        android:onClick="onButtonClick"
-                        android:text="查看更多>"
-                        android:textColor="@color/Myappcolor"
-                        android:textSize="13dp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -315,7 +304,21 @@
                         android:layout_height="200dp"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:layout_marginTop="15dp"/>
+                        android:layout_marginTop="15dp">
+
+                        <TextView
+                            android:id="@+id/tv_moreFood"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="180dp"
+                            android:clickable="true"
+                            android:gravity="right|center"
+                            android:onClick="onButtonClick"
+                            android:text="查看更多>"
+                            android:textColor="@color/Myappcolor"
+                            android:textSize="13dp" />
+
+                    </com.tencent.tencentmap.mapsdk.map.MapView>
 
                     <Button
                         android:id="@+id/btn_map_position"
@@ -326,6 +329,13 @@
                         android:layout_marginRight="20dp"
                         android:background="@drawable/selector_btn_map"
                         android:scaleType="fitXY"/>
+
+                    <Button
+                        android:layout_gravity="bottom|left"
+                        android:id="@+id/btn_more_map_detal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="详细信息" />
                 </FrameLayout>
 
 

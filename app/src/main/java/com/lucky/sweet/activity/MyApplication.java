@@ -65,6 +65,13 @@ public class MyApplication extends Application {
         initCloudChannel(this);
     }
 
+    public static double longi=0;
+    public static double lat=0;
+
+    public static void setCurrentLatAndLon(double latitude, double longitude) {
+        longi = longitude;
+        lat = latitude;
+    }
 
     private void initBroadCastReceiver() {
         NetBroadcastReceiver netBroadcastReceiver = new NetBroadcastReceiver();
@@ -180,6 +187,7 @@ public class MyApplication extends Application {
             }
         });
     }
+
 
     public interface OnOssClient {
         void onClient(Boolean flag);

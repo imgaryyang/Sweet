@@ -1,7 +1,7 @@
 package com.lucky.sweet.activity;
 
-import android.content.Context;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -28,15 +28,24 @@ import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.thread.BlurBitmapThread;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
+import com.tencent.lbssearch.TencentSearch;
+import com.tencent.lbssearch.httpresponse.BaseObject;
+import com.tencent.lbssearch.httpresponse.HttpResponseListener;
+import com.tencent.lbssearch.object.Location;
+import com.tencent.lbssearch.object.param.WalkingParam;
+import com.tencent.lbssearch.object.result.WalkingResultObject;
+import com.tencent.mapsdk.raster.model.BitmapDescriptorFactory;
 import com.tencent.mapsdk.raster.model.LatLng;
 import com.tencent.mapsdk.raster.model.Marker;
 import com.tencent.mapsdk.raster.model.MarkerOptions;
+import com.tencent.mapsdk.raster.model.PolylineOptions;
 import com.tencent.tencentmap.mapsdk.map.MapView;
 import com.tencent.tencentmap.mapsdk.map.TencentMap;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,6 +75,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private TextView tv_shop_des;
     private MapView map;
     private Button btn_map_position;
+    private Button btn_more_map_detal;
     private TencentMap maps;
     private LatLng latLng;
     private TextView tv_moreFood;
@@ -121,29 +131,21 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
 
     private void initEvent() {
-        btn_map_position.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                maps.setCenter(latLng);
-            }
+        btn_more_map_detal.setOnClickListener(v -> {
+            MapWebAcivity.Companion.InStance(StoreParticularInfoActivity.this, latLng.getLatitude(), latLng.getLongitude());
         });
-        tv_moreFood.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(StoreParticularInfoActivity.this,
-                        RecruitmentDisplayActivity.class);
-                startActivity(intent);
-                goUpAnim();
-            }
+        btn_map_position.setOnClickListener(v -> maps.setCenter(latLng));
+        tv_moreFood.setOnClickListener(v -> {
+            Intent intent = new Intent(StoreParticularInfoActivity.this,
+                    RecruitmentDisplayActivity.class);
+            startActivity(intent);
+            goUpAnim();
         });
-        tv_moreevr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(StoreParticularInfoActivity.this,
-                        RecruitmentDisplayActivity.class);
-                startActivity(intent);
-                goUpAnim();
-            }
+        tv_moreevr.setOnClickListener(v -> {
+            Intent intent = new Intent(StoreParticularInfoActivity.this,
+                    RecruitmentDisplayActivity.class);
+            startActivity(intent);
+            goUpAnim();
         });
     }
 
@@ -153,6 +155,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
         imv_show_fir = findViewById(R.id.imv_show_fir);
         tv_moreFood = findViewById(R.id.tv_moreFood);
         tv_moreevr = findViewById(R.id.tv_moreevr);
+        btn_more_map_detal = findViewById(R.id.btn_more_map_detal);
         imv_show_sec = findViewById(R.id.imv_show_sec);
         imv_show_sed = findViewById(R.id.imv_show_sed);
         tv_shop_title = findViewById(R.id.tv_shop_title);
@@ -201,35 +204,26 @@ public class StoreParticularInfoActivity extends BaseActivity {
                 goPreAnim();
             }
         });
-        ll_null.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cancelbtnAnim();
-
+        ll_null.setOnClickListener(view -> cancelbtnAnim());
+        ibtn_order_seat.setOnClickListener(view -> {
+            if (MyApplication.sessionId.equals("")) {
+                Toast.makeText(StoreParticularInfoActivity.this, "请先登陆",
+                        Toast.LENGTH_SHORT).show();
+                return;
             }
-        });
-        ibtn_order_seat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (MyApplication.sessionId.equals("")) {
-                    Toast.makeText(StoreParticularInfoActivity.this, "请先登陆",
-                            Toast.LENGTH_SHORT).show();
-                    return;
+            new BlurBitmapThread(StoreParticularInfoActivity.this,
+                    ll_store_part_info, 20) {
+                @Override
+                public void onBulerBitmapFinish() {
+                    Intent intent = new Intent
+                            (StoreParticularInfoActivity.this,
+                                    OrderSeatActivity.class);
+                    intent.putExtra("mer_id", mer_id);
+                    startActivity(intent);
+
+                    goNextAnim();
                 }
-                new BlurBitmapThread(StoreParticularInfoActivity.this,
-                        ll_store_part_info, 20) {
-                    @Override
-                    public void onBulerBitmapFinish() {
-                        Intent intent = new Intent
-                                (StoreParticularInfoActivity.this,
-                                        OrderSeatActivity.class);
-                        intent.putExtra("mer_id", mer_id);
-                        startActivity(intent);
-
-                        goNextAnim();
-                    }
-                }.run();
-            }
+            }.run();
         });
         ibtn_orderSingle.setOnClickListener(view -> {
             if (MyApplication.sessionId.equals("")) {
@@ -241,34 +235,31 @@ public class StoreParticularInfoActivity extends BaseActivity {
             goNextAnim();
         });
 
-        ibtn_orderMulti.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (MyApplication.sessionId.equals("")) {
-                    Toast.makeText(StoreParticularInfoActivity.this, "请先登陆",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                /*Intent intent = new Intent(StoreParticularInfoActivity
-                        .this, MultiOrderActivity.class);
-
-                startActivity(intent);
-                goNextAnim();*/
-                new AlertDialog.Builder(StoreParticularInfoActivity.this)
-                        .setMessage("请选择加入方式")
-                        .setPositiveButton("加入房间", (dialog, which) -> {
-                            Intent intent = new Intent(StoreParticularInfoActivity.this, JoinRoomActivity.class);
-                            intent.putExtra("mer_id", mer_id);
-                            startActivityForResult(intent, 0);
-                            goNextAnim();
-                        })
-                        .setNegativeButton("创建房间", (dialog, which) -> {
-                            CreateRoomActivity.newInStrance(StoreParticularInfoActivity.this, mer_id);
-                            goNextAnim();
-                        })
-                        .create()
-                        .show();
+        ibtn_orderMulti.setOnClickListener(view -> {
+            if (MyApplication.sessionId.equals("")) {
+                Toast.makeText(StoreParticularInfoActivity.this, "请先登陆",
+                        Toast.LENGTH_SHORT).show();
+                return;
             }
+            /*Intent intent = new Intent(StoreParticularInfoActivity
+                    .this, MultiOrderActivity.class);
+
+            startActivity(intent);
+            goNextAnim();*/
+            new AlertDialog.Builder(StoreParticularInfoActivity.this)
+                    .setMessage("请选择加入方式")
+                    .setPositiveButton("加入房间", (dialog, which) -> {
+                        Intent intent = new Intent(StoreParticularInfoActivity.this, JoinRoomActivity.class);
+                        intent.putExtra("mer_id", mer_id);
+                        startActivityForResult(intent, 0);
+                        goNextAnim();
+                    })
+                    .setNegativeButton("创建房间", (dialog, which) -> {
+                        CreateRoomActivity.newInStrance(StoreParticularInfoActivity.this, mer_id);
+                        goNextAnim();
+                    })
+                    .create()
+                    .show();
         });
 
     }
@@ -320,9 +311,60 @@ public class StoreParticularInfoActivity extends BaseActivity {
         maps = map.getMap();
 
         maps.setCenter(latLng);
-        maps.setZoom(75);
+
         Marker marker = this.map.addMarker(new MarkerOptions().title(shopdes.getName()).anchor(0.5f, 0.5f).position(latLng));
         marker.showInfoWindow();
+        double longitude = MyApplication.longi;
+        double latitude = MyApplication.lat;
+        if (longitude != 0 && latitude != 0) {
+
+            LatLng current = new LatLng(latitude, longitude);
+            marker = this.map.addMarker(new MarkerOptions().title("您当前位置").anchor(0.5f, 0.5f).position(current));
+            marker.showInfoWindow();
+            btn_more_map_detal.setVisibility(View.VISIBLE);
+            maps.zoomToSpan(latLng,current);
+
+            TencentSearch tencentSearch = new TencentSearch(this);
+            WalkingParam walkingParam = new WalkingParam();
+            walkingParam.from(new Location(Float.valueOf(shopdes.getLatitude()), Float.valueOf(shopdes.getLongitude())));
+            walkingParam.to(new Location((float) MyApplication.lat, (float) MyApplication.longi));
+            ArrayList<LatLng> latLngs = new ArrayList<>();
+            tencentSearch.getDirection(walkingParam, new HttpResponseListener() {
+                @Override
+                public void onSuccess(int i, BaseObject baseObject) {
+                    if (baseObject instanceof WalkingResultObject) {
+                        WalkingResultObject result = (WalkingResultObject) baseObject;
+                        List<WalkingResultObject.Route> routes = result.result.routes;
+                        if (routes.size() > 0) {
+                            WalkingResultObject.Route route = routes.get(0);
+                            for (Location location : route.polyline) {
+                                latLngs.add(new LatLng(location.lat, location.lng));
+                            }
+                            String direction = route.direction;
+                            System.out.println(direction);
+                            map.addPolyline(new PolylineOptions().
+                                    addAll(latLngs).
+                                    color(0xff0066cc).
+                                    width(10f).
+                                    //为 polyline 添加纹理, 通常用于标记路线
+                                            arrowTexture(BitmapDescriptorFactory.fromAsset("texture_arrow.png")).
+                                            arrowGap(30).
+                                            edgeColor(0xff0072E3).
+                                            edgeWidth(5));
+
+                        }
+
+
+                    }
+                }
+
+                @Override
+                public void onFailure(int i, String s, Throwable throwable) {
+
+                }
+            });
+
+        }
 
 
     }

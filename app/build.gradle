@@ -12,6 +12,10 @@ android {
         javaCompileOptions {
             annotationProcessorOptions { includeCompileClasspath = true }
         }
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
+        }
+
     }
     buildTypes {
         release {
@@ -71,4 +75,8 @@ dependencies {
     compile 'com.aliyun.ams:alicloud-android-push:3.1.0'
     //分享圈子工具
     compile 'com.kuyue:utils:1.0.8'
+    implementation files('libs/TencentMapSearch_v1.1.7.1.3e04ee1.jar')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'

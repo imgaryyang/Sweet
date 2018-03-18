@@ -79,7 +79,7 @@ public class MerchantActivity extends BaseActivity {
             myBinder.shopCarRequest(mer_id);
         } else {
             String room_id = getIntent().getStringExtra("room_id");
-            myBinder.shopMultCarRequest(mer_id, room_id, "1");
+            myBinder.shopMultCarRequest(mer_id,room_id,"");
         }
         this.myBinder = myBinder;
     }
