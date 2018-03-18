@@ -231,19 +231,14 @@ public class StoreParticularInfoActivity extends BaseActivity {
                 }.run();
             }
         });
-        ibtn_orderSingle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (MyApplication.sessionId.equals("")) {
-                    Toast.makeText(StoreParticularInfoActivity.this, "请先登陆",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Intent intent = new Intent(StoreParticularInfoActivity
-                        .this, MerchantActivity.class);
-                startActivity(intent);
-                goNextAnim();
+        ibtn_orderSingle.setOnClickListener(view -> {
+            if (MyApplication.sessionId.equals("")) {
+                Toast.makeText(StoreParticularInfoActivity.this, "请先登陆",
+                        Toast.LENGTH_SHORT).show();
+                return;
             }
+            MerchantActivity.newSingleOrderInStance(StoreParticularInfoActivity.this, mer_id);
+            goNextAnim();
         });
 
         ibtn_orderMulti.setOnClickListener(new View.OnClickListener() {

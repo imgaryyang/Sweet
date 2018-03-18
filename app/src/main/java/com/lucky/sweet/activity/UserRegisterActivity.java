@@ -1,11 +1,19 @@
 package com.lucky.sweet.activity;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.GetMailVerInfo;
+import com.lucky.sweet.entity.MailValiInfo;
+import com.lucky.sweet.entity.UserLoginInfo;
+import com.lucky.sweet.entity.UserRegestInfo;
 import com.lucky.sweet.fragment.EmailSubmitFragment;
 import com.lucky.sweet.fragment.PassWordSubimitFragment;
 import com.lucky.sweet.service.CommunicationService;
@@ -14,6 +22,9 @@ import com.lucky.sweet.widgets.ToolBar;
 import com.lucky.sweet.widgets.noscrollview.DepthPageTransformer;
 import com.lucky.sweet.widgets.noscrollview.FragAdapter;
 import com.lucky.sweet.widgets.noscrollview.NoScrollViewPager;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -26,11 +37,14 @@ public class UserRegisterActivity extends BaseActivity {
     private EmailSubmitFragment emailSubmitFragment;
     private Boolean isRegister;
     private CommunicationService.MyBinder myBinder;
+    private SharedPreferences.Editor edit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_register);
+
+        setIsBindEventBus();
 
         isRegister = getIntent().getBooleanExtra("isRegister", true);
 
@@ -50,7 +64,11 @@ public class UserRegisterActivity extends BaseActivity {
         this.myBinder = myBinder;
     }
 
+    @SuppressLint("CommitPrefEdits")
     private void initData() {
+
+        edit = getSharedPreferences("config", Activity.MODE_PRIVATE).edit();
+
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(emailSubmitFragment);
         fragments.add(passWordSubimitFragment);
@@ -80,22 +98,18 @@ public class UserRegisterActivity extends BaseActivity {
 //        Title.ButtonInfo buttonLeft=new Title.ButtonInfo(true,Title.BUTTON_LEFT,0,"立即注册");
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
                 .BUTTON_LEFT, R.drawable.selector_btn_titlebackblack, null);
-        title.setOnTitleButtonClickListener(new Title
-                .OnTitleButtonClickListener() {
-            @Override
-            public void onClick(int id, Title.ButtonViewHolder viewHolder) {
-                switch (id) {
-                    case Title.BUTTON_LEFT:
-                        hintInputKb();
-                        if (vp_reg.getCurrentItem() != 0) {
-                            vp_reg.setCurrentItem(vp_reg.getCurrentItem() -
-                                    1, true);
-                            return;
-                        }
-                        finish();
-                        break;
+        title.setOnTitleButtonClickListener((id, viewHolder) -> {
+            switch (id) {
+                case Title.BUTTON_LEFT:
+                    hintInputKb();
+                    if (vp_reg.getCurrentItem() != 0) {
+                        vp_reg.setCurrentItem(vp_reg.getCurrentItem() -
+                                1, true);
+                        return;
+                    }
+                    finish();
+                    break;
 
-                }
             }
         });
         title.mSetButtonInfo(buttonLeft);
@@ -103,10 +117,10 @@ public class UserRegisterActivity extends BaseActivity {
     }
 
     private void initEvent() {
-        emailSubmitFragment.setOnEmailVer(new EmailSubmitFragment.OnEmailVer() {
+        emailSubmitFragment.setOnEmailVerListener(new EmailSubmitFragment.OnEmailVer() {
             @Override
             public void onEmailVer(String email, String verPsw) {
-                myBinder.emailVer(UserRegisterActivity.this, email, verPsw);
+                myBinder.emailVer(email, verPsw);
             }
 
             @Override
@@ -116,7 +130,7 @@ public class UserRegisterActivity extends BaseActivity {
 
             @Override
             public void checkOutEmail(String email) {
-                myBinder.checkOutEmail(UserRegisterActivity.this, email);
+                myBinder.checkOutEmail(email);
             }
 
             @Override
@@ -127,12 +141,12 @@ public class UserRegisterActivity extends BaseActivity {
         passWordSubimitFragment.setOnUserUpdataInfo(new PassWordSubimitFragment.OnUserUpdataInfo() {
             @Override
             public void onUserRegister(String email, String psw) {
-                myBinder.userRegister(UserRegisterActivity.this, email, psw);
+                myBinder.userRegister(email, psw);
             }
 
             @Override
             public void onUserForget(String email, String psw) {
-                myBinder.userRegister(UserRegisterActivity.this, email, psw);
+                myBinder.userRegister(email, psw);
 
             }
         });
@@ -164,5 +178,45 @@ public class UserRegisterActivity extends BaseActivity {
             return;
         }
         super.onBackPressed();
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(GetMailVerInfo info) {
+        if (info.getAttr()) {
+            Toast.makeText(this, "请耐心等待邮件", Toast.LENGTH_SHORT).show();
+        } else
+            Toast.makeText(this, "邮箱已存在或操作过于频繁", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(MailValiInfo info) {
+        if (info.getAttr()) {
+            passWordSubimitFragment.setCurrentEmail(emailSubmitFragment.getEmail());
+            Toast.makeText(this, "验证成功请进行下一步", Toast.LENGTH_SHORT).show();
+            moveToNextStep();
+        } else
+            Toast.makeText(this, "验证失败", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(UserRegestInfo info) {
+        if (info.getAttr()) {
+            edit.putBoolean("logined", true);
+            edit.putString("Id", info.getUserID());
+            edit.putString("Psw", info.getPassword());
+            if (edit.commit()) {
+                Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
+                MyApplication.initSession(flag -> {
+                    if (flag) {
+                        finish();
+                    }
+                });
+            }
+        } else
+            Toast.makeText(this, "注册失败", Toast.LENGTH_SHORT).show();
+
     }
 }

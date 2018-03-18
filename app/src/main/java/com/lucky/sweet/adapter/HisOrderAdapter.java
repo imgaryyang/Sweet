@@ -4,12 +4,17 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.AlterOrderInfo;
 
 import java.util.List;
+
+import javax.microedition.khronos.opengles.GL;
 
 /**
  * Created by Qiuyue on 2018/3/2.
@@ -36,8 +41,14 @@ public class HisOrderAdapter extends BaseAdapter {
         TextView time;
         TextView cost;
         TextView data;
+        ImageView shopImv;
 
-        public void updata(AlterOrderInfo.UnfinishIndentListBean info) {
+        public void updata(AlterOrderInfo.UnfinishIndentListBean info, Context context) {
+           /* String photo = info.getPhoto();
+            System.out.println(photo);
+            if (photo != null) {
+                Glide.with(context).load(info.getPhoto()).diskCacheStrategy(DiskCacheStrategy.ALL).into(shopImv);
+            }*/
             shopName.setText(info.getMer_name());
             String[] split = info.getCreate_time().split(" ");
             if (split.length == 2) {
@@ -58,7 +69,6 @@ public class HisOrderAdapter extends BaseAdapter {
                     break;
                 case "1":
                     attr = "客户取消订单";
-
                     break;
                 case "2":
                     attr = "店铺取消订单";
@@ -108,11 +118,13 @@ public class HisOrderAdapter extends BaseAdapter {
             viewHolder.orderAttr = convertView.findViewById(R.id.tv_order_alter_order_attr);
             viewHolder.cost = convertView.findViewById(R.id.tv_order_alter_order_cost);
             viewHolder.data = convertView.findViewById(R.id.tv_order_alter_order_data);
+            viewHolder.shopImv = convertView.findViewById(R.id.imv_hisorder_shop_imv);
         } else {
             viewHolder = (HisOrderAdapter.ViewHolder) convertView.getTag();
         }
 
-        viewHolder.updata(datas.get(position));
+
+        viewHolder.updata(datas.get(position), context);
 
         return convertView;
     }

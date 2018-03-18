@@ -36,7 +36,7 @@
     <!-- 闪光灯 -->
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <application
         android:name=".activity.MyApplication"
         android:allowBackup="true"
@@ -75,7 +75,8 @@
             android:label="@string/title_activity_order"
             android:theme="@style/AppTheme" />
         <activity android:name=".activity.MainSearchActiviy" />
-        <activity android:name=".activity.MerchantActivity" />
+        <activity android:name=".activity.MerchantActivity"
+            android:launchMode="singleTop"/>
         <activity android:name=".activity.OrderSubmitActivity" />
         <activity android:name=".activity.RecruitmentDisplayActivity" />
         <activity android:name=".activity.CaptureActivity" />

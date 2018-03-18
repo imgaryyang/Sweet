@@ -1,5 +1,6 @@
 package com.lucky.sweet.activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -11,8 +12,10 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.InvitationInfo;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.views.SlidingLayoutView;
 
@@ -24,10 +27,29 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private MyConn conn = new MyConn();
     private Boolean isBindEventBus = false;
+    private static Context context;
+
+    public static void getCurrentActivity( InvitationInfo invitationInfo ) {
+        if (context != null){
+            final AlertDialog.Builder normalDialog = new AlertDialog.Builder(context);
+            normalDialog.setTitle("您的好友邀请您一起点餐");
+            normalDialog.setMessage("您的好友ID：" + invitationInfo.getUserId());
+            normalDialog.setPositiveButton("接受邀请", (dialog, which) -> {
+
+                MerchantActivity.newMoreOrderInStance((Activity)context,invitationInfo.getMerId(),invitationInfo.getRoomId());
+            });
+            normalDialog.setNegativeButton("果断拒绝", (dialog, which) -> {
+                dialog.dismiss();
+            });
+            normalDialog.show();
+
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         if (enableSliding()) {
             SlidingLayoutView rootView = new SlidingLayoutView(this);
             rootView.bindActivity(this);

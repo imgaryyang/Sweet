@@ -28,6 +28,7 @@ public class EmailSubmitFragment extends Fragment {
     private Button btn_delete;
     private Button btn_nextStep;
     private Button btn_verCode;
+    private String email;
 
     public EmailSubmitFragment(Boolean isRegister) {
 
@@ -75,7 +76,7 @@ public class EmailSubmitFragment extends Fragment {
         btn_nextStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = edt_userEmail.getText().toString().trim();
+                email = edt_userEmail.getText().toString().trim();
                 String verPsw = edt_verPassword.getText().toString().trim();
                 if (!email.isEmpty() && !verPsw.isEmpty()) {
                     if (isRegister) {
@@ -105,8 +106,12 @@ public class EmailSubmitFragment extends Fragment {
 
     private OnEmailVer onEmailVer;
 
-    public void setOnEmailVer(OnEmailVer onEmailVer) {
+    public void setOnEmailVerListener(OnEmailVer onEmailVer) {
         this.onEmailVer = onEmailVer;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     private void initView(View inflate) {

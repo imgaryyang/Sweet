@@ -15,11 +15,11 @@ public class Properties {
             "https://thethreestooges.cn:666/identity/login/login.php";
 
     public static final String USERWRITEPATH =
-            "http://thethreestooges.cn/consumer/bean/login/user_write.php";
+            "https://thethreestooges.cn:666/application/login/user_write.php";
     public static final String MAILSUBMITPATH =
-            "http://thethreestooges.cn/consumer/bean/login/mail_submit.php";
+            "https://thethreestooges.cn:666/application/login/mail_submit.php";
     public static final String MAILVALIDATEPATH =
-            "http://thethreestooges.cn/consumer/bean/login/mail_validate.php";
+            "https://thethreestooges.cn:666/application/login/mail_validate.php";
 
     public static final String FORGETSUBMITPATH =
             "http://thethreestooges.cn/consumer/bean/login/forget_submit.php";
@@ -28,8 +28,7 @@ public class Properties {
     public static final String USERFORGETPATH =
             "http://thethreestooges.cn/consumer/bean/login/user_forget.php";
 
-    public static final String STOREDISPLAYTPATH =
-            "https://thethreestooges.cn/consumer/bean/nearby/nearby_mer.php";
+
     public static final String MAINSHOWPLAYTPATH =
             "https://thethreestooges.cn:666/application/home_page/home_page_show.php";
     public static final String STOREDETAILEDPATH =
@@ -40,14 +39,10 @@ public class Properties {
     public static final String DISPLAYMAINSHOWPATH =
             "https://thethreestooges.cn:666/application/searching/search_show.php";
 
-    public static final String ORDERSUBMITPATH = "https://thethreestooges.cn:666/order/order/submit";
-
     public static final String SHOP_CAR = "https://thethreestooges.cn:666/trolley/show/menu";
 
 
-
     public static final String ORDER_SEAT_BACKGROUND_PATH = MyApplication.getContext().getCacheDir().getAbsolutePath();
-
 
 
 }

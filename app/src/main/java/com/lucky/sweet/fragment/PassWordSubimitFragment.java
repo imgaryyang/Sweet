@@ -56,34 +56,31 @@ public class PassWordSubimitFragment extends Fragment {
     }
 
     private void initEvent() {
-        btn_submit_regerist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String psw = edt_psw.getText().toString().trim();
-                String verifypsw = edt_verifypsw.getText().toString().trim();
-                if (psw.equals(verifypsw)) {
-                    if (psw.length() >= 6 && StringFormatUtility.checkOutPSW(psw)) {
-                        if (isRegister) {
-                            if (onUserUpdataInfo != null) {
-                                onUserUpdataInfo.onUserRegister(userEmail, psw);
-                            }
-                        } else {
-                            if (onUserUpdataInfo != null) {
-                                onUserUpdataInfo.onUserForget(userEmail, psw);
-                            }
+        btn_submit_regerist.setOnClickListener(view -> {
+            String psw = edt_psw.getText().toString().trim();
+            String verifypsw = edt_verifypsw.getText().toString().trim();
+            if (psw.equals(verifypsw)) {
+                if (psw.length() >= 6 && StringFormatUtility.checkOutPSW(psw)) {
+                    if (isRegister) {
+                        if (onUserUpdataInfo != null) {
+                            onUserUpdataInfo.onUserRegister(userEmail, psw);
                         }
                     } else {
-                        ((BaseActivity) getContext()).showDialogBaseAct
-                                (null, "密码必须同时包含数字和字母。并且长度不小于6位", "确认", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        dialogInterface.cancel();
-                                    }
-                                }, null, null, null, null, getContext());
+                        if (onUserUpdataInfo != null) {
+                            onUserUpdataInfo.onUserForget(userEmail, psw);
+                        }
                     }
                 } else {
-                    Toast.makeText(getActivity(), "两次密码不同", Toast.LENGTH_SHORT).show();
+                    ((BaseActivity) getContext()).showDialogBaseAct
+                            (null, "密码必须同时包含数字和字母。并且长度不小于6位", "确认", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
+                            }, null, null, null, null, getContext());
                 }
+            } else {
+                Toast.makeText(getActivity(), "两次密码不同", Toast.LENGTH_SHORT).show();
             }
         });
     }

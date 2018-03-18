@@ -31,7 +31,10 @@ import com.lucky.sweet.entity.CircleLikePoint;
 import com.lucky.sweet.entity.CircleMainInfo;
 import com.lucky.sweet.entity.DetailOrderInfo;
 import com.lucky.sweet.entity.FlowPeople;
+import com.lucky.sweet.entity.GetMailVerInfo;
+import com.lucky.sweet.entity.InvitationInfo;
 import com.lucky.sweet.entity.JoinInRoomInfo;
+import com.lucky.sweet.entity.MailValiInfo;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.PerdetermingEntity;
 import com.lucky.sweet.entity.PersonInfo;
@@ -40,6 +43,7 @@ import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.entity.StoreDisplayInfo;
 import com.lucky.sweet.entity.StoreDisplaySearchEntity;
 import com.lucky.sweet.entity.UserLoginInfo;
+import com.lucky.sweet.entity.UserRegestInfo;
 import com.lucky.sweet.entity.VipCardInfo;
 import com.lucky.sweet.entity.WeatherInfo;
 import com.lucky.sweet.handler.LoginRegisterHandler;
@@ -56,6 +60,7 @@ import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
 import com.tencent.map.geolocation.TencentLocationRequest;
+import com.zhy.http.okhttp.OkHttpUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
@@ -113,10 +118,8 @@ public class CommunicationService extends Service {
          *
          * @param email 邮箱字符串
          */
-        public void checkOutEmail(Context context, String email) {
-
-            sendLoginRegesiterRequest(context, CHECKOUTEMAIL, email, null);
-
+        public void checkOutEmail(String email) {
+            userRegisterSubmitEmail(email);
         }
 
         /**
@@ -126,10 +129,8 @@ public class CommunicationService extends Service {
          * @param verPassword 验证码
          * @return
          */
-        public void emailVer(Context context, String email, String verPassword) {
-
-            sendLoginRegesiterRequest(context, EMAILVER, email, verPassword);
-
+        public void emailVer(String email, String verPassword) {
+            mailValidate(email, verPassword);
         }
 
         /**
@@ -138,9 +139,9 @@ public class CommunicationService extends Service {
          * @param email    邮箱
          * @param password 密码
          */
-        public void userRegister(Context context, String email, String password) {
+        public void userRegister(String email, String password) {
+            userWrite(email, password);
 
-            sendLoginRegesiterRequest(context, USERREGISTER, email, password);
 
         }
 
@@ -279,6 +280,11 @@ public class CommunicationService extends Service {
             requestShopCarInfo(mer_id);
         }
 
+        public void shopMultCarRequest(String mer_id, String room_id, String key) {
+
+            requestMoreShopCarInfo(mer_id, room_id, key);
+        }
+
         public void sendCircleInfo(String photoPath, String content) {
             CommunicationService.this.sendCircleInfo(photoPath, content);
         }
@@ -325,8 +331,8 @@ public class CommunicationService extends Service {
             CommunicationService.this.getFlowFriends();
         }
 
-        public void invitationFriend(String user_id) {
-            CommunicationService.this.invitationFriend(user_id);
+        public void invitationFriend(String user_id, InvitationInfo info) {
+            CommunicationService.this.invitationFriend(user_id, info);
         }
 
         public void getPersonInfo() {
@@ -439,21 +445,20 @@ public class CommunicationService extends Service {
         }, map);
     }
 
-    private void invitationFriend(String inviteUserId) {
+    private void invitationFriend(String inviteUserId, InvitationInfo info) {
         HashMap<String, String> map = new HashMap<>();
         map.put("invite_user_id", inviteUserId);
         map.put("session", MyApplication.sessionId);
-        map.put("key_value", "????");
+        map.put("key_value", info.toString());
         HttpUtils.sendOkHttpRequest(ReserveProperties.INVITATION_FRIEND, new MyOkhttpHelper() {
             @Override
             public void onResponseSuccessfulString(String string) {
-                System.out.println(string + "invitaion");
 
             }
 
             @Override
             public void afterNewRequestSession() {
-                invitationFriend(inviteUserId);
+                invitationFriend(inviteUserId, info);
             }
         }, map);
     }
@@ -619,7 +624,7 @@ public class CommunicationService extends Service {
 
                     @Override
                     public void onResponseSuccessfulString(String string) {
-                        System.out.println(string);
+                        EventBus.getDefault().post(string);
 
                     }
 
@@ -784,6 +789,28 @@ public class CommunicationService extends Service {
         }, map);
     }
 
+    private void requestMoreShopCarInfo(final String mer_id, String room_id, String key_value) {
+        final HashMap<String, String> map = new HashMap<>();
+
+        map.put("session", MyApplication.sessionId);
+        map.put("room_id", room_id);
+        map.put("key_value", key_value);
+        HttpUtils.sendOkHttpRequest(Properties.SHOP_CAR, new MyOkhttpHelper() {
+
+            @Override
+            public void onResponseSuccessfulString(String string) {
+                System.out.println(string.toString());
+                //   EventBus.getDefault().post(new Gson().fromJson(string, ShopCarEntity.class));
+
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+                requestShopCarInfo(mer_id);
+            }
+        }, map);
+    }
+
     private void getStoreDisplaySearchTitle() {
         HashMap<String, String> map = new HashMap<>();
         map.put("city", MyApplication.CURRENT_CITY);
@@ -839,6 +866,7 @@ public class CommunicationService extends Service {
 
             @Override
             public void onResponseSuccessfulString(String string) {
+                System.out.println(string);
                 EventBus.getDefault().post(new Gson().fromJson(string, MainStoreInfo.class));
             }
 
@@ -1035,6 +1063,83 @@ public class CommunicationService extends Service {
      * @param email    邮箱
      * @param password 密码
      */
+    private void userRegisterSubmitEmail(String email) {
+        final HashMap<String, String> map = new HashMap<>();
+        map.put("mail_address", email);
+        new Thread() {
+            @Override
+            public void run() {
+                HttpUtils.sendOkHttpRequest(Properties.MAILSUBMITPATH, new
+                        MyOkhttpHelper() {
+                            @Override
+                            public void onResponseSuccessfulString(String string) {
+                                EventBus.getDefault().post(new GetMailVerInfo(string));
+                            }
+
+                            @Override
+                            public void afterNewRequestSession() {
+
+                            }
+
+                        }, map);
+            }
+        }.start();
+    }
+
+    private void mailValidate(String email, String ver) {
+        final HashMap<String, String> map = new HashMap<>();
+        map.put("mail_address", email);
+        map.put("mail_ver", ver);
+        new Thread() {
+            @Override
+            public void run() {
+                HttpUtils.sendOkHttpRequest(Properties.MAILVALIDATEPATH, new
+                        MyOkhttpHelper() {
+                            @Override
+                            public void onResponseSuccessfulString(String string) {
+                                EventBus.getDefault().post(new MailValiInfo(string));
+                            }
+
+                            @Override
+                            public void afterNewRequestSession() {
+
+                            }
+
+                        }, map);
+            }
+        }.start();
+    }
+
+
+    private void userWrite(String email, String password) {
+        final HashMap<String, String> map = new HashMap<>();
+
+        map.put("username", email);
+        map.put("password", password);
+
+        new Thread() {
+            @Override
+            public void run() {
+                HttpUtils.sendOkHttpRequest(Properties.USERWRITEPATH, new
+                        MyOkhttpHelper() {
+                            @Override
+                            public void onResponseSuccessfulString(String string) {
+                                UserRegestInfo userRegestInfo = new UserRegestInfo(string);
+                                userRegestInfo.setPassword(password);
+                                userRegestInfo.setUserID(email);
+                                EventBus.getDefault().post(userRegestInfo);
+                            }
+
+                            @Override
+                            public void afterNewRequestSession() {
+
+                            }
+
+                        }, map);
+            }
+        }.start();
+    }
+
     private void requestLoginRegister(final int type, final String email, @Nullable final
     String password, final LoginRegisterHandler handler) {
         new Thread() {

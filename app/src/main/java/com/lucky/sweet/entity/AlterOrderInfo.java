@@ -1,5 +1,7 @@
 package com.lucky.sweet.entity;
 
+import com.lucky.sweet.utility.OssUtils;
+
 import java.util.List;
 
 /**
@@ -85,6 +87,12 @@ public class AlterOrderInfo {
         }
 
         public String getPhoto() {
+
+            if (photo == null)
+                return photo;
+            if (!photo.contains("http")) {
+                photo = OssUtils.getOSSExtranetPath(photo);
+            }
             return photo;
         }
 

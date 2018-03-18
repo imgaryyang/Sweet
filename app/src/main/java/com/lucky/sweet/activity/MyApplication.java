@@ -185,7 +185,7 @@ public class MyApplication extends Application {
         void onClient(Boolean flag);
     }
 
-    private static final String TAG = "Init";
+    private static final String TAG = "ALI_PUSH_SERVICE";
 
     private static CloudPushService pushService;
 

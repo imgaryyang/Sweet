@@ -1,12 +1,19 @@
 package com.lucky.sweet.reciver;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.alibaba.sdk.android.push.MessageReceiver;
 import com.alibaba.sdk.android.push.notification.CPushMessage;
 import com.google.gson.Gson;
+import com.lucky.sweet.activity.BaseActivity;
+import com.lucky.sweet.activity.MyApplication;
+import com.lucky.sweet.entity.InvitationInfo;
 import com.lucky.sweet.entity.JoinRoomInfo;
 import com.lucky.sweet.entity.MuliiOrderInfo;
 
@@ -28,6 +35,8 @@ public class MyMessageReceiver extends MessageReceiver {
 
     private static final String JOIN_ROOM = "join_room";
     private static final String UPDATE_MENU = "update_menu";
+    private static final String INVITE_PEOPLE = "invite";
+    private static final String DELETE_ROOM = "delete_room";
 
     @Override
     public void onNotification(Context context, String title, String summary, Map<String, String> extraMap) {
@@ -51,7 +60,19 @@ public class MyMessageReceiver extends MessageReceiver {
                 MuliiOrderInfo MuliiOrderInfo = gson.fromJson(content, MuliiOrderInfo.class);
                 EventBus.getDefault().post(MuliiOrderInfo);
                 break;
+            case INVITE_PEOPLE:
+                InvitationInfo invitationInfo = new Gson().fromJson(content, InvitationInfo.class);
+                BaseActivity.getCurrentActivity(invitationInfo);
+
+                Toast.makeText(context, content, Toast.LENGTH_SHORT).show();
+
+                break;
+            case DELETE_ROOM:
+                Toast.makeText(context, content, Toast.LENGTH_SHORT).show();
+
+                break;
         }
+        Toast.makeText(context, "onMessage, messageId: " + cPushMessage.getMessageId() + ", title: " + cPushMessage.getTitle() + ", content:" + cPushMessage.getContent(), Toast.LENGTH_SHORT).show();
         Log.e("MyMessageReceiver", "onMessage, messageId: " + cPushMessage.getMessageId() + ", title: " + cPushMessage.getTitle() + ", content:" + cPushMessage.getContent());
     }
 

@@ -2,11 +2,9 @@ package com.lucky.sweet.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -15,7 +13,6 @@ import android.widget.Toast;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.PerdetermingEntity;
-import com.lucky.sweet.properties.Properties;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.utility.RegularUtils;
 import com.lucky.sweet.views.DishesOrderDialog;
@@ -125,28 +122,15 @@ public class OrderSeatActivity extends BaseActivity {
         if (result == true) {
             AlertDialog dialog = new AlertDialog.Builder(OrderSeatActivity.this)
                     .setMessage("需要提前点菜吗？")
-                    .setNegativeButton("直接订座", new DialogInterface
-                            .OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int
-                                which) {
-                            sendOrderSeatInfo();
-                            dialog.dismiss();
-                        }
+                    .setNegativeButton("直接订座", (dialog12, which) -> {
+                        sendOrderSeatInfo();
+                        dialog12.dismiss();
                     })
-                    .setPositiveButton("提前点菜", new DialogInterface
-                            .OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int
-                                which) {
-                            sendOrderSeatInfo();
-                            Intent intent = new Intent(OrderSeatActivity
-                                    .this, MerchantActivity.class);
-                            intent.putExtra("mer_id", mer_id);
-                            startActivity(intent);
-                            goNextAnim();
+                    .setPositiveButton("提前点菜", (dialog1, which) -> {
+                        sendOrderSeatInfo();
+                        MerchantActivity.newSingleOrderInStance(OrderSeatActivity.this, mer_id);
+                        goNextAnim();
 
-                        }
                     })
                     .create();
             dialog.show();
@@ -161,14 +145,13 @@ public class OrderSeatActivity extends BaseActivity {
         title = (Title) findViewById(R.id.title);
         title.setTitleNameStr("预订座位");
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
-                .BUTTON_LEFT,0, "取消");
-        Title.ButtonInfo buttonRight=new Title.ButtonInfo(true,Title.BUTTON_RIGHT1,0,"完成");
+                .BUTTON_LEFT, 0, "取消");
+        Title.ButtonInfo buttonRight = new Title.ButtonInfo(true, Title.BUTTON_RIGHT1, 0, "完成");
         title.setOnTitleButtonClickListener(new Title
                 .OnTitleButtonClickListener() {
             @Override
             public void onClick(int id, Title.ButtonViewHolder viewHolder) {
-                switch(id)
-                {
+                switch (id) {
                     case Title.BUTTON_LEFT:
                         hintInputKb();
                         finish();

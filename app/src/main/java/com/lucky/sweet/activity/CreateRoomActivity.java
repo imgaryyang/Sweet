@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.FlowFriendAdapter;
 import com.lucky.sweet.entity.FlowPeople;
+import com.lucky.sweet.entity.InvitationInfo;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
@@ -111,8 +112,21 @@ public class CreateRoomActivity extends BaseActivity {
 
         flowFriendAdapter.setOnInvitationClick(userId -> {
             Toast.makeText(this, userId, Toast.LENGTH_SHORT).show();
-            myBinder.invitationFriend(userId);
+            if (roomID != null) {
+                myBinder.invitationFriend(userId, new InvitationInfo(MyApplication.USER_ID, roomID, mer_id));
+            } else
+                Toast.makeText(this, "请创建房间", Toast.LENGTH_SHORT).show();
+
+
         });
 
+    }
+
+    private String roomID;
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(String info) {
+        roomID = info;
+        Toast.makeText(this, "建立房间成功：" + info, Toast.LENGTH_SHORT).show();
     }
 }

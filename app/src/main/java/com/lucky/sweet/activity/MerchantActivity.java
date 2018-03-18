@@ -1,5 +1,6 @@
 package com.lucky.sweet.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -40,6 +41,7 @@ public class MerchantActivity extends BaseActivity {
     private ProductsFragment fg_shop_car;
     private Button btn_back;
     private CommunicationService.MyBinder myBinder;
+    private static Boolean singleFlag = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +57,30 @@ public class MerchantActivity extends BaseActivity {
 
     }
 
+    public static void newSingleOrderInStance(Activity activity, String mer_id) {
+        Intent intent = new Intent(activity, MerchantActivity.class);
+        intent.putExtra("mer_id", mer_id);
+        activity.startActivity(intent);
+    }
+
+    public static void newMoreOrderInStance(Activity activity, String mer_id, String room_id) {
+        singleFlag = false;
+        Intent intent = new Intent(activity, MerchantActivity.class);
+        intent.putExtra("mer_id", mer_id);
+        intent.putExtra("room_id", room_id);
+        activity.startActivity(intent);
+    }
 
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
-
-        myBinder.shopCarRequest(getIntent().getStringExtra("mer_id"));
+        String mer_id = getIntent().getStringExtra("mer_id");
+        if (singleFlag) {
+            myBinder.shopCarRequest(mer_id);
+        } else {
+            String room_id = getIntent().getStringExtra("room_id");
+            myBinder.shopMultCarRequest(mer_id, room_id, "1");
+        }
         this.myBinder = myBinder;
     }
 
