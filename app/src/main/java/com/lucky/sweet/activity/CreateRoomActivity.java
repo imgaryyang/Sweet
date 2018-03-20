@@ -96,6 +96,13 @@ public class CreateRoomActivity extends BaseActivity {
 
     }
 
+    public void addRoom(View v) {
+        if (roomID != null) {
+            MerchantActivity.newMoreOrderInStance(CreateRoomActivity.this, mer_id, roomID);
+        }
+
+    }
+
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {

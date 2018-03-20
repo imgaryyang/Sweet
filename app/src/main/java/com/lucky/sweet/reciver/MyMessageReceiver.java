@@ -49,6 +49,9 @@ public class MyMessageReceiver extends MessageReceiver {
     public void onMessage(Context context, CPushMessage cPushMessage) {
         String content = cPushMessage.getContent();
         Gson gson = new Gson();
+        Toast.makeText(context, "onMessage, messageId: " + cPushMessage.getMessageId() + ", title: " + cPushMessage.getTitle() + ", content:" + cPushMessage.getContent(), Toast.LENGTH_SHORT).show();
+        Log.e("MyMessageReceiver", "onMessage, messageId: " + cPushMessage.getMessageId() + ", title: " + cPushMessage.getTitle() + ", content:" + cPushMessage.getContent());
+
         switch (cPushMessage.getTitle()) {
 
             case JOIN_ROOM:
@@ -61,6 +64,7 @@ public class MyMessageReceiver extends MessageReceiver {
                 EventBus.getDefault().post(MuliiOrderInfo);
                 break;
             case INVITE_PEOPLE:
+                System.out.println(content);
                 InvitationInfo invitationInfo = new Gson().fromJson(content, InvitationInfo.class);
                 BaseActivity.getCurrentActivity(invitationInfo);
 
@@ -72,9 +76,7 @@ public class MyMessageReceiver extends MessageReceiver {
 
                 break;
         }
-        Toast.makeText(context, "onMessage, messageId: " + cPushMessage.getMessageId() + ", title: " + cPushMessage.getTitle() + ", content:" + cPushMessage.getContent(), Toast.LENGTH_SHORT).show();
-        Log.e("MyMessageReceiver", "onMessage, messageId: " + cPushMessage.getMessageId() + ", title: " + cPushMessage.getTitle() + ", content:" + cPushMessage.getContent());
-    }
+         }
 
     @Override
     public void onNotificationOpened(Context context, String title, String summary, String extraMap) {

@@ -74,12 +74,13 @@ public class MerchantActivity extends BaseActivity {
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
-        String mer_id = getIntent().getStringExtra("mer_id");
+
         if (singleFlag) {
+            String mer_id = getIntent().getStringExtra("mer_id");
             myBinder.shopCarRequest(mer_id);
         } else {
             String room_id = getIntent().getStringExtra("room_id");
-            myBinder.shopMultCarRequest(mer_id,room_id,"");
+            myBinder.shopMultCarRequest(room_id,"");
         }
         this.myBinder = myBinder;
     }

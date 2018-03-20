@@ -280,9 +280,9 @@ public class CommunicationService extends Service {
             requestShopCarInfo(mer_id);
         }
 
-        public void shopMultCarRequest(String mer_id, String room_id, String key) {
+        public void shopMultCarRequest(String room_id, String key) {
 
-            requestMoreShopCarInfo(mer_id, room_id, key);
+            requestMoreShopCarInfo(room_id, key);
         }
 
         public void sendCircleInfo(String photoPath, String content) {
@@ -789,11 +789,11 @@ public class CommunicationService extends Service {
         }, map);
     }
 
-    private void requestMoreShopCarInfo(final String mer_id, String room_id, String key_value) {
+    private void requestMoreShopCarInfo(String room_id, String key_value) {
         final HashMap<String, String> map = new HashMap<>();
 
         map.put("session", MyApplication.sessionId);
-        map.put("room_id", "1");
+        map.put("room_id", room_id);
         map.put("key_value", key_value);
         HttpUtils.sendOkHttpRequest(Properties.SHOP_CAR, new MyOkhttpHelper() {
 
@@ -806,7 +806,7 @@ public class CommunicationService extends Service {
 
             @Override
             public void afterNewRequestSession() {
-                requestShopCarInfo(mer_id);
+                requestMoreShopCarInfo(room_id, key_value);
             }
         }, map);
     }
