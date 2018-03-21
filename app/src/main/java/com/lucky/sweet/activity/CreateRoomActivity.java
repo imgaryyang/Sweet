@@ -3,8 +3,12 @@ package com.lucky.sweet.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
@@ -37,6 +41,9 @@ public class CreateRoomActivity extends BaseActivity {
     private final static String SHOPID = "mer_id";
     private ListView lv_add_friend;
     private FlowFriendAdapter flowFriendAdapter;
+    private TextView userName;
+    private Button btn_search;
+    private EditText edt_serch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +68,18 @@ public class CreateRoomActivity extends BaseActivity {
 
     private void initView() {
 
+
         lv_add_friend = findViewById(R.id.lv_add_friend);
+        userName = findViewById(R.id.tv_search_user_show);
+        findViewById(R.id.btn_user_search).setOnClickListener(v -> {
+            String search = edt_serch.getText().toString();
+            if (!TextUtils.isEmpty(search)) {
+                myBinder.searchFriend(search);
+            }
+        });
+
+
+        edt_serch = findViewById(R.id.edt_search_user);
         initTitle();
     }
 

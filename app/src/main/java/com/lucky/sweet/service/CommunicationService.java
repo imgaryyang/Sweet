@@ -34,6 +34,7 @@ import com.lucky.sweet.entity.FlowPeople;
 import com.lucky.sweet.entity.GetMailVerInfo;
 import com.lucky.sweet.entity.InvitationInfo;
 import com.lucky.sweet.entity.JoinInRoomInfo;
+import com.lucky.sweet.entity.JoinRoomInfo;
 import com.lucky.sweet.entity.MailValiInfo;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.PerdetermingEntity;
@@ -280,9 +281,9 @@ public class CommunicationService extends Service {
             requestShopCarInfo(mer_id);
         }
 
-        public void shopMultCarRequest(String room_id, String key) {
+        public void shopMultCarRequest(String room_id, JoinRoomInfo info) {
 
-            requestMoreShopCarInfo(room_id, key);
+            requestMoreShopCarInfo(room_id, info);
         }
 
         public void sendCircleInfo(String photoPath, String content) {
@@ -354,6 +355,28 @@ public class CommunicationService extends Service {
         public void cancelOrder(String mer_id, String indent_id) {
             CommunicationService.this.cancelOrder(mer_id, indent_id);
         }
+
+        public void searchFriend(String search) {
+            CommunicationService.this.searchFriend(search);
+        }
+    }
+
+    private void searchFriend(String searchName) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("session", MyApplication.sessionId);
+        map.put("user_name", searchName);
+        HttpUtils.sendOkHttpRequest(ReserveProperties.SEARCH_FRIEND, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+                System.out.println(string);
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+                searchFriend(searchName);
+            }
+        }, map);
+
     }
 
     private void cancelOrder(String mer_id, String indent_id) {
@@ -449,7 +472,7 @@ public class CommunicationService extends Service {
         HashMap<String, String> map = new HashMap<>();
         map.put("invite_user_id", inviteUserId);
         map.put("session", MyApplication.sessionId);
-        map.put("key_value", info.toString());
+        map.put("key_value", info.toJsonString());
         HttpUtils.sendOkHttpRequest(ReserveProperties.INVITATION_FRIEND, new MyOkhttpHelper() {
             @Override
             public void onResponseSuccessfulString(String string) {
@@ -618,7 +641,7 @@ public class CommunicationService extends Service {
     private void createReserveRoom(final String mer_id) {
         HashMap<String, String> map = new HashMap<>();
         map.put("session", MyApplication.sessionId);
-        map.put("mer_id", mer_id);
+        map.put("mer_id", "1");
         HttpUtils.sendOkHttpRequest(ReserveProperties.CREATE_ROOM,
                 new MyOkhttpHelper() {
 
@@ -789,24 +812,23 @@ public class CommunicationService extends Service {
         }, map);
     }
 
-    private void requestMoreShopCarInfo(String room_id, String key_value) {
+    private void requestMoreShopCarInfo(String room_id,JoinRoomInfo info) {
         final HashMap<String, String> map = new HashMap<>();
-
+        String jsonKey = info.toJsonString();
         map.put("session", MyApplication.sessionId);
         map.put("room_id", room_id);
-        map.put("key_value", key_value);
+        map.put("key_value", jsonKey);
         HttpUtils.sendOkHttpRequest(Properties.SHOP_CAR, new MyOkhttpHelper() {
 
             @Override
             public void onResponseSuccessfulString(String string) {
-                System.out.println(string.toString());
-                //   EventBus.getDefault().post(new Gson().fromJson(string, ShopCarEntity.class));
+                EventBus.getDefault().post(new Gson().fromJson(string, ShopCarEntity.class));
 
             }
 
             @Override
             public void afterNewRequestSession() {
-                requestMoreShopCarInfo(room_id, key_value);
+                requestMoreShopCarInfo(room_id, info);
             }
         }, map);
     }

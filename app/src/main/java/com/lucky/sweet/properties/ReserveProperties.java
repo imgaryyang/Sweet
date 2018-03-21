@@ -22,6 +22,7 @@ public class ReserveProperties {
     public static final String WAIT_ORDER = "https://thethreestooges.cn:666/indent/unfinished/indent";
 
     public static final String CANCEL_OREDER = "https://thethreestooges.cn:666/indent/cancel/indent";
+    public static final String SEARCH_FRIEND = "https://thethreestooges.cn:666/trolley/attent/find";
 
 
     public static final String CREATE_OR_ALTER_ROOM_FAIL = "0";

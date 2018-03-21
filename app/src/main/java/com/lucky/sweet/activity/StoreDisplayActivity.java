@@ -252,7 +252,7 @@ public class StoreDisplayActivity extends BaseActivity {
 
         setListener();
 
-        myBinder.requestStoreDisplayInfo(businessArea,rankType ,recreationType , num + "");
+        myBinder.requestStoreDisplayInfo(businessArea, rankType, recreationType, num + "");
 
     }
 

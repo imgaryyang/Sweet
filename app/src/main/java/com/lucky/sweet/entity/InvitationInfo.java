@@ -1,5 +1,8 @@
 package com.lucky.sweet.entity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by C on 2018/3/18.
  */
@@ -42,11 +45,18 @@ public class InvitationInfo {
         this.roomId = roomId;
     }
 
-    @Override
-    public String toString() {
-        return " {userId:" + userId + ",merId:" + merId + ",roomId:" + roomId + "    }";
+    public String toJsonString() {
+        JSONObject jsonObject = new JSONObject();
 
+        try {
+            jsonObject.put("userId", userId);
+            jsonObject.put("merId", merId);
+            jsonObject.put("roomId", roomId);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
     }
-
-
 }

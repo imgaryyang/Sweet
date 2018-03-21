@@ -1,6 +1,22 @@
 package com.lucky.sweet;
 
+import com.google.gson.Gson;
+import com.lucky.sweet.activity.MyApplication;
+import com.lucky.sweet.entity.FlowPeople;
+import com.lucky.sweet.properties.PersonProperties;
+import com.lucky.sweet.utility.HttpUtils;
+import com.squareup.okhttp.Request;
+import com.zhy.http.okhttp.OkHttpUtils;
+
+import org.greenrobot.eventbus.EventBus;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 import static org.junit.Assert.assertEquals;
 
@@ -16,6 +32,28 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
     }
 
+    @Test
+    public void test_Session_outtime() throws Exception {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("session", "111111");
+        HttpUtils.sendOkHttpRequest(PersonProperties.FOLW_FRIEND, new com.zhy.http.okhttp.callback.Callback() {
+            @Override
+            public Object parseNetworkResponse(com.squareup.okhttp.Response response) throws IOException {
+                assertEquals(response.body().string(), "250");
+                return null;
+            }
+
+            @Override
+            public void onError(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Object response) {
+
+            }
+        }, map);
+    }
  /*   @Test
     public void loginTest() throws Exception {
         assertEquals(true, LoginRegisterManager.UserLogin("2222@163.com",

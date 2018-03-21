@@ -1,18 +1,14 @@
 package com.lucky.sweet.reciver;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.util.Log;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.alibaba.sdk.android.push.MessageReceiver;
 import com.alibaba.sdk.android.push.notification.CPushMessage;
 import com.google.gson.Gson;
 import com.lucky.sweet.activity.BaseActivity;
-import com.lucky.sweet.activity.MyApplication;
+import com.lucky.sweet.activity.MerchantActivity;
 import com.lucky.sweet.entity.InvitationInfo;
 import com.lucky.sweet.entity.JoinRoomInfo;
 import com.lucky.sweet.entity.MuliiOrderInfo;
@@ -57,26 +53,28 @@ public class MyMessageReceiver extends MessageReceiver {
             case JOIN_ROOM:
 
                 JoinRoomInfo joinRoomInfo = gson.fromJson(content, JoinRoomInfo.class);
-                EventBus.getDefault().post(joinRoomInfo);
+                // EventBus.getDefault().post(joinRoomInfo);
+                Toast.makeText(context, "感谢这位老铁：" + joinRoomInfo.getName() + "加入房间", Toast.LENGTH_SHORT).show();
+
                 break;
             case UPDATE_MENU:
                 MuliiOrderInfo MuliiOrderInfo = gson.fromJson(content, MuliiOrderInfo.class);
                 EventBus.getDefault().post(MuliiOrderInfo);
                 break;
             case INVITE_PEOPLE:
-                System.out.println(content);
                 InvitationInfo invitationInfo = new Gson().fromJson(content, InvitationInfo.class);
-                BaseActivity.getCurrentActivity(invitationInfo);
+                BaseActivity.invitationFriend(invitationInfo);
 
                 Toast.makeText(context, content, Toast.LENGTH_SHORT).show();
 
                 break;
             case DELETE_ROOM:
+                BaseActivity.onMerchantFinish();
                 Toast.makeText(context, content, Toast.LENGTH_SHORT).show();
 
                 break;
         }
-         }
+    }
 
     @Override
     public void onNotificationOpened(Context context, String title, String summary, String extraMap) {

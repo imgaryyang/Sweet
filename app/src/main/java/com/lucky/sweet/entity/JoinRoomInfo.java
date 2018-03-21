@@ -1,5 +1,8 @@
 package com.lucky.sweet.entity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by chn on 2018/2/17.
  * (╯°□°）╯︵ ┻━┻ MMP好气啊！
@@ -16,6 +19,10 @@ public class JoinRoomInfo {
 
     private String name;
 
+    public JoinRoomInfo(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
@@ -24,4 +31,13 @@ public class JoinRoomInfo {
         this.name = name;
     }
 
+    public String toJsonString() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("name", name);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
 }

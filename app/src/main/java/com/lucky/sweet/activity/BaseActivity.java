@@ -29,14 +29,18 @@ public abstract class BaseActivity extends AppCompatActivity {
     private Boolean isBindEventBus = false;
     private static Context context;
 
-    public static void getCurrentActivity( InvitationInfo invitationInfo ) {
-        if (context != null){
+    public static Context getCurrentContext() {
+        return context;
+    }
+
+    public static void invitationFriend(InvitationInfo invitationInfo) {
+        if (context != null) {
             final AlertDialog.Builder normalDialog = new AlertDialog.Builder(context);
             normalDialog.setTitle("您的好友邀请您一起点餐");
             normalDialog.setMessage("您的好友ID：" + invitationInfo.getUserId());
             normalDialog.setPositiveButton("接受邀请", (dialog, which) -> {
 
-                MerchantActivity.newMoreOrderInStance((Activity)context,invitationInfo.getMerId(),invitationInfo.getRoomId());
+                MerchantActivity.newMoreOrderInStance((Activity) context, invitationInfo.getMerId(), invitationInfo.getRoomId());
             });
             normalDialog.setNegativeButton("果断拒绝", (dialog, which) -> {
                 dialog.dismiss();
@@ -44,6 +48,20 @@ public abstract class BaseActivity extends AppCompatActivity {
             normalDialog.show();
 
         }
+    }
+
+    public static void onMerchantFinish() {
+
+        String activityName = context.toString();
+        String currentActivityName = activityName.substring(activityName.lastIndexOf(".") + 1, activityName.indexOf("@"));
+        if (currentActivityName.equals(MerchantActivity.class.getSimpleName())) {
+            Toast.makeText(context, "当前是购物车", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "当前不是购物车", Toast.LENGTH_SHORT).show();
+
+        }
+
+
     }
 
     @Override

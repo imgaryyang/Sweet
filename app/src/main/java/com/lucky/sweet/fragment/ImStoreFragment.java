@@ -114,7 +114,6 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
             String tmp = info.getHeWeather6().get(0).getNow
                     ().getTmp();
             tv_weathertype.setText(cond_txt + " " + tmp);
-            System.out.println(info.getHeWeather6().get(0).getNow().getCond_code());
             InputStream open = context.getAssets().open("weather/w" + info.getHeWeather6().get(0).getNow().getCond_code() + ".png");
             imv_weather.setImageBitmap(BitmapFactory.decodeStream(open));
 
