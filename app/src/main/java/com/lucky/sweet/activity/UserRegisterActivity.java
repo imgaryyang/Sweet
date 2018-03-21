@@ -3,6 +3,7 @@ package com.lucky.sweet.activity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -38,6 +39,13 @@ public class UserRegisterActivity extends BaseActivity {
     private Boolean isRegister;
     private CommunicationService.MyBinder myBinder;
     private SharedPreferences.Editor edit;
+    private final static String INTENTTAG = "isRegister";
+
+    public static void newInstance(Context context, boolean isRegister) {
+        Intent intent = new Intent(context, UserRegisterActivity.class);
+        intent.putExtra(INTENTTAG, isRegister);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +54,7 @@ public class UserRegisterActivity extends BaseActivity {
 
         setIsBindEventBus();
 
-        isRegister = getIntent().getBooleanExtra("isRegister", true);
+        isRegister = getIntent().getBooleanExtra(INTENTTAG, true);
 
 
         initView();
@@ -203,20 +211,29 @@ public class UserRegisterActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(UserRegestInfo info) {
-        if (info.getAttr()) {
-            edit.putBoolean("logined", true);
-            edit.putString("Id", info.getUserID());
-            edit.putString("Psw", info.getPassword());
-            if (edit.commit()) {
-                Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
-                MyApplication.initSession(flag -> {
-                    if (flag) {
-                        finish();
-                    }
-                });
-            }
-        } else
-            Toast.makeText(this, "注册失败", Toast.LENGTH_SHORT).show();
+        if (isRegister){
+            if (info.getAttr()) {
+                edit.putBoolean("logined", true);
+                edit.putString("Id", info.getUserID());
+                edit.putString("Psw", info.getPassword());
+                if (edit.commit()) {
+                    Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
+                    MyApplication.initSession(flag -> {
+                        if (flag) {
+                            finish();
+                        }
+                    });
+                }
+            } else
+                Toast.makeText(this, "注册失败", Toast.LENGTH_SHORT).show();
+
+        }else {
+            if (info.getAttr()) {
+                Toast.makeText(this, "修改成功", Toast.LENGTH_SHORT).show();
+            }else
+                Toast.makeText(this, "原密码不能重复", Toast.LENGTH_SHORT).show();
+
+        }
 
     }
 }

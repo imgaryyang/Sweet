@@ -359,6 +359,72 @@ public class CommunicationService extends Service {
         public void searchFriend(String search) {
             CommunicationService.this.searchFriend(search);
         }
+
+        public void userForgetPsw(String mail_address) {
+            CommunicationService.this.userForgetPsw(mail_address);
+        }
+
+        public void checkOutForgetEmail(String mail_address, String mail_ver) {
+            CommunicationService.this.checkOutForgetEmail(mail_address,mail_ver);
+        }
+    }
+
+    private void checkOutForgetEmail(String mail_address, String mail_ver) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("mail_address", mail_address);
+        map.put("mail_ver", mail_ver);
+        HttpUtils.sendOkHttpRequest(Properties.FORGETSUBMITPATH, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+
+                EventBus.getDefault().post(new MailValiInfo(string));
+
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+
+            }
+        }, map);
+    }
+
+    private void ForgetEmailWrite(String username, String password) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("username", username);
+        map.put("password", password);
+
+        HttpUtils.sendOkHttpRequest(Properties.USERFORGETPATH, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+
+                EventBus.getDefault().post(new UserRegestInfo(string));
+
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+
+            }
+        }, map);
+    }
+
+    private void userForgetPsw(String mail_address) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("mail_address", mail_address);
+
+        HttpUtils.sendOkHttpRequest(Properties.FORGETSUBMITPATH, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+
+                EventBus.getDefault().post(new GetMailVerInfo(string));
+
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+
+            }
+        }, map);
     }
 
     private void searchFriend(String searchName) {
@@ -703,7 +769,6 @@ public class CommunicationService extends Service {
     }
 
     private void ossPicDown(final String objectKey)
-
     {
         GetObjectRequest request = new GetObjectRequest(TEST_BUCKET, objectKey);
         request.setxOssProcess("image/resize,m_fixed,w_100," + "h_100/quality,q_50");
@@ -812,7 +877,7 @@ public class CommunicationService extends Service {
         }, map);
     }
 
-    private void requestMoreShopCarInfo(String room_id,JoinRoomInfo info) {
+    private void requestMoreShopCarInfo(String room_id, JoinRoomInfo info) {
         final HashMap<String, String> map = new HashMap<>();
         String jsonKey = info.toJsonString();
         map.put("session", MyApplication.sessionId);
@@ -940,8 +1005,7 @@ public class CommunicationService extends Service {
 
     }
 
-    private TencentLocationListener mListener = new
-            TencentLocationListener() {
+    private TencentLocationListener mListener = new TencentLocationListener() {
                 @Override
                 public void onLocationChanged(TencentLocation tencentLocation, int error, String s) {
 

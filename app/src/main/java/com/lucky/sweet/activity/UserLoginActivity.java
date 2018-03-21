@@ -53,17 +53,15 @@ public class UserLoginActivity extends BaseActivity {
     }
 
     public void forgetPsw(View view) {
-        Intent intent = new Intent(this, UserRegisterActivity.class);
-        intent.putExtra("isRegister", false);
-        startActivity(intent);
+        UserRegisterActivity.newInstance(this, false);
+
 
     }
 
     public void register(View view) {
-        Intent intent = new Intent(this,
-                UserRegisterActivity.class);
-        intent.putExtra("isRegister", true);
-        startActivity(intent);
+        UserRegisterActivity.newInstance(this, true);
+
+
     }
 
 

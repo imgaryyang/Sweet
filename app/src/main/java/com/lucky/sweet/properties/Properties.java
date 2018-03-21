@@ -22,11 +22,11 @@ public class Properties {
             "https://thethreestooges.cn:666/application/login/mail_validate.php";
 
     public static final String FORGETSUBMITPATH =
-            "http://thethreestooges.cn/consumer/bean/login/forget_submit.php";
+            "https://thethreestooges.cn:666/application/login/forget_submit.php";
     public static final String FORGETVALIDATEPATH =
-            "http://thethreestooges.cn/consumer/bean/login/forget_validate.php";
+            "https://thethreestooges.cn:666/application/login/forget_validate.php";
     public static final String USERFORGETPATH =
-            "http://thethreestooges.cn/consumer/bean/login/user_forget.php";
+            "https://thethreestooges.cn:666/application/login/user_forget.php";
 
 
     public static final String MAINSHOWPLAYTPATH =

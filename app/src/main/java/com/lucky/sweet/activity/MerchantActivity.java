@@ -90,6 +90,9 @@ public class MerchantActivity extends BaseActivity {
         fg_shop_car.setOnClickListener(new ProductsFragment.OnClickListener() {
             @Override
             public void onClickSubimt(ShopCarSingleInformation shopCarSingleInformation) {
+          /*      if (!singleFlag){
+                    myBinder.upDickesInfo();
+                }*/
                 Intent intent = new Intent(MerchantActivity.this,
                         OrderSubmitActivity.class);
                 intent.putExtra("data", shopCarSingleInformation);
