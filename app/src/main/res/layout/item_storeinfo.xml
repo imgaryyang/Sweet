@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/white"
+              android:layout_height="wrap_content"
+              android:background="@color/gray0"
               android:orientation="vertical">
 
     <ImageView
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/photo_null_bg"
         android:id="@+id/imv_shop_sur"
         android:layout_width="match_parent"
         android:layout_height="150dp"
@@ -18,18 +19,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="13dp"
-
         android:textColor="#000000"
-        android:textSize="25dp"
-        android:textStyle="bold"/>
+        android:textSize="25dp"/>
 
     <TextView
         android:id="@+id/tv_shop_des"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-
-        android:textColor="#000000"/>
+        android:textSize="16dp"
+        android:text="王兴田最帅王兴田最牛逼别老爆炸别老生气"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,6 +40,8 @@
             android:layout_height="80dp"
             android:layout_margin="16dp"
             android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/photo_null_bg"
         />
 
         <ImageView
@@ -49,6 +50,8 @@
             android:layout_height="80dp"
             android:layout_margin="16dp"
             android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/photo_null_bg"
          />
 
         <ImageView
@@ -57,6 +60,8 @@
             android:layout_height="80dp"
             android:layout_margin="16dp"
             android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/photo_null_bg"
           />
 
     </LinearLayout>
