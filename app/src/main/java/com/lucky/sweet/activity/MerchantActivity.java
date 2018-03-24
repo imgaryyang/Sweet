@@ -96,8 +96,8 @@ public class MerchantActivity extends BaseActivity {
                     myBinder.upDickesInfo(mer_id, new DeletRoomInfo(MyApplication.USER_ID, TimeUtil.getCurrentTime()), room_id, "{}", "{}", shopCarSingleInformation.getSaleSum());
                 }
                 Intent intent = new Intent(MerchantActivity.this,
-                        OrderSubmitActivity.class);
-                intent.putExtra("data", shopCarSingleInformation);
+                        OrderSeatActivity.class);
+               // intent.putExtra("data", shopCarSingleInformation);
                 startActivity(intent);
                 overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
             }

@@ -241,11 +241,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
                         Toast.LENGTH_SHORT).show();
                 return;
             }
-            /*Intent intent = new Intent(StoreParticularInfoActivity
-                    .this, MultiOrderActivity.class);
 
-            startActivity(intent);
-            goNextAnim();*/
             new AlertDialog.Builder(StoreParticularInfoActivity.this)
                     .setMessage("请选择加入方式")
                     .setPositiveButton("加入房间", (dialog, which) -> {

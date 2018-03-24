@@ -519,7 +519,6 @@ public class CommunicationService extends Service {
         HttpUtils.sendOkHttpRequest(PersonProperties.DETAILED_ORDER_INFO, new MyOkhttpHelper() {
             @Override
             public void onResponseSuccessfulString(String string) {
-                System.out.println(string);
                 EventBus.getDefault().post(new Gson().fromJson(string, DetailOrderInfo.class));
 
             }

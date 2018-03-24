@@ -43,7 +43,7 @@ public class OrderSubmitActivity extends BaseActivity {
 
         initView();
 
-        initData();
+        //initData();
 
         initEvent();
 

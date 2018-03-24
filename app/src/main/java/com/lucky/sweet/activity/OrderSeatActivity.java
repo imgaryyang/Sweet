@@ -157,9 +157,9 @@ public class OrderSeatActivity extends BaseActivity {
                         finish();
                         goPreAnim();
                         break;
-
                     case Title.BUTTON_RIGHT1://不好用？
                         verifyOrder();
+                        startActivity(new Intent(OrderSeatActivity.this, OrderSubmitActivity.class));
                         break;
                 }
             }
