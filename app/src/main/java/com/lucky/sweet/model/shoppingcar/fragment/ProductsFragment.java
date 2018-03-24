@@ -186,7 +186,7 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
                         muliiOrderInfo.setaddDis(false);
                     }
 
-                    ((MerchantActivity) activity).upMenuInfo(muliiOrderInfo);
+                     ((MerchantActivity) activity).upMenuInfo(muliiOrderInfo);
                 }
             });
         sectionedAdapter.SetOnSetHolderClickListener((drawable, start_location) -> doAnim(drawable, start_location));
@@ -315,6 +315,9 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         return count;
     }
 
+    public final String ADD = "1";
+    public final String DELETE = "2";
+
     public void multiOrderUpdata(MuliiOrderInfo info) {
 
 
@@ -322,23 +325,26 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
         if (!name.equals(MyApplication.USER_ID)) {
             ShopProduct shopProduct = productCategorizes.get(info.getSection()).getProduct().get(info
                     .getPosition());
+
             int number = shopProduct.getNumber();
             if (info.isaddDis()) {
                 number = number + 1;
                 Toast.makeText(getActivity(), "感谢这位老铁：" + name + "添加了一份" + shopProduct.getGoods(), Toast.LENGTH_SHORT).show();
 
-                updateProduct(shopProduct,"1");
+                updateProduct(shopProduct, ADD);
             } else if (number != 0) {
                 number = number - 1;
                 Toast.makeText(getActivity(), "感谢这位老铁：" + name + "取消了一份" + shopProduct.getGoods(), Toast.LENGTH_SHORT).show();
 
-                updateProduct(shopProduct,"2");
+                updateProduct(shopProduct, DELETE);
 
             }
+
             shopProduct.setNumber(number);
             productCategorizes.get(info.getSection()).getProduct().set(info.getPosition(), shopProduct);
             sectionedAdapter.notifyDataSetChanged();
             morelist.notify();
+
         }
 
 
@@ -352,20 +358,11 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
      */
     @Override
     public void updateProduct(ShopProduct product, String type) {
-        if (type.equals("1")) {
-            if (!productList.contains(product)) {
-                productList.add(product);
-            } else {
-                for (ShopProduct shopProduct : productList) {
-                    if (product.getId() == shopProduct.getId()) {
-                        shopProduct.setNumber(shopProduct.getNumber());
-                    }
-                }
-            }
-        } else if (type.equals("2")) {
-            if (productList.contains(product)) {
-                if (product.getNumber() == 0) {
-                    productList.remove(product);
+        switch (type) {
+            case ADD:
+                if (!productList.contains(product)) {
+                    product.setNumber(1);
+                    productList.add(product);
                 } else {
                     for (ShopProduct shopProduct : productList) {
                         if (product.getId() == shopProduct.getId()) {
@@ -373,9 +370,23 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
                         }
                     }
                 }
+                break;
+            case DELETE:
+                if (productList.contains(product)) {
+                    if (product.getNumber() == 0) {
+                        productList.remove(product);
+                    } else {
+                        for (ShopProduct shopProduct : productList) {
+                            if (product.getId() == shopProduct.getId()) {
+                                shopProduct.setNumber(shopProduct.getNumber());
+                            }
+                        }
+                    }
 
-            }
+                }
+                break;
         }
+
         shopAdapter.notifyDataSetChanged();
         setPrise();
     }
@@ -388,25 +399,31 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
      */
     @Override
     public void onUpdateDetailList(ShopProduct product, String type) {
-        if (type.equals("1")) {
-            for (int i = 0; i < productCategorizes.size(); i++) {
-                shopProductsAll = productCategorizes.get(i).getProduct();
-                for (ShopProduct shopProduct : shopProductsAll) {
-                    if (product.getId() == shopProduct.getId()) {
-                        shopProduct.setNumber(product.getNumber());
+        switch (type) {
+            case ADD:
+
+                for (int i = 0; i < productCategorizes.size(); i++) {
+                    shopProductsAll = productCategorizes.get(i).getProduct();
+                    for (ShopProduct shopProduct : shopProductsAll) {
+                        if (product.getId() == shopProduct.getId()) {
+                            shopProduct.setNumber(product.getNumber());
+                        }
                     }
                 }
-            }
-        } else if (type.equals("2")) {
-            for (int i = 0; i < productCategorizes.size(); i++) {
-                shopProductsAll = productCategorizes.get(i).getProduct();
-                for (ShopProduct shopProduct : shopProductsAll) {
-                    if (product.getId() == shopProduct.getId()) {
-                        shopProduct.setNumber(product.getNumber());
+                break;
+            case DELETE:
+
+                for (int i = 0; i < productCategorizes.size(); i++) {
+                    shopProductsAll = productCategorizes.get(i).getProduct();
+                    for (ShopProduct shopProduct : shopProductsAll) {
+                        if (product.getId() == shopProduct.getId()) {
+                            shopProduct.setNumber(product.getNumber());
+                        }
                     }
                 }
-            }
+                break;
         }
+
         sectionedAdapter.notifyDataSetChanged();
         setPrise();
     }

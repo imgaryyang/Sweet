@@ -31,7 +31,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     private static Context context;
 
 
-
     public static void invitationFriend(InvitationInfo invitationInfo) {
         if (context != null) {
             final AlertDialog.Builder normalDialog = new AlertDialog.Builder(context);
@@ -57,7 +56,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
             final AlertDialog.Builder normalDialog = new AlertDialog.Builder(context);
             normalDialog.setTitle("警告！");
-            normalDialog.setMessage("您的好友：" + DeletRoomInfo.getUserId() + "于"+DeletRoomInfo.getTime()+"已经关闭多人购物");
+            normalDialog.setMessage("您的好友：" + DeletRoomInfo.getUserId() + "于" + DeletRoomInfo.getTime() + "已经关闭多人购物");
             normalDialog.setPositiveButton("无奈关闭", (dialog, which) -> {
                 ((Activity) context).finish();
             });
@@ -72,7 +71,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = this;
         if (enableSliding()) {
             SlidingLayoutView rootView = new SlidingLayoutView(this);
             rootView.bindActivity(this);
@@ -96,6 +94,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (isBindEventBus) {
             EventBus.getDefault().register(this);
         }
+        context = this;
         bindService();
 
     }

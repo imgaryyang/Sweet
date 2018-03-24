@@ -310,7 +310,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
                 Double.valueOf(shopdes.getLongitude()));
         maps = map.getMap();
 
-        maps.setCenter(latLng);
+        // maps.setCenter(latLng);
 
         Marker marker = this.map.addMarker(new MarkerOptions().title(shopdes.getName()).anchor(0.5f, 0.5f).position(latLng));
         marker.showInfoWindow();
@@ -322,7 +322,8 @@ public class StoreParticularInfoActivity extends BaseActivity {
             marker = this.map.addMarker(new MarkerOptions().title("您当前位置").anchor(0.5f, 0.5f).position(current));
             marker.showInfoWindow();
             btn_more_map_detal.setVisibility(View.VISIBLE);
-            maps.zoomToSpan(latLng, current);
+
+            maps.zoomToSpan(new LatLng(latLng.getLatitude() - 0.000032, latLng.getLongitude() - 0.000032), new LatLng(latitude -   0.000032, longitude -   0.000032));
             TencentSearch tencentSearch = new TencentSearch(this);
             WalkingParam walkingParam = new WalkingParam();
             walkingParam.from(new Location(Float.valueOf(shopdes.getLatitude()), Float.valueOf(shopdes.getLongitude())));
