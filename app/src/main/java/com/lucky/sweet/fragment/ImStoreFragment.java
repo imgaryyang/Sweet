@@ -78,8 +78,8 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
 
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private IndicatorView in_vp_ad;
-/*    private RecycleViewRefresh ref_recy_food;
-    private RecycleViewRefresh ref_recy_fun;*/
+    /*    private RecycleViewRefresh ref_recy_food;
+        private RecycleViewRefresh ref_recy_fun;*/
     private RelativeLayout rl_store_method;
     private FloatingActionButton float_btn;
     private CoordinatorLayout cdl_cover;
@@ -107,18 +107,19 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
     }
 
     public void updataWeather(WeatherInfo info) {
+        if (tv_weathertype != null) {
+            try {
+                String cond_txt = info.getHeWeather6().get(0).getNow
+                        ().getCond_txt();
+                String tmp = info.getHeWeather6().get(0).getNow
+                        ().getTmp();
+                tv_weathertype.setText(cond_txt + " " + tmp);
+                InputStream open = context.getAssets().open("weather/w" + info.getHeWeather6().get(0).getNow().getCond_code() + ".png");
+                imv_weather.setImageBitmap(BitmapFactory.decodeStream(open));
 
-        try {
-            String cond_txt = info.getHeWeather6().get(0).getNow
-                    ().getCond_txt();
-            String tmp = info.getHeWeather6().get(0).getNow
-                    ().getTmp();
-            tv_weathertype.setText(cond_txt + " " + tmp);
-            InputStream open = context.getAssets().open("weather/w" + info.getHeWeather6().get(0).getNow().getCond_code() + ".png");
-            imv_weather.setImageBitmap(BitmapFactory.decodeStream(open));
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -270,21 +271,23 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
     }
 
     public void setShowInfo(MainStoreInfo showInfo) {
+        if (vp_ad != null) {
+            vp_ad.setPageMargin(15);//设置page间间距，自行根据需求设置
+            vp_ad.setOffscreenPageLimit(3);//>=3
+            vp_ad.setAdapter(new AdViewPagerAdapter(getContext(), showInfo
+                    .getAdvertising()));
+            in_vp_ad.initIndicator(showInfo.getAdvertising().size());
+            RecFoodRecommendAdapter foodAdapter = new RecFoodRecommendAdapter
+                    (context, RecFoodRecommendAdapter.FOOD, showInfo.getFood());
+            RecFoodRecommendAdapter funAdapter = new RecFoodRecommendAdapter
+                    (context, RecFoodRecommendAdapter.FUN, showInfo.getRecreation());
 
-        vp_ad.setPageMargin(15);//设置page间间距，自行根据需求设置
-        vp_ad.setOffscreenPageLimit(3);//>=3
-        vp_ad.setAdapter(new AdViewPagerAdapter(getContext(), showInfo
-                .getAdvertising()));
-        in_vp_ad.initIndicator(showInfo.getAdvertising().size());
-        RecFoodRecommendAdapter foodAdapter = new RecFoodRecommendAdapter
-                (context, RecFoodRecommendAdapter.FOOD, showInfo.getFood());
-        RecFoodRecommendAdapter funAdapter = new RecFoodRecommendAdapter
-                (context, RecFoodRecommendAdapter.FUN, showInfo.getRecreation());
+            foodAdapter.setOnItemClickListener(shopId -> StoreParticularInfoActivity.newInStance(context, shopId));
+            funAdapter.setOnItemClickListener(shopId -> StoreParticularInfoActivity.newInStance(context, shopId));
+            rec_foodStore.setAdapter(foodAdapter);
+            rec_funStore.setAdapter(funAdapter);
 
-        foodAdapter.setOnItemClickListener(shopId -> StoreParticularInfoActivity.newInStance(context, shopId));
-        funAdapter.setOnItemClickListener(shopId -> StoreParticularInfoActivity.newInStance(context, shopId));
-        rec_foodStore.setAdapter(foodAdapter);
-        rec_funStore.setAdapter(funAdapter);
+        }
 
     }
 

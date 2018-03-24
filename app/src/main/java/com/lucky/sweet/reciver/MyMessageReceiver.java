@@ -8,7 +8,7 @@ import com.alibaba.sdk.android.push.MessageReceiver;
 import com.alibaba.sdk.android.push.notification.CPushMessage;
 import com.google.gson.Gson;
 import com.lucky.sweet.activity.BaseActivity;
-import com.lucky.sweet.activity.MerchantActivity;
+import com.lucky.sweet.entity.DeletRoomInfo;
 import com.lucky.sweet.entity.InvitationInfo;
 import com.lucky.sweet.entity.JoinRoomInfo;
 import com.lucky.sweet.entity.MuliiOrderInfo;
@@ -62,14 +62,15 @@ public class MyMessageReceiver extends MessageReceiver {
                 EventBus.getDefault().post(MuliiOrderInfo);
                 break;
             case INVITE_PEOPLE:
-                InvitationInfo invitationInfo = new Gson().fromJson(content, InvitationInfo.class);
+                InvitationInfo invitationInfo = gson.fromJson(content, InvitationInfo.class);
                 BaseActivity.invitationFriend(invitationInfo);
 
                 Toast.makeText(context, content, Toast.LENGTH_SHORT).show();
 
                 break;
             case DELETE_ROOM:
-                BaseActivity.onMerchantFinish();
+                DeletRoomInfo DeletRoomInfo = gson.fromJson(content, DeletRoomInfo.class);
+                BaseActivity.onMerchantFinish(DeletRoomInfo);
                 Toast.makeText(context, content, Toast.LENGTH_SHORT).show();
 
                 break;

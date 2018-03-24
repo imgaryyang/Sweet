@@ -29,6 +29,7 @@ import com.lucky.sweet.entity.AlterOrderInfo;
 import com.lucky.sweet.entity.CircleDetail;
 import com.lucky.sweet.entity.CircleLikePoint;
 import com.lucky.sweet.entity.CircleMainInfo;
+import com.lucky.sweet.entity.DeletRoomInfo;
 import com.lucky.sweet.entity.DetailOrderInfo;
 import com.lucky.sweet.entity.FlowPeople;
 import com.lucky.sweet.entity.GetMailVerInfo;
@@ -39,6 +40,7 @@ import com.lucky.sweet.entity.MailValiInfo;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.PerdetermingEntity;
 import com.lucky.sweet.entity.PersonInfo;
+import com.lucky.sweet.entity.SearchFriendInfo;
 import com.lucky.sweet.entity.ShopCarEntity;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.entity.StoreDisplayInfo;
@@ -61,7 +63,6 @@ import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
 import com.tencent.map.geolocation.TencentLocationRequest;
-import com.zhy.http.okhttp.OkHttpUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
@@ -108,9 +109,9 @@ public class CommunicationService extends Service {
          * @param email    用户邮箱
          * @param password 密码
          */
-        public void userLogin(Context context, String email, String password) {
+        public void userLogin(String email, String password) {
 
-            sendLoginRegesiterRequest(context, USERLOGIN, email, password);
+            CommunicationService.this.userLogin(email, password);
 
         }
 
@@ -365,8 +366,35 @@ public class CommunicationService extends Service {
         }
 
         public void checkOutForgetEmail(String mail_address, String mail_ver) {
-            CommunicationService.this.checkOutForgetEmail(mail_address,mail_ver);
+            CommunicationService.this.checkOutForgetEmail(mail_address, mail_ver);
         }
+
+        public void upDickesInfo(String mer_id, DeletRoomInfo entity, String room_id, String indent_info, String trolley_list, String money) {
+            CommunicationService.this.upDickesInfo(mer_id, entity, room_id, indent_info, trolley_list, money);
+
+        }
+    }
+
+    private void upDickesInfo(String mer_id, DeletRoomInfo entity, String room_id, String indent_info, String trolley_list, String money) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("session", MyApplication.sessionId);
+        map.put("mer_id", "1");
+        map.put("key_value", entity.toJsonString());
+        map.put("room_id", room_id);
+        map.put("indent_info", indent_info);
+        map.put("trolley_list", trolley_list);
+        map.put("money", money);
+        HttpUtils.sendOkHttpRequest(Properties.UPLOAD_FINISH_ORDER, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+                Log.i("Shop_delet", string);
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+
+            }
+        }, map);
     }
 
     private void checkOutForgetEmail(String mail_address, String mail_ver) {
@@ -434,7 +462,9 @@ public class CommunicationService extends Service {
         HttpUtils.sendOkHttpRequest(ReserveProperties.SEARCH_FRIEND, new MyOkhttpHelper() {
             @Override
             public void onResponseSuccessfulString(String string) {
-                System.out.println(string);
+
+                EventBus.getDefault().post(new Gson().fromJson(string, SearchFriendInfo.class));
+
             }
 
             @Override
@@ -659,11 +689,12 @@ public class CommunicationService extends Service {
         map.put("item", item);
         map.put("incr_decr", incr_decr);
         map.put("key_value", key);
+
         HttpUtils.sendOkHttpRequest(ReserveProperties.UPDATA_MENU,
                 new MyOkhttpHelper() {
                     @Override
                     public void onResponseSuccessfulString(String string) {
-
+                        System.out.println(string);
 
                     }
 
@@ -768,8 +799,7 @@ public class CommunicationService extends Service {
 
     }
 
-    private void ossPicDown(final String objectKey)
-    {
+    private void ossPicDown(final String objectKey) {
         GetObjectRequest request = new GetObjectRequest(TEST_BUCKET, objectKey);
         request.setxOssProcess("image/resize,m_fixed,w_100," + "h_100/quality,q_50");
         OSSClient ossClient = MyApplication.getOSSClient();
@@ -904,7 +934,7 @@ public class CommunicationService extends Service {
         HttpUtils.sendOkHttpRequest(Properties.DISPLAYSEARCHTITLE, new MyOkhttpHelper() {
             @Override
             public void onResponseSuccessfulString(String string) {
-                System.out.println(string);
+
                 EventBus.getDefault().post(new Gson().fromJson(string, StoreDisplaySearchEntity.class));
             }
 
@@ -953,7 +983,7 @@ public class CommunicationService extends Service {
 
             @Override
             public void onResponseSuccessfulString(String string) {
-                System.out.println(string);
+
                 EventBus.getDefault().post(new Gson().fromJson(string, MainStoreInfo.class));
             }
 
@@ -1006,32 +1036,32 @@ public class CommunicationService extends Service {
     }
 
     private TencentLocationListener mListener = new TencentLocationListener() {
-                @Override
-                public void onLocationChanged(TencentLocation tencentLocation, int error, String s) {
+        @Override
+        public void onLocationChanged(TencentLocation tencentLocation, int error, String s) {
 
-                    if (error == TencentLocation.ERROR_OK) {
+            if (error == TencentLocation.ERROR_OK) {
 
-                        String city = tencentLocation.getCity().trim();
-                        MyApplication.setCurrenCity(city);
-                        if (city.length() > 3) {
-                            city = city.substring(0, 2) + "...";
-                            EventBus.getDefault().post(city);
-                        }
-
-                        if (city.contains("市"))
-                            initWeather(city.substring(0, city.length() - 1));
-                        MyApplication.setCurrentLatAndLon(tencentLocation.getLatitude(), tencentLocation.getLongitude());
-                        initShopInfo(tencentLocation.getLatitude(), tencentLocation.getLongitude());
-                    }
-                    stopLocation();
-
+                String city = tencentLocation.getCity().trim();
+                MyApplication.setCurrenCity(city);
+                if (city.length() > 3) {
+                    city = city.substring(0, 2) + "...";
+                    EventBus.getDefault().post(city);
                 }
 
-                @Override
-                public void onStatusUpdate(String s, int i, String s1) {
+                if (city.contains("市"))
+                    initWeather(city.substring(0, city.length() - 1));
+                MyApplication.setCurrentLatAndLon(tencentLocation.getLatitude(), tencentLocation.getLongitude());
+                initShopInfo(tencentLocation.getLatitude(), tencentLocation.getLongitude());
+            }
+            stopLocation();
 
-                }
-            };
+        }
+
+        @Override
+        public void onStatusUpdate(String s, int i, String s1) {
+
+        }
+    };
 
     private void stopLocation() {
         locationManager.removeUpdates(mListener);
@@ -1214,6 +1244,31 @@ public class CommunicationService extends Service {
                                 userRegestInfo.setPassword(password);
                                 userRegestInfo.setUserID(email);
                                 EventBus.getDefault().post(userRegestInfo);
+                            }
+
+                            @Override
+                            public void afterNewRequestSession() {
+
+                            }
+
+                        }, map);
+            }
+        }.start();
+    }
+
+    private void userLogin(String email, String password) {
+        final HashMap<String, String> map = new HashMap<>();
+        map.put("username", email);
+        map.put("password", password);
+        new Thread() {
+            @Override
+            public void run() {
+                HttpUtils.sendOkHttpRequest(Properties.LOGINPATH, new
+                        MyOkhttpHelper() {
+                            @Override
+                            public void onResponseSuccessfulString(String string) {
+                                EventBus.getDefault().post(string);
+
                             }
 
                             @Override

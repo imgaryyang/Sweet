@@ -32,7 +32,7 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
     }
 
-    @Test
+  /*  @Test
     public void test_Session_outtime() throws Exception {
         HashMap<String, String> map = new HashMap<>();
         map.put("session", "111111");
@@ -53,7 +53,7 @@ public class ExampleUnitTest {
 
             }
         }, map);
-    }
+    }*/
  /*   @Test
     public void loginTest() throws Exception {
         assertEquals(true, LoginRegisterManager.UserLogin("2222@163.com",

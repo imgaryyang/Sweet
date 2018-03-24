@@ -15,8 +15,8 @@ public class ServiceProperties {
 
     public final static String REQUEST_PATH = "https://thethreestooges.cn:5210/identity/oss/token.php";
 
-public static final String TIMECHECK = "http://quan.suning.com/getSysTime.do";
+    public static final String TIMECHECK = "http://quan.suning.com/getSysTime.do";
 
-public static final String WEATHERREQUESTBODY = "https://free-api.heweather.com/s6/weather/now?key=e14dc2b9f04d4a84b467f7f43e3137f2&location=";
+    public static final String WEATHERREQUESTBODY = "https://free-api.heweather.com/s6/weather/now?key=e14dc2b9f04d4a84b467f7f43e3137f2&location=";
 
-        }
+}

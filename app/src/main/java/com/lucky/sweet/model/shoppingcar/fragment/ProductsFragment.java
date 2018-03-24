@@ -173,6 +173,7 @@ public class ProductsFragment extends Fragment implements View.OnClickListener, 
             sectionedAdapter.setOnMenuChangedListener((id, section, position, add) -> {
                 FragmentActivity activity = getActivity();
                 if (activity instanceof MerchantActivity) {
+                    System.out.println(id + "id" + section + "section" + position + "position" + add + "add");
                     MuliiOrderInfo muliiOrderInfo = new MuliiOrderInfo();
                     muliiOrderInfo.setSection(section);
                     muliiOrderInfo.setPosition(position);

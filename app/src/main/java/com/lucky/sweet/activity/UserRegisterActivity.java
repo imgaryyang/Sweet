@@ -41,10 +41,10 @@ public class UserRegisterActivity extends BaseActivity {
     private SharedPreferences.Editor edit;
     private final static String INTENTTAG = "isRegister";
 
-    public static void newInstance(Context context, boolean isRegister) {
-        Intent intent = new Intent(context, UserRegisterActivity.class);
+    public static void newInstance(Activity activity, boolean isRegister, int result) {
+        Intent intent = new Intent(activity, UserRegisterActivity.class);
         intent.putExtra(INTENTTAG, isRegister);
-        context.startActivity(intent);
+        activity.startActivityForResult(intent, result);
     }
 
     @Override
@@ -211,7 +211,7 @@ public class UserRegisterActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(UserRegestInfo info) {
-        if (isRegister){
+        if (isRegister) {
             if (info.getAttr()) {
                 edit.putBoolean("logined", true);
                 edit.putString("Id", info.getUserID());
@@ -220,17 +220,20 @@ public class UserRegisterActivity extends BaseActivity {
                     Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
                     MyApplication.initSession(flag -> {
                         if (flag) {
-                            finish();
+                            Intent intent = new Intent();
+                            intent.putExtra("Id", info.getUserID());
+                            intent.putExtra("Psw", info.getPassword());
+                            setResult(RESULT_OK, intent);
                         }
                     });
                 }
             } else
                 Toast.makeText(this, "注册失败", Toast.LENGTH_SHORT).show();
 
-        }else {
+        } else {
             if (info.getAttr()) {
                 Toast.makeText(this, "修改成功", Toast.LENGTH_SHORT).show();
-            }else
+            } else
                 Toast.makeText(this, "原密码不能重复", Toast.LENGTH_SHORT).show();
 
         }

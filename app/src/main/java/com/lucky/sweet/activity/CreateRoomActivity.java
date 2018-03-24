@@ -15,6 +15,7 @@ import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.FlowFriendAdapter;
 import com.lucky.sweet.entity.FlowPeople;
 import com.lucky.sweet.entity.InvitationInfo;
+import com.lucky.sweet.entity.SearchFriendInfo;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
@@ -152,6 +153,16 @@ public class CreateRoomActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(String info) {
         roomID = info;
+        Toast.makeText(this, "建立房间成功：" + info, Toast.LENGTH_SHORT).show();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(SearchFriendInfo info) {
+        if (info.getNickname() != null) {
+
+            userName.setText(info.getNickname());
+        } else
+            userName.setText("没有当前用户");
         Toast.makeText(this, "建立房间成功：" + info, Toast.LENGTH_SHORT).show();
     }
 }

@@ -41,6 +41,7 @@ public class Properties {
 
     public static final String SHOP_CAR = "https://thethreestooges.cn:666/trolley/show/menu";
 
+    public static final String UPLOAD_FINISH_ORDER = "https://thethreestooges.cn:666/indent/indent/upload";
 
     public static final String ORDER_SEAT_BACKGROUND_PATH = MyApplication.getContext().getCacheDir().getAbsolutePath();
 

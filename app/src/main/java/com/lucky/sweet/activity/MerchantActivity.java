@@ -3,12 +3,11 @@ package com.lucky.sweet.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
-import com.lucky.sweet.entity.JoinInRoomInfo;
+import com.lucky.sweet.entity.DeletRoomInfo;
 import com.lucky.sweet.entity.JoinRoomInfo;
 import com.lucky.sweet.entity.MuliiOrderInfo;
 import com.lucky.sweet.entity.ShopCarEntity;
@@ -17,13 +16,12 @@ import com.lucky.sweet.model.shoppingcar.fragment.ProductsFragment;
 import com.lucky.sweet.model.shoppingcar.mode.ProductType;
 import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
 import com.lucky.sweet.service.CommunicationService;
+import com.lucky.sweet.utility.TimeUtil;
 import com.lucky.sweet.widgets.ToolBar;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -41,7 +39,9 @@ public class MerchantActivity extends BaseActivity {
     private ProductsFragment fg_shop_car;
     private Button btn_back;
     private CommunicationService.MyBinder myBinder;
-    private static Boolean singleFlag = true;
+    private static Boolean isSingleOrder = true;
+    private String room_id = "";
+    private String mer_id = "1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class MerchantActivity extends BaseActivity {
     }
 
     public static void newMoreOrderInStance(Activity activity, String mer_id, String room_id) {
-        singleFlag = false;
+        isSingleOrder = false;
         Intent intent = new Intent(activity, MerchantActivity.class);
         intent.putExtra("mer_id", mer_id);
         intent.putExtra("room_id", room_id);
@@ -74,14 +74,16 @@ public class MerchantActivity extends BaseActivity {
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
-
-        if (singleFlag) {
-            String mer_id = getIntent().getStringExtra("mer_id");
-            myBinder.shopCarRequest(mer_id);
-        } else {
-            String room_id = getIntent().getStringExtra("room_id");
-            myBinder.shopMultCarRequest(room_id,new JoinRoomInfo(MyApplication.USER_ID));
+        mer_id = getIntent().getStringExtra("mer_id");
+        if (this.myBinder == null) {
+            if (isSingleOrder) {
+                myBinder.shopCarRequest(mer_id);
+            } else {
+                room_id = getIntent().getStringExtra("room_id");
+                myBinder.shopMultCarRequest(room_id, new JoinRoomInfo(MyApplication.USER_ID));
+            }
         }
+
         this.myBinder = myBinder;
     }
 
@@ -90,9 +92,9 @@ public class MerchantActivity extends BaseActivity {
         fg_shop_car.setOnClickListener(new ProductsFragment.OnClickListener() {
             @Override
             public void onClickSubimt(ShopCarSingleInformation shopCarSingleInformation) {
-          /*      if (!singleFlag){
-                    myBinder.upDickesInfo();
-                }*/
+                if (!isSingleOrder) {
+                    myBinder.upDickesInfo(mer_id, new DeletRoomInfo(MyApplication.USER_ID, TimeUtil.getCurrentTime()), room_id, "{}", "{}", shopCarSingleInformation.getSaleSum());
+                }
                 Intent intent = new Intent(MerchantActivity.this,
                         OrderSubmitActivity.class);
                 intent.putExtra("data", shopCarSingleInformation);
@@ -126,7 +128,7 @@ public class MerchantActivity extends BaseActivity {
     private void initView() {
 
         fg_shop_car = (ProductsFragment) getSupportFragmentManager().findFragmentById(R.id.fg_shop_car);
-        fg_shop_car.setCurrenType(getIntent().getBooleanExtra("multiOrder", false));
+        fg_shop_car.setCurrenType(!isSingleOrder);
         btn_back = findViewById(R.id.btn_back);
     }
 

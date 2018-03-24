@@ -61,8 +61,9 @@
             android:name="TencentMapSDK"
             android:value="DUSBZ-LL63F-FOIJI-J2GW4-TWNFT-FEFBB" />
 
-        <activity android:name=".activity.StoreDisplayActivity"
-            android:launchMode="singleTop"/>
+        <activity
+            android:name=".activity.StoreDisplayActivity"
+            android:launchMode="singleTop" />
         <activity android:name=".activity.SetUserInfoActivity" />
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
@@ -84,7 +85,9 @@
         <activity android:name=".activity.RecruitmentDisplayActivity" />
         <activity android:name=".activity.CaptureActivity" />
         <activity android:name=".activity.VipCardActiviry" />
-        <activity android:name=".activity.PersonalCircleActivity" />
+        <activity
+            android:name=".activity.PersonalCircleActivity"
+            android:launchMode="singleTop" />
 
         <service android:name=".service.CommunicationService" />
 
@@ -125,15 +128,16 @@
 
         <activity
             android:name=".activity.DetailOrderActivity"
-            android:launchMode="singleTop"/>
-        <activity android:name=".activity.MapWebAcivity"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.MapWebAcivity"
+            android:launchMode="singleTop" />
         <activity
             android:name="com.tencent.smtt.sdk.VideoActivity"
+            android:alwaysRetainTaskState="true"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false"
-            android:launchMode="singleTask"
-            android:alwaysRetainTaskState="true">
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="com.tencent.smtt.tbs.video.PLAY" />
                 <category android:name="android.intent.category.DEFAULT" />

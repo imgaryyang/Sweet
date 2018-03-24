@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.DeletRoomInfo;
 import com.lucky.sweet.entity.InvitationInfo;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.views.SlidingLayoutView;
@@ -29,9 +30,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private Boolean isBindEventBus = false;
     private static Context context;
 
-    public static Context getCurrentContext() {
-        return context;
-    }
+
 
     public static void invitationFriend(InvitationInfo invitationInfo) {
         if (context != null) {
@@ -50,17 +49,23 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public static void onMerchantFinish() {
+    public static void onMerchantFinish(DeletRoomInfo DeletRoomInfo) {
 
         String activityName = context.toString();
         String currentActivityName = activityName.substring(activityName.lastIndexOf(".") + 1, activityName.indexOf("@"));
         if (currentActivityName.equals(MerchantActivity.class.getSimpleName())) {
-            Toast.makeText(context, "当前是购物车", Toast.LENGTH_SHORT).show();
+
+            final AlertDialog.Builder normalDialog = new AlertDialog.Builder(context);
+            normalDialog.setTitle("警告！");
+            normalDialog.setMessage("您的好友：" + DeletRoomInfo.getUserId() + "于"+DeletRoomInfo.getTime()+"已经关闭多人购物");
+            normalDialog.setPositiveButton("无奈关闭", (dialog, which) -> {
+                ((Activity) context).finish();
+            });
+            normalDialog.show();
         } else {
             Toast.makeText(context, "当前不是购物车", Toast.LENGTH_SHORT).show();
 
         }
-
 
     }
 

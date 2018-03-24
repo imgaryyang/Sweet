@@ -173,9 +173,7 @@ public class MyApplication extends Application {
                 String KEY_ID = ossBean.getCredentials().getAccessKeyId();
                 String TOKEN = ossBean.getCredentials().getSecurityToken();
                 String SECRET_KEY_ID = ossBean.getCredentials().getAccessKeySecret();
-                OSSCredentialProvider credentialProvider = new
-                        OSSStsTokenCredentialProvider(KEY_ID, SECRET_KEY_ID, TOKEN
-                );
+                OSSCredentialProvider credentialProvider = new OSSStsTokenCredentialProvider(KEY_ID, SECRET_KEY_ID, TOKEN);
                 ClientConfiguration conf = new ClientConfiguration();
                 conf.setConnectionTimeout(15 * 1000); // 连接超时，默认15秒
                 conf.setSocketTimeout(15 * 1000); // socket超时，默认15秒
@@ -232,5 +230,18 @@ public class MyApplication extends Application {
 
     }
 
+    public static void setOnCloundPush(String email){
+        pushService.bindAccount(email, new CommonCallback() {
+            @Override
+            public void onSuccess(String s) {
+                Log.i("ClodePush", "Success");
+            }
 
+            @Override
+            public void onFailed(String s, String s1) {
+                Log.i("ClodePush", "onFailed");
+
+            }
+        });
+    }
 }
