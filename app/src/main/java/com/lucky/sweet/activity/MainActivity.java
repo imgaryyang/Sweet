@@ -49,8 +49,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
-        if (!MyApplication.sessionId.equals("")){
-            myBinder.getPersonPortrait(USER_PORTRAIT_PATH);
+        if (!MyApplication.sessionId.equals("")) {
             myBinder.getFlowFriends();
             myBinder.requestCircleInfo("朋友", 0);
             myBinder.getPersonInfo();
@@ -182,9 +181,11 @@ public class MainActivity extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void Event(String city) {
-
-        storeFragment.updataLocation(city);
+    public void Event(String info) {
+        if (info.contains("http")) {
+            meFragment.upPersonPortrait(info);
+        } else
+            storeFragment.updataLocation(info);
 
     }
 
@@ -192,12 +193,6 @@ public class MainActivity extends BaseActivity {
     public void Event(MainStoreInfo mainStoreInfo) {
 
         storeFragment.setShowInfo(mainStoreInfo);
-
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void Event(GetObjectResult result) {
-        meFragment.upPersonPortrait(result.getObjectContent());
 
     }
 

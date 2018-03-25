@@ -128,33 +128,37 @@ public class UserRegisterActivity extends BaseActivity {
         emailSubmitFragment.setOnEmailVerListener(new EmailSubmitFragment.OnEmailVer() {
             @Override
             public void onEmailVer(String email, String verPsw) {
-                myBinder.emailVer(email, verPsw);
+
+                myBinder.emailVer(email, verPsw, isRegister);
+
+
             }
 
             @Override
             public void onGetValidate(String email, String verPsw) {
-                myBinder.forgetValidate(UserRegisterActivity.this, email, verPsw);
+                myBinder.emailVer(email, verPsw,isRegister);
             }
 
             @Override
             public void checkOutEmail(String email) {
-                myBinder.checkOutEmail(email);
+                myBinder.checkOutEmail(email, isRegister);
+
             }
 
             @Override
             public void forgetSubmit(String email) {
-                myBinder.forgetSubmit(UserRegisterActivity.this, email);
+                myBinder.checkOutEmail(email, isRegister);
             }
         });
         passWordSubimitFragment.setOnUserUpdataInfo(new PassWordSubimitFragment.OnUserUpdataInfo() {
             @Override
             public void onUserRegister(String email, String psw) {
-                myBinder.userRegister(email, psw);
+                myBinder.userRegister(email, psw, isRegister);
             }
 
             @Override
             public void onUserForget(String email, String psw) {
-                myBinder.userRegister(email, psw);
+                myBinder.userRegister(email, psw, isRegister);
 
             }
         });
@@ -224,6 +228,7 @@ public class UserRegisterActivity extends BaseActivity {
                             intent.putExtra("Id", info.getUserID());
                             intent.putExtra("Psw", info.getPassword());
                             setResult(RESULT_OK, intent);
+                            finish();
                         }
                     });
                 }

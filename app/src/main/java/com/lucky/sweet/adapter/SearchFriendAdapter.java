@@ -14,18 +14,16 @@ import com.lucky.sweet.entity.FlowPeople;
 
 import java.util.List;
 
-import javax.microedition.khronos.opengles.GL;
-
 /**
- * Created by C on 2018/3/14.
+ * Created by C on 2018/3/25.
  */
 
-public class FlowFriendAdapter extends BaseAdapter {
+public class SearchFriendAdapter extends BaseAdapter {
     private List<FlowPeople.AttentListBean> attent_list;
     private Context context;
-    private OnInvitationClick onInvitationClick;
+    private FlowFriendAdapter.OnInvitationClick onInvitationClick;
 
-    public FlowFriendAdapter(List<FlowPeople.AttentListBean> attent_list, Context context) {
+    public SearchFriendAdapter(List<FlowPeople.AttentListBean> attent_list, Context context) {
         this.attent_list = attent_list;
         this.context = context;
     }
@@ -49,17 +47,17 @@ public class FlowFriendAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ViewHolder viewHolder;
+        FlowFriendAdapter.ViewHolder viewHolder;
         FlowPeople.AttentListBean attentListBean = attent_list.get(position);
         if (convertView == null) {
             convertView = View.inflate(context, R.layout.item_flow_friend, null);
-            viewHolder = new ViewHolder();
+            viewHolder = new FlowFriendAdapter.ViewHolder();
             viewHolder.name = convertView.findViewById(R.id.tv_flow_friend);
             viewHolder.pic = convertView.findViewById(R.id.imv_flow_friend);
             viewHolder.invitation = convertView.findViewById(R.id.btn_in_frinde);
             convertView.setTag(viewHolder);
         } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+            viewHolder = (FlowFriendAdapter.ViewHolder) convertView.getTag();
         }
         viewHolder.name.setText(attentListBean.getNickname());
         Glide.with(context).load(attentListBean.getPhoto()).into(viewHolder.pic);
@@ -76,7 +74,7 @@ public class FlowFriendAdapter extends BaseAdapter {
     }
 
 
-    public void setOnInvitationClick(OnInvitationClick onInvitationClick) {
+    public void setOnInvitationClick(FlowFriendAdapter.OnInvitationClick onInvitationClick) {
         this.onInvitationClick = onInvitationClick;
     }
 

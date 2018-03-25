@@ -15,5 +15,9 @@ public class PersonProperties {
 
     public static final String DETAILED_ORDER_INFO = "https://thethreestooges.cn:666/indent/indent/info";
 
+    public static final String ADD_PERSON_PIC = "https://thethreestooges.cn:666/myself/photo/change";
+
+    public static final String CHANGE_NICKNAME = "https://thethreestooges.cn:666/myself/nickname/change";
+
 
 }

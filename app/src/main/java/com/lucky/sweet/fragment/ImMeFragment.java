@@ -15,7 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lucky.sweet.R;
 import com.lucky.sweet.activity.CropIwaActivity;
 import com.lucky.sweet.activity.HistoricalOderActivity;
@@ -44,9 +47,9 @@ import java.io.InputStream;
 // ( (oo) )  ( (oo) )  ( (oo) )
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
-public class ImMeFragment extends Fragment {
+public class ImMeFragment extends Fragment implements View.OnClickListener {
 
-    private Button btn_setUserInfo;
+
     private CircleImageView imv_head;
     private MainActivity activity;
     public final static int CROP_PHOTO = 1000;
@@ -67,8 +70,6 @@ public class ImMeFragment extends Fragment {
 
         initView(getView());
 
-        initEvent();
-
     }
 
     @Nullable
@@ -81,11 +82,8 @@ public class ImMeFragment extends Fragment {
         return view;
     }
 
-    public void upPersonPortrait(InputStream filePath) {
-        bitmap = BitmapFactory.decodeStream(filePath);
-        if (imv_head == null)
-            return;
-        imv_head.setImageBitmap(bitmap);
+    public void upPersonPortrait(String info) {
+       Glide.with(this).load(info).into(imv_head);
     }
 
     @Override
@@ -97,7 +95,6 @@ public class ImMeFragment extends Fragment {
             switch (requestCode) {
                 case REQUEST_CODE_CHOOSE:
                     Uri uri = Matisse.obtainResult(data).get(0);
-
                     Intent intent = new Intent(getActivity(), CropIwaActivity.class);
                     intent.putExtra("img_uri", uri.toString());
                     activity.startActivityForResult(intent, CROP_PHOTO);
@@ -111,10 +108,9 @@ public class ImMeFragment extends Fragment {
     }
 
 
-
     private void initView(View view) {
 
-        btn_setUserInfo = view.findViewById(R.id.btn_setUserInfo);
+
         orderNum = view.findViewById(R.id.tv_historical_order);
         flowNum = view.findViewById(R.id.tv_person_show_flow_num);
         funsNum = view.findViewById(R.id.tv_person_show_funs_num);
@@ -123,36 +119,16 @@ public class ImMeFragment extends Fragment {
         colletCount = view.findViewById(R.id.tv_person_colloct_num);
         talNum = view.findViewById(R.id.tv_person_tal_count);
         userName = view.findViewById(R.id.tv_userName);
-
-        view.findViewById(R.id.rl_vipcard).setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), VipCardActiviry.class));
-            getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
-
-        });
-        btn_setUserInfo.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), SettingActivity.class);
-            startActivity(intent);
-            getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
-
-        });
-
-        view.findViewById(R.id.rl_mycomment).setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), MyCommentActivity.class));
-            getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
-
-        });
-        view.findViewById(R.id.rl_hisorder).setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), HistoricalOderActivity.class));
-            getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
-
-        });
-
-        view.findViewById(R.id.myLikeStore).setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), MyLikeStoreActivity.class));
-            getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
-        });
-
         imv_head = view.findViewById(R.id.imv_head);
+
+        view.findViewById(R.id.rl_vipcard).setOnClickListener(this);
+        view.findViewById(R.id.btn_setUserInfo).setOnClickListener(this);
+        view.findViewById(R.id.rl_mycomment).setOnClickListener(this);
+        view.findViewById(R.id.rl_hisorder).setOnClickListener(this);
+        view.findViewById(R.id.myLikeStore).setOnClickListener(this);
+        imv_head.setOnClickListener(this);
+
+
         if (bitmap != null) {
             imv_head.setImageBitmap(bitmap);
         }
@@ -173,21 +149,6 @@ public class ImMeFragment extends Fragment {
 
     private final static int REQUEST_CODE_CHOOSE = 10000;
 
-    private void initEvent() {
-        imv_head.setOnClickListener(v -> {
-            if (!MyApplication.sessionId.equals("")) {
-                Matisse.from(ImMeFragment.this)
-                        .choose(MimeType.allOf())
-                        .countable(true)
-                        .maxSelectable(1)
-                        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                        .thumbnailScale(0.85f)
-                        .imageEngine(new GlideEngine())
-                        .forResult(REQUEST_CODE_CHOOSE);
-            }
-
-        });
-    }
 
     public void upDataPersonInfo(PersonInfo info) {
         userName.setText(info.getNickname());
@@ -196,10 +157,52 @@ public class ImMeFragment extends Fragment {
         vipCardNum.setText(info.getVip_card_num());
         talNum.setText(info.getComment_num());
         orderNum.setText(info.getIndent_num());
-        System.out.println(info.getIndent_num());
         colletCount.setText(info.getCollect());
         if (!info.getPhoto().equals("")) {
+            Glide.with(this).load(info.getPhoto()).diskCacheStrategy(DiskCacheStrategy.ALL).into(imv_head);
 
+        }
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.rl_vipcard:
+                startActivity(new Intent(getActivity(), VipCardActiviry.class));
+                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+                break;
+            case R.id.myLikeStore:
+                startActivity(new Intent(getActivity(), MyLikeStoreActivity.class));
+                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+                break;
+            case R.id.rl_hisorder:
+                startActivity(new Intent(getActivity(), HistoricalOderActivity.class));
+                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+                break;
+            case R.id.rl_mycomment:
+                startActivity(new Intent(getActivity(), MyCommentActivity.class));
+                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+                break;
+            case R.id.btn_setUserInfo:
+                Intent intent = new Intent(getActivity(), SettingActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+                break;
+            case R.id.imv_head:
+                if (!MyApplication.sessionId.equals("")) {
+                    Matisse.from(ImMeFragment.this)
+                            .choose(MimeType.allOf())
+                            .countable(true)
+                            .maxSelectable(1)
+                            .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                            .thumbnailScale(0.85f)
+                            .imageEngine(new GlideEngine())
+                            .forResult(REQUEST_CODE_CHOOSE);
+                } else {
+                    Toast.makeText(activity, "请先登陆", Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
     }
 }

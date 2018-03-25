@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -17,8 +16,6 @@ import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.ServiceException;
 import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
 import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
-import com.alibaba.sdk.android.oss.model.GetObjectRequest;
-import com.alibaba.sdk.android.oss.model.GetObjectResult;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.google.gson.Gson;
@@ -26,6 +23,7 @@ import com.google.gson.JsonArray;
 import com.lucky.sweet.activity.MyApplication;
 import com.lucky.sweet.activity.OrderSeatActivity;
 import com.lucky.sweet.entity.AlterOrderInfo;
+import com.lucky.sweet.entity.ChangeNameRequstInfo;
 import com.lucky.sweet.entity.CircleDetail;
 import com.lucky.sweet.entity.CircleLikePoint;
 import com.lucky.sweet.entity.CircleMainInfo;
@@ -45,11 +43,9 @@ import com.lucky.sweet.entity.ShopCarEntity;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.entity.StoreDisplayInfo;
 import com.lucky.sweet.entity.StoreDisplaySearchEntity;
-import com.lucky.sweet.entity.UserLoginInfo;
 import com.lucky.sweet.entity.UserRegestInfo;
 import com.lucky.sweet.entity.VipCardInfo;
 import com.lucky.sweet.entity.WeatherInfo;
-import com.lucky.sweet.handler.LoginRegisterHandler;
 import com.lucky.sweet.handler.OrderSeatHandler;
 import com.lucky.sweet.properties.CircleProperties;
 import com.lucky.sweet.properties.PersonProperties;
@@ -58,6 +54,7 @@ import com.lucky.sweet.properties.ReserveProperties;
 import com.lucky.sweet.properties.ServiceProperties;
 import com.lucky.sweet.utility.HttpUtils;
 import com.lucky.sweet.utility.MyOkhttpHelper;
+import com.lucky.sweet.utility.OssUtils;
 import com.lucky.sweet.utility.PanduanNet;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
@@ -76,8 +73,6 @@ import java.util.HashMap;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 import static com.lucky.sweet.properties.ServiceProperties.TEST_BUCKET;
@@ -94,7 +89,7 @@ import static com.lucky.sweet.properties.ServiceProperties.TEST_BUCKET;
 public class CommunicationService extends Service {
 
     private TencentLocationManager locationManager;
-
+    private final String TAG = "Service_";
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -118,10 +113,11 @@ public class CommunicationService extends Service {
         /**
          * 请求验证码
          *
-         * @param email 邮箱字符串
+         * @param email      邮箱字符串
+         * @param isRegister
          */
-        public void checkOutEmail(String email) {
-            userRegisterSubmitEmail(email);
+        public void checkOutEmail(String email, Boolean isRegister) {
+            userRegisterSubmitEmail(email, isRegister);
         }
 
         /**
@@ -131,51 +127,21 @@ public class CommunicationService extends Service {
          * @param verPassword 验证码
          * @return
          */
-        public void emailVer(String email, String verPassword) {
-            mailValidate(email, verPassword);
+        public void emailVer(String email, String verPassword, Boolean isRegtst) {
+            mailValidate(email, verPassword, isRegtst);
         }
+
 
         /**
          * 提交邮箱和密码
          *
-         * @param email    邮箱
-         * @param password 密码
+         * @param email      邮箱
+         * @param password   密码
+         * @param isRegister
          */
-        public void userRegister(String email, String password) {
-            userWrite(email, password);
+        public void userRegister(String email, String password, Boolean isRegister) {
+            userWrite(email, password, isRegister);
 
-
-        }
-
-        /**
-         * 忘记密码确认邮箱
-         *
-         * @param email
-         */
-        public void forgetSubmit(Context context, String email) {
-
-            sendLoginRegesiterRequest(context, FORGETSUBMIT, email, null);
-
-        }
-
-
-        public void forgetValidate(Context context, String email, String
-                verPassword) {
-
-            sendLoginRegesiterRequest(context, FORGETVALIDATE, email,
-                    verPassword);
-
-        }
-
-        public void userForget(Context context, String email, String password) {
-
-            sendLoginRegesiterRequest(context, USERFORGET, email, password);
-
-        }
-
-        private void sendLoginRegesiterRequest(Context context, final int type, final String email, @Nullable final String password) {
-            LoginRegisterHandler handler = new LoginRegisterHandler(context);
-            CommunicationService.this.requestLoginRegister(type, email, password, handler);
 
         }
 
@@ -361,18 +327,54 @@ public class CommunicationService extends Service {
             CommunicationService.this.searchFriend(search);
         }
 
-        public void userForgetPsw(String mail_address) {
-            CommunicationService.this.userForgetPsw(mail_address);
-        }
-
-        public void checkOutForgetEmail(String mail_address, String mail_ver) {
-            CommunicationService.this.checkOutForgetEmail(mail_address, mail_ver);
-        }
 
         public void upDickesInfo(String mer_id, DeletRoomInfo entity, String room_id, String indent_info, String trolley_list, String money) {
             CommunicationService.this.upDickesInfo(mer_id, entity, room_id, indent_info, trolley_list, money);
+        }
+
+        public void upPersonPic(String photo_path) {
+            CommunicationService.this.upPersonPic(photo_path);
 
         }
+
+        public void upPersonNikName(String nickname) {
+            CommunicationService.this.upPersonNikName(nickname);
+        }
+    }
+
+    private void upPersonNikName(String nickname) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("nickname", nickname);
+        map.put("session", MyApplication.sessionId);
+        HttpUtils.sendOkHttpRequest(PersonProperties.CHANGE_NICKNAME, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+                EventBus.getDefault().post(new ChangeNameRequstInfo(string));
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+
+            }
+        }, map);
+    }
+
+    private void upPersonPic(String photo_path) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("photo_path", photo_path);
+        map.put("session", MyApplication.sessionId);
+        HttpUtils.sendOkHttpRequest(PersonProperties.ADD_PERSON_PIC, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+
+
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+
+            }
+        }, map);
     }
 
     private void upDickesInfo(String mer_id, DeletRoomInfo entity, String room_id, String indent_info, String trolley_list, String money) {
@@ -388,64 +390,6 @@ public class CommunicationService extends Service {
             @Override
             public void onResponseSuccessfulString(String string) {
                 Log.i("Shop_delet", string);
-            }
-
-            @Override
-            public void afterNewRequestSession() {
-
-            }
-        }, map);
-    }
-
-    private void checkOutForgetEmail(String mail_address, String mail_ver) {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("mail_address", mail_address);
-        map.put("mail_ver", mail_ver);
-        HttpUtils.sendOkHttpRequest(Properties.FORGETSUBMITPATH, new MyOkhttpHelper() {
-            @Override
-            public void onResponseSuccessfulString(String string) {
-
-                EventBus.getDefault().post(new MailValiInfo(string));
-
-            }
-
-            @Override
-            public void afterNewRequestSession() {
-
-            }
-        }, map);
-    }
-
-    private void ForgetEmailWrite(String username, String password) {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("username", username);
-        map.put("password", password);
-
-        HttpUtils.sendOkHttpRequest(Properties.USERFORGETPATH, new MyOkhttpHelper() {
-            @Override
-            public void onResponseSuccessfulString(String string) {
-
-                EventBus.getDefault().post(new UserRegestInfo(string));
-
-            }
-
-            @Override
-            public void afterNewRequestSession() {
-
-            }
-        }, map);
-    }
-
-    private void userForgetPsw(String mail_address) {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("mail_address", mail_address);
-
-        HttpUtils.sendOkHttpRequest(Properties.FORGETSUBMITPATH, new MyOkhttpHelper() {
-            @Override
-            public void onResponseSuccessfulString(String string) {
-
-                EventBus.getDefault().post(new GetMailVerInfo(string));
-
             }
 
             @Override
@@ -799,26 +743,8 @@ public class CommunicationService extends Service {
     }
 
     private void ossPicDown(final String objectKey) {
-        GetObjectRequest request = new GetObjectRequest(TEST_BUCKET, objectKey);
-        request.setxOssProcess("image/resize,m_fixed,w_100," + "h_100/quality,q_50");
-        OSSClient ossClient = MyApplication.getOSSClient();
-        if (ossClient != null) {
-            ossClient.asyncGetObject(request, new
-                    OSSCompletedCallback<GetObjectRequest, GetObjectResult>() {
-                        @Override
-                        public void onSuccess(GetObjectRequest request, GetObjectResult result) {
 
-                            EventBus.getDefault().post(result);
-
-                        }
-
-                        @Override
-                        public void onFailure(GetObjectRequest request, ClientException clientException, ServiceException serviceException) {
-
-                        }
-                    });
-
-        }
+        EventBus.getDefault().post(OssUtils.getOSSExtranetPath(objectKey));
 
 
     }
@@ -1174,17 +1100,22 @@ public class CommunicationService extends Service {
     /**
      * 发送数据请求
      *
-     * @param type     数据请求类型
-     * @param email    邮箱
-     * @param password 密码
+     * @param type       数据请求类型
+     * @param password   密码
+     * @param email      邮箱
+     * @param isRegister
      */
-    private void userRegisterSubmitEmail(String email) {
+    private void userRegisterSubmitEmail(String email, Boolean isRegister) {
         final HashMap<String, String> map = new HashMap<>();
         map.put("mail_address", email);
+        String path;
+        if (isRegister) path = Properties.MAILSUBMITPATH;
+        else path = Properties.FORGETSUBMITPATH;
+
         new Thread() {
             @Override
             public void run() {
-                HttpUtils.sendOkHttpRequest(Properties.MAILSUBMITPATH, new
+                HttpUtils.sendOkHttpRequest(path, new
                         MyOkhttpHelper() {
                             @Override
                             public void onResponseSuccessfulString(String string) {
@@ -1201,14 +1132,19 @@ public class CommunicationService extends Service {
         }.start();
     }
 
-    private void mailValidate(String email, String ver) {
+    private void mailValidate(String email, String ver, boolean regest) {
         final HashMap<String, String> map = new HashMap<>();
         map.put("mail_address", email);
         map.put("mail_ver", ver);
+        String path;
+        if (regest) {
+            path = Properties.MAILVALIDATEPATH;
+        } else
+            path = Properties.FORGETVALIDATEPATH;
         new Thread() {
             @Override
             public void run() {
-                HttpUtils.sendOkHttpRequest(Properties.MAILVALIDATEPATH, new
+                HttpUtils.sendOkHttpRequest(path, new
                         MyOkhttpHelper() {
                             @Override
                             public void onResponseSuccessfulString(String string) {
@@ -1226,19 +1162,23 @@ public class CommunicationService extends Service {
     }
 
 
-    private void userWrite(String email, String password) {
+    private void userWrite(String email, String password, Boolean isRegister) {
         final HashMap<String, String> map = new HashMap<>();
 
         map.put("username", email);
         map.put("password", password);
-
+        String path;
+        if (isRegister)
+            path = Properties.USERWRITEPATH;
+        else path = Properties.USERFORGETPATH;
         new Thread() {
             @Override
             public void run() {
-                HttpUtils.sendOkHttpRequest(Properties.USERWRITEPATH, new
+                HttpUtils.sendOkHttpRequest(path, new
                         MyOkhttpHelper() {
                             @Override
                             public void onResponseSuccessfulString(String string) {
+                                Log.i(TAG, string);
                                 UserRegestInfo userRegestInfo = new UserRegestInfo(string);
                                 userRegestInfo.setPassword(password);
                                 userRegestInfo.setUserID(email);
@@ -1280,70 +1220,5 @@ public class CommunicationService extends Service {
         }.start();
     }
 
-    private void requestLoginRegister(final int type, final String email, @Nullable final
-    String password, final LoginRegisterHandler handler) {
-        new Thread() {
-
-            @Override
-            public void run() {
-                try {
-                    OkHttpClient client = new OkHttpClient();
-                    okhttp3.Request request = null;
-                    switch (type) {
-                        case USERLOGIN:
-                            isLogin = true;
-                            request = new okhttp3.Request.Builder().url(Properties.LOGINPATH).post(new FormBody.Builder().add("username", email).add("password", password).build()).build();
-                            break;
-                        case CHECKOUTEMAIL:
-                            request = new okhttp3.Request.Builder().url(Properties.MAILSUBMITPATH).post(new FormBody.Builder().add("mail_address", email).build()).build();
-                            break;
-                        case EMAILVER:
-                            request = new okhttp3.Request.Builder().url(Properties.MAILVALIDATEPATH).post(new FormBody.Builder().add("mail_address", email).add(" mail_ver", password).build()).build();
-                            break;
-                        case USERREGISTER:
-                            request = new okhttp3.Request.Builder().url(Properties.USERWRITEPATH).post(new FormBody.Builder().add("mail_address", email).add(" password", password).build()).build();
-                            break;
-                        case FORGETSUBMIT:
-                            request = new okhttp3.Request.Builder().url(Properties.FORGETSUBMITPATH).post(new FormBody.Builder().add("mail_address", email).build()).build();
-                            break;
-                        case FORGETVALIDATE:
-                            request = new okhttp3.Request.Builder().url(Properties.FORGETVALIDATEPATH).post(new FormBody.Builder().add("mail_address", email).add(" mail_ver", password).build()).build();
-                            break;
-                        case USERFORGET:
-                            request = new okhttp3.Request.Builder().url(Properties.USERFORGETPATH).post(new FormBody.Builder().add("mail_address", email).add(" password", password).build()).build();
-                            break;
-
-                        default:
-                            break;
-                    }
-
-                    Response response = client.newCall(request).execute();
-
-                    if (response.isSuccessful()) {
-                        int responseType = -1;
-                        String str = response.body().string();
-                        Log.i("ServerBackCode:", str);
-                        UserLoginInfo info = new UserLoginInfo(email, password);
-                        Message message = new Message();
-                        message.what = type;
-                        try {
-                            responseType = Integer.parseInt(str);
-                        } catch (NumberFormatException e) {
-                            info.setSession(str);
-                            responseType = LoginRegisterHandler.LOGINSSUCCEED;
-                            isLogin = false;
-                        }
-                        message.arg1 = responseType;
-                        message.obj = info;
-                        handler.sendMessage(message);
-                    } else {
-
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
 
 }

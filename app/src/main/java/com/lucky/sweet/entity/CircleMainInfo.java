@@ -147,6 +147,7 @@ public class CircleMainInfo {
 
 
         public List<String> getPhoto_url() {
+
             if (!transHttpPath) {
                 transHttpPath = true;
                 for (int i = 0; i < photo_url.size(); i++) {

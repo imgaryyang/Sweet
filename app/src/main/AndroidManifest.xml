@@ -140,9 +140,11 @@
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="com.tencent.smtt.tbs.video.PLAY" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.UserDetailctivity"></activity>
     </application>
 
 </manifest>

@@ -43,40 +43,31 @@ public class CropIwaActivity extends BaseActivity {
     }
 
     private void initEvent() {
-        submitCrop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cropView.crop(img_uri)
-                        .execute(new CropCallback() {
+        submitCrop.setOnClickListener(v -> cropView.crop(img_uri)
+                .execute(new CropCallback() {
+                    @Override
+                    public void onSuccess(final Bitmap cropped) {
+                        new Thread() {
                             @Override
-                            public void onSuccess(final Bitmap cropped) {
-                                new Thread() {
-                                    @Override
-                                    public void run() {
-                                        BlurBitmapUtil.saveFile(cropped, cachePath);
-                                        myBinder.upDataPersonPortrait
-                                                (USER_PORTRAIT_PATH,
-                                                        cachePath, new CommunicationService.OnUpdaSuccess() {
-                                                            @Override
-                                                            public void success() {
-                                                                Intent intent = new Intent();
-                                                                intent.putExtra("path", cachePath);
-                                                                setResult(RESULT_OK, intent);
-                                                                finish();
-                                                            }
-                                                        });
+                            public void run() {
+                                BlurBitmapUtil.saveFile(cropped, cachePath);
+                                myBinder.upDataPersonPortrait(USER_PORTRAIT_PATH, cachePath, () -> {
+                                    myBinder.upPersonPic(USER_PORTRAIT_PATH);
+                                    Intent intent = new Intent();
+                                    intent.putExtra("path", cachePath);
+                                    setResult(RESULT_OK, intent);
+                                    finish();
+                                });
 
-                                    }
-
-                                }.start();
                             }
 
-                            @Override
-                            public void onError(Throwable e) {
-                            }
-                        });
-            }
-        });
+                        }.start();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+                }));
     }
 
     private void initView() {

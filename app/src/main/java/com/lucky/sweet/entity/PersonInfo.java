@@ -1,5 +1,7 @@
 package com.lucky.sweet.entity;
 
+import com.lucky.sweet.utility.OssUtils;
+
 /**
  * Created by C on 2018/3/17.
  */
@@ -19,7 +21,7 @@ public class PersonInfo {
 
     private String nickname;
     private String exp;
-    private Object photo;
+    private String photo;
     private String attention_to_me_num;
     private String me_to_attention_num;
     private String collect;
@@ -43,11 +45,14 @@ public class PersonInfo {
         this.exp = exp;
     }
 
-    public Object getPhoto() {
+    public String getPhoto() {
+        if (!photo.contains("http")) {
+            photo = OssUtils.getOSSExtranetPath(photo);
+        }
         return photo;
     }
 
-    public void setPhoto(Object photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 

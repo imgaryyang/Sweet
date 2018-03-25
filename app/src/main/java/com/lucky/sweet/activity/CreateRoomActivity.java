@@ -42,8 +42,7 @@ public class CreateRoomActivity extends BaseActivity {
     private final static String SHOPID = "mer_id";
     private ListView lv_add_friend;
     private FlowFriendAdapter flowFriendAdapter;
-    private TextView userName;
-    private Button btn_search;
+    private ListView lv_search_user_show;
     private EditText edt_serch;
 
     @Override
@@ -71,7 +70,7 @@ public class CreateRoomActivity extends BaseActivity {
 
 
         lv_add_friend = findViewById(R.id.lv_add_friend);
-        userName = findViewById(R.id.tv_search_user_show);
+        lv_search_user_show = findViewById(R.id.lv_search_user_show);
         findViewById(R.id.btn_user_search).setOnClickListener(v -> {
             String search = edt_serch.getText().toString();
             if (!TextUtils.isEmpty(search)) {
@@ -159,10 +158,8 @@ public class CreateRoomActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(SearchFriendInfo info) {
         if (info.getNickname() != null) {
-
-            userName.setText(info.getNickname());
+          //  lv_search_user_show.setAdapter(new FlowFriendAdapter(,this));
         } else
-            userName.setText("没有当前用户");
-        Toast.makeText(this, "建立房间成功：" + info, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "没有当前用户：" + info, Toast.LENGTH_SHORT).show();
     }
 }
