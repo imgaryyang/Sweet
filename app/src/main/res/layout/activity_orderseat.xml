@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/theme_bg"
@@ -12,21 +11,21 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/layout_title"/>
+        <include layout="@layout/layout_title" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="45dp"
-            android:src="@mipmap/order_seat"/>
+            android:src="@mipmap/order_seat" />
 
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.3px"
             android:layout_marginTop="45dp"
-            android:background="@color/grayDividerDark"/>
+            android:background="@color/grayDividerDark" />
 
 
         <LinearLayout
@@ -51,9 +50,10 @@
                     android:layout_gravity="right|center_vertical"
                     android:text="时间："
                     android:textColor="@color/black"
-                    android:textSize="15dp"/>
+                    android:textSize="15dp" />
 
                 <TextView
+                    android:onClick="onButtonClick"
                     android:id="@+id/tv_timeSelect"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -63,7 +63,7 @@
                     android:gravity="center"
                     android:singleLine="true"
                     android:text="请选择"
-                    android:textSize="15dp"/>
+                    android:textSize="15dp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.3px"
             android:layout_marginLeft="15dp"
-            android:background="@color/grayDividerDark"/>
+            android:background="@color/grayDividerDark" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -96,7 +96,7 @@
                     android:layout_gravity="right|center_vertical"
                     android:text="人数："
                     android:textColor="@color/black"
-                    android:textSize="15dp"/>
+                    android:textSize="15dp" />
 
                 <EditText
                     android:id="@+id/edt_num"
@@ -109,7 +109,7 @@
                     android:hint="请填写"
                     android:inputType="number"
                     android:singleLine="true"
-                    android:textSize="15dp"/>
+                    android:textSize="15dp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -118,7 +118,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.3px"
             android:layout_marginLeft="15dp"
-            android:background="@color/grayDividerDark"/>
+            android:background="@color/grayDividerDark" />
 
 
         <LinearLayout
@@ -143,7 +143,7 @@
                     android:layout_gravity="right|center_vertical"
                     android:text="姓名："
                     android:textColor="@color/black"
-                    android:textSize="15dp"/>
+                    android:textSize="15dp" />
 
                 <EditText
                     android:id="@+id/edt_people_num"
@@ -153,7 +153,7 @@
                     android:layout_marginRight="15dp"
                     android:background="@null"
                     android:singleLine="true"
-                    android:textSize="15dp"/>
+                    android:textSize="15dp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -162,7 +162,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.3px"
             android:layout_marginLeft="15dp"
-            android:background="@color/grayDividerDark"/>
+            android:background="@color/grayDividerDark" />
 
 
         <LinearLayout
@@ -187,7 +187,7 @@
                     android:layout_gravity="right|center_vertical"
                     android:text="电话："
                     android:textColor="@color/black"
-                    android:textSize="15dp"/>
+                    android:textSize="15dp" />
 
                 <EditText
                     android:id="@+id/et_input_phone"
@@ -199,7 +199,7 @@
                     android:inputType="number"
                     android:maxLength="11"
                     android:singleLine="true"
-                    android:textSize="15dp"/>
+                    android:textSize="15dp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -207,12 +207,14 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.3px"
-            android:background="@color/grayDividerDark"/>
+            android:background="@color/grayDividerDark" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.3px"
             android:layout_marginTop="15dp"
-            android:background="@color/grayDividerDark"/>
+            android:background="@color/grayDividerDark" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="85dp"
@@ -234,14 +236,14 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="16dp"
                     android:text="备注："
-                    android:textSize="15dp"/>
+                    android:textSize="15dp" />
 
                 <EditText
                     android:id="@+id/edt_order_des"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:textSize="15dp"/>
+                    android:textSize="15dp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -249,9 +251,14 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.3px"
-            android:background="@color/grayDividerDark"/>
+            android:background="@color/grayDividerDark" />
 
-
+        <Button
+            android:onClick="onButtonClick"
+            android:id="@+id/btn_order_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="完成" />
 
         <LinearLayout
             android:id="@+id/meItemExit"
@@ -270,13 +277,14 @@
                 android:gravity="center">
 
                 <Button
+
                     android:id="@+id/btn_order_commit"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@null"
                     android:text="确认预订"
                     android:textColor="@color/white"
-                    android:textSize="16dp"/>
+                    android:textSize="16dp" />
 
             </LinearLayout>
 
@@ -288,5 +296,4 @@
     <!--</ScrollView>-->
 
 
-</LinearLayout>
-    <!--</LinearLayout>-->
+</LinearLayout><!--</LinearLayout>-->

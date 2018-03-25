@@ -215,12 +215,10 @@ public class StoreParticularInfoActivity extends BaseActivity {
                     ll_store_part_info, 20) {
                 @Override
                 public void onBulerBitmapFinish() {
-                    Intent intent = new Intent
-                            (StoreParticularInfoActivity.this,
-                                    OrderSeatActivity.class);
+
+                    Intent intent = new Intent(StoreParticularInfoActivity.this, OrderSeatActivity.class);
                     intent.putExtra("mer_id", mer_id);
                     startActivity(intent);
-
                     goNextAnim();
                 }
             }.run();

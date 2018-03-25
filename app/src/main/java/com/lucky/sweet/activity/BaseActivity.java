@@ -31,43 +31,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     private static Context context;
 
 
-    public static void invitationFriend(InvitationInfo invitationInfo) {
-        if (context != null) {
-            final AlertDialog.Builder normalDialog = new AlertDialog.Builder(context);
-            normalDialog.setTitle("您的好友邀请您一起点餐");
-            normalDialog.setMessage("您的好友ID：" + invitationInfo.getUserId());
-            normalDialog.setPositiveButton("接受邀请", (dialog, which) -> {
-
-                MerchantActivity.newMoreOrderInStance((Activity) context, invitationInfo.getMerId(), invitationInfo.getRoomId());
-            });
-            normalDialog.setNegativeButton("果断拒绝", (dialog, which) -> {
-                dialog.dismiss();
-            });
-            normalDialog.show();
-
-        }
-    }
-
-    public static void onMerchantFinish(DeletRoomInfo DeletRoomInfo) {
-
-        String activityName = context.toString();
-        String currentActivityName = activityName.substring(activityName.lastIndexOf(".") + 1, activityName.indexOf("@"));
-        if (currentActivityName.equals(MerchantActivity.class.getSimpleName())) {
-
-            final AlertDialog.Builder normalDialog = new AlertDialog.Builder(context);
-            normalDialog.setTitle("警告！");
-            normalDialog.setMessage("您的好友：" + DeletRoomInfo.getUserId() + "于" + DeletRoomInfo.getTime() + "已经关闭多人购物");
-            normalDialog.setPositiveButton("无奈关闭", (dialog, which) -> {
-                ((Activity) context).finish();
-            });
-            normalDialog.show();
-        } else {
-            Toast.makeText(context, "当前不是购物车", Toast.LENGTH_SHORT).show();
-
-        }
-
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             SlidingLayoutView rootView = new SlidingLayoutView(this);
             rootView.bindActivity(this);
         }
+        System.out.println("onCreate");
 
     }
 
@@ -83,7 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void bindService() {
-
+        System.out.println("bindService");
         bindService(new Intent(this, CommunicationService.class), conn, BIND_AUTO_CREATE);
 
     }
@@ -91,6 +55,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        System.out.println("onResume");
+
         if (isBindEventBus) {
             EventBus.getDefault().register(this);
         }
@@ -101,6 +67,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        System.out.println("onPause");
+
         super.onPause();
         if (isBindEventBus) {
             EventBus.getDefault().unregister(this);
@@ -117,6 +85,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder
                 iBinder) {
+            System.out.println("onServiceConnected");
             CommunicationService.MyBinder myBinder = (CommunicationService.MyBinder) iBinder;
             onServiceBind(myBinder);
 
@@ -202,5 +171,42 @@ public abstract class BaseActivity extends AppCompatActivity {
     /*关闭侧滑手势*/
     protected boolean enableSliding() {
         return true;
+    }
+
+    public static void invitationFriend(InvitationInfo invitationInfo) {
+        if (context != null) {
+            final AlertDialog.Builder normalDialog = new AlertDialog.Builder(context);
+            normalDialog.setTitle("您的好友邀请您一起点餐");
+            normalDialog.setMessage("您的好友ID：" + invitationInfo.getUserId());
+            normalDialog.setPositiveButton("接受邀请", (dialog, which) -> {
+
+                MerchantActivity.newMoreOrderInStance((Activity) context, invitationInfo.getMerId(), invitationInfo.getRoomId());
+            });
+            normalDialog.setNegativeButton("果断拒绝", (dialog, which) -> {
+                dialog.dismiss();
+            });
+            normalDialog.show();
+
+        }
+    }
+
+    public static void onMerchantFinish(DeletRoomInfo DeletRoomInfo) {
+
+        String activityName = context.toString();
+        String currentActivityName = activityName.substring(activityName.lastIndexOf(".") + 1, activityName.indexOf("@"));
+        if (currentActivityName.equals(MerchantActivity.class.getSimpleName())) {
+
+            final AlertDialog.Builder normalDialog = new AlertDialog.Builder(context);
+            normalDialog.setTitle("警告！");
+            normalDialog.setMessage("您的好友：" + DeletRoomInfo.getUserId() + "于" + DeletRoomInfo.getTime() + "已经关闭多人购物");
+            normalDialog.setPositiveButton("无奈关闭", (dialog, which) -> {
+                ((Activity) context).finish();
+            });
+            normalDialog.show();
+        } else {
+            Toast.makeText(context, "当前不是购物车", Toast.LENGTH_SHORT).show();
+
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 package com.lucky.sweet.activity;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.PerdetermingEntity;
+import com.lucky.sweet.entity.ShopCarSingleInformation;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.utility.RegularUtils;
 import com.lucky.sweet.views.DishesOrderDialog;
@@ -40,6 +42,24 @@ public class OrderSeatActivity extends BaseActivity {
     private String[][] time;
     private LinearLayout ll_order_seat;
     private String mer_id;
+    private static String SHOP_CAR_INFO = "DATA";
+    private static Boolean MORE_PEOPLE = false;
+
+    public static void newInstance(Activity activity, ShopCarSingleInformation shopCarSingleInformation) {
+        Intent intent = new Intent(activity, OrderSeatActivity.class);
+        intent.putExtra(SHOP_CAR_INFO, shopCarSingleInformation);
+        activity.startActivity(intent);
+        MORE_PEOPLE = false;
+        activity.overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+    }
+
+    public static void newInstance(Activity activity, String roomId) {
+        Intent intent = new Intent(activity, OrderSeatActivity.class);
+        intent.putExtra(SHOP_CAR_INFO, roomId);
+        MORE_PEOPLE = true;
+        activity.startActivity(intent);
+        activity.overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,31 +109,9 @@ public class OrderSeatActivity extends BaseActivity {
     }
 
     private void initEvent() {
-        tv_timeSelect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                DishesOrderDialog dishesOrderDialog = new DishesOrderDialog
-                        (OrderSeatActivity.this,
-                                data, time);
-                dishesOrderDialog.setDateSelectListener
-                        (new DishesOrderDialog.OnDateSelectListener() {
-                            @Override
-                            public void onDateSelected(String dates) {
-                                tv_timeSelect.setText(dates);
-                            }
-                        });
 
-            }
-        });
-
-        findViewById(R.id.btn_order_commit).setOnClickListener(new View
-                .OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                verifyOrder();
-            }
-        });
+        findViewById(R.id.btn_order_commit).setOnClickListener(v -> verifyOrder());
     }
 
     private void verifyOrder() {
@@ -147,21 +145,17 @@ public class OrderSeatActivity extends BaseActivity {
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
                 .BUTTON_LEFT, 0, "取消");
         Title.ButtonInfo buttonRight = new Title.ButtonInfo(true, Title.BUTTON_RIGHT1, 0, "完成");
-        title.setOnTitleButtonClickListener(new Title
-                .OnTitleButtonClickListener() {
-            @Override
-            public void onClick(int id, Title.ButtonViewHolder viewHolder) {
-                switch (id) {
-                    case Title.BUTTON_LEFT:
-                        hintInputKb();
-                        finish();
-                        goPreAnim();
-                        break;
-                    case Title.BUTTON_RIGHT1://不好用？
-                        verifyOrder();
-                        startActivity(new Intent(OrderSeatActivity.this, OrderSubmitActivity.class));
-                        break;
-                }
+        title.setOnTitleButtonClickListener((id, viewHolder) -> {
+            switch (id) {
+                case Title.BUTTON_LEFT:
+                    hintInputKb();
+                    finish();
+                    goPreAnim();
+                    break;
+                case Title.BUTTON_RIGHT1://不好用？
+                    verifyOrder();
+                    startActivity(new Intent(OrderSeatActivity.this, OrderSubmitActivity.class));
+                    break;
             }
         });
 
@@ -177,6 +171,27 @@ public class OrderSeatActivity extends BaseActivity {
         String photo = et_input_phone.getText().toString().trim();
         String des = edt_order_des.getText().toString().trim();
         myBinder.sendOrderSeatInfo(time,num,peopleNum,photo,des);*/
+    }
+
+    public void onButtonClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_order_submit:
+                if (MORE_PEOPLE) {
+                    OrderSubmitActivity.newInstance(this, getIntent().getStringExtra(SHOP_CAR_INFO));
+
+                } else {
+                    OrderSubmitActivity.newInstance(this, (ShopCarSingleInformation) getIntent().getSerializableExtra(SHOP_CAR_INFO));
+                }
+                break;
+            case R.id.tv_timeSelect:
+
+                DishesOrderDialog dishesOrderDialog = new DishesOrderDialog
+                        (OrderSeatActivity.this,
+                                data, time);
+                dishesOrderDialog.setDateSelectListener
+                        (dates -> tv_timeSelect.setText(dates));
+                break;
+        }
     }
 
 }

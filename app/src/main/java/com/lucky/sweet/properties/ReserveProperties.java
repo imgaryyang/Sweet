@@ -27,6 +27,7 @@ public class ReserveProperties {
 
     public static final String SEARCH_FRIEND = "https://thethreestooges.cn:666/trolley/attent/find";
 
+
     public static final String SEARCH_FRIEND_BY_NIKNAME = "https://thethreestooges.cn:666/trolley/nickname/find";
 
     public static final String GET_SERVER_DIS = "https://thethreestooges.cn:666/trolley/confirm";

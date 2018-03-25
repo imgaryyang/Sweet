@@ -31,6 +31,7 @@ import com.lucky.sweet.entity.DeletRoomInfo;
 import com.lucky.sweet.entity.DetailOrderInfo;
 import com.lucky.sweet.entity.FlowPeople;
 import com.lucky.sweet.entity.GetMailVerInfo;
+import com.lucky.sweet.entity.InternetTime;
 import com.lucky.sweet.entity.InvitationInfo;
 import com.lucky.sweet.entity.JoinInRoomInfo;
 import com.lucky.sweet.entity.JoinRoomInfo;
@@ -340,6 +341,47 @@ public class CommunicationService extends Service {
         public void upPersonNikName(String nickname) {
             CommunicationService.this.upPersonNikName(nickname);
         }
+
+        public void getCurrentIntentTime() {
+            CommunicationService.this.getCurrentIntentTime();
+        }
+
+        public void getMultShopCarInfo(String room_id) {
+            CommunicationService.this.getMultShopCarInfo(room_id);
+
+        }
+    }
+
+    public void getCurrentIntentTime() {
+        HttpUtils.sendOkHttpRequest(ServiceProperties.TIMECHECK, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                EventBus.getDefault().post(new Gson().fromJson(response.body().string(), InternetTime.class));
+
+            }
+        });
+    }
+    public void getMultShopCarInfo(String room_id) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("room_id", room_id);
+        map.put("session", MyApplication.sessionId);
+        HttpUtils.sendOkHttpRequest(ReserveProperties.GET_SERVER_DIS, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+                System.out.println(string);
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+
+            }
+        }, map);
+
     }
 
     private void upPersonNikName(String nickname) {
@@ -1074,37 +1116,6 @@ public class CommunicationService extends Service {
     }
 
 
-    private Boolean isLogin = false;
-    private Context context;
-    /**
-     * USERLOGIN ：用户登陆
-     */
-    public final static int USERLOGIN = 1;
-    /**
-     * CHECKOUTEMAIL ：邮箱检测
-     * EMAILVER ：确认验证码
-     * USERREGISTER ：用户注册
-     */
-    public final static int CHECKOUTEMAIL = 2;
-    public final static int EMAILVER = 3;
-    public final static int USERREGISTER = 4;
-    /**
-     * FORGETSUBMIT:找回密码确认邮箱
-     * FORGETVALIDATE：验证邮箱和对应邮箱验证码
-     * USERFORGET：修改密码
-     */
-    public final static int FORGETSUBMIT = 5;
-    public final static int FORGETVALIDATE = 6;
-    public final static int USERFORGET = 7;
-
-    /**
-     * 发送数据请求
-     *
-     * @param type       数据请求类型
-     * @param password   密码
-     * @param email      邮箱
-     * @param isRegister
-     */
     private void userRegisterSubmitEmail(String email, Boolean isRegister) {
         final HashMap<String, String> map = new HashMap<>();
         map.put("mail_address", email);
