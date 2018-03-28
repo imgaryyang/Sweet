@@ -78,15 +78,27 @@ public class TitleIndicatorView extends LinearLayout implements View.OnClickList
     }
 
     public void initializationData(String[] title) {
-        if (title.length==3) {
+        if (title.length == 3) {
             tv_dishes_title.setText(title[0]);
             tv_dishes_over.setText(title[1]);
             tv_other.setText(title[2]);
         }
+        if (title.length == 2) {
+            tv_dishes_title.setText(title[0]);
+            tv_dishes_over.setText(title[1]);
+            tv_other.setVisibility(GONE);
+        }
+        if (title.length == 1) {
+            tv_dishes_title.setText(title[0]);
+            tv_other.setVisibility(GONE);
+            tv_dishes_over.setVisibility(GONE);
+
+        }
+
     }
 
     public interface OnTitleListener {
-        void onCurrentTitleChange(String  type);
+        void onCurrentTitleChange(String type);
     }
 
     private OnTitleListener onTitleListener;
@@ -95,9 +107,26 @@ public class TitleIndicatorView extends LinearLayout implements View.OnClickList
         this.onTitleListener = onTitleListener;
     }
 
+    public void setOnClickItem(String item) {
+        for (TextView textView : arrayList) {
+            if (textView.getText().equals(item)) {
+                inStanceTextSize(textView);
+                return;
+            }
+        }
+
+    }
+
     @Override
     public void onClick(View v) {
 
+        inStanceTextSize(v);
+        if (onTitleListener != null) {
+            onTitleListener.onCurrentTitleChange(((TextView) v).getText().toString());
+        }
+    }
+
+    private void inStanceTextSize(View v) {
         for (TextView textview : arrayList) {
             if (textview.getTag() == v.getTag()) {
 
@@ -110,11 +139,8 @@ public class TitleIndicatorView extends LinearLayout implements View.OnClickList
                 textview.setTextSize(OTHER_ITEM);
 
             }
-            if (onTitleListener != null) {
-                onTitleListener.onCurrentTitleChange(((TextView)v).getText().toString());
-            }
 
         }
-
     }
+
 }

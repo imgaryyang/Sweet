@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.ShopDetailPicInfo;
 import com.lucky.sweet.service.CommunicationService;
@@ -57,7 +58,10 @@ public class RecruitmentDisplayActivity extends BaseActivity {
         String mer_id = intent.getStringExtra(MER_ID);
         String type = intent.getStringExtra(SHOW_TYPE);
         myBinder.getShopDetailInfo(mer_id, type);
+        titie_search.setOnClickItem(title[Integer.parseInt(type)-1]);
         this.myBinder = myBinder;
+
+
     }
 
 
@@ -65,7 +69,7 @@ public class RecruitmentDisplayActivity extends BaseActivity {
     public void Event(ShopDetailPicInfo info) {
         List<String> mer_photo = info.getMer_photo();
         if (mer_photo.size() != 0) {
-            if (photo_show.getVisibility()== View.GONE) {
+            if (photo_show.getVisibility() == View.GONE) {
                 photo_show.setVisibility(View.VISIBLE);
             }
             photo_show.initDatas(info.getMer_photo());

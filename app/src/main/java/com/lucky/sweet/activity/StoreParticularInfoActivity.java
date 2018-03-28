@@ -26,6 +26,7 @@ import com.lucky.sweet.entity.CircleMainInfo;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.thread.BlurBitmapThread;
+import com.lucky.sweet.utility.GaoDeMapUtil;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 import com.tencent.lbssearch.TencentSearch;
@@ -132,7 +133,8 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
     private void initEvent() {
         btn_more_map_detal.setOnClickListener(v -> {
-            MapWebAcivity.Companion.InStance(StoreParticularInfoActivity.this, latLng.getLatitude(), latLng.getLongitude());
+
+            MapWebAcivity.Companion.InStance(StoreParticularInfoActivity.this, latLng.getLatitude()+"", ""+latLng.getLongitude());
         });
         btn_map_position.setOnClickListener(v -> maps.setCenter(latLng));
         tv_moreFood.setOnClickListener(v -> {
@@ -312,8 +314,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
             marker = this.map.addMarker(new MarkerOptions().title("您当前位置").anchor(0.5f, 0.5f).position(current));
             marker.showInfoWindow();
             btn_more_map_detal.setVisibility(View.VISIBLE);
-
-            maps.zoomToSpan(new LatLng(latLng.getLatitude() - 0.000032, latLng.getLongitude() - 0.000032), new LatLng(latitude - 0.000032, longitude - 0.000032));
+            maps.zoomToSpan(new LatLng(latLng.getLatitude(), latLng.getLongitude()), new LatLng(latitude, longitude));
             TencentSearch tencentSearch = new TencentSearch(this);
             WalkingParam walkingParam = new WalkingParam();
             walkingParam.from(new Location(Float.valueOf(shopdes.getLatitude()), Float.valueOf(shopdes.getLongitude())));

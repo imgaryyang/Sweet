@@ -82,7 +82,8 @@
             android:name=".activity.MerchantActivity"
             android:launchMode="singleTop" />
         <activity android:name=".activity.OrderSubmitActivity" />
-        <activity android:name=".activity.RecruitmentDisplayActivity" />
+        <activity android:name=".activity.RecruitmentDisplayActivity"
+            android:launchMode="singleTop"/>
         <activity android:name=".activity.CaptureActivity" />
         <activity android:name=".activity.VipCardActiviry" />
         <activity

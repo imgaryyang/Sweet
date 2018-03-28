@@ -19,4 +19,7 @@ public class ServiceProperties {
 
     public static final String WEATHERREQUESTBODY = "https://free-api.heweather.com/s6/weather/now?key=e14dc2b9f04d4a84b467f7f43e3137f2&location=";
 
+    public static final String GAODEWEBKEY = "31d07ef08c787f75c25bf496fa7affb5";
+
+    public static final String GAODEKEY = "fd908839b3f89af8091beaace7a67b9e";
 }
