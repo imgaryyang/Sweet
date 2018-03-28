@@ -10,11 +10,16 @@ import com.lucky.sweet.R;
 import com.lucky.sweet.entity.ChangeNameRequstInfo;
 import com.lucky.sweet.entity.UserRegestInfo;
 import com.lucky.sweet.service.CommunicationService;
+import com.lucky.sweet.views.CircleImageView;
+import com.lucky.sweet.widgets.Title;
+import com.lucky.sweet.widgets.ToolBar;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 public class UserDetailctivity extends BaseActivity {
+    private Title title = null;
+    private CircleImageView imv_head;
 
     private EditText edt_change_nikname;
     private EditText edt_chang_psw;
@@ -26,9 +31,30 @@ public class UserDetailctivity extends BaseActivity {
         setContentView(R.layout.activity_use_detailctivity);
         setIsBindEventBus();
         initView();
+        initTitle();
+    }
+
+    private void initTitle() {
+        ToolBar toolBar = new ToolBar(this);
+        toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
+        title = findViewById(R.id.title);
+        title.setTitleNameStr("账户信息");
+        Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
+                .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
+        title.setOnTitleButtonClickListener((id, viewHolder) -> {
+            switch (id) {
+                case Title.BUTTON_LEFT:
+                    finish();
+                    goPreAnim();
+                    break;
+            }
+        });
+        title.mSetButtonInfo(buttonLeft);
     }
 
     private void initView() {
+        imv_head = findViewById(R.id.imv_head);
+        imv_head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
 
         edt_change_nikname = findViewById(R.id.edt_change_nikname);
         edt_chang_psw = findViewById(R.id.edt_chang_psw);

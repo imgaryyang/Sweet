@@ -7,20 +7,29 @@
 
     <include layout="@layout/layout_title" />
 
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:background="@drawable/shape_level_bg">-->
+
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="10dp"-->
+            <!--android:text="温馨提示：输入房间密码后，将分配您房间号码，把号码告诉你的好朋友，就可以加入您的房间与您一起点餐了哦！"-->
+            <!--android:textColor="@color/Myappcolor"-->
+            <!--android:textSize="14dp" />-->
+    <!--</LinearLayout>-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/shape_level_bg">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="温馨提示：输入房间密码后，将分配您房间号码，把号码告诉你的好朋友，就可以加入您的房间与您一起点餐了哦！"
-            android:textColor="@color/Myappcolor"
-            android:textSize="14dp" />
-    </LinearLayout>
+        android:layout_height="35dp"
+        android:orientation="horizontal"
+        android:background="@drawable/shape_search_bg"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        >
 
     <EditText
         android:id="@+id/edt_search_user"
@@ -55,6 +64,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+        <EditText
+            android:id="@+id/edt_search_user"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="搜索好友..."
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:textSize="15dp"
+            android:background="@null"/>
+        <Button
+            android:id="@+id/btn_user_search"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@mipmap/ic_search"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="20dp"/>
+    </LinearLayout>
+
+
+<TextView
+    android:id="@+id/tv_search_user_show"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_0_dp"

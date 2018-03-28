@@ -13,6 +13,7 @@
         android:layout_height="100dp"
         android:layout_marginLeft="15dp"
         android:scaleType="fitXY"
+        android:background="@mipmap/photo_null_bg"
     />
 
     <LinearLayout

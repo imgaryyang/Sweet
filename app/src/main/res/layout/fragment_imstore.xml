@@ -160,6 +160,7 @@
                         android:layout_marginRight="15dp"
                         android:clipChildren="false"
                         android:orientation="horizontal"
+                        android:background="@mipmap/photo_null_bg"
                         android:overScrollMode="never">
 
                     </android.support.v4.view.ViewPager>
@@ -233,7 +234,7 @@
                             android:layout_marginTop="5dp"
                             android:clipChildren="false"
                             android:overScrollMode="never"
-                            android:scrollbars="none" />
+                            android:scrollbars="none"/>
 
     <!--                    <include
                             layout="@layout/pull_to_refresh"
@@ -296,7 +297,7 @@
                             android:layout_marginLeft="3dp"
                             android:layout_marginRight="15dp"
                             android:layout_marginTop="5dp"
-                            android:clipChildren="false" />
+                            android:clipChildren="false"/>
 <!--
                         <ProgressBar
                             android:id="@+id/pb_fun_loading"
@@ -368,16 +369,36 @@
 
     </RelativeLayout>
 
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/float_btn"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_gravity="right|bottom"-->
+        <!--android:clickable="true"-->
+        <!--android:layout_marginRight="15dp"-->
+        <!--android:layout_marginBottom="15dp"-->
+        <!--app:elevation="20dp"-->
+        <!--app:fabSize="mini"-->
+        <!--app:pressedTranslationZ="22dp"-->
+        <!--app:rippleColor="#ff0"/>-->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/float_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="20.0dip"
+        android:onClick="click"
+        android:src="@mipmap/floatbtn_bg"
+        app:backgroundTint="#3ABA47"
+        app:borderWidth="0.0dip"
+        app:elevation="5.0dip"
+        app:fabSize="mini"
+        app:layout_anchor="@id/container"
+        app:layout_anchorGravity="right|bottom"
+        app:pressedTranslationZ="10.0dip"
+        app:rippleColor="#a6a6a6"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="right|bottom"
-        android:clickable="true"
-        app:elevation="20dp"
-        app:fabSize="normal"
-        app:pressedTranslationZ="22dp"
-        app:rippleColor="#ff0" />
+        android:layout_alignParentRight="true"/>
+
 </RelativeLayout>
