@@ -50,14 +50,13 @@ public class MyApplication extends Application {
 
     public static String CURRENT_CITY = "大连市";
     public static String USER_ID = "";
-    private static SharedPreferences config;
+    public static SharedPreferences config;
 
     @Override
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-        config = context.getSharedPreferences("config",
-                MODE_PRIVATE);
+        config = context.getSharedPreferences("config", MODE_PRIVATE);
         initOssClient();
 
         initBroadCastReceiver();
@@ -65,8 +64,8 @@ public class MyApplication extends Application {
         initCloudChannel(this);
     }
 
-    public static double longi=0;
-    public static double lat=0;
+    public static double longi = 0;
+    public static double lat = 0;
 
     public static void setCurrentLatAndLon(double latitude, double longitude) {
         longi = longitude;
@@ -117,7 +116,6 @@ public class MyApplication extends Application {
     }
 
     public static void initSession(final OnOssClient onOssClient) {
-
         if (config.getBoolean("logined", false)) {
             USER_ID = config.getString("Id", "");
             final String psw = config.getString("Psw", "");
@@ -186,6 +184,20 @@ public class MyApplication extends Application {
         });
     }
 
+    public static boolean upDataPersonLoginInfo(String id, String psw) {
+        SharedPreferences.Editor edit = config.edit();
+        edit.putString("Id", id);
+        edit.putString("Psw", psw);
+        edit.putBoolean("logined", true);
+        return edit.commit();
+    }
+    public static boolean userOutLogin(){
+        SharedPreferences.Editor edit = config.edit();
+        edit.putString("Id","");
+        edit.putString("Psw","");
+        edit.putBoolean("logined", false);
+        return edit.commit();
+    }
 
     public interface OnOssClient {
         void onClient(Boolean flag);
@@ -230,7 +242,7 @@ public class MyApplication extends Application {
 
     }
 
-    public static void setOnCloundPush(String email){
+    public static void setOnCloundPush(String email) {
         pushService.bindAccount(email, new CommonCallback() {
             @Override
             public void onSuccess(String s) {

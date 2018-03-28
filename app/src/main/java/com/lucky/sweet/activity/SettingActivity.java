@@ -109,9 +109,11 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.btn_userOut:
                 if (btn_userOut.getText().toString().equals("退出登陆")) {
+
                     new AlertDialog.Builder(SettingActivity.this)
                             .setMessage("确定退出账号？")
                             .setPositiveButton("确定", (dialog, which) -> {
+                                MyApplication.userOutLogin();
                                 Intent intent = new Intent(SettingActivity.this, UserLoginActivity.class);
                                 startActivityForResult(intent, 0);
                             })
@@ -119,8 +121,7 @@ public class SettingActivity extends BaseActivity {
                             .create()
                             .show();
                 } else {
-                    edit.putBoolean("logined", false);
-                    edit.commit();
+
                     btn_userOut.getText().toString().equals("用户登陆");
                     startActivity(new Intent(SettingActivity.this, UserLoginActivity.class));
                     return;

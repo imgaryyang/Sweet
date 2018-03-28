@@ -93,7 +93,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
- 
+
     public AlertDialog showDialogBaseAct(String title, String message,
                                          String natureName,
                                          DialogInterface.OnClickListener
@@ -180,22 +180,22 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public static void onMerchantFinish(DeletRoomInfo DeletRoomInfo) {
+        if (!DeletRoomInfo.getUserId().equals(MyApplication.USER_ID)) {
+            String activityName = context.toString();
+            String currentActivityName = activityName.substring(activityName.lastIndexOf(".") + 1, activityName.indexOf("@"));
+            if (currentActivityName.equals(MerchantActivity.class.getSimpleName())) {
 
-        String activityName = context.toString();
-        String currentActivityName = activityName.substring(activityName.lastIndexOf(".") + 1, activityName.indexOf("@"));
-        if (currentActivityName.equals(MerchantActivity.class.getSimpleName())) {
+                final AlertDialog.Builder normalDialog = new AlertDialog.Builder(context);
+                normalDialog.setTitle("警告！");
+                normalDialog.setMessage("您的好友：" + DeletRoomInfo.getUserId() + "于" + DeletRoomInfo.getTime() + "已经关闭多人购物");
+                normalDialog.setPositiveButton("无奈关闭", (dialog, which) -> {
+                    ((Activity) context).finish();
+                });
+                normalDialog.show();
+            } else {
+                Toast.makeText(context, "当前不是购物车", Toast.LENGTH_SHORT).show();
 
-            final AlertDialog.Builder normalDialog = new AlertDialog.Builder(context);
-            normalDialog.setTitle("警告！");
-            normalDialog.setMessage("您的好友：" + DeletRoomInfo.getUserId() + "于" + DeletRoomInfo.getTime() + "已经关闭多人购物");
-            normalDialog.setPositiveButton("无奈关闭", (dialog, which) -> {
-                ((Activity) context).finish();
-            });
-            normalDialog.show();
-        } else {
-            Toast.makeText(context, "当前不是购物车", Toast.LENGTH_SHORT).show();
-
+            }
         }
-
     }
 }

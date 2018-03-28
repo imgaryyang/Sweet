@@ -177,6 +177,7 @@ public class OrderSeatActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.btn_order_submit:
                 if (MORE_PEOPLE) {
+
                     OrderSubmitActivity.newInstance(this, getIntent().getStringExtra(SHOP_CAR_INFO));
 
                 } else {

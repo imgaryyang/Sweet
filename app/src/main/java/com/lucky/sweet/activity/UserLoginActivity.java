@@ -1,6 +1,7 @@
 package com.lucky.sweet.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -28,7 +29,6 @@ public class UserLoginActivity extends BaseActivity {
         setContentView(R.layout.activity_user_login);
         setIsBindEventBus();
         initView();
-
 
     }
 
@@ -81,11 +81,13 @@ public class UserLoginActivity extends BaseActivity {
         }
     }
 
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(String string) {
         if (string.length() == 32) {
             MyApplication.setSessionID(string);
             MyApplication.setOnCloundPush(edt_userEmail.getText().toString().trim());
+            MyApplication.upDataPersonLoginInfo(edt_userEmail.getText().toString(), edt_password.getText().toString());
             Toast.makeText(this, "登陆成功", Toast.LENGTH_SHORT).show();
             finish();
         } else {
