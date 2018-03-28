@@ -41,6 +41,7 @@ import com.lucky.sweet.entity.PerdetermingEntity;
 import com.lucky.sweet.entity.PersonInfo;
 import com.lucky.sweet.entity.SearchFriendInfo;
 import com.lucky.sweet.entity.ShopCarEntity;
+import com.lucky.sweet.entity.ShopDetailPicInfo;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.entity.StoreDisplayInfo;
 import com.lucky.sweet.entity.StoreDisplaySearchEntity;
@@ -167,17 +168,12 @@ public class CommunicationService extends Service {
 
         public void requestPerdeterming(OrderSeatActivity activity) {
             final OrderSeatHandler orderSeatHandler = new OrderSeatHandler(activity);
-            CommunicationService.this.requestPredetermined(new PerdetermingRequest() {
-                @Override
-                public void getIt(PerdetermingEntity entitys) {
+            CommunicationService.this.requestPredetermined(entitys -> {
 
-                    Message msg = new Message();
-                    msg.obj = entitys;
-                    msg.what = OrderSeatHandler.UPDATE_DIALOGDAT;
-                    orderSeatHandler.sendMessage(msg);
-                }
-
-
+                Message msg = new Message();
+                msg.obj = entitys;
+                msg.what = OrderSeatHandler.UPDATE_DIALOGDAT;
+                orderSeatHandler.sendMessage(msg);
             });
         }
 
@@ -350,6 +346,29 @@ public class CommunicationService extends Service {
             CommunicationService.this.getMultShopCarInfo(room_id);
 
         }
+
+        public void getShopDetailInfo(String mer_id, String type) {
+            CommunicationService.this.getShopDetailInfo(mer_id, type);
+        }
+    }
+
+
+    private void getShopDetailInfo(String mer_id, String type) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("mer_id", "1");
+        map.put("type", type);
+        HttpUtils.sendOkHttpRequest(ReserveProperties.SHOP_DETAIL, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+                System.out.println(string.trim());
+                EventBus.getDefault().post(new Gson().fromJson(string.trim(), ShopDetailPicInfo.class));
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+
+            }
+        }, map);
     }
 
     public void getCurrentIntentTime() {
@@ -366,6 +385,7 @@ public class CommunicationService extends Service {
             }
         });
     }
+
     public void getMultShopCarInfo(String room_id) {
         HashMap<String, String> map = new HashMap<>();
         map.put("room_id", room_id);
@@ -444,7 +464,8 @@ public class CommunicationService extends Service {
     private void searchFriend(String searchName) {
         HashMap<String, String> map = new HashMap<>();
         map.put("session", MyApplication.sessionId);
-        map.put("user_name", searchName);
+        map.put("user_part", searchName);
+        map.put("start", "0");
         HttpUtils.sendOkHttpRequest(ReserveProperties.SEARCH_FRIEND, new MyOkhttpHelper() {
             @Override
             public void onResponseSuccessfulString(String string) {
@@ -881,9 +902,9 @@ public class CommunicationService extends Service {
         map.put("room_id", room_id);
         map.put("key_value", jsonKey);
         HttpUtils.sendOkHttpRequest(Properties.SHOP_CAR, new MyOkhttpHelper() {
-
             @Override
             public void onResponseSuccessfulString(String string) {
+
                 EventBus.getDefault().post(new Gson().fromJson(string, ShopCarEntity.class));
 
             }

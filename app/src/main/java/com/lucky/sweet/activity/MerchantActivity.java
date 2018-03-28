@@ -92,12 +92,12 @@ public class MerchantActivity extends BaseActivity {
         fg_shop_car.setOnClickListener(new ProductsFragment.OnClickListener() {
             @Override
             public void onClickSubimt(ShopCarSingleInformation shopCarSingleInformation) {
-                if (!isSingleOrder) {
+       /*         if (!isSingleOrder) {
                     myBinder.upDickesInfo(mer_id, new DeletRoomInfo(MyApplication.USER_ID, TimeUtil.getCurrentTime()), room_id, "{}", "{}", shopCarSingleInformation.getSaleSum());
                     OrderSeatActivity.newInstance(MerchantActivity.this, room_id);
                 } else
-
-                    OrderSeatActivity.newInstance(MerchantActivity.this, shopCarSingleInformation);
+*/
+                OrderSeatActivity.newInstance(MerchantActivity.this, shopCarSingleInformation);
             }
 
             @Override

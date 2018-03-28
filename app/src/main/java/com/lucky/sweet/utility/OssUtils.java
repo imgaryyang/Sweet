@@ -29,6 +29,8 @@ public class OssUtils {
             path = MyApplication.getOSSClient().presignConstrainedObjectURL(TEST_BUCKET, objectKey, 30);
         } catch (ClientException e) {
             e.printStackTrace();
+        }catch (NullPointerException e){
+            e.printStackTrace();
         }
         return path;
     }

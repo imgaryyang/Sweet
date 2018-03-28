@@ -38,7 +38,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             SlidingLayoutView rootView = new SlidingLayoutView(this);
             rootView.bindActivity(this);
         }
-        System.out.println("onCreate");
 
     }
 
@@ -47,7 +46,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void bindService() {
-        System.out.println("bindService");
         bindService(new Intent(this, CommunicationService.class), conn, BIND_AUTO_CREATE);
 
     }
@@ -55,8 +53,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        System.out.println("onResume");
-
         if (isBindEventBus) {
             EventBus.getDefault().register(this);
         }
@@ -67,7 +63,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        System.out.println("onPause");
+
 
         super.onPause();
         if (isBindEventBus) {
@@ -85,7 +81,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder
                 iBinder) {
-            System.out.println("onServiceConnected");
+
             CommunicationService.MyBinder myBinder = (CommunicationService.MyBinder) iBinder;
             onServiceBind(myBinder);
 
@@ -97,14 +93,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void initializeSessionId() {
-        SharedPreferences config = getSharedPreferences("config", MODE_PRIVATE);
-        if (config.getBoolean("logined", false)) {
-            sessionId = config.getString("Session", "");
-        }
-    }
-
-
+ 
     public AlertDialog showDialogBaseAct(String title, String message,
                                          String natureName,
                                          DialogInterface.OnClickListener

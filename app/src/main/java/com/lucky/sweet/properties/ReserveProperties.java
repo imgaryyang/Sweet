@@ -1,6 +1,5 @@
 package com.lucky.sweet.properties;
 
-import java.time.format.SignStyle;
 
 /**
  * Created by chn on 2018/2/14.
@@ -12,6 +11,7 @@ import java.time.format.SignStyle;
 
 public class ReserveProperties {
 
+    public static final String SHOP_DETAIL = "https://thethreestooges.cn:666/application/mer_info/mer_photo.php";
 
     public static final String UPDATA_MENU = "https://thethreestooges.cn:666/trolley/update/menu";
 
@@ -25,7 +25,7 @@ public class ReserveProperties {
 
     public static final String CANCEL_OREDER = "https://thethreestooges.cn:666/indent/cancel/indent";
 
-    public static final String SEARCH_FRIEND = "https://thethreestooges.cn:666/trolley/attent/find";
+    public static final String SEARCH_FRIEND = "https://thethreestooges.cn:666/trolley/find/user";
 
 
     public static final String SEARCH_FRIEND_BY_NIKNAME = "https://thethreestooges.cn:666/trolley/nickname/find";

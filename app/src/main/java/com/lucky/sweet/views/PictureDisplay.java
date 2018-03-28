@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.gif.GifDrawableLoadProvider;
 import com.lucky.sweet.R;
 
 import java.util.ArrayList;
@@ -50,11 +52,13 @@ public class PictureDisplay extends LinearLayout {
     public void initDatas(ArrayList<String> countList) {
 
         for (int i = 0; i < MAX_SIZE; i++) {
+            ImageView imageView = imageViews.get(i);
             if (countList.size() <= i) {
-                imageViews.get(i).setVisibility(GONE);
-                continue;
+                imageView.setVisibility(GONE);
+            } else {
+                Glide.with(getContext()).load(countList.get(i)).into(imageView);
             }
-            System.out.println("部署图片");
+
         }
 
     }

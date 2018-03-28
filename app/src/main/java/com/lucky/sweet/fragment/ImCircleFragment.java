@@ -98,11 +98,10 @@ public class ImCircleFragment extends Fragment implements
         circle_titie_search.initializationData(title);
         circle_titie_search.setOnTitleListener(type -> {
 
-            String titleType = title[type];
-            if (!titleType.equals(currentTitle)) {
-                currentTitle = titleType;
+            if (!type.equals(currentTitle)) {
+                currentTitle = type;
                 currentPage = 0;
-                activity.ChangeCircleDate(titleType, currentPage);
+                activity.ChangeCircleDate(type, currentPage);
 
             }
         });

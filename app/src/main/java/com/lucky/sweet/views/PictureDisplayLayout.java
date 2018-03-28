@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by chn on 2018/1/14.
@@ -28,8 +29,8 @@ public class PictureDisplayLayout extends LinearLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    public void initDatas(ArrayList<String> data) {
-
+    public void initDatas(List<String> data) {
+        removeAllViews();
         ArrayList<String> countList = new ArrayList<>();
         for (int i = 0; i < data.size(); i++) {
             countList.add(data.get(i));

@@ -86,7 +86,7 @@ public class TitleIndicatorView extends LinearLayout implements View.OnClickList
     }
 
     public interface OnTitleListener {
-        void onCurrentTitleChange(int type);
+        void onCurrentTitleChange(String  type);
     }
 
     private OnTitleListener onTitleListener;
@@ -111,7 +111,7 @@ public class TitleIndicatorView extends LinearLayout implements View.OnClickList
 
             }
             if (onTitleListener != null) {
-                onTitleListener.onCurrentTitleChange((Integer) v.getTag());
+                onTitleListener.onCurrentTitleChange(((TextView)v).getText().toString());
             }
 
         }

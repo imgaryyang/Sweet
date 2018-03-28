@@ -241,7 +241,7 @@
                         android:onClick="onButtonClick"
                         android:text="查看更多>"
                         android:textColor="@color/Myappcolor"
-                        android:textSize="13dp"/>
+                        android:textSize="13dp" />
                 </LinearLayout>
 
                 <LinearLayout

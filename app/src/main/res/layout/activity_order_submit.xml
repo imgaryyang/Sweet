@@ -62,14 +62,6 @@
                         android:textSize="20dp"
                         android:textStyle="bold"/>
 
-                    <TextView
-                        android:id="@+id/tv_seat_num"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="8"
-                        android:textColor="@color/black"
-                        android:textSize="20dp"
-                        android:textStyle="bold"/>
                 </LinearLayout>
 
                 <TextView
@@ -170,6 +162,19 @@
                         android:text="￥ 1111.00"
                         android:textColor="@color/black"
                         android:textSize="25dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_seat_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@+id/tv_now_time"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="87dp"
+                        android:layout_marginEnd="35dp"
+                        android:text="8"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
 
 
                 </RelativeLayout>

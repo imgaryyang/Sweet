@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.adapter.DetaileSearchFriendAdapter;
 import com.lucky.sweet.adapter.FlowFriendAdapter;
 import com.lucky.sweet.entity.FlowPeople;
 import com.lucky.sweet.entity.InvitationInfo;
@@ -43,6 +44,7 @@ public class CreateRoomActivity extends BaseActivity {
     private ListView lv_add_friend;
     private FlowFriendAdapter flowFriendAdapter;
     private ListView lv_search_user_show;
+    private ListView lv_search_vague_user_show;
     private EditText edt_serch;
 
     @Override
@@ -70,7 +72,8 @@ public class CreateRoomActivity extends BaseActivity {
 
 
         lv_add_friend = findViewById(R.id.lv_add_friend);
-        lv_search_user_show = findViewById(R.id.lv_search_user_show);
+        lv_search_user_show = findViewById(R.id.lv_search_detailed_user_show);
+        lv_search_vague_user_show = findViewById(R.id.lv_search_vague_user_show);
         findViewById(R.id.btn_user_search).setOnClickListener(v -> {
             String search = edt_serch.getText().toString();
             if (!TextUtils.isEmpty(search)) {
@@ -138,10 +141,10 @@ public class CreateRoomActivity extends BaseActivity {
         flowFriendAdapter.setOnInvitationClick(userId -> {
             Toast.makeText(this, userId, Toast.LENGTH_SHORT).show();
             if (roomID != null) {
+                Toast.makeText(this, "已经邀请您的好友", Toast.LENGTH_SHORT).show();
                 myBinder.invitationFriend(userId, new InvitationInfo(MyApplication.USER_ID, roomID, mer_id));
             } else
                 Toast.makeText(this, "请创建房间", Toast.LENGTH_SHORT).show();
-
 
         });
 
@@ -157,9 +160,19 @@ public class CreateRoomActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(SearchFriendInfo info) {
-        if (info.getNickname() != null) {
-          //  lv_search_user_show.setAdapter(new FlowFriendAdapter(,this));
-        } else
-        Toast.makeText(this, "没有当前用户：" + info, Toast.LENGTH_SHORT).show();
+        List<SearchFriendInfo.NicknameListBean> nickname_list = info.getNickname_list();
+        DetaileSearchFriendAdapter detaileSearchFriendAdapter = new DetaileSearchFriendAdapter(nickname_list, this);
+        lv_search_user_show.setAdapter(detaileSearchFriendAdapter);
+        detaileSearchFriendAdapter.setOnInvitationClick(userId -> {
+            if (roomID != null) {
+                Toast.makeText(this, "已经邀请您的好友", Toast.LENGTH_SHORT).show();
+
+                myBinder.invitationFriend(userId, new InvitationInfo(MyApplication.USER_ID, roomID, mer_id));
+            } else
+                Toast.makeText(this, "请创建房间", Toast.LENGTH_SHORT).show();
+
+        });
+        /*        SearchFriendInfo.UserListBean user_list = info.getUser_list();*/
+        /*        lv_search_vague_user_show.setAdapter();*/
     }
 }

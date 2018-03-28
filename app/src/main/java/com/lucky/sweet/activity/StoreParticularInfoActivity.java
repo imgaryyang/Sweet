@@ -136,15 +136,11 @@ public class StoreParticularInfoActivity extends BaseActivity {
         });
         btn_map_position.setOnClickListener(v -> maps.setCenter(latLng));
         tv_moreFood.setOnClickListener(v -> {
-            Intent intent = new Intent(StoreParticularInfoActivity.this,
-                    RecruitmentDisplayActivity.class);
-            startActivity(intent);
+            RecruitmentDisplayActivity.newStance(this, RecruitmentDisplayActivity.DISC_SHOW, mer_id);
             goUpAnim();
         });
         tv_moreevr.setOnClickListener(v -> {
-            Intent intent = new Intent(StoreParticularInfoActivity.this,
-                    RecruitmentDisplayActivity.class);
-            startActivity(intent);
+            RecruitmentDisplayActivity.newStance(this, RecruitmentDisplayActivity.AROUND_SHOW, mer_id);
             goUpAnim();
         });
     }
@@ -317,7 +313,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
             marker.showInfoWindow();
             btn_more_map_detal.setVisibility(View.VISIBLE);
 
-            maps.zoomToSpan(new LatLng(latLng.getLatitude() - 0.000032, latLng.getLongitude() - 0.000032), new LatLng(latitude -   0.000032, longitude -   0.000032));
+            maps.zoomToSpan(new LatLng(latLng.getLatitude() - 0.000032, latLng.getLongitude() - 0.000032), new LatLng(latitude - 0.000032, longitude - 0.000032));
             TencentSearch tencentSearch = new TencentSearch(this);
             WalkingParam walkingParam = new WalkingParam();
             walkingParam.from(new Location(Float.valueOf(shopdes.getLatitude()), Float.valueOf(shopdes.getLongitude())));
