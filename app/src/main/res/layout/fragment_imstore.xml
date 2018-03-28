@@ -160,6 +160,7 @@
                         android:layout_marginRight="15dp"
                         android:clipChildren="false"
                         android:orientation="horizontal"
+                        android:background="@mipmap/photo_null_bg"
                         android:overScrollMode="never">
 
                     </android.support.v4.view.ViewPager>
@@ -233,7 +234,7 @@
                             android:layout_marginTop="5dp"
                             android:clipChildren="false"
                             android:overScrollMode="never"
-                            android:scrollbars="none" />
+                            android:scrollbars="none"/>
 
     <!--                    <include
                             layout="@layout/pull_to_refresh"
@@ -296,7 +297,7 @@
                             android:layout_marginLeft="3dp"
                             android:layout_marginRight="15dp"
                             android:layout_marginTop="5dp"
-                            android:clipChildren="false" />
+                            android:clipChildren="false"/>
 <!--
                         <ProgressBar
                             android:id="@+id/pb_fun_loading"
