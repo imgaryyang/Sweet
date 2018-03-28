@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -176,6 +177,7 @@ public class ImStoreFragment extends Fragment implements View.OnClickListener {
         collapsingToolbarLayout.setContentScrim(getResources().getDrawable(R.drawable.search_bg));
 
         float_btn = view.findViewById(R.id.float_btn);
+        float_btn.setImageResource(R.mipmap.floatbtn_bg);
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            ToolBar toolBar = new ToolBar(getActivity());
 //            toolBar.setStatusBarDarkMode();
