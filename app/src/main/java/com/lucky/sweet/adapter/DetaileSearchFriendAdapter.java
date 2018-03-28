@@ -47,18 +47,18 @@ public class DetaileSearchFriendAdapter extends BaseAdapter {
             convertView = View.inflate(context, R.layout.item_flow_friend, null);
             viewHolder = new ViewHolder();
             viewHolder.name = convertView.findViewById(R.id.tv_flow_friend);
-            viewHolder.invitation=convertView.findViewById(R.id.btn_in_frinde);
+//            viewHolder.invitation=convertView.findViewById(R.id.btn_in_frinde);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.name.setText(nicknameListBean.getNickname());
 
-        viewHolder.invitation.setOnClickListener(v -> {
+/*        viewHolder.invitation.setOnClickListener(v -> {
             if (onInvitationClick != null) {
                 onInvitationClick.onClick(nicknameListBean.getUser());
             }
-        });
+        });*/
         return convertView;
     }
 
