@@ -139,7 +139,7 @@ public class RecFoodRecommendAdapter extends RecyclerView.Adapter {
         }
 
         public void bindData(FoodBean foodBean, Context context) {
-            Glide.with(context).load(foodBean.getPho_url()).placeholder(R.mipmap.photo_null_bg).diskCacheStrategy
+            Glide.with(context).load(foodBean.getPho_url()).diskCacheStrategy
                     (DiskCacheStrategy.ALL).into(imv_photo);
             tv_info.setText(foodBean.getName());
             tv_recreation.setText(foodBean.getClassify());
