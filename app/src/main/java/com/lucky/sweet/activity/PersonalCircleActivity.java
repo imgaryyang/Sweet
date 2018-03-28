@@ -1,6 +1,8 @@
 package com.lucky.sweet.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -35,15 +37,19 @@ public class PersonalCircleActivity extends BaseActivity {
     private TextView tv_content;
     private TextView tv_name;
     private String circle_id;
+    private String CIRCLE_INFO="100000";
+    private CommunicationService.MyBinder myBinder;
+    private PersonalCircleAdapter personalCircleAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_circle);
-        circle_info = (CircleMainInfo.CircleListBean) getIntent().getSerializableExtra("circle_info");
+        circle_info = (CircleMainInfo.CircleListBean) getIntent().getSerializableExtra(CIRCLE_INFO);
         if (circle_info != null) {
             circle_id = circle_info.getCircle_id();
         }
+        setIsBindEventBus();
         initTitle();
         initViews();
         initDatas();
@@ -55,31 +61,18 @@ public class PersonalCircleActivity extends BaseActivity {
     }
 
     @Override
-    protected void onPause() {
-        EventBus.getDefault().unregister(this);
-
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        EventBus.getDefault().register(this);
-
-        super.onResume();
-    }
-
-    @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
-        if (circle_id!=null) {
+        if (circle_id != null) {
 
             myBinder.sendCircledetailsInfo(circle_id);
         }
+        this.myBinder = myBinder;
     }
 
     private void initViews() {
         ToolBar toolBar = new ToolBar(this);
         toolBar.setStatusBarDarkMode();
-        imv_head = (CircleImageView) findViewById(R.id.imv_head);
+        imv_head = findViewById(R.id.imv_head);
         imv_head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
         lv_comments = findViewById(R.id.lv_comments);
         tv_name = findViewById(R.id.tv_name);
@@ -94,16 +87,12 @@ public class PersonalCircleActivity extends BaseActivity {
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
                 .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
 
-        title.setOnTitleButtonClickListener(new Title
-                .OnTitleButtonClickListener() {
-            @Override
-            public void onClick(int id, Title.ButtonViewHolder viewHolder) {
-                switch (id) {
-                    case Title.BUTTON_LEFT:
-                        finish();
-                        goPreAnim();
-                        break;
-                }
+        title.setOnTitleButtonClickListener((id, viewHolder) -> {
+            switch (id) {
+                case Title.BUTTON_LEFT:
+                    finish();
+                    goPreAnim();
+                    break;
             }
         });
 
@@ -112,7 +101,13 @@ public class PersonalCircleActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(CircleDetail info) {
+        personalCircleAdapter = new PersonalCircleAdapter(info.getComment(), this);
+        lv_comments.setAdapter(personalCircleAdapter);
+    }
 
-        lv_comments.setAdapter(new PersonalCircleAdapter(info.getComment(), this));
+    public static void newInStance(FragmentActivity activity, CircleMainInfo.CircleListBean circleListBean) {
+        Intent intent = new Intent(activity, PersonalCircleActivity.class);
+        intent.putExtra("circle_info", circleListBean);
+        activity.startActivity(intent);
     }
 }

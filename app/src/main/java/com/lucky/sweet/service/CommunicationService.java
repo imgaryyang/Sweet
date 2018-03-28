@@ -27,6 +27,7 @@ import com.lucky.sweet.entity.ChangeNameRequstInfo;
 import com.lucky.sweet.entity.CircleDetail;
 import com.lucky.sweet.entity.CircleLikePoint;
 import com.lucky.sweet.entity.CircleMainInfo;
+import com.lucky.sweet.entity.CircleUpDataInfo;
 import com.lucky.sweet.entity.DeletRoomInfo;
 import com.lucky.sweet.entity.DetailOrderInfo;
 import com.lucky.sweet.entity.FlowPeople;
@@ -350,6 +351,34 @@ public class CommunicationService extends Service {
         public void getShopDetailInfo(String mer_id, String type) {
             CommunicationService.this.getShopDetailInfo(mer_id, type);
         }
+
+        public void commentCircle(String reply_user, String reply_circle_id, String mer_id, String content) {
+            CommunicationService.this.commentCircle(reply_user, reply_circle_id, mer_id, content);
+
+        }
+    }
+
+    private void commentCircle(String reply_user, String reply_circle_id, String mer_id, String content) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("reply_user", reply_user);
+        map.put("reply_circle_id", reply_circle_id);
+        map.put("mer_id", mer_id);
+        map.put("content", content);
+        map.put("session", MyApplication.sessionId);
+        HttpUtils.sendOkHttpRequest(CircleProperties.COMMENT_PEOPLE, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+                System.out.println(string.trim());
+                EventBus.getDefault().post(new Gson().fromJson(string.trim(), CircleUpDataInfo.class));
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+
+            }
+        }, map);
+
+
     }
 
 

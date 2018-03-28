@@ -106,10 +106,7 @@ public class ImCircleFragment extends Fragment implements
             }
         });
         lv_circle.setOnItemClickListener((adapterView, view1, i, l) -> {
-            Intent intent = new Intent(getActivity(), PersonalCircleActivity.class);
-
-            intent.putExtra("circle_info", circle_list.get(i));
-            startActivity(intent);
+            PersonalCircleActivity.newInStance(getActivity(),circle_list.get(i));
             getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
         });
         vImageWatcher = view.findViewById(R.id.imv_watcger);
