@@ -62,7 +62,7 @@ public class CreateRoomActivity extends BaseActivity {
         intent.putExtra("mer_id", mer_id);
         activity.startActivity(intent);
     }
-
+    
     private void initData() {
         Intent intent = getIntent();
         mer_id = intent.getStringExtra(SHOPID);
