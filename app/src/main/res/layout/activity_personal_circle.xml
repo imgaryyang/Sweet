@@ -79,38 +79,25 @@
             android:text="装修很不错，光顾着拍照了，不过菜品也很好吃,装修很不错，光顾着拍照了，不过菜品也很好吃"
             android:textColor="@color/black" />
 
-        <LinearLayout
+        <com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayout
+            android:id="@+id/l_pictures"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dimen_200_dp"
             android:layout_below="@id/tv_content"
-            android:layout_marginTop="15dp"
-            android:gravity="center">
+            android:padding="@dimen/dimen_20_dp"
+            android:layout_marginTop="20dp">
 
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="15dp"
-                android:src="@mipmap/test1" />
+            <com.lucky.sweet.widgets.ImageViewWatcher.SquareImageView
+                android:id="@+id/i_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="12dp"
+                android:layout_marginStart="14dp"
+                android:scaleType="centerCrop" />
 
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="15dp"
-                android:src="@mipmap/test2" />
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:src="@mipmap/test3" />
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="15dp"
-                android:src="@mipmap/test4" />
-        </LinearLayout>
+        </com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayout>
     </RelativeLayout>
 
     <View
@@ -134,18 +121,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <EditText
             android:id="@+id/et_comment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:hint="假装输入点东西进去"/>
+            android:hint="假装输入点东西进去" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="发送"/>
+            android:text="发送" />
     </LinearLayout>
 
 </LinearLayout>

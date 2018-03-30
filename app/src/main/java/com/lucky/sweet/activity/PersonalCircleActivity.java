@@ -3,6 +3,7 @@ package com.lucky.sweet.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -12,6 +13,7 @@ import com.lucky.sweet.entity.CircleDetail;
 import com.lucky.sweet.entity.CircleMainInfo;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.views.CircleImageView;
+import com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayout;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -40,12 +42,14 @@ public class PersonalCircleActivity extends BaseActivity {
     private static final String CIRCLE_INFO = "100000";
     private CommunicationService.MyBinder myBinder;
     private PersonalCircleAdapter personalCircleAdapter;
+    private MessagePicturesLayout l_pictures;
 
     public static void newInStance(FragmentActivity activity, CircleMainInfo.CircleListBean circleListBean) {
         Intent intent = new Intent(activity, PersonalCircleActivity.class);
         intent.putExtra(CIRCLE_INFO, circleListBean);
         activity.startActivity(intent);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +66,7 @@ public class PersonalCircleActivity extends BaseActivity {
 
     private void initDatas() {
         tv_name.setText(circle_info.getNikcname());
+        l_pictures.set(circle_info.getPhoto_url());
         tv_content.setText(circle_info.getContent());
     }
 
@@ -78,6 +83,7 @@ public class PersonalCircleActivity extends BaseActivity {
         ToolBar toolBar = new ToolBar(this);
         toolBar.setStatusBarDarkMode();
         imv_head = findViewById(R.id.imv_head);
+        l_pictures = findViewById(R.id.l_pictures);
         imv_head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
         lv_comments = findViewById(R.id.lv_comments);
         tv_name = findViewById(R.id.tv_name);
