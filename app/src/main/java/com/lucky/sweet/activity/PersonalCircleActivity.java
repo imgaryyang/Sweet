@@ -37,10 +37,15 @@ public class PersonalCircleActivity extends BaseActivity {
     private TextView tv_content;
     private TextView tv_name;
     private String circle_id;
-    private String CIRCLE_INFO="100000";
+    private static final String CIRCLE_INFO = "100000";
     private CommunicationService.MyBinder myBinder;
     private PersonalCircleAdapter personalCircleAdapter;
 
+    public static void newInStance(FragmentActivity activity, CircleMainInfo.CircleListBean circleListBean) {
+        Intent intent = new Intent(activity, PersonalCircleActivity.class);
+        intent.putExtra(CIRCLE_INFO, circleListBean);
+        activity.startActivity(intent);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,9 +110,5 @@ public class PersonalCircleActivity extends BaseActivity {
         lv_comments.setAdapter(personalCircleAdapter);
     }
 
-    public static void newInStance(FragmentActivity activity, CircleMainInfo.CircleListBean circleListBean) {
-        Intent intent = new Intent(activity, PersonalCircleActivity.class);
-        intent.putExtra("circle_info", circleListBean);
-        activity.startActivity(intent);
-    }
+
 }
