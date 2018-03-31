@@ -23,6 +23,7 @@ import com.lucky.sweet.entity.CircleDetail;
 import com.lucky.sweet.entity.CircleMainInfo;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.views.CircleImageView;
+import com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayout;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -42,7 +43,7 @@ import java.util.List;
 // ( (oo) )  ( (oo) )  ( (oo) )
 //   ︶︶︶     ︶︶︶     ︶︶︶
 
-public class PersonalCircleActivity extends BaseActivity implements View.OnClickListener{
+public class PersonalCircleActivity extends BaseActivity implements View.OnClickListener {
     private Title title = null;
     private CircleImageView imv_head;
 //    private ListView lv_comments;
@@ -93,6 +94,7 @@ public class PersonalCircleActivity extends BaseActivity implements View.OnClick
     private void initDatas() {
         tv_name.setText(circle_info.getNikcname());
         tv_content.setText(circle_info.getContent());
+        l_pictures.set(circle_info.getPhoto_url());
     }
 
     @Override
@@ -130,9 +132,10 @@ public class PersonalCircleActivity extends BaseActivity implements View.OnClick
 
         rl_enroll = (LinearLayout) findViewById(R.id.rl_enroll);
         rl_comment = (RelativeLayout) findViewById(R.id.rl_comment);
+        l_pictures = findViewById(R.id.l_pictures);
     }
 
-    public void setListener(){
+    public void setListener() {
         comment.setOnClickListener(this);
 
         hide_down.setOnClickListener(this);
@@ -181,7 +184,7 @@ public class PersonalCircleActivity extends BaseActivity implements View.OnClick
                 rl_enroll.setVisibility(View.VISIBLE);
                 rl_comment.setVisibility(View.GONE);
                 // 隐藏输入法，然后暂存当前输入框的内容，方便下次使用
-                InputMethodManager im = (InputMethodManager)getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager im = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 im.hideSoftInputFromWindow(comment_content.getWindowToken(), 0);
                 break;
             case R.id.comment_send:
@@ -192,13 +195,13 @@ public class PersonalCircleActivity extends BaseActivity implements View.OnClick
         }
     }
 
-    public void sendComment(){
-        if(comment_content.getText().toString().equals("")){
+    public void sendComment() {
+        if (comment_content.getText().toString().equals("")) {
             Toast.makeText(getApplicationContext(), "评论不能为空！", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             // 生成评论数据
             CircleComment comment = new CircleComment();
-            comment.setName("评论者"+(data.size()+1)+"：");
+            comment.setName("评论者" + (data.size() + 1) + "：");
             comment.setContent(comment_content.getText().toString());
             adapterComment.addComment(comment);
             // 发送完，清空输入框

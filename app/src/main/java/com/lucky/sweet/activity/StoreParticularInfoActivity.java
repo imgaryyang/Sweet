@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -134,7 +135,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private void initEvent() {
         btn_more_map_detal.setOnClickListener(v -> {
 
-            MapWebAcivity.Companion.InStance(StoreParticularInfoActivity.this, latLng.getLatitude()+"", ""+latLng.getLongitude());
+            MapWebAcivity.Companion.InStance(StoreParticularInfoActivity.this, latLng.getLongitude()+"", ""+latLng.getLatitude());
         });
         btn_map_position.setOnClickListener(v -> maps.setCenter(latLng));
         tv_moreFood.setOnClickListener(v -> {
@@ -309,7 +310,8 @@ public class StoreParticularInfoActivity extends BaseActivity {
         double longitude = MyApplication.longi;
         double latitude = MyApplication.lat;
         if (longitude != 0 && latitude != 0) {
-
+            Log.d("longitude", MyApplication.longi+" MyApplication.lat"+MyApplication.lat);
+            Log.d("longitude", latLng.getLatitude()+" MyApplication.getLongitude"+ latLng.getLongitude());
             LatLng current = new LatLng(latitude, longitude);
             marker = this.map.addMarker(new MarkerOptions().title("您当前位置").anchor(0.5f, 0.5f).position(current));
             marker.showInfoWindow();

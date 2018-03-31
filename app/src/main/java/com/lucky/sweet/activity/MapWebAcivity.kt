@@ -22,15 +22,15 @@ class MapWebAcivity : AppCompatActivity() {
 
 
     fun initView() {
-        val urlPath = getUrlPath( intent.getStringExtra(END_LAT), intent.getStringExtra(END_LON))
+        val urlPath = getUrlPath(intent.getStringExtra(END_LAT), intent.getStringExtra(END_LON))
         println(urlPath)
         wb_map.loadUrl(urlPath)
-        wb_map.webViewClient = WebViewClient()
+       // wb_map.webViewClient = WebViewClient()
     }
 
     fun getUrlPath(lat: String, lon: String): String {
-        return "http://apis.map.qq.com/tools/routeplan/eword=您的目的地&epointx=$lat&epointy=$lon?referer=myapp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77 "
 
+        return "m.amap.com/navi/?start=121.30554，38.815544&dest=$lon,$lat&destName=一条驾车路线&naviBy=car&key=31d07ef08c787f75c25bf496fa7affb5"
     }
 
     companion object {
@@ -38,7 +38,7 @@ class MapWebAcivity : AppCompatActivity() {
         val END_LAT = "END_LAT"
         val END_LON = "END_LON"
 
-        fun InStance(activity: Activity, endLat: String, endlong: String) {
+        fun InStance(activity: Activity, endlong: String, endLat: String) {
             var intent = Intent(activity, MapWebAcivity::class.java)
             intent.putExtra(END_LAT, endLat)
             intent.putExtra(END_LON, endlong)

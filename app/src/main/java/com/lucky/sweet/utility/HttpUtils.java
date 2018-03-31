@@ -43,20 +43,5 @@ public class HttpUtils {
         }
         url.build().execute(callback);
     }
-    public static void writeImagetoChace(InputStream in, File file) {
-        try {
-            FileOutputStream fos = new FileOutputStream(file);
-            int len=-1;
-            byte[] buffer = new byte[1024];
-            while ((len = in.read(buffer))!=-1){
-                fos.write(buffer);
-            }
-            fos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-    }
 }
