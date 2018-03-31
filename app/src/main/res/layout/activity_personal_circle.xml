@@ -97,7 +97,19 @@
                 android:layout_marginStart="14dp"
                 android:scaleType="centerCrop" />
 
-        </com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayout>
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:src="@mipmap/test3" />
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginRight="15dp"
+                android:src="@mipmap/test4" />
+        </LinearLayout>
     </RelativeLayout>
 
     <View
@@ -106,34 +118,89 @@
         android:layout_marginTop="15dp"
         android:background="@color/gray3" />
 
-    <ListView
-        android:id="@+id/lv_comments"
+    <!--<ListView-->
+        <!--android:id="@+id/lv_comments"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/dimen_250_dp"-->
+        <!--android:layout_marginLeft="15dp"-->
+        <!--android:layout_marginRight="15dp"-->
+        <!--android:divider="@color/white"-->
+        <!--android:overScrollMode="never"-->
+        <!--android:scrollbars="none">-->
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_250_dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:divider="@color/white"
-        android:overScrollMode="never"
-        android:scrollbars="none">
-
-    </ListView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/et_comment"
+        android:layout_height="match_parent">
+        <ListView
+            android:id="@+id/comment_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:hint="假装输入点东西进去" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="50dp" />
+        <LinearLayout
+            android:id="@+id/rl_enroll"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/comment"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/comment_content"
+                android:layout_weight="1"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_comment"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey" />
+
+            <TextView
+                android:id="@+id/hide_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hide_down"
+                android:textSize="13sp"
+                android:textColor="@color/txtgrey"
+                android:drawableBottom="@drawable/comment_hide_dowm"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"/>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/grey"
+                android:layout_toRightOf="@id/hide_down"
+                android:layout_marginLeft="10dp"/>
+            <EditText
+                android:id="@+id/comment_content"
+                android:hint="@string/comment_content"
+                android:textSize="15sp"
+                android:singleLine="true"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:layout_toRightOf="@id/hide_down"
+                android:layout_marginLeft="20dp"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="发送" />
+            android:text="发送"/>
     </LinearLayout>
 
 </LinearLayout>

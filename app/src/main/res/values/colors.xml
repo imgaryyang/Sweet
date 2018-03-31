@@ -35,6 +35,10 @@
     <color name="possible_result_points">#c0ffff00</color>
     <color name="scan_text">#ffffff</color>
 
+    <color name="mainColor">#4dc445</color>
+
+    <color name="txtgrey">#7c7b7b</color>
+    <color name="greywhite">#aeacac</color>
     <color name="possible_result">#c004ff00</color>
     <!--<color name="white">#FFFFFFFF</color>-->
     <!-- 白色 -->
