@@ -44,7 +44,6 @@ public class CreateRoomActivity extends BaseActivity {
     private ListView lv_add_friend;
     private FlowFriendAdapter flowFriendAdapter;
     private ListView lv_search_user_show;
-    private ListView lv_search_vague_user_show;
     private EditText edt_serch;
 
     @Override
@@ -73,7 +72,7 @@ public class CreateRoomActivity extends BaseActivity {
 
         lv_add_friend = findViewById(R.id.lv_add_friend);
         lv_search_user_show = findViewById(R.id.lv_search_detailed_user_show);
-        lv_search_vague_user_show = findViewById(R.id.lv_search_vague_user_show);
+
         findViewById(R.id.btn_user_search).setOnClickListener(v -> {
             String search = edt_serch.getText().toString();
             if (!TextUtils.isEmpty(search)) {
@@ -160,8 +159,8 @@ public class CreateRoomActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(SearchFriendInfo info) {
-        List<SearchFriendInfo.NicknameListBean> nickname_list = info.getNickname_list();
-        DetaileSearchFriendAdapter detaileSearchFriendAdapter = new DetaileSearchFriendAdapter(nickname_list, this);
+
+        DetaileSearchFriendAdapter detaileSearchFriendAdapter = new DetaileSearchFriendAdapter( info.getUser_list(), this);
         lv_search_user_show.setAdapter(detaileSearchFriendAdapter);
         detaileSearchFriendAdapter.setOnInvitationClick(userId -> {
             if (roomID != null) {
@@ -172,7 +171,6 @@ public class CreateRoomActivity extends BaseActivity {
                 Toast.makeText(this, "请创建房间", Toast.LENGTH_SHORT).show();
 
         });
-        /*        SearchFriendInfo.UserListBean user_list = info.getUser_list();*/
-        /*        lv_search_vague_user_show.setAdapter();*/
+
     }
 }

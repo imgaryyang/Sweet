@@ -15,7 +15,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="70dp"
         android:text="姓名" />
-
     <Button
         android:id="@+id/btn_in_frinde"
         android:layout_width="@dimen/dimen_45_dp"

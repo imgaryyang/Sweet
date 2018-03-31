@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.alibaba.sdk.android.oss.model.GetObjectResult;
 import com.lucky.sweet.R;
@@ -39,12 +40,14 @@ public class MainActivity extends BaseActivity {
     private Fragment[] fragments = {storeFragment, circleFragment, meFragment};
     private final String USER_PORTRAIT_PATH = "sweet/person/portrait/" + MyApplication.USER_ID + ".png";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
         setIsBindEventBus();
+
     }
 
     @Override
@@ -109,6 +112,18 @@ public class MainActivity extends BaseActivity {
         mPager.setAdapter(mAdapter);
 
         mTabLayout = findViewById(R.id.ll_tab_container);
+        mTabLayout.setOnItemClick(new TabContainerView.OnItemClick() {
+            @Override
+            public boolean onItemClickListener(int position) {
+                if (!MyApplication.config.getBoolean("logined", false)) {
+                    Toast.makeText(MainActivity.this, "请先登陆", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this, UserLoginActivity.class));
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        });
         mTabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -117,6 +132,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
+
                 for (int index = 0, len = fragments.length; index < len; index++) {
                     fragments[index].onHiddenChanged(index != position);
                 }
@@ -134,7 +150,7 @@ public class MainActivity extends BaseActivity {
         int height = getResources().getDimensionPixelSize(R.dimen.tab_icon_height);
         mTabLayout.setContainerLayout(R.layout.layout_tab_container, R.id.iv_tab_icon, R.id.tv_tab_text, width, height);
         mTabLayout.setViewPager(mPager);
-        mPager.setCurrentItem(getIntent().getIntExtra("tab", 0));
+        //mPager.setCurrentItem(getIntent().getIntExtra("tab", 0));
     }
 
 

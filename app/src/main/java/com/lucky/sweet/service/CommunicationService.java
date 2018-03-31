@@ -493,7 +493,7 @@ public class CommunicationService extends Service {
     private void searchFriend(String searchName) {
         HashMap<String, String> map = new HashMap<>();
         map.put("session", MyApplication.sessionId);
-        map.put("user_part", searchName);
+        map.put("name_part", searchName);
         map.put("start", "0");
         HttpUtils.sendOkHttpRequest(ReserveProperties.SEARCH_FRIEND, new MyOkhttpHelper() {
             @Override
