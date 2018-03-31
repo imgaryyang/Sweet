@@ -26,8 +26,8 @@ public class ReserveProperties {
     public static final String CANCEL_OREDER = "https://thethreestooges.cn:666/indent/cancel/indent";
 
     public static final String SEARCH_FRIEND = "https://thethreestooges.cn:666/trolley/find/user";
-
-
+    public static final String DELETE_ROOM =
+            "https://thethreestooges.cn:666/trolley/dele/room";
     public static final String GET_SERVER_DIS = "https://thethreestooges.cn:666/trolley/confirm";
 
     public static final String CREATE_OR_ALTER_ROOM_FAIL = "0";

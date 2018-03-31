@@ -356,6 +356,10 @@ public class CommunicationService extends Service {
             CommunicationService.this.commentCircle(reply_user, reply_circle_id, mer_id, content);
 
         }
+
+        public void closeOrder(DeletRoomInfo deletRoomInfo, String room_id) {
+            CommunicationService.this.deleteRoom( deletRoomInfo, room_id);
+        }
     }
 
     private void commentCircle(String reply_user, String reply_circle_id, String mer_id, String content) {
@@ -486,6 +490,26 @@ public class CommunicationService extends Service {
             @Override
             public void afterNewRequestSession() {
 
+            }
+        }, map);
+    }
+
+
+    private void deleteRoom( DeletRoomInfo deletRoomInfo, String room_id) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("session", MyApplication.sessionId);
+        map.put("key_value", deletRoomInfo.toJsonString());
+        map.put("room_id", room_id);
+        HttpUtils.sendOkHttpRequest(ReserveProperties.DELETE_ROOM, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+
+
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+                deleteRoom(deletRoomInfo,room_id);
             }
         }, map);
     }
