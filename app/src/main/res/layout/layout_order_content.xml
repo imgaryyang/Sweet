@@ -42,7 +42,7 @@
                     android:id="@+id/ibtn_order_seat"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:background="@mipmap/order_seat"
+                    android:background="@mipmap/order_onlyseat"
                     android:visibility="gone"/>
                 <TextView
                     android:id="@+id/tv_circle"
