@@ -372,8 +372,8 @@ public class CommunicationService extends Service {
         HttpUtils.sendOkHttpRequest(CircleProperties.COMMENT_PEOPLE, new MyOkhttpHelper() {
             @Override
             public void onResponseSuccessfulString(String string) {
-                System.out.println(string.trim());
-                EventBus.getDefault().post(new Gson().fromJson(string.trim(), CircleUpDataInfo.class));
+
+             EventBus.getDefault().post(new CircleUpDataInfo(string));
             }
 
             @Override
@@ -729,7 +729,7 @@ public class CommunicationService extends Service {
                 new MyOkhttpHelper() {
                     @Override
                     public void onResponseSuccessfulString(String string) {
-
+                        System.out.println(string);
                         EventBus.getDefault().post(new Gson().fromJson(string, CircleMainInfo.class));
                     }
 

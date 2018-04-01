@@ -11,7 +11,6 @@ import java.util.List;
  */
 
 public class CircleDetail {
-
     private List<CommentBean> comment;
 
     public List<CommentBean> getComment() {
@@ -24,12 +23,14 @@ public class CircleDetail {
 
     public static class CommentBean {
         /**
-         * circle_id : 5_10
-         * user_id : 5
+         * circle_id : 5_4
+         * user_id : 4
          * mer_id : 1
-         * content : 看谁不爽就赏他一句：井底之蛙，却不知道如果这一生能够把那一小片天空看个清楚，你也比别人看的远。
-         * create_time : 2018-02-14 23:35:01
-         * nikcname : 阿元测试
+         * content : 我是一个笨蛋，但是请相信我，我并不是有意的。能原谅我吗？友爱的。
+         * create_time : 2018-02-12 14:41:12
+         * reply_user : 5
+         * nikcname_user : 大外只有一个浩南
+         * nikcname_reply_user : aaaa
          */
 
         private String circle_id;
@@ -37,7 +38,9 @@ public class CircleDetail {
         private String mer_id;
         private String content;
         private String create_time;
-        private String nikcname;
+        private String reply_user;
+        private String nikcname_user;
+        private String nikcname_reply_user;
 
         public String getCircle_id() {
             return circle_id;
@@ -79,12 +82,28 @@ public class CircleDetail {
             this.create_time = create_time;
         }
 
-        public String getNikcname() {
-            return nikcname;
+        public String getReply_user() {
+            return reply_user;
         }
 
-        public void setNikcname(String nikcname) {
-            this.nikcname = nikcname;
+        public void setReply_user(String reply_user) {
+            this.reply_user = reply_user;
+        }
+
+        public String getNikcname_user() {
+            return nikcname_user;
+        }
+
+        public void setNikcname_user(String nikcname_user) {
+            this.nikcname_user = nikcname_user;
+        }
+
+        public String getNikcname_reply_user() {
+            return nikcname_reply_user;
+        }
+
+        public void setNikcname_reply_user(String nikcname_reply_user) {
+            this.nikcname_reply_user = nikcname_reply_user;
         }
     }
 }

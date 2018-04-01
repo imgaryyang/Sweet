@@ -21,6 +21,7 @@ import com.lucky.sweet.adapter.PersonalCircleAdapter;
 import com.lucky.sweet.entity.CircleComment;
 import com.lucky.sweet.entity.CircleDetail;
 import com.lucky.sweet.entity.CircleMainInfo;
+import com.lucky.sweet.entity.CircleUpDataInfo;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.views.CircleImageView;
 import com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayout;
@@ -46,12 +47,9 @@ import java.util.List;
 public class PersonalCircleActivity extends BaseActivity implements View.OnClickListener {
     private Title title = null;
     private CircleImageView imv_head;
-//    private ListView lv_comments;
-
     private CircleMainInfo.CircleListBean circle_info;
     private TextView tv_content;
     private TextView tv_name;
-    private String circle_id;
     private static final String CIRCLE_INFO = "100000";
     private CommunicationService.MyBinder myBinder;
     private PersonalCircleAdapter personalCircleAdapter;
@@ -68,6 +66,11 @@ public class PersonalCircleActivity extends BaseActivity implements View.OnClick
     private ListView comment_list;
     private CircleCommentAdapter adapterComment;
     private List<CircleComment> data;
+    private ListView lv_comments;
+    private String mer_id;
+    private String user_id;
+    private String circle_id;
+
 
     public static void newInStance(FragmentActivity activity, CircleMainInfo.CircleListBean circleListBean) {
         Intent intent = new Intent(activity, PersonalCircleActivity.class);
@@ -80,9 +83,8 @@ public class PersonalCircleActivity extends BaseActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_circle);
         circle_info = (CircleMainInfo.CircleListBean) getIntent().getSerializableExtra(CIRCLE_INFO);
-        if (circle_info != null) {
-            circle_id = circle_info.getCircle_id();
-        }
+
+
         setIsBindEventBus();
         initTitle();
         initViews();
@@ -95,6 +97,9 @@ public class PersonalCircleActivity extends BaseActivity implements View.OnClick
         tv_name.setText(circle_info.getNikcname());
         tv_content.setText(circle_info.getContent());
         l_pictures.set(circle_info.getPhoto_url());
+        circle_id = circle_info.getCircle_id();
+        mer_id = circle_info.getMer_id();
+        user_id = circle_info.getUser_id();
     }
 
     @Override
@@ -111,25 +116,25 @@ public class PersonalCircleActivity extends BaseActivity implements View.OnClick
         toolBar.setStatusBarDarkMode();
         imv_head = findViewById(R.id.imv_head);
         imv_head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
-//        lv_comments = findViewById(R.id.lv_comments);
+
         tv_name = findViewById(R.id.tv_name);
         tv_content = findViewById(R.id.tv_content);
 
 
         // 初始化评论列表
-        comment_list = (ListView) findViewById(R.id.comment_list);
+        //  comment_list = findViewById(R.id.comment_list);
         // 初始化数据
-        data = new ArrayList<>();
+        //  data = ;
         // 初始化适配器
-        adapterComment = new CircleCommentAdapter(getApplicationContext(), data);
+        //adapterComment = new CircleCommentAdapter(getApplicationContext(), new ArrayList<>());
         // 为评论列表设置适配器
-        comment_list.setAdapter(adapterComment);
+        // comment_list.setAdapter(adapterComment);
 
         comment = (ImageView) findViewById(R.id.comment);
+        lv_comments = findViewById(R.id.lv_comments);
         hide_down = (TextView) findViewById(R.id.hide_down);
         comment_content = (EditText) findViewById(R.id.comment_content);
         comment_send = (Button) findViewById(R.id.comment_send);
-
         rl_enroll = (LinearLayout) findViewById(R.id.rl_enroll);
         rl_comment = (RelativeLayout) findViewById(R.id.rl_comment);
         l_pictures = findViewById(R.id.l_pictures);
@@ -137,9 +142,10 @@ public class PersonalCircleActivity extends BaseActivity implements View.OnClick
 
     public void setListener() {
         comment.setOnClickListener(this);
-
         hide_down.setOnClickListener(this);
         comment_send.setOnClickListener(this);
+        findViewById(R.id.btn_click).setOnClickListener(this);
+
     }
 
     private void initTitle() {
@@ -164,7 +170,15 @@ public class PersonalCircleActivity extends BaseActivity implements View.OnClick
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(CircleDetail info) {
         personalCircleAdapter = new PersonalCircleAdapter(info.getComment(), this);
-//        lv_comments.setAdapter(personalCircleAdapter);
+        personalCircleAdapter.setRequestPeople(new PersonalCircleAdapter.RequestPeople() {
+            @Override
+            public void onClicked(String circleId, String reqlyId) {
+                upKeyBoard();
+                circle_id = circleId;
+                user_id = reqlyId;
+            }
+        });
+        lv_comments.setAdapter(personalCircleAdapter);
     }
 
 
@@ -173,11 +187,7 @@ public class PersonalCircleActivity extends BaseActivity implements View.OnClick
         switch (v.getId()) {
             case R.id.comment:
                 // 弹出输入法
-                InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                // 显示评论框
-                rl_enroll.setVisibility(View.GONE);
-                rl_comment.setVisibility(View.VISIBLE);
+                upKeyBoard();
                 break;
             case R.id.hide_down:
                 // 隐藏评论框
@@ -190,9 +200,23 @@ public class PersonalCircleActivity extends BaseActivity implements View.OnClick
             case R.id.comment_send:
                 sendComment();
                 break;
+            case R.id.btn_click:
+                circle_id = circle_info.getCircle_id();
+                mer_id = circle_info.getMer_id();
+                user_id = circle_info.getUser_id();
+                upKeyBoard();
+                break;
             default:
                 break;
         }
+    }
+
+    private void upKeyBoard() {
+        InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        // 显示评论框
+        rl_enroll.setVisibility(View.GONE);
+        rl_comment.setVisibility(View.VISIBLE);
     }
 
     public void sendComment() {
@@ -200,14 +224,26 @@ public class PersonalCircleActivity extends BaseActivity implements View.OnClick
             Toast.makeText(getApplicationContext(), "评论不能为空！", Toast.LENGTH_SHORT).show();
         } else {
             // 生成评论数据
-            CircleComment comment = new CircleComment();
-            comment.setName("评论者" + (data.size() + 1) + "：");
-            comment.setContent(comment_content.getText().toString());
-            adapterComment.addComment(comment);
+            myBinder.commentCircle(user_id, circle_id, mer_id, comment_content.getText().toString());
+
+            // CircleComment comment = new CircleComment();
+            // comment.setName("评论者" + (data.size() + 1) + "：");
+            //comment.setContent(comment_content.getText().toString());
+            // adapterComment.addComment(comment);
             // 发送完，清空输入框
             comment_content.setText("");
 
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(CircleUpDataInfo info) {
+        if (info.getAttr()) {
             Toast.makeText(getApplicationContext(), "评论成功！", Toast.LENGTH_SHORT).show();
+            myBinder.sendCircledetailsInfo(circle_id);
+        } else {
+
+            Toast.makeText(getApplicationContext(), "评论失败！", Toast.LENGTH_SHORT).show();
         }
     }
 }
