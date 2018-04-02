@@ -39,6 +39,7 @@ import com.lucky.sweet.entity.JoinRoomInfo;
 import com.lucky.sweet.entity.MailValiInfo;
 import com.lucky.sweet.entity.MainStoreInfo;
 import com.lucky.sweet.entity.PerdetermingEntity;
+import com.lucky.sweet.entity.PersonCollectInfo;
 import com.lucky.sweet.entity.PersonInfo;
 import com.lucky.sweet.entity.SearchFriendInfo;
 import com.lucky.sweet.entity.ShopCarEntity;
@@ -69,6 +70,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.annotation.Repeatable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -358,8 +360,91 @@ public class CommunicationService extends Service {
         }
 
         public void closeOrder(DeletRoomInfo deletRoomInfo, String room_id) {
-            CommunicationService.this.deleteRoom( deletRoomInfo, room_id);
+            CommunicationService.this.deleteRoom(deletRoomInfo, room_id);
         }
+
+        public void flowPeople(String userId, boolean isFlow) {
+            CommunicationService.this.flowPeople(userId, isFlow);
+        }
+
+        public void getPersonCollect() {
+            CommunicationService.this.personCollect();
+        }
+
+        public void collectShop(String mer_id, boolean isCollect) {
+            CommunicationService.this.collectShop(mer_id, isCollect);
+        }
+
+        public void deleteCircle(String circle_id) {
+            CommunicationService.this.deleteCircle(circle_id);
+        }
+    }
+
+    private void deleteCircle(String circle_id) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("session", MyApplication.sessionId);
+        map.put("circle_id", circle_id);
+        HttpUtils.sendOkHttpRequest(CircleProperties.DELET_CIRCLE, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+
+
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+
+            }
+        }, map);
+
+    }
+
+    private void collectShop(String mer_id, boolean isCollect) {
+        String path;
+        String type;
+        if (isCollect) {
+            type = "collect_mer_id";
+            path = ReserveProperties.COLLECT_SHOP;
+        } else {
+            path = ReserveProperties.UN_COLLECT_SHOP;
+            type = "uncollect_mer_id";
+        }
+        HashMap<String, String> map = new HashMap<>();
+        map.put("session", MyApplication.sessionId);
+        map.put(type, mer_id);
+        HttpUtils.sendOkHttpRequest(path, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+
+
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+
+            }
+        }, map);
+
+
+    }
+
+    private void personCollect() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("session", MyApplication.sessionId);
+        HttpUtils.sendOkHttpRequest(PersonProperties.PERSON_COLLECT, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+                System.out.println(string);
+                EventBus.getDefault().post(new Gson().fromJson(string, PersonCollectInfo.class));
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+
+            }
+        }, map);
+
+
     }
 
     private void commentCircle(String reply_user, String reply_circle_id, String mer_id, String content) {
@@ -373,7 +458,7 @@ public class CommunicationService extends Service {
             @Override
             public void onResponseSuccessfulString(String string) {
 
-             EventBus.getDefault().post(new CircleUpDataInfo(string));
+                EventBus.getDefault().post(new CircleUpDataInfo(string));
             }
 
             @Override
@@ -495,7 +580,7 @@ public class CommunicationService extends Service {
     }
 
 
-    private void deleteRoom( DeletRoomInfo deletRoomInfo, String room_id) {
+    private void deleteRoom(DeletRoomInfo deletRoomInfo, String room_id) {
         HashMap<String, String> map = new HashMap<>();
         map.put("session", MyApplication.sessionId);
         map.put("key_value", deletRoomInfo.toJsonString());
@@ -509,7 +594,7 @@ public class CommunicationService extends Service {
 
             @Override
             public void afterNewRequestSession() {
-                deleteRoom(deletRoomInfo,room_id);
+                deleteRoom(deletRoomInfo, room_id);
             }
         }, map);
     }
@@ -720,6 +805,34 @@ public class CommunicationService extends Service {
                 }, map);
     }
 
+    private void flowPeople(String userId, boolean flag) {
+        String type;
+        String path;
+        if (flag) {
+            type = "attention_by_user_id";
+            path = CircleProperties.FLOW_PEOPLE;
+        } else {
+            type = "unattention_by_user_id";
+            path = CircleProperties.UN_FLOW_PEOPLE;
+        }
+        HashMap<String, String> map = new HashMap<>();
+        map.put(type, userId);
+        map.put("session", MyApplication.sessionId);
+        HttpUtils.sendOkHttpRequest(path,
+                new MyOkhttpHelper() {
+                    @Override
+                    public void onResponseSuccessfulString(String string) {
+                        System.out.println(string);
+                        //EventBus.getDefault().post(new Gson().fromJson(string, CircleMainInfo.class));
+                    }
+
+                    @Override
+                    public void afterNewRequestSession() {
+                        flowPeople(userId,flag);
+                    }
+                }, map);
+    }
+
     private void requestCircleInfo(final String type, final int location) {
         HashMap<String, String> map = new HashMap<>();
         map.put("type", type);
@@ -729,7 +842,7 @@ public class CommunicationService extends Service {
                 new MyOkhttpHelper() {
                     @Override
                     public void onResponseSuccessfulString(String string) {
-                        System.out.println(string);
+
                         EventBus.getDefault().post(new Gson().fromJson(string, CircleMainInfo.class));
                     }
 

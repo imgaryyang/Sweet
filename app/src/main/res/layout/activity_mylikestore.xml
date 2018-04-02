@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <include layout="@layout/layout_title"/>
+    <include
+        layout="@layout/layout_title" />
 
-    <ListView
-        android:id="@+id/lv_likeStore"
+        <ListView
+            android:layout_marginTop="35dp"
+            android:id="@+id/lv_likeStore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:dividerHeight="10dp">
+        </ListView>
+    <TextView
+        android:id="@+id/tv_person_collec_shop_show"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:dividerHeight="10dp">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="暂时收藏" />
 
-    </ListView>
 
-
-</LinearLayout>
+</RelativeLayout>

@@ -56,7 +56,8 @@ public class CircleListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder = null;
+        CircleMainInfo.CircleListBean circleListBean = datas.get(position);
+        ViewHolder viewHolder;
         if (convertView == null) {
             convertView = View.inflate(context, R.layout.item_circle, null);
             viewHolder = new ViewHolder();
@@ -92,8 +93,8 @@ public class CircleListViewAdapter extends BaseAdapter {
                 if (onLikeItClickListener != null) {
                     if (flag) {
 
-                        finalViewHolder.likeNum.setText(Integer.parseInt(datas.get(position).getLike_num()) + 1 + "");
-                        onLikeItClickListener.meridBack(datas.get(position).getCircle_id(), position);
+                        finalViewHolder.likeNum.setText(Integer.parseInt(circleListBean.getLike_num()) + 1 + "");
+                        onLikeItClickListener.meridBack(circleListBean.getCircle_id(), position);
                         flag = false;
                     }
                 }
@@ -106,6 +107,17 @@ public class CircleListViewAdapter extends BaseAdapter {
             } else {
                 tv_flow.setText("关注");
             }
+            boolean flag;
+            String att = tv_flow.getText().toString();
+            if (att.equals("已关注")) {
+                flag = true;
+            } else {
+                flag = false;
+            }
+            if (onLikeItClickListener != null) {
+                onLikeItClickListener.onFlowPeople(circleListBean.getUser_id(), flag);
+            }
+
         });
         return convertView;
 
@@ -113,6 +125,8 @@ public class CircleListViewAdapter extends BaseAdapter {
 
     public interface OnLikeItClickListener {
         void meridBack(String mer_id, int position);
+
+        void onFlowPeople(String userId, boolean flag);
     }
 
     private OnLikeItClickListener onLikeItClickListener;

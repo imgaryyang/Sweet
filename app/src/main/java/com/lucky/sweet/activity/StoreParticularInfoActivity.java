@@ -99,6 +99,8 @@ public class StoreParticularInfoActivity extends BaseActivity {
     public int num = 0;
     private ListView lv_circle;
 
+    private CommunicationService.MyBinder myBinder;
+
     public static void newInStance(Context context, String shopId) {
 
         Intent intent = new Intent(context, StoreParticularInfoActivity.class);
@@ -128,14 +130,14 @@ public class StoreParticularInfoActivity extends BaseActivity {
         mer_id = intent.getStringExtra("shopid");
         myBinder.requestShopDisplay(mer_id);
         myBinder.getParticularCircleInfo(mer_id, num);
-
+        this.myBinder = myBinder;
     }
 
 
     private void initEvent() {
         btn_more_map_detal.setOnClickListener(v -> {
 
-            MapWebAcivity.Companion.InStance(StoreParticularInfoActivity.this, latLng.getLongitude()+"", ""+latLng.getLatitude());
+            MapWebAcivity.Companion.InStance(StoreParticularInfoActivity.this, latLng.getLongitude() + "", "" + latLng.getLatitude());
         });
         btn_map_position.setOnClickListener(v -> maps.setCenter(latLng));
         tv_moreFood.setOnClickListener(v -> {
@@ -147,7 +149,9 @@ public class StoreParticularInfoActivity extends BaseActivity {
             goUpAnim();
         });
     }
-
+    public void onButtonClick(View view){
+        myBinder.collectShop(mer_id,true);
+    }
 
     private void initView() {
         imv_back = findViewById(R.id.imv_back);
@@ -310,8 +314,8 @@ public class StoreParticularInfoActivity extends BaseActivity {
         double longitude = MyApplication.longi;
         double latitude = MyApplication.lat;
         if (longitude != 0 && latitude != 0) {
-            Log.d("longitude", MyApplication.longi+" MyApplication.lat"+MyApplication.lat);
-            Log.d("longitude", latLng.getLatitude()+" MyApplication.getLongitude"+ latLng.getLongitude());
+            Log.d("longitude", MyApplication.longi + " MyApplication.lat" + MyApplication.lat);
+            Log.d("longitude", latLng.getLatitude() + " MyApplication.getLongitude" + latLng.getLongitude());
             LatLng current = new LatLng(latitude, longitude);
             marker = this.map.addMarker(new MarkerOptions().title("您当前位置").anchor(0.5f, 0.5f).position(current));
             marker.showInfoWindow();

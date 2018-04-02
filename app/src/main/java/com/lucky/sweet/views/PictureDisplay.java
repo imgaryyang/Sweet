@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.gif.GifDrawableLoadProvider;
 import com.lucky.sweet.R;
 
@@ -56,7 +57,7 @@ public class PictureDisplay extends LinearLayout {
             if (countList.size() <= i) {
                 imageView.setVisibility(GONE);
             } else {
-                Glide.with(getContext()).load(countList.get(i)).into(imageView);
+                Glide.with(getContext()).load(countList.get(i)).diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView);
             }
 
         }

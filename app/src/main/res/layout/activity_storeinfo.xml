@@ -68,11 +68,11 @@
                         android:background="@drawable/shape_roundbtn_bg">
 
                         <ImageButton
-                            android:layout_width="16dp"
+                            android:layout_width="13dp"
                             android:layout_height="16dp"
                             android:layout_gravity="center"
-                            android:onClick="photoBack"
-                            android:background="@mipmap/circle_star"/>
+                            android:background="@mipmap/circle_star"
+                            android:onClick="onButtonClick" />
                     </FrameLayout>
 
 
@@ -169,7 +169,6 @@
                         android:text="推荐美食："
                         android:textColor="@color/black"
                         android:textSize="15dp"/>
-
                     <TextView
                         android:id="@+id/tv_moreFood"
                         android:layout_width="wrap_content"

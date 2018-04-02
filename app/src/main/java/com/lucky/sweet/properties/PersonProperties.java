@@ -19,5 +19,7 @@ public class PersonProperties {
 
     public static final String CHANGE_NICKNAME = "https://thethreestooges.cn:666/myself/nickname/change";
 
-
+    public static final String PERSON_COLLECT = "https://thethreestooges.cn:666/relation/collect/list";
+    //todo 历史订单
+    public static final String PERSON_ORDER = "https://thethreestooges.cn:666/myself/indent_history/list";
 }

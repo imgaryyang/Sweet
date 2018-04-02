@@ -164,6 +164,10 @@ public class MainActivity extends BaseActivity {
         myBinder.circleLikeIt(mer_id, position);
     }
 
+    public void flowPeople(String userId, boolean flag) {
+        myBinder.flowPeople(userId, flag);
+    }
+
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {

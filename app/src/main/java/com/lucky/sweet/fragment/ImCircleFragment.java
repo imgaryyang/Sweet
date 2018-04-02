@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -108,7 +107,7 @@ public class ImCircleFragment extends Fragment implements
             }
         });
         lv_circle.setOnItemClickListener((adapterView, view1, i, l) -> {
-            PersonalCircleActivity.newInStance(getActivity(),circle_list.get(i));
+            PersonalCircleActivity.newInStance(getActivity(), circle_list.get(i));
             getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
         });
         vImageWatcher = view.findViewById(R.id.imv_watcger);
@@ -145,15 +144,23 @@ public class ImCircleFragment extends Fragment implements
 
         }*/
     }
-
     public void initData(CircleMainInfo info) {
         circle_list = info.getCircle_list();
         circleListViewAdapter = new CircleListViewAdapter(getActivity(), circle_list).setCallBack(this);
         circleListViewAdapter.setOnLikeItClickListener(
-                (mer_id, position) -> activity.sendCircleLikeIt(mer_id, position));
+                new CircleListViewAdapter.OnLikeItClickListener() {
+                    @Override
+                    public void meridBack(String mer_id, int position) {
+                        activity.sendCircleLikeIt(mer_id, position);
+                    }
+
+                    @Override
+                    public void onFlowPeople(String userId, boolean flag) {
+                        activity.flowPeople(userId,flag);
+                    }
+                });
         lv_circle.setAdapter(circleListViewAdapter);
-        if(circleListViewAdapter.isEmpty())
-        {
+        if (circleListViewAdapter.isEmpty()) {
             imv_empty.setVisibility(View.VISIBLE);
         }
     }

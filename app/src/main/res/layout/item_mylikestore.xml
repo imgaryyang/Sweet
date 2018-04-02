@@ -37,6 +37,7 @@
         android:layout_height="95dp"
         android:background="@color/white">
         <TextView
+            android:id="@+id/tv_person_collec_shop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="动感新天地"

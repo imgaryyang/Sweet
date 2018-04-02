@@ -36,8 +36,7 @@ public class AdViewPagerAdapter extends PagerAdapter {
         View view = LayoutInflater.from(context).inflate(R.layout
                 .iitem_viewpager_ad, null);
         ImageView imv_ab = view.findViewById(R.id.imv_ab);
-        Glide.with(context).load(data.get(position).getUrl()).diskCacheStrategy
-                (DiskCacheStrategy.ALL).animate(R.anim.act_glide_alpha_in).thumbnail(0.1f).into(imv_ab);
+        Glide.with(context).load(data.get(position).getUrl()).diskCacheStrategy(DiskCacheStrategy.ALL).animate(R.anim.act_glide_alpha_in).thumbnail(0.1f).into(imv_ab);
         container.addView(view);
         return view;
     }
