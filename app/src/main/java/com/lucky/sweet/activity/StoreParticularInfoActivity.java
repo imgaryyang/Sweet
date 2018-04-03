@@ -24,6 +24,7 @@ import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
 import com.lucky.sweet.entity.CircleMainInfo;
 import com.lucky.sweet.entity.CollectStoreEntitiy;
+import com.lucky.sweet.entity.LikeShopEntity;
 import com.lucky.sweet.entity.StatueCheckBaseEntitiy;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.service.CommunicationService;
@@ -277,8 +278,6 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
     }
 
-
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(CollectStoreEntitiy collectStoreEntitiy){
         String log;
@@ -297,17 +296,15 @@ public class StoreParticularInfoActivity extends BaseActivity {
         }
         Toast.makeText(this, log, Toast.LENGTH_SHORT).show();
     }
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void Event(StatueCheckBaseEntitiy base){
-        if (base.getAttr()) {
-            collect=true;
-            System.out.println(collect+"circle_star_collected");
-           Glide.with(this).load(R.mipmap.circle_star_collected).into(imb_store_collect);
-        }else {
-            collect=false;
-            System.out.println(collect+"circle_star");
 
-             Glide.with(this).load(R.mipmap.circle_star).into(imb_store_collect);
+     @Subscribe(threadMode = ThreadMode.MAIN)
+   public void Event(LikeShopEntity base){
+        if (base.getAttr()) {
+
+          Glide.with(this).load(R.mipmap.circle_star).into(imb_store_collect);
+        }else {
+
+           Glide.with(this).load(R.mipmap.circle_star_collected).into(imb_store_collect);
         }
     }
 

@@ -36,6 +36,7 @@ import com.lucky.sweet.entity.InternetTime;
 import com.lucky.sweet.entity.InvitationInfo;
 import com.lucky.sweet.entity.JoinInRoomInfo;
 import com.lucky.sweet.entity.JoinRoomInfo;
+import com.lucky.sweet.entity.LikeShopEntity;
 import com.lucky.sweet.entity.StatueCheckBaseEntitiy;
 import com.lucky.sweet.entity.MailValiInfo;
 import com.lucky.sweet.entity.MainStoreInfo;
@@ -1287,7 +1288,7 @@ public class CommunicationService extends Service {
                             @Override
                             public void onResponseSuccessfulString(String string) {
 
-                                EventBus.getDefault().post(new StatueCheckBaseEntitiy(string));
+                                EventBus.getDefault().post(new LikeShopEntity(string));
                             }
 
                             @Override
