@@ -1,4 +1,6 @@
 package com.lucky.sweet.activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -6,8 +8,12 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.DecodeEntity;
 import com.lucky.sweet.model.qrcodescan.ScanningQR;
 import com.lucky.sweet.views.SlidingLayoutView;
 import com.lucky.sweet.widgets.ToolBar;
@@ -60,11 +66,25 @@ findViewById(R.id.mo_scanner_photo);
        fragment.setObtainResultCodeListener(new ScanningQR.GetDecode() {
            @Override
            public void getDecodeString(String decode) {
-               Intent data = new Intent();
-               data.putExtra("result", decode);
-               setResult(300, data);
-               finish();
-               overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
+               DecodeEntity decodeEntity;
+               try {
+                     decodeEntity = new Gson().fromJson(decode, DecodeEntity.class);
+
+               }catch (JsonSyntaxException e){
+                   Toast.makeText(CaptureActivity.this, "请勿解析其他二维码", Toast.LENGTH_SHORT).show();
+                   finish();
+                   return;
+               }
+               AlertDialog.Builder builder = new AlertDialog.Builder(CaptureActivity.this);
+               builder.setTitle("提示").setMessage("确认加入购物！").setPositiveButton("确认", (dialogInterface, i) -> {
+                   MerchantActivity.newMoreOrderInStance(CaptureActivity.this,decodeEntity.getMerId(),decodeEntity.getRoomId());
+                   finish();
+                   overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+               }).setNegativeButton("取消", (dialogInterface, i) -> finish()).create();
+               AlertDialog show = builder.show();
+               show.setCanceledOnTouchOutside(false);
+
 
            }
        });

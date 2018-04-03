@@ -94,8 +94,7 @@ public class MerchantActivity extends BaseActivity {
             public void onClickSubimt(ShopCarSingleInformation shopCarSingleInformation) {
                 if (!isSingleOrder) {
                     myBinder.closeOrder(new DeletRoomInfo(MyApplication.USER_ID, TimeUtil.getCurrentTime()), room_id);
-                    //myBinder.upDickesInfo(mer_id, new DeletRoomInfo(MyApplication.USER_ID, TimeUtil.getCurrentTime()), room_id, "{}", "{}", shopCarSingleInformation.getSaleSum());
-                    //OrderSeatActivity.newInstance(MerchantActivity.this, room_id);
+
                 }
                 OrderSeatActivity.newInstance(MerchantActivity.this, shopCarSingleInformation);
             }

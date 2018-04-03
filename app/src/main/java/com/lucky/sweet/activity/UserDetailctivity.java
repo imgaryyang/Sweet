@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.ChangeNameRequstInfo;
-import com.lucky.sweet.entity.UserRegestInfo;
+import com.lucky.sweet.entity.StatueCheckBaseEntitiy;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.views.CircleImageView;
 import com.lucky.sweet.widgets.Title;
@@ -80,7 +80,7 @@ public class UserDetailctivity extends BaseActivity {
             case R.id.btn_change_psw:
                 text = edt_chang_psw.getText().toString();
                 if (!TextUtils.isEmpty(text)) {
-                    myBinder.userRegister(MyApplication.USER_ID, text, false);
+                    myBinder.loginedChanged(text);
 
                 }
                 break;
@@ -96,11 +96,10 @@ public class UserDetailctivity extends BaseActivity {
             Toast.makeText(this,
                     "匿名修改失败", Toast.LENGTH_SHORT).show();
     }   @Subscribe(threadMode = ThreadMode.MAIN)
-    public void Evnet(UserRegestInfo info) {
+    public void Event(StatueCheckBaseEntitiy info) {
         if (info.getAttr()) {
             Toast.makeText(this, "密码修改成功", Toast.LENGTH_SHORT).show();
         } else
-            Toast.makeText(this,
-                    "密码修改失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "密码修改失败", Toast.LENGTH_SHORT).show();
     }
 }

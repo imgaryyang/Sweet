@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -24,10 +23,11 @@ import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.CircleListViewAdapter;
 import com.lucky.sweet.entity.CircleMainInfo;
+import com.lucky.sweet.entity.CollectStoreEntitiy;
+import com.lucky.sweet.entity.StatueCheckBaseEntitiy;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.thread.BlurBitmapThread;
-import com.lucky.sweet.utility.GaoDeMapUtil;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 import com.tencent.lbssearch.TencentSearch;
@@ -100,6 +100,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private ListView lv_circle;
 
     private CommunicationService.MyBinder myBinder;
+    private ImageButton imb_store_collect;
 
     public static void newInStance(Context context, String shopId) {
 
@@ -137,7 +138,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private void initEvent() {
         btn_more_map_detal.setOnClickListener(v -> {
 
-            MapWebAcivity.Companion.InStance(StoreParticularInfoActivity.this, latLng.getLongitude() + "", "" + latLng.getLatitude());
+            MapWebAcivity.Companion.InStance(StoreParticularInfoActivity.this,String.valueOf(MyApplication.lat)   , String.valueOf(MyApplication.longi)   ,latLng.getLongitude() + "", "" + latLng.getLatitude());
         });
         btn_map_position.setOnClickListener(v -> maps.setCenter(latLng));
         tv_moreFood.setOnClickListener(v -> {
@@ -149,8 +150,10 @@ public class StoreParticularInfoActivity extends BaseActivity {
             goUpAnim();
         });
     }
+    private Boolean collect =true;
     public void onButtonClick(View view){
-        myBinder.collectShop(mer_id,true);
+        myBinder.collectShop(mer_id,!collect);
+
     }
 
     private void initView() {
@@ -167,7 +170,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
         tv_shop_des = findViewById(R.id.tv_shop_des);
         btn_map_position = findViewById(R.id.btn_map_position);
         sv_storeInfo = findViewById(R.id.sv_storeInfo);
-        sv_storeInfo.smoothScrollTo(0, 0);
+
         ll_store_part_info = findViewById(R.id.ll_store_part_info);
         imv_shop_one = findViewById(R.id.imv_shop_one);
         imv_shop_two = findViewById(R.id.imv_shop_two);
@@ -183,6 +186,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
         tv_weibo = findViewById(R.id.tv_weibo);
         layout_order_content = findViewById(R.id.layout_order_content);
         ll_orderbtn = findViewById(R.id.ll_orderbtn);
+        imb_store_collect = findViewById(R.id.imb_store_collect);
 
 
 //        StarLevelIndicatorView startIndicator = findViewById(R.id.startIndicator);
@@ -273,6 +277,40 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
     }
 
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(CollectStoreEntitiy collectStoreEntitiy){
+        String log;
+        if (collectStoreEntitiy.getAttr()) {
+            if (collectStoreEntitiy.isCollect()) {
+                Glide.with(this).load(R.mipmap.circle_star_collected).into(imb_store_collect);
+                log="收藏成功";
+                collect=true;
+            }else {
+                Glide.with(this).load(R.mipmap.circle_star).into(imb_store_collect);
+                log="取关成功";
+                collect=false;
+        }
+        }else {
+            log="操作失败";
+        }
+        Toast.makeText(this, log, Toast.LENGTH_SHORT).show();
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(StatueCheckBaseEntitiy base){
+        if (base.getAttr()) {
+            collect=true;
+            System.out.println(collect+"circle_star_collected");
+           Glide.with(this).load(R.mipmap.circle_star_collected).into(imb_store_collect);
+        }else {
+            collect=false;
+            System.out.println(collect+"circle_star");
+
+             Glide.with(this).load(R.mipmap.circle_star).into(imb_store_collect);
+        }
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(StoreDetailedInfo entity) {
         StoreDetailedInfo.InfoBean info = entity.getInfo();
@@ -314,13 +352,11 @@ public class StoreParticularInfoActivity extends BaseActivity {
         double longitude = MyApplication.longi;
         double latitude = MyApplication.lat;
         if (longitude != 0 && latitude != 0) {
-            Log.d("longitude", MyApplication.longi + " MyApplication.lat" + MyApplication.lat);
-            Log.d("longitude", latLng.getLatitude() + " MyApplication.getLongitude" + latLng.getLongitude());
             LatLng current = new LatLng(latitude, longitude);
             marker = this.map.addMarker(new MarkerOptions().title("您当前位置").anchor(0.5f, 0.5f).position(current));
             marker.showInfoWindow();
             btn_more_map_detal.setVisibility(View.VISIBLE);
-            maps.zoomToSpan(new LatLng(latLng.getLatitude(), latLng.getLongitude()), new LatLng(latitude, longitude));
+            maps.zoomToSpan(new LatLng(latLng.getLatitude()-0.0013, latLng.getLongitude()-0.0013), new LatLng(latitude+0.0013, longitude+0.0013));
             TencentSearch tencentSearch = new TencentSearch(this);
             WalkingParam walkingParam = new WalkingParam();
             walkingParam.from(new Location(Float.valueOf(shopdes.getLatitude()), Float.valueOf(shopdes.getLongitude())));
@@ -361,7 +397,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
         }
 
-
+        sv_storeInfo.smoothScrollTo(0, 0);
     }
 
     public static void setListViewHeightBasedOnChildren(ListView listView) {

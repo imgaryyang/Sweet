@@ -22,4 +22,8 @@ public class PersonProperties {
     public static final String PERSON_COLLECT = "https://thethreestooges.cn:666/relation/collect/list";
     //todo 历史订单
     public static final String PERSON_ORDER = "https://thethreestooges.cn:666/myself/indent_history/list";
+
+    public static final String LOGIN_CHANGE_PSW="https://thethreestooges.cn:666/myself/change/pwd";
+
+    public static final String PERSON_COMMENT_LIST="https://thethreestooges.cn:666/myself/circle_reply/list";
 }

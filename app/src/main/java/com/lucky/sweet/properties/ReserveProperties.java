@@ -35,5 +35,7 @@ public class ReserveProperties {
 
     public static final String UN_COLLECT_SHOP = "https://thethreestooges.cn:666/relation/uncollect/mer";
 
+    public static final String CHECK_SHOP_COLLECT="https://thethreestooges.cn:666/mer_info/attention/status";
+
 }
 

@@ -165,7 +165,6 @@ public class CreateRoomActivity extends BaseActivity {
         detaileSearchFriendAdapter.setOnInvitationClick(userId -> {
             if (roomID != null) {
                 Toast.makeText(this, "已经邀请您的好友", Toast.LENGTH_SHORT).show();
-
                 myBinder.invitationFriend(userId, new InvitationInfo(MyApplication.USER_ID, roomID, mer_id));
             } else
                 Toast.makeText(this, "请创建房间", Toast.LENGTH_SHORT).show();

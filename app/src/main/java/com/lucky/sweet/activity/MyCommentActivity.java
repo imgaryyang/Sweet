@@ -9,10 +9,14 @@ import android.widget.ListView;
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.MyCommentAdapter;
 import com.lucky.sweet.adapter.PersonalCircleAdapter;
+import com.lucky.sweet.entity.MyCommentEntiy;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.views.ShopCarPopWindow;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,34 +37,21 @@ public class MyCommentActivity extends BaseActivity {
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
-
+        myBinder.getPersonComment();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mycomment);
+        setIsBindEventBus();
         initTitle();
         initViews();
     }
 
     private void initViews() {
         lv_myComment = (ListView)findViewById(R.id.lv_myComment);
-        ArrayList<String> objects = new ArrayList<String>();
-        objects.add("");
-        objects.add("");
-        objects.add("");
-        objects.add("");
-        objects.add("");
-        objects.add("");
-        objects.add("");
-        objects.add("");
-        objects.add("");
-        objects.add("");
-        objects.add("");
-        objects.add("");
-        objects.add("");
-        lv_myComment.setAdapter(new MyCommentAdapter(objects,this));
+
         lv_myComment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view,
@@ -97,5 +88,16 @@ public class MyCommentActivity extends BaseActivity {
 
         title.mSetButtonInfo(buttonLeft);
 
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(MyCommentEntiy entiy){
+        List<MyCommentEntiy.CircleReplyLsitBean> circle_reply_lsit = entiy.getCircle_reply_lsit();
+        lv_myComment.setAdapter(new MyCommentAdapter(circle_reply_lsit,this));
+        lv_myComment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });
     }
 }

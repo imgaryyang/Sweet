@@ -4,8 +4,12 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
+import com.lucky.sweet.entity.MyCommentEntiy;
 import com.lucky.sweet.views.CircleImageView;
 
 import java.util.List;
@@ -21,15 +25,19 @@ import java.util.List;
 
 public class MyCommentAdapter extends BaseAdapter {
 
-    private List<String> datas;
+    private   List<MyCommentEntiy.CircleReplyLsitBean> datas;
     private Context context;
 
-    public MyCommentAdapter(List<String> datas, Context context) {
+    public MyCommentAdapter (List<MyCommentEntiy.CircleReplyLsitBean> datas, Context context) {
         this.datas = datas;
         this.context = context;
     }
 
     static public class ViewHolder {
+        ImageView imv_my_comment;
+        TextView contant;
+        TextView getRepert;
+
     }
 
     @Override
@@ -49,15 +57,21 @@ public class MyCommentAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        MyCommentEntiy.CircleReplyLsitBean circleReplyLsitBean = datas.get(position);
         ViewHolder viewHolder = null;
         if (convertView == null) {
-            convertView = View.inflate(context, R.layout.item_mycomment, null);
             viewHolder = new MyCommentAdapter.ViewHolder();
+            convertView = View.inflate(context, R.layout.item_mycomment, null);
+            viewHolder.imv_my_comment=convertView.findViewById(R.id.imv_my_comment);
+            viewHolder.contant=convertView.findViewById(R.id.tv_comment_content);
+            viewHolder.getRepert=convertView.findViewById(R.id.tv_comment_repert_pero);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
+        viewHolder.getRepert.setText(circleReplyLsitBean.getReply_user_nickname());
+        viewHolder.contant.setText(circleReplyLsitBean.getContent());
+        Glide.with(context).load( circleReplyLsitBean.getPublish_photo()).into(viewHolder.imv_my_comment);
         return convertView;
     }
 }

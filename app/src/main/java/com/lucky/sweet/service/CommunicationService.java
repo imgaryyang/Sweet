@@ -2,7 +2,6 @@ package com.lucky.sweet.service;
 
 import android.app.Activity;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
@@ -28,6 +27,7 @@ import com.lucky.sweet.entity.CircleDetail;
 import com.lucky.sweet.entity.CircleLikePoint;
 import com.lucky.sweet.entity.CircleMainInfo;
 import com.lucky.sweet.entity.CircleUpDataInfo;
+import com.lucky.sweet.entity.CollectStoreEntitiy;
 import com.lucky.sweet.entity.DeletRoomInfo;
 import com.lucky.sweet.entity.DetailOrderInfo;
 import com.lucky.sweet.entity.FlowPeople;
@@ -36,8 +36,10 @@ import com.lucky.sweet.entity.InternetTime;
 import com.lucky.sweet.entity.InvitationInfo;
 import com.lucky.sweet.entity.JoinInRoomInfo;
 import com.lucky.sweet.entity.JoinRoomInfo;
+import com.lucky.sweet.entity.StatueCheckBaseEntitiy;
 import com.lucky.sweet.entity.MailValiInfo;
 import com.lucky.sweet.entity.MainStoreInfo;
+import com.lucky.sweet.entity.MyCommentEntiy;
 import com.lucky.sweet.entity.PerdetermingEntity;
 import com.lucky.sweet.entity.PersonCollectInfo;
 import com.lucky.sweet.entity.PersonInfo;
@@ -70,7 +72,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.annotation.Repeatable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -95,11 +96,13 @@ public class CommunicationService extends Service {
 
     private TencentLocationManager locationManager;
     private final String TAG = "Service_";
+    private Object personComment;
 
     @Override
     public IBinder onBind(Intent intent) {
         return new MyBinder();
     }
+
 
 
     public class MyBinder extends Binder {
@@ -147,9 +150,11 @@ public class CommunicationService extends Service {
         public void userRegister(String email, String password, Boolean isRegister) {
             userWrite(email, password, isRegister);
 
+        }
+        public void loginedChanged(String psw){
+            CommunicationService.this.loginedChanged(psw);
 
         }
-
         public void requestImStoreInfo(Activity activity) {
 
             initLocation(activity);
@@ -160,6 +165,7 @@ public class CommunicationService extends Service {
         public void requestShopDisplay(String mer_id) {
 
             CommunicationService.this.getParticularInfo(mer_id);
+            CommunicationService.this.isCollectShopInfo(mer_id);
 
         }
 
@@ -378,6 +384,48 @@ public class CommunicationService extends Service {
         public void deleteCircle(String circle_id) {
             CommunicationService.this.deleteCircle(circle_id);
         }
+
+        public void getPersonComment() {
+            CommunicationService.this.getPersonComment();
+        }
+    }
+
+    private void loginedChanged(String psw) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("session", MyApplication.sessionId);
+        map.put("psw", psw);
+        HttpUtils.sendOkHttpRequest(PersonProperties.LOGIN_CHANGE_PSW, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+
+                EventBus.getDefault().post(new StatueCheckBaseEntitiy(string));
+
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+
+            }
+        }, map);
+    }
+
+    public void getPersonComment() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("session", MyApplication.sessionId);
+        map.put("start", "0");
+        HttpUtils.sendOkHttpRequest(PersonProperties.PERSON_COMMENT_LIST, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+        EventBus.getDefault().post(new Gson().fromJson(string,MyCommentEntiy.class));
+
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+                getPersonComment();
+            }
+        }, map);
+
     }
 
     private void deleteCircle(String circle_id) {
@@ -412,19 +460,24 @@ public class CommunicationService extends Service {
         HashMap<String, String> map = new HashMap<>();
         map.put("session", MyApplication.sessionId);
         map.put(type, mer_id);
-        HttpUtils.sendOkHttpRequest(path, new MyOkhttpHelper() {
+        new Thread(){
             @Override
-            public void onResponseSuccessfulString(String string) {
+            public void run() {
+                HttpUtils.sendOkHttpRequest(path, new MyOkhttpHelper() {
+                    @Override
+                    public void onResponseSuccessfulString(String string) {
 
+                        EventBus.getDefault().post(new CollectStoreEntitiy(string,isCollect) );
 
+                    }
+
+                    @Override
+                    public void afterNewRequestSession() {
+
+                    }
+                }, map);
             }
-
-            @Override
-            public void afterNewRequestSession() {
-
-            }
-        }, map);
-
+        }.start();
 
     }
 
@@ -434,7 +487,7 @@ public class CommunicationService extends Service {
         HttpUtils.sendOkHttpRequest(PersonProperties.PERSON_COLLECT, new MyOkhttpHelper() {
             @Override
             public void onResponseSuccessfulString(String string) {
-                System.out.println(string);
+
                 EventBus.getDefault().post(new Gson().fromJson(string, PersonCollectInfo.class));
             }
 
@@ -478,7 +531,6 @@ public class CommunicationService extends Service {
         HttpUtils.sendOkHttpRequest(ReserveProperties.SHOP_DETAIL, new MyOkhttpHelper() {
             @Override
             public void onResponseSuccessfulString(String string) {
-                System.out.println(string.trim());
                 EventBus.getDefault().post(new Gson().fromJson(string.trim(), ShopDetailPicInfo.class));
             }
 
@@ -1050,6 +1102,7 @@ public class CommunicationService extends Service {
 
             @Override
             public void onResponseSuccessfulString(String string) {
+
                 EventBus.getDefault().post(new Gson().fromJson(string, ShopCarEntity.class));
 
             }
@@ -1221,7 +1274,30 @@ public class CommunicationService extends Service {
         locationManager.removeUpdates(mListener);
     }
 
+    private void isCollectShopInfo(final String shopid){
+        final HashMap<String, String> map = new HashMap<>();
+        map.put("mer_id", shopid);
+        map.put("session", MyApplication.sessionId);
+        new Thread() {
+            @Override
+            public void run() {
+                HttpUtils.sendOkHttpRequest(ReserveProperties.CHECK_SHOP_COLLECT, new
+                        MyOkhttpHelper() {
 
+                            @Override
+                            public void onResponseSuccessfulString(String string) {
+
+                                EventBus.getDefault().post(new StatueCheckBaseEntitiy(string));
+                            }
+
+                            @Override
+                            public void afterNewRequestSession() {
+                                isCollectShopInfo(shopid);
+                            }
+                        }, map);
+            }
+        }.start();
+    }
     private void getParticularInfo(final String shopid) {
         final HashMap<String, String> map = new HashMap<>();
         map.put("mer_id", shopid);

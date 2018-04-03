@@ -11,8 +11,8 @@ import com.tencent.mapsdk.raster.model.LatLng
 import kotlinx.android.synthetic.main.activity_map_web_acivity.*
 
 class MapWebAcivity : AppCompatActivity() {
-    val MAPPATH = "http://apis.map.qq.com/tools/routeplan/eword=您的目的地&epointx=116.39710&epointy=39.917200?referer=myapp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77 "
 
+     val GAODE_MAP_KEY="65db589bc83a741541ebdb30810e7205"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map_web_acivity)
@@ -22,24 +22,30 @@ class MapWebAcivity : AppCompatActivity() {
 
 
     fun initView() {
-        val urlPath = getUrlPath(intent.getStringExtra(END_LAT), intent.getStringExtra(END_LON))
+        val urlPath = getUrlPath(intent.getStringExtra(START_LAT),intent.getStringExtra(START_LON),intent.getStringExtra(END_LAT), intent.getStringExtra(END_LON))
         println(urlPath)
+        wb_map.settings.javaScriptEnabled=true
+        wb_map.settings.javaScriptCanOpenWindowsAutomatically=true
         wb_map.loadUrl(urlPath)
-       // wb_map.webViewClient = WebViewClient()
     }
 
-    fun getUrlPath(lat: String, lon: String): String {
+    fun getUrlPath(startLat: String,startLon: String,lat: String, lon: String): String {
 
-        return "m.amap.com/navi/?start=121.30554，38.815544&dest=$lon,$lat&destName=一条驾车路线&naviBy=car&key=31d07ef08c787f75c25bf496fa7affb5"
+        return "http://m.amap.com/navi/?start=$startLat,$startLon&dest=$lat,$lon&destName=您的目的地&naviBy=car&key=$GAODE_MAP_KEY"
     }
+
 
     companion object {
 
+        val START_LAT = "START_LAT"
+        val  START_LON = "START_LON"
         val END_LAT = "END_LAT"
         val END_LON = "END_LON"
 
-        fun InStance(activity: Activity, endlong: String, endLat: String) {
+        fun InStance(activity: Activity,startLat :String,startLon: String, endlong: String, endLat: String) {
             var intent = Intent(activity, MapWebAcivity::class.java)
+            intent.putExtra(START_LAT, startLat)
+            intent.putExtra(START_LON, startLon)
             intent.putExtra(END_LAT, endLat)
             intent.putExtra(END_LON, endlong)
             activity.startActivity(intent)

@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.SearchSpinnerAdapter;
 import com.lucky.sweet.adapter.ShowInfoListViewAdapter;
+import com.lucky.sweet.entity.CollectStoreEntitiy;
 import com.lucky.sweet.entity.StoreDisplayInfo;
 import com.lucky.sweet.entity.StoreDisplaySearchEntity;
 import com.lucky.sweet.service.CommunicationService;
@@ -232,7 +233,20 @@ public class StoreDisplayActivity extends BaseActivity {
 
     }
 
+@Subscribe(threadMode = ThreadMode.MAIN)
+public void Event(CollectStoreEntitiy collectStoreEntitiy){
+    if (collectStoreEntitiy.getAttr()) {
+        String log;
+        if (collectStoreEntitiy.isCollect()) {
+            log="收藏成功";
+        }else
+        {
+            log="取关成功";
 
+        }
+        Toast.makeText(this, log, Toast.LENGTH_SHORT).show();
+    }
+}
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(StoreDisplaySearchEntity info) {
 
