@@ -106,6 +106,8 @@
         <activity android:name=".activity.CreateRoomActivity" />
         <activity android:name=".activity.CropIwaActivity" />
         <activity android:name=".activity.MyLikeStoreActivity" />
+        <activity android:name=".activity.BindUserPhoneActivity" />
+        <activity android:name=".activity.AlterPwdActivity" />
 
         <meta-data
             android:name="com.alibaba.app.appkey"

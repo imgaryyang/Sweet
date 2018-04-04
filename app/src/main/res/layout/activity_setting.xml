@@ -42,7 +42,41 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_setUserPhone"
         android:layout_width="match_parent"
+        android:onClick="onButtonClick"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/selector_item_click">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/set_phone"/>
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="绑定手机"
+            android:textColor="@color/black"
+            android:textSize="17dp"
+            android:layout_marginLeft="15dp"/>
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@mipmap/next_arrow"
+            android:layout_marginRight="15dp"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_setUserPwd"
+        android:layout_width="match_parent"
+        android:onClick="onButtonClick"
         android:layout_height="60dp"
         android:layout_marginTop="20dp"
         android:gravity="center_vertical"
@@ -62,6 +96,14 @@
             android:textColor="@color/black"
             android:textSize="17dp"
             android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:layout_weight="0.2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="修改"
+            android:textSize="10dp"
+            android:gravity="right"/>
 
         <ImageView
             android:layout_width="18dp"

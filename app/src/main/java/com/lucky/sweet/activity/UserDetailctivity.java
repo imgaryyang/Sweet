@@ -30,63 +30,62 @@ public class UserDetailctivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_use_detailctivity);
         setIsBindEventBus();
-        initView();
-        initTitle();
-    }
-
-    private void initTitle() {
+//        initView();
         ToolBar toolBar = new ToolBar(this);
         toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
-        title = findViewById(R.id.title);
-        title.setTitleNameStr("账户信息");
-        Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
-                .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
-        title.setOnTitleButtonClickListener((id, viewHolder) -> {
-            switch (id) {
-                case Title.BUTTON_LEFT:
-                    finish();
-                    goPreAnim();
-                    break;
-            }
-        });
-        title.mSetButtonInfo(buttonLeft);
     }
 
-    private void initView() {
-        imv_head = findViewById(R.id.imv_head);
-        imv_head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
+//    private void initTitle() {
+//        title = findViewById(R.id.title);
+//        title.setTitleNameStr("账户信息");
+//        Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
+//                .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
+//        title.setOnTitleButtonClickListener((id, viewHolder) -> {
+//            switch (id) {
+//                case Title.BUTTON_LEFT:
+//                    finish();
+//                    goPreAnim();
+//                    break;
+//            }
+//        });
+//        title.mSetButtonInfo(buttonLeft);
+//    }
 
-        edt_change_nikname = findViewById(R.id.edt_change_nikname);
-        edt_chang_psw = findViewById(R.id.edt_chang_psw);
-
-    }
+//    private void initView() {
+//        imv_head = findViewById(R.id.imv_head);
+//        imv_head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
+//
+//        edt_change_nikname = findViewById(R.id.edt_change_nikname);
+//        edt_chang_psw = findViewById(R.id.edt_chang_psw);
+//
+//    }
 
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
         this.myBinder = myBinder;
     }
 
-    public void onViewClick(View view) {
-        String text;
-        switch (view.getId()) {
-
-            case R.id.btn_change_nikeName:
-                text = edt_change_nikname.getText().toString();
-                if (!TextUtils.isEmpty(text)) {
-                    myBinder.upPersonNikName(text);
-
-                }
-                break;
-            case R.id.btn_change_psw:
-                text = edt_chang_psw.getText().toString();
-                if (!TextUtils.isEmpty(text)) {
-                    myBinder.loginedChanged(text);
-
-                }
-                break;
-
-        }
-    }
+//    public void onViewClick(View view) {
+//        String text;
+//        switch (view.getId()) {
+//
+//            case R.id.btn_change_nikeName:
+//                text = edt_change_nikname.getText().toString();
+//                if (!TextUtils.isEmpty(text)) {
+//                    myBinder.upPersonNikName(text);
+//
+//                }
+//                break;
+//            case R.id.btn_change_psw:
+//                text = edt_chang_psw.getText().toString();
+//                if (!TextUtils.isEmpty(text)) {
+//                    myBinder.loginedChanged(text);
+//
+//                }
+//                break;
+//
+//        }
+//    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Evnet(ChangeNameRequstInfo info) {

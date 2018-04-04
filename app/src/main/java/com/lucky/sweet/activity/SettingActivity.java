@@ -107,6 +107,14 @@ public class SettingActivity extends BaseActivity {
                 startActivity(new Intent(SettingActivity.this, UserDetailctivity.class));
                 overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
                 break;
+            case R.id.ll_setUserPhone:
+                startActivity(new Intent(SettingActivity.this, BindUserPhoneActivity.class));
+                overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+                break;
+            case R.id.ll_setUserPwd:
+                startActivity(new Intent(SettingActivity.this, AlterPwdActivity.class));
+                overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
+                break;
             case R.id.btn_userOut:
                 if (btn_userOut.getText().toString().equals("退出登陆")) {
 
