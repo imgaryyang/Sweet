@@ -4,8 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.activity.MyApplication;
 
 
 /**
@@ -20,25 +22,23 @@ import com.lucky.sweet.R;
 */
 
 public class MyToast {
-    private android.widget.Toast mToast;
-    private MyToast(Context context, CharSequence text, int duration) {
+    private Toast mToast;
+    private MyToast(Context context, String text, int duration) {
         View v = LayoutInflater.from(context).inflate(R.layout.layout_mytoast, null);
         TextView textView = (TextView) v.findViewById(R.id.tv_toastContent);
-        mToast = new android.widget.Toast(context);
         textView.setText(text);
+        mToast = new Toast(context);
         mToast.setDuration(duration);
         mToast.setView(v);
+        mToast.show();
     }
 
-
-    public static MyToast makeText(Context context, CharSequence text, int duration) {
-        return new MyToast(context, text, duration);
+    public static void showShort(String text) {
+        new MyToast(MyApplication.getContext(), text, Toast.LENGTH_SHORT);
     }
 
-    public void show() {
-        if (mToast != null) {
-            mToast.show();
-        }
+    public static void showLong(String text) {
+        new MyToast(MyApplication.getContext(), text, Toast.LENGTH_LONG);
     }
 
 }

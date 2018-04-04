@@ -24,6 +24,7 @@ import com.lucky.sweet.entity.CircleMainInfo;
 import com.lucky.sweet.entity.CircleUpDataInfo;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.views.CircleImageView;
+import com.lucky.sweet.views.MyToast;
 import com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayout;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
@@ -221,7 +222,8 @@ public class PersonalCircleActivity extends BaseActivity implements View.OnClick
 
     public void sendComment() {
         if (comment_content.getText().toString().equals("")) {
-            Toast.makeText(getApplicationContext(), "评论不能为空！", Toast.LENGTH_SHORT).show();
+            MyToast.showShort("评论不能为空！");
+
         } else {
             // 生成评论数据
             myBinder.commentCircle(user_id, circle_id, mer_id, comment_content.getText().toString());
@@ -239,11 +241,14 @@ public class PersonalCircleActivity extends BaseActivity implements View.OnClick
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(CircleUpDataInfo info) {
         if (info.getAttr()) {
-            Toast.makeText(getApplicationContext(), "评论成功！", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "评论成功！", Toast.LENGTH_SHORT).show();
+            MyToast.showShort("评论成功！");
+
             myBinder.sendCircledetailsInfo(circle_id);
         } else {
 
-            Toast.makeText(getApplicationContext(), "评论失败！", Toast.LENGTH_SHORT).show();
+            MyToast.showShort("评论失败！");
+
         }
     }
 }

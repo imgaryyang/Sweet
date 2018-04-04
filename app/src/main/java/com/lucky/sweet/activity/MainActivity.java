@@ -20,6 +20,7 @@ import com.lucky.sweet.fragment.ImCircleFragment;
 import com.lucky.sweet.fragment.ImMeFragment;
 import com.lucky.sweet.fragment.ImStoreFragment;
 import com.lucky.sweet.service.CommunicationService;
+import com.lucky.sweet.views.MyToast;
 import com.lucky.sweet.widgets.Tab.TabContainerView;
 import com.lucky.sweet.widgets.Tab.TabFragmentAdapter;
 import com.lucky.sweet.widgets.ToolBar;
@@ -116,7 +117,8 @@ public class MainActivity extends BaseActivity {
             @Override
             public boolean onItemClickListener(int position) {
                 if (!MyApplication.config.getBoolean("logined", false)) {
-                    Toast.makeText(MainActivity.this, "请先登陆", Toast.LENGTH_SHORT).show();
+                    MyToast.showShort("请先登陆");
+
                     startActivity(new Intent(MainActivity.this, UserLoginActivity.class));
                     return false;
                 } else {

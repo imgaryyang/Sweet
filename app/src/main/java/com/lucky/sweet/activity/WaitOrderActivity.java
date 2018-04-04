@@ -8,6 +8,7 @@ import com.lucky.sweet.R;
 import com.lucky.sweet.adapter.HisOrderAdapter;
 import com.lucky.sweet.entity.AlterOrderInfo;
 import com.lucky.sweet.service.CommunicationService;
+import com.lucky.sweet.views.MyToast;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -75,7 +76,9 @@ public class WaitOrderActivity extends BaseActivity {
         if (listBeans.size() != 0) {
             HisOrderAdapter hisOrderAdapter = new HisOrderAdapter(listBeans, this);
             lv_wait_order.setAdapter(hisOrderAdapter);
-        } else Toast.makeText(this, "暂时无等待订单", Toast.LENGTH_SHORT).show();
+        } else MyToast.showShort("暂时无等待订单");
+
+
     }
 
 }

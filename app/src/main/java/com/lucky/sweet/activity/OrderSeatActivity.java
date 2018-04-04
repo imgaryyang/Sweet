@@ -18,6 +18,7 @@ import com.lucky.sweet.entity.ShopCarSingleInformation;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.utility.RegularUtils;
 import com.lucky.sweet.views.DishesOrderDialog;
+import com.lucky.sweet.views.MyToast;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -133,7 +134,8 @@ public class OrderSeatActivity extends BaseActivity {
                     .create();
             dialog.show();
         } else {
-            Toast.makeText(getApplication(), "手机号不对哦，请重新输入", Toast.LENGTH_SHORT).show();
+            MyToast.showShort("手机号不对哦，请重新输入");
+
         }
     }
 

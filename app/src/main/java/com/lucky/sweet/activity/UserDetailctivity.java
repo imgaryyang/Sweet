@@ -11,6 +11,7 @@ import com.lucky.sweet.entity.ChangeNameRequstInfo;
 import com.lucky.sweet.entity.StatueCheckBaseEntitiy;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.views.CircleImageView;
+import com.lucky.sweet.views.MyToast;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -90,15 +91,19 @@ public class UserDetailctivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Evnet(ChangeNameRequstInfo info) {
         if (info.getAttr()) {
-            Toast.makeText(this, "匿名修改成功", Toast.LENGTH_SHORT).show();
+            MyToast.showShort("匿名修改成功");
+
         } else
-            Toast.makeText(this,
-                    "匿名修改失败", Toast.LENGTH_SHORT).show();
+
+        MyToast.showShort("匿名修改失败");
+
     }   @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(StatueCheckBaseEntitiy info) {
         if (info.getAttr()) {
-            Toast.makeText(this, "密码修改成功", Toast.LENGTH_SHORT).show();
+            MyToast.showShort("密码修改成功");
+
         } else
-            Toast.makeText(this, "密码修改失败", Toast.LENGTH_SHORT).show();
+        MyToast.showShort("密码修改失败");
+
     }
 }

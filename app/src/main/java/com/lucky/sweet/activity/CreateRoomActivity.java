@@ -18,6 +18,7 @@ import com.lucky.sweet.entity.FlowPeople;
 import com.lucky.sweet.entity.InvitationInfo;
 import com.lucky.sweet.entity.SearchFriendInfo;
 import com.lucky.sweet.service.CommunicationService;
+import com.lucky.sweet.views.MyToast;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -138,12 +139,14 @@ public class CreateRoomActivity extends BaseActivity {
         lv_add_friend.setAdapter(flowFriendAdapter);
 
         flowFriendAdapter.setOnInvitationClick(userId -> {
-            Toast.makeText(this, userId, Toast.LENGTH_SHORT).show();
+            MyToast.showShort(userId);
+
             if (roomID != null) {
-                Toast.makeText(this, "已经邀请您的好友", Toast.LENGTH_SHORT).show();
+                MyToast.showShort("已经邀请您的好友");
+
                 myBinder.invitationFriend(userId, new InvitationInfo(MyApplication.USER_ID, roomID, mer_id));
             } else
-                Toast.makeText(this, "请创建房间", Toast.LENGTH_SHORT).show();
+            MyToast.showShort("请创建房间");
 
         });
 
@@ -154,7 +157,9 @@ public class CreateRoomActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(String info) {
         roomID = info;
-        Toast.makeText(this, "建立房间成功：" + info, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "建立房间成功：" + info, Toast.LENGTH_SHORT).show();
+        MyToast.showShort("建立房间成功："+ info);
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -164,10 +169,11 @@ public class CreateRoomActivity extends BaseActivity {
         lv_search_user_show.setAdapter(detaileSearchFriendAdapter);
         detaileSearchFriendAdapter.setOnInvitationClick(userId -> {
             if (roomID != null) {
-                Toast.makeText(this, "已经邀请您的好友", Toast.LENGTH_SHORT).show();
+                MyToast.showShort("已经邀请您的好友");
+
                 myBinder.invitationFriend(userId, new InvitationInfo(MyApplication.USER_ID, roomID, mer_id));
             } else
-                Toast.makeText(this, "请创建房间", Toast.LENGTH_SHORT).show();
+            MyToast.showShort("请创建房间");
 
         });
 

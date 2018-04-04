@@ -20,6 +20,7 @@ import com.lucky.sweet.reciver.NetBroadcastReceiver;
 import com.lucky.sweet.entity.OssBean;
 import com.lucky.sweet.properties.Properties;
 import com.lucky.sweet.utility.HttpUtils;
+import com.lucky.sweet.views.MyToast;
 
 import java.io.IOException;
 
@@ -83,7 +84,8 @@ public class MyApplication extends Application {
 
                     break;
                 case NetBroadcastReceiver.NETWORK_NONE:
-                    Toast.makeText(context, "暂无网络", Toast.LENGTH_SHORT).show();
+                    MyToast.showShort("暂无网络");
+
                     break;
                 case NetBroadcastReceiver.NETWORK_WIFI:
 

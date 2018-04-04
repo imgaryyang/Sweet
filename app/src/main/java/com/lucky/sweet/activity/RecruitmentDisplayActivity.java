@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.ShopDetailPicInfo;
 import com.lucky.sweet.service.CommunicationService;
+import com.lucky.sweet.views.MyToast;
 import com.lucky.sweet.views.PictureDisplayLayout;
 import com.lucky.sweet.views.TitleIndicatorView;
 import com.lucky.sweet.widgets.ToolBar;
@@ -75,7 +76,8 @@ public class RecruitmentDisplayActivity extends BaseActivity {
             photo_show.initDatas(info.getMer_photo());
         } else {
             photo_show.setVisibility(View.GONE);
-            Toast.makeText(this, "暂无相关图片", Toast.LENGTH_SHORT).show();
+            MyToast.showShort("暂无相关图片");
+
 
         }
     }

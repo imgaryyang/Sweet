@@ -18,6 +18,7 @@ import com.lucky.sweet.entity.UserRegestInfo;
 import com.lucky.sweet.fragment.EmailSubmitFragment;
 import com.lucky.sweet.fragment.PassWordSubimitFragment;
 import com.lucky.sweet.service.CommunicationService;
+import com.lucky.sweet.views.MyToast;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 import com.lucky.sweet.widgets.noscrollview.DepthPageTransformer;
@@ -196,9 +197,11 @@ public class UserRegisterActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(GetMailVerInfo info) {
         if (info.getAttr()) {
-            Toast.makeText(this, "请耐心等待邮件", Toast.LENGTH_SHORT).show();
+            MyToast.showShort("请耐心等待邮件");
+
         } else
-            Toast.makeText(this, "邮箱已存在或操作过于频繁", Toast.LENGTH_SHORT).show();
+        MyToast.showShort("邮箱已存在或操作过于频繁");
+
 
     }
 
@@ -206,10 +209,12 @@ public class UserRegisterActivity extends BaseActivity {
     public void Event(MailValiInfo info) {
         if (info.getAttr()) {
             passWordSubimitFragment.setCurrentEmail(emailSubmitFragment.getEmail());
-            Toast.makeText(this, "验证成功请进行下一步", Toast.LENGTH_SHORT).show();
+            MyToast.showShort("验证成功请进行下一步");
+
             moveToNextStep();
         } else
-            Toast.makeText(this, "验证失败", Toast.LENGTH_SHORT).show();
+        MyToast.showShort("验证失败");
+
 
     }
 
@@ -221,7 +226,8 @@ public class UserRegisterActivity extends BaseActivity {
                 edit.putString("Id", info.getUserID());
                 edit.putString("Psw", info.getPassword());
                 if (edit.commit()) {
-                    Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
+                    MyToast.showShort("注册成功");
+
                     MyApplication.initSession(flag -> {
                         if (flag) {
                             Intent intent = new Intent();
@@ -233,13 +239,16 @@ public class UserRegisterActivity extends BaseActivity {
                     });
                 }
             } else
-                Toast.makeText(this, "注册失败", Toast.LENGTH_SHORT).show();
+            MyToast.showShort("注册失败");
+
 
         } else {
             if (info.getAttr()) {
-                Toast.makeText(this, "修改成功", Toast.LENGTH_SHORT).show();
+                MyToast.showShort("修改成功");
+
             } else
-                Toast.makeText(this, "原密码不能重复", Toast.LENGTH_SHORT).show();
+            MyToast.showShort("原密码不能重复");
+
 
         }
 

@@ -16,6 +16,7 @@ import com.lucky.sweet.entity.CollectStoreEntitiy;
 import com.lucky.sweet.entity.StoreDisplayInfo;
 import com.lucky.sweet.entity.StoreDisplaySearchEntity;
 import com.lucky.sweet.service.CommunicationService;
+import com.lucky.sweet.views.MyToast;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout;
@@ -204,7 +205,7 @@ public class StoreDisplayActivity extends BaseActivity {
                     requestSearchItem(false);
                     num++;
                     myBinder.requestStoreDisplayInfo(recreationType, businessArea, rankType, num + "");
-                    Toast.makeText(StoreDisplayActivity.this, "加载更多", Toast.LENGTH_SHORT).show();
+                    MyToast.showShort("加载更多");
                     break;
             }
 
@@ -227,7 +228,8 @@ public class StoreDisplayActivity extends BaseActivity {
             displayList.addAll(info.getMer_list());
             adapter.notifyDataSetChanged();
         } else {
-            Toast.makeText(this, "暂时无数据", Toast.LENGTH_SHORT).show();
+            MyToast.showShort("暂时无数据");
+
         }
 
 
@@ -244,7 +246,9 @@ public void Event(CollectStoreEntitiy collectStoreEntitiy){
             log="取关成功";
 
         }
-        Toast.makeText(this, log, Toast.LENGTH_SHORT).show();
+
+        MyToast.showShort(log);
+
     }
 }
     @Subscribe(threadMode = ThreadMode.MAIN)

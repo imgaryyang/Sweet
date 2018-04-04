@@ -17,6 +17,7 @@ import com.lucky.sweet.model.shoppingcar.mode.ProductType;
 import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.utility.TimeUtil;
+import com.lucky.sweet.views.MyToast;
 import com.lucky.sweet.widgets.ToolBar;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -163,7 +164,8 @@ public class MerchantActivity extends BaseActivity {
 
         String name = joinRoomInfo.getName();
         if (!name.equals(MyApplication.USER_ID))
-            Toast.makeText(this, "感谢这位老铁：" + name + "加入房间", Toast.LENGTH_SHORT).show();
+        MyToast.showShort("感谢这位老铁：" + name + "加入房间");
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -29,6 +29,7 @@ import com.lucky.sweet.entity.StatueCheckBaseEntitiy;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.thread.BlurBitmapThread;
+import com.lucky.sweet.views.MyToast;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 import com.tencent.lbssearch.TencentSearch;
@@ -215,8 +216,10 @@ public class StoreParticularInfoActivity extends BaseActivity {
         ll_null.setOnClickListener(view -> cancelbtnAnim());
         ibtn_order_seat.setOnClickListener(view -> {
             if (MyApplication.sessionId.equals("")) {
-                Toast.makeText(StoreParticularInfoActivity.this, "请先登陆",
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(StoreParticularInfoActivity.this, "请先登陆",
+//                        Toast.LENGTH_SHORT).show();
+                MyToast.showShort("请先登陆");
+
                 return;
             }
             new BlurBitmapThread(StoreParticularInfoActivity.this,
@@ -233,8 +236,10 @@ public class StoreParticularInfoActivity extends BaseActivity {
         });
         ibtn_orderSingle.setOnClickListener(view -> {
             if (MyApplication.sessionId.equals("")) {
-                Toast.makeText(StoreParticularInfoActivity.this, "请先登陆",
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(StoreParticularInfoActivity.this, "请先登陆",
+//                        Toast.LENGTH_SHORT).show();
+                MyToast.showShort("请先登陆");
+
                 return;
             }
             MerchantActivity.newSingleOrderInStance(StoreParticularInfoActivity.this, mer_id);
@@ -243,8 +248,10 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
         ibtn_orderMulti.setOnClickListener(view -> {
             if (MyApplication.sessionId.equals("")) {
-                Toast.makeText(StoreParticularInfoActivity.this, "请先登陆",
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(StoreParticularInfoActivity.this, "请先登陆",
+//                        Toast.LENGTH_SHORT).show();
+                MyToast.showShort("请先登陆");
+
                 return;
             }
 
@@ -294,7 +301,8 @@ public class StoreParticularInfoActivity extends BaseActivity {
         }else {
             log="操作失败";
         }
-        Toast.makeText(this, log, Toast.LENGTH_SHORT).show();
+        MyToast.showShort(log);
+
     }
 
      @Subscribe(threadMode = ThreadMode.MAIN)

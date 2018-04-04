@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.DetailOrderInfo;
 import com.lucky.sweet.service.CommunicationService;
+import com.lucky.sweet.views.MyToast;
 import com.lucky.sweet.views.StepView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -65,6 +66,8 @@ public class DetailOrderActivity extends BaseActivity {
             info.setMoney("无消费金额");
         }
         detailCost.setText(info.getMoney());
-        Toast.makeText(this, info.toString(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, info.toString(), Toast.LENGTH_SHORT).show();
+        MyToast.showShort(info.toString());
+
     }
 }

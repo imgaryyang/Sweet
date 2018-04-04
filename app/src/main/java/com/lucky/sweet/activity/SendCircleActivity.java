@@ -23,6 +23,7 @@ import com.lucky.sweet.model.dragrecycleview.OnRecyclerItemClickListener;
 import com.lucky.sweet.model.dragrecycleview.PostArticleImgAdapter;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.utility.StringFormatUtility;
+import com.lucky.sweet.views.MyToast;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 import com.zhihu.matisse.Matisse;
@@ -96,7 +97,7 @@ public class SendCircleActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (originImages.size() == 9) {
-                    Toast.makeText(SendCircleActivity.this, "选择图片已到上限", Toast.LENGTH_SHORT).show();
+                    MyToast.showShort("选择图片已到上限");
 
                 } else
 
@@ -115,7 +116,7 @@ public class SendCircleActivity extends BaseActivity {
             public void onClick(View v) {
                 String desc = et_description.getText().toString().trim();
                 if (desc.equals("")) {
-                    Toast.makeText(SendCircleActivity.this, "请输入文字描述", Toast.LENGTH_SHORT).show();
+                    MyToast.showShort("请输入文字描述");
                     return;
                 }
 

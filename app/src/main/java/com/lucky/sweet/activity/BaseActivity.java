@@ -18,6 +18,7 @@ import com.lucky.sweet.R;
 import com.lucky.sweet.entity.DeletRoomInfo;
 import com.lucky.sweet.entity.InvitationInfo;
 import com.lucky.sweet.service.CommunicationService;
+import com.lucky.sweet.views.MyToast;
 import com.lucky.sweet.views.SlidingLayoutView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -193,8 +194,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 });
                 normalDialog.show();
             } else {
-                Toast.makeText(context, "当前不是购物车", Toast.LENGTH_SHORT).show();
-
+                MyToast.showShort("当前不是购物车");
             }
         }
     }

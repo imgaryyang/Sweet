@@ -15,6 +15,7 @@ import com.google.gson.JsonSyntaxException;
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.DecodeEntity;
 import com.lucky.sweet.model.qrcodescan.ScanningQR;
+import com.lucky.sweet.views.MyToast;
 import com.lucky.sweet.views.SlidingLayoutView;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -72,7 +73,8 @@ findViewById(R.id.mo_scanner_photo);
                      decodeEntity = new Gson().fromJson(decode, DecodeEntity.class);
 
                }catch (JsonSyntaxException e){
-                   Toast.makeText(CaptureActivity.this, "请勿解析其他二维码", Toast.LENGTH_SHORT).show();
+                   MyToast.showShort("请勿解析其他二维码");
+
                    finish();
                    return;
                }

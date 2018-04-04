@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.WeatherInfo;
 import com.lucky.sweet.service.CommunicationService;
+import com.lucky.sweet.views.MyToast;
 import com.lucky.sweet.widgets.ToolBar;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -52,7 +53,8 @@ public class UserLoginActivity extends BaseActivity {
         if (!userID.isEmpty() && !password.isEmpty()) {
             myBinder.userLogin(userID, password);
         } else {
-            Toast.makeText(this, "请输入账号或者密码", Toast.LENGTH_SHORT).show();
+            MyToast.showShort("请输入账号或者密码");
+//            Toast.makeText(this, "请输入账号或者密码", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -88,10 +90,11 @@ public class UserLoginActivity extends BaseActivity {
             MyApplication.setSessionID(string);
             MyApplication.setOnCloundPush(edt_userEmail.getText().toString().trim());
             MyApplication.upDataPersonLoginInfo(edt_userEmail.getText().toString(), edt_password.getText().toString());
-            Toast.makeText(this, "登陆成功", Toast.LENGTH_SHORT).show();
+            MyToast.showShort("登陆成功");
             finish();
         } else {
-            Toast.makeText(this, "登陆失败", Toast.LENGTH_SHORT).show();
+            MyToast.showShort("登陆失败");
+
         }
 
     }
