@@ -146,20 +146,27 @@ public class ImCircleFragment extends Fragment implements
     }
     public void initData(CircleMainInfo info) {
         circle_list = info.getCircle_list();
-        circleListViewAdapter = new CircleListViewAdapter(getActivity(), circle_list).setCallBack(this);
-        circleListViewAdapter.setOnLikeItClickListener(
-                new CircleListViewAdapter.OnLikeItClickListener() {
-                    @Override
-                    public void meridBack(String mer_id, int position) {
-                        activity.sendCircleLikeIt(mer_id, position);
-                    }
+        if (circle_list.size()!=0) {
+            if (imv_empty.getVisibility()== View.VISIBLE) {
+                imv_empty.setVisibility(View.GONE);
+            }
+            circleListViewAdapter = new CircleListViewAdapter(getActivity(), circle_list).setCallBack(this);
+            circleListViewAdapter.setOnLikeItClickListener(
+                    new CircleListViewAdapter.OnLikeItClickListener() {
+                        @Override
+                        public void meridBack(String mer_id, int position) {
+                            activity.sendCircleLikeIt(mer_id, position);
+                        }
 
-                    @Override
-                    public void onFlowPeople(String userId, boolean flag) {
-                        activity.flowPeople(userId,flag);
-                    }
-                });
-        lv_circle.setAdapter(circleListViewAdapter);
+                        @Override
+                        public void onFlowPeople(String userId, boolean flag) {
+                            activity.flowPeople(userId,flag);
+                        }
+                    });
+            lv_circle.setAdapter(circleListViewAdapter);
+        }else {
+            imv_empty.setVisibility(View.VISIBLE);
+        }
         if (circleListViewAdapter.isEmpty()) {
             imv_empty.setVisibility(View.VISIBLE);
         }

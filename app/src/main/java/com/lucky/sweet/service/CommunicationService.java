@@ -102,7 +102,6 @@ public class CommunicationService extends Service {
 
     private TencentLocationManager locationManager;
     private final String TAG = "Service_";
-    private Object personComment;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -418,7 +417,6 @@ public class CommunicationService extends Service {
 
     private void upServerInfo(  UpServiceDesInfo upServiceDesInfo  , OrderDisInfo disInfo) {
         HashMap<String, String> map = new HashMap<>();
-        System.out.println(new Gson().toJson(upServiceDesInfo));
         map.put("session", MyApplication.sessionId);
         map.put("mer_id", upServiceDesInfo.getMerId());
         map.put("trolley_list", new Gson().toJson(upServiceDesInfo));
@@ -829,9 +827,10 @@ public class CommunicationService extends Service {
     private void getFlowFriends() {
         HashMap<String, String> map = new HashMap<>();
         map.put("session", MyApplication.sessionId);
-        HttpUtils.sendOkHttpRequest(PersonProperties.FOLW_FRIEND, new MyOkhttpHelper() {
+      /*  HttpUtils.sendOkHttpRequest(PersonProperties.FOLW_FRIEND, new MyOkhttpHelper() {
             @Override
             public void onResponseSuccessfulString(String string) {
+                System.out.println(string);
                 EventBus.getDefault().post(new Gson().fromJson(string, FlowPeople.class));
             }
 
@@ -839,7 +838,7 @@ public class CommunicationService extends Service {
             public void afterNewRequestSession() {
 
             }
-        }, map);
+        }, map);*/
     }
 
     private void requestPersonVipCard() {
@@ -942,7 +941,6 @@ public class CommunicationService extends Service {
                 new MyOkhttpHelper() {
                     @Override
                     public void onResponseSuccessfulString(String string) {
-
                         EventBus.getDefault().post(new Gson().fromJson(string, CircleMainInfo.class));
                     }
 

@@ -42,23 +42,19 @@ public class OrderSeatActivity extends BaseActivity {
     private EditText edt_order_des;
     private String[] data;
     private String[][] time;
-    private LinearLayout ll_order_seat;
     private String mer_id;
     private static String SHOP_CAR_INFO = "DATA";
-    private static Boolean MORE_PEOPLE = false;
 
     public static void newInstance(Activity activity, ShopCarSingleInformation shopCarSingleInformation) {
         Intent intent = new Intent(activity, OrderSeatActivity.class);
         intent.putExtra(SHOP_CAR_INFO, shopCarSingleInformation);
         activity.startActivity(intent);
-        MORE_PEOPLE = false;
         activity.overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
     }
 
     public static void newInstance(Activity activity, String roomId) {
         Intent intent = new Intent(activity, OrderSeatActivity.class);
         intent.putExtra(SHOP_CAR_INFO, roomId);
-        MORE_PEOPLE = true;
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
     }
@@ -94,7 +90,6 @@ public class OrderSeatActivity extends BaseActivity {
     private void initView() {
         tv_timeSelect = findViewById(R.id.tv_timeSelect);
         edt_num = findViewById(R.id.edt_num);
-        ll_order_seat = findViewById(R.id.ll_order_seat);
         et_input_phone = findViewById(R.id.et_input_phone);
         edt_people_nam = findViewById(R.id.edt_people_nam);
         edt_order_des = findViewById(R.id.edt_order_des);
@@ -170,19 +165,19 @@ public class OrderSeatActivity extends BaseActivity {
         String phone = et_input_phone.getText().toString().trim();
         String des = edt_order_des.getText().toString().trim();
         if (TextUtils.isEmpty(time)) {
-            MyToast.makeText(this,"时间不能为空",Toast.LENGTH_SHORT);
+            MyToast.showShort("时间不能为空");
             return null;
         }
         if (TextUtils.isEmpty((num))) {
-            MyToast.makeText(this,"人数不能为空",Toast.LENGTH_SHORT);
+            MyToast.showShort("人数不能为空");
             return null;
         }
         if (TextUtils.isEmpty(name)) {
-            MyToast.makeText(this,"名字不能为空",Toast.LENGTH_SHORT);
+            MyToast.showShort("名字不能为空");
             return null;
         }
         if (TextUtils.isEmpty(phone)) {
-            MyToast.makeText(this,"电话不能为空",Toast.LENGTH_SHORT);
+            MyToast.showShort("电话不能为空");
             return null;
         }
         OrderDisInfo orderDisInfo = new OrderDisInfo();
@@ -200,12 +195,12 @@ public class OrderSeatActivity extends BaseActivity {
             case R.id.btn_order_submit:
       /*          if (MORE_PEOPLE) {
 
-                    OrderSubmitActivity.newInstance(this, getIntent().getStringExtra(SHOP_CAR_INFO));
+                    OrderSubmitActivity.newInstance( getIntent().getStringExtra(SHOP_CAR_INFO));
 
                 } else {*/
                 OrderDisInfo orderDisInfo = sendOrderSeatInfo();
                 if (orderDisInfo!=null) {
-                    OrderSubmitActivity.newInstance(this, (ShopCarSingleInformation) getIntent().getSerializableExtra(SHOP_CAR_INFO),orderDisInfo);
+                    OrderSubmitActivity.newInstance( OrderSeatActivity.this,(ShopCarSingleInformation) getIntent().getSerializableExtra(SHOP_CAR_INFO),orderDisInfo);
 
                 }
                /* }*/
