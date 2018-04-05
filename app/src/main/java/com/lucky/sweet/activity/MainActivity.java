@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.alibaba.sdk.android.oss.model.GetObjectResult;
+import com.google.gson.Gson;
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.CircleLikePoint;
 import com.lucky.sweet.entity.CircleMainInfo;
@@ -213,7 +214,6 @@ public class MainActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(MainStoreInfo mainStoreInfo) {
-
         storeFragment.setShowInfo(mainStoreInfo);
 
     }

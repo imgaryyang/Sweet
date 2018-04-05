@@ -37,6 +37,8 @@ import com.lucky.sweet.entity.InvitationInfo;
 import com.lucky.sweet.entity.JoinInRoomInfo;
 import com.lucky.sweet.entity.JoinRoomInfo;
 import com.lucky.sweet.entity.LikeShopEntity;
+import com.lucky.sweet.entity.OrderDisInfo;
+import com.lucky.sweet.entity.ShopCarSingleInformation;
 import com.lucky.sweet.entity.StatueCheckBaseEntitiy;
 import com.lucky.sweet.entity.MailValiInfo;
 import com.lucky.sweet.entity.MainStoreInfo;
@@ -50,10 +52,12 @@ import com.lucky.sweet.entity.ShopDetailPicInfo;
 import com.lucky.sweet.entity.StoreDetailedInfo;
 import com.lucky.sweet.entity.StoreDisplayInfo;
 import com.lucky.sweet.entity.StoreDisplaySearchEntity;
+import com.lucky.sweet.entity.UpServiceDesInfo;
 import com.lucky.sweet.entity.UserRegestInfo;
 import com.lucky.sweet.entity.VipCardInfo;
 import com.lucky.sweet.entity.WeatherInfo;
 import com.lucky.sweet.handler.OrderSeatHandler;
+import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
 import com.lucky.sweet.properties.CircleProperties;
 import com.lucky.sweet.properties.PersonProperties;
 import com.lucky.sweet.properties.Properties;
@@ -77,6 +81,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -103,7 +108,6 @@ public class CommunicationService extends Service {
     public IBinder onBind(Intent intent) {
         return new MyBinder();
     }
-
 
 
     public class MyBinder extends Binder {
@@ -152,10 +156,12 @@ public class CommunicationService extends Service {
             userWrite(email, password, isRegister);
 
         }
-        public void loginedChanged(String psw){
+
+        public void loginedChanged(String psw) {
             CommunicationService.this.loginedChanged(psw);
 
         }
+
         public void requestImStoreInfo(Activity activity) {
 
             initLocation(activity);
@@ -389,6 +395,47 @@ public class CommunicationService extends Service {
         public void getPersonComment() {
             CommunicationService.this.getPersonComment();
         }
+
+        public void upServerInfo(ShopCarSingleInformation info, OrderDisInfo disInfo) {
+
+            UpServiceDesInfo upServiceDesInfo = new UpServiceDesInfo();
+            upServiceDesInfo.setPay(info.getSaleSum());
+            upServiceDesInfo.setMerId(info.getMer_id());
+
+            List<UpServiceDesInfo.Diskesinfo> list = new ArrayList<>();
+            UpServiceDesInfo.Diskesinfo diskesinfo;
+            for (ShopProduct entity:info.getProductList()){
+                diskesinfo  = new UpServiceDesInfo.Diskesinfo();
+                diskesinfo.setDisId(entity.getId());
+                diskesinfo.setPay( entity.getMoney());
+                diskesinfo.setDisNum( entity.getNumber());
+                list.add(diskesinfo);
+            }
+            upServiceDesInfo.setList(list);
+            CommunicationService.this.upServerInfo(upServiceDesInfo,disInfo);
+        }
+    }
+
+    private void upServerInfo(  UpServiceDesInfo upServiceDesInfo  , OrderDisInfo disInfo) {
+        HashMap<String, String> map = new HashMap<>();
+        System.out.println(new Gson().toJson(upServiceDesInfo));
+        map.put("session", MyApplication.sessionId);
+        map.put("mer_id", upServiceDesInfo.getMerId());
+        map.put("trolley_list", new Gson().toJson(upServiceDesInfo));
+        map.put("indent_info",  new Gson().toJson(disInfo));
+        HttpUtils.sendOkHttpRequest(ReserveProperties.UP_SERVER_INFO, new MyOkhttpHelper() {
+            @Override
+            public void onResponseSuccessfulString(String string) {
+
+                //   EventBus.getDefault().post(new StatueCheckBaseEntitiy(string));
+
+            }
+
+            @Override
+            public void afterNewRequestSession() {
+
+            }
+        }, map);
     }
 
     private void loginedChanged(String psw) {
@@ -417,7 +464,7 @@ public class CommunicationService extends Service {
         HttpUtils.sendOkHttpRequest(PersonProperties.PERSON_COMMENT_LIST, new MyOkhttpHelper() {
             @Override
             public void onResponseSuccessfulString(String string) {
-        EventBus.getDefault().post(new Gson().fromJson(string,MyCommentEntiy.class));
+                EventBus.getDefault().post(new Gson().fromJson(string, MyCommentEntiy.class));
 
             }
 
@@ -461,14 +508,14 @@ public class CommunicationService extends Service {
         HashMap<String, String> map = new HashMap<>();
         map.put("session", MyApplication.sessionId);
         map.put(type, mer_id);
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 HttpUtils.sendOkHttpRequest(path, new MyOkhttpHelper() {
                     @Override
                     public void onResponseSuccessfulString(String string) {
 
-                        EventBus.getDefault().post(new CollectStoreEntitiy(string,isCollect) );
+                        EventBus.getDefault().post(new CollectStoreEntitiy(string, isCollect));
 
                     }
 
@@ -881,7 +928,7 @@ public class CommunicationService extends Service {
 
                     @Override
                     public void afterNewRequestSession() {
-                        flowPeople(userId,flag);
+                        flowPeople(userId, flag);
                     }
                 }, map);
     }
@@ -1275,7 +1322,7 @@ public class CommunicationService extends Service {
         locationManager.removeUpdates(mListener);
     }
 
-    private void isCollectShopInfo(final String shopid){
+    private void isCollectShopInfo(final String shopid) {
         final HashMap<String, String> map = new HashMap<>();
         map.put("mer_id", shopid);
         map.put("session", MyApplication.sessionId);
@@ -1299,6 +1346,7 @@ public class CommunicationService extends Service {
             }
         }.start();
     }
+
     private void getParticularInfo(final String shopid) {
         final HashMap<String, String> map = new HashMap<>();
         map.put("mer_id", shopid);

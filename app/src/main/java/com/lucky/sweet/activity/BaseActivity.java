@@ -31,7 +31,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     private Boolean isBindEventBus = false;
     private static Context context;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

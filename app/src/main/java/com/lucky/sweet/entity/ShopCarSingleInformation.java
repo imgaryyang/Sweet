@@ -14,6 +14,15 @@ import java.util.List;
  */
 
 public class ShopCarSingleInformation implements Serializable {
+    private String mer_id;
+
+    public String getMer_id() {
+        return mer_id;
+    }
+
+    public void setMer_id(String mer_id) {
+        this.mer_id = mer_id;
+    }
 
     private String saleSum;
     private String shopName;

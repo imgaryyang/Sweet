@@ -11,6 +11,8 @@ package com.lucky.sweet.properties;
 
 public class ReserveProperties {
 
+    public static final String UP_SERVER_INFO="https://thethreestooges.cn:666/indent/indent/upload";
+
     public static final String SHOP_DETAIL = "https://thethreestooges.cn:666/application/mer_info/mer_photo.php";
 
     public static final String UPDATA_MENU = "https://thethreestooges.cn:666/trolley/update/menu";

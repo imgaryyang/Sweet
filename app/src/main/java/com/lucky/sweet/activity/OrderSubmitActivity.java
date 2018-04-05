@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.InternetTime;
+import com.lucky.sweet.entity.OrderDisInfo;
 import com.lucky.sweet.entity.ShopCarSingleInformation;
 import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
 import com.lucky.sweet.properties.ServiceProperties;
@@ -41,13 +42,15 @@ public class OrderSubmitActivity extends BaseActivity {
     private TextView tv_seat_num;
     private Title title;
     private static String SHOP_CAR_INFO = "carInfo";
-    private static Boolean MORE_PEOPLE = false;
+    private static String ORDER_DES = "orderdes";
+    private CommunicationService.MyBinder myBinder;
+    private ShopCarSingleInformation data;
 
-    public static void newInstance(Activity activity, @Nullable ShopCarSingleInformation shopCarSingleInformation) {
+    public static void newInstance(Activity activity,  ShopCarSingleInformation shopCarSingleInformation,  OrderDisInfo orderDisInfo) {
         Intent intent = new Intent(activity, OrderSubmitActivity.class);
         intent.putExtra(SHOP_CAR_INFO, shopCarSingleInformation);
+        intent.putExtra(ORDER_DES, orderDisInfo);
         activity.startActivity(intent);
-        MORE_PEOPLE = false;
         activity.overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
     }
 
@@ -55,7 +58,6 @@ public class OrderSubmitActivity extends BaseActivity {
         Intent intent = new Intent(activity, OrderSubmitActivity.class);
         intent.putExtra(SHOP_CAR_INFO, roomId);
         activity.startActivity(intent);
-        MORE_PEOPLE = true;
         activity.overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
     }
 
@@ -74,10 +76,10 @@ public class OrderSubmitActivity extends BaseActivity {
         initEvent();
 
     }
-
     @Override
     void onServiceBind(CommunicationService.MyBinder myBinder) {
         myBinder.getCurrentIntentTime();
+        this.myBinder = myBinder;
     /*    if (MORE_PEOPLE) {
             myBinder.getMultShopCarInfo(getIntent().getStringExtra(SHOP_CAR_INFO));
         }*/
@@ -85,6 +87,10 @@ public class OrderSubmitActivity extends BaseActivity {
 
     private void initEvent() {
         findViewById(R.id.btn_submit_order).setOnClickListener(v -> {
+            if (data!=null) {
+                myBinder.upServerInfo(data,(OrderDisInfo) getIntent().getSerializableExtra(ORDER_DES));
+
+            }
             startActivity(new Intent(OrderSubmitActivity.this,
                     SettlementActivity.class));
             goFadeAnim();
@@ -112,7 +118,7 @@ public class OrderSubmitActivity extends BaseActivity {
         Intent intent = getIntent();
 
 
-        ShopCarSingleInformation data = (ShopCarSingleInformation) intent.getSerializableExtra(SHOP_CAR_INFO);
+        data = (ShopCarSingleInformation) intent.getSerializableExtra(SHOP_CAR_INFO);
 
         if (data != null) {
             final Title.ButtonInfo buttonRigt = new Title.ButtonInfo(true, Title
@@ -147,7 +153,6 @@ public class OrderSubmitActivity extends BaseActivity {
         tv_shop_name = findViewById(R.id.tv_shop_name);
         tv_now_time = findViewById(R.id.tv_now_time);
         tv_cost_num = findViewById(R.id.tv_cost_num);
-
         ll_order_list = findViewById(R.id.ll_order_list);
         title = findViewById(R.id.title);
 

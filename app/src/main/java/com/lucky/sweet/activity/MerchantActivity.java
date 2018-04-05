@@ -97,6 +97,7 @@ public class MerchantActivity extends BaseActivity {
                     myBinder.closeOrder(new DeletRoomInfo(MyApplication.USER_ID, TimeUtil.getCurrentTime()), room_id);
 
                 }
+                shopCarSingleInformation.setMer_id(mer_id);
                 OrderSeatActivity.newInstance(MerchantActivity.this, shopCarSingleInformation);
             }
 
