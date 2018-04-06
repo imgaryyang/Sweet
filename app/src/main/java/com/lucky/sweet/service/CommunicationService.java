@@ -827,10 +827,10 @@ public class CommunicationService extends Service {
     private void getFlowFriends() {
         HashMap<String, String> map = new HashMap<>();
         map.put("session", MyApplication.sessionId);
-      /*  HttpUtils.sendOkHttpRequest(PersonProperties.FOLW_FRIEND, new MyOkhttpHelper() {
+      HttpUtils.sendOkHttpRequest(PersonProperties.FOLW_FRIEND, new MyOkhttpHelper() {
             @Override
             public void onResponseSuccessfulString(String string) {
-                System.out.println(string);
+
                 EventBus.getDefault().post(new Gson().fromJson(string, FlowPeople.class));
             }
 
@@ -838,7 +838,7 @@ public class CommunicationService extends Service {
             public void afterNewRequestSession() {
 
             }
-        }, map);*/
+        }, map);
     }
 
     private void requestPersonVipCard() {

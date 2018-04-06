@@ -25,6 +25,7 @@ import com.lucky.sweet.widgets.ImageViewWatcher.ImageWatcher;
 import com.lucky.sweet.widgets.ImageViewWatcher.MessagePicturesLayout;
 import com.lucky.sweet.widgets.ToolBar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -165,11 +166,11 @@ public class ImCircleFragment extends Fragment implements
                     });
             lv_circle.setAdapter(circleListViewAdapter);
         }else {
+            circleListViewAdapter = new CircleListViewAdapter(getActivity(),new ArrayList<CircleMainInfo.CircleListBean>()).setCallBack(this);
+            lv_circle.setAdapter(circleListViewAdapter);
             imv_empty.setVisibility(View.VISIBLE);
         }
-        if (circleListViewAdapter.isEmpty()) {
-            imv_empty.setVisibility(View.VISIBLE);
-        }
+
     }
 
     public void likeCallback(CircleLikePoint request) {

@@ -22,6 +22,7 @@ public abstract class MyOkhttpHelper extends Callback {
     @Override
     public Object parseNetworkResponse(Response response) throws IOException {
         String stringResponse = response.body().string();
+
         try {
             if (!stringResponse.equals("")) {
                 if (stringResponse.equals("250")) {
@@ -33,7 +34,7 @@ public abstract class MyOkhttpHelper extends Callback {
                 } else onResponseSuccessfulString(stringResponse.trim());
             }
         } catch (JsonSyntaxException e) {
-            Log.e("JsonSyntaxException", "jSON解析错误");
+            Log.e("JsonSyntaxException", "jSON解析错误/n"+stringResponse);
         }
         return null;
     }
