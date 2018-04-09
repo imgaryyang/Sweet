@@ -21,16 +21,9 @@ public class ShopProduct implements Serializable,Parcelable {
      * 商品数目
      */
     private int number;
-    private String money;
+
     private String des;
 
-    public String getMoney() {
-        return money;
-    }
-
-    public void setMoney(String money) {
-        this.money = money;
-    }
 
     public int getNumber() {
         return number;

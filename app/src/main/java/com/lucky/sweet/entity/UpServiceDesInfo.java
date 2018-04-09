@@ -39,16 +39,16 @@ public class UpServiceDesInfo {
     }
 
     public static class Diskesinfo {
-        private int disId;
+        private String goodsName;
         private int disNum;
         private String pay;
 
-        public int getDisId() {
-            return disId;
+        public String getGoodsName() {
+            return goodsName;
         }
 
-        public void setDisId(int disId) {
-            this.disId = disId;
+        public void setGoodsName(String  goodsName) {
+            this.goodsName = goodsName;
         }
 
         public int getDisNum() {

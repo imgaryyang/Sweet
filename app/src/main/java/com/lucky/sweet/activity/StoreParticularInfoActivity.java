@@ -290,11 +290,11 @@ public class StoreParticularInfoActivity extends BaseActivity {
         String log;
         if (collectStoreEntitiy.getAttr()) {
             if (collectStoreEntitiy.isCollect()) {
-                Glide.with(this).load(R.mipmap.circle_star_collected).into(imb_store_collect);
+                Glide.with(this).load(R.mipmap.shopstarfull).into(imb_store_collect);
                 log="收藏成功";
                 collect=Boolean.TRUE;
             }else {
-                Glide.with(this).load(R.mipmap.circle_star).into(imb_store_collect);
+                Glide.with(this).load(R.mipmap.shopstar).into(imb_store_collect);
                 log="取关成功";
                 collect=Boolean.FALSE;
         }
@@ -309,10 +309,10 @@ public class StoreParticularInfoActivity extends BaseActivity {
    public void Event(LikeShopEntity base){
         if (base.getAttr()) {
             collect= Boolean.FALSE;
-          Glide.with(this).load(R.mipmap.circle_star).into(imb_store_collect);
+          Glide.with(this).load(R.mipmap.shopstar).into(imb_store_collect);
         }else {
             collect=Boolean.TRUE;
-           Glide.with(this).load(R.mipmap.circle_star_collected).into(imb_store_collect);
+           Glide.with(this).load(R.mipmap.shopstarfull).into(imb_store_collect);
         }
     }
 

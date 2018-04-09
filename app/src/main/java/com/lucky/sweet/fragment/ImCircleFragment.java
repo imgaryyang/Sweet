@@ -168,6 +168,7 @@ public class ImCircleFragment extends Fragment implements
         }else {
             circleListViewAdapter = new CircleListViewAdapter(getActivity(),new ArrayList<CircleMainInfo.CircleListBean>()).setCallBack(this);
             lv_circle.setAdapter(circleListViewAdapter);
+
             imv_empty.setVisibility(View.VISIBLE);
         }
 

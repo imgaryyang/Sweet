@@ -68,9 +68,11 @@
                         android:gravity="center">
 
                         <ImageButton
+                            android:src="@mipmap/shopstar"
                             android:id="@+id/imb_store_collect"
                             android:layout_width="13dp"
                             android:layout_height="16dp"
+                            android:background="@null"
                             android:layout_gravity="center"
                             android:onClick="onButtonClick" />
                     </FrameLayout>

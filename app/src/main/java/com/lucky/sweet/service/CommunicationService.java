@@ -403,29 +403,27 @@ public class CommunicationService extends Service {
 
             List<UpServiceDesInfo.Diskesinfo> list = new ArrayList<>();
             UpServiceDesInfo.Diskesinfo diskesinfo;
-            for (ShopProduct entity:info.getProductList()){
-                diskesinfo  = new UpServiceDesInfo.Diskesinfo();
-                diskesinfo.setDisId(entity.getId());
-                diskesinfo.setPay( entity.getMoney());
-                diskesinfo.setDisNum( entity.getNumber());
+            for (ShopProduct entity : info.getProductList()) {
+                diskesinfo = new UpServiceDesInfo.Diskesinfo();
+                diskesinfo.setGoodsName(entity.getGoods());
+                diskesinfo.setPay(entity.getPrice());
+                diskesinfo.setDisNum(entity.getNumber());
                 list.add(diskesinfo);
             }
             upServiceDesInfo.setList(list);
-            CommunicationService.this.upServerInfo(upServiceDesInfo,disInfo);
+            CommunicationService.this.upServerInfo(upServiceDesInfo, disInfo);
         }
     }
 
-    private void upServerInfo(  UpServiceDesInfo upServiceDesInfo  , OrderDisInfo disInfo) {
+    private void upServerInfo(UpServiceDesInfo upServiceDesInfo, OrderDisInfo disInfo) {
         HashMap<String, String> map = new HashMap<>();
         map.put("session", MyApplication.sessionId);
         map.put("mer_id", upServiceDesInfo.getMerId());
         map.put("trolley_list", new Gson().toJson(upServiceDesInfo));
-        map.put("indent_info",  new Gson().toJson(disInfo));
+        map.put("indent_info", new Gson().toJson(disInfo));
         HttpUtils.sendOkHttpRequest(ReserveProperties.UP_SERVER_INFO, new MyOkhttpHelper() {
             @Override
             public void onResponseSuccessfulString(String string) {
-
-                //   EventBus.getDefault().post(new StatueCheckBaseEntitiy(string));
 
             }
 
@@ -827,7 +825,7 @@ public class CommunicationService extends Service {
     private void getFlowFriends() {
         HashMap<String, String> map = new HashMap<>();
         map.put("session", MyApplication.sessionId);
-      HttpUtils.sendOkHttpRequest(PersonProperties.FOLW_FRIEND, new MyOkhttpHelper() {
+        HttpUtils.sendOkHttpRequest(PersonProperties.FOLW_FRIEND, new MyOkhttpHelper() {
             @Override
             public void onResponseSuccessfulString(String string) {
 
@@ -1203,27 +1201,43 @@ public class CommunicationService extends Service {
     }
 
     private void requestPredetermined(PerdetermingRequest request) {
-        String[] data = {"2-1", "2-2", "2-3", "2-4",
-                "2-5", "2-6"};
+        String[] data = {"4-11", "4-12", "4-13", "4-14",
+                "4-15", "4-16", "4-17", "4-18", "4-19", "4-20"};
         String[][] time = {
                 {
-                        "1", "2", "3", "4", "5", "6"
+                        "8:00-9:00", "10:00-11:00", "12:00-13:00", "13:00-14:00", "14:00-15:00", "15:00-16:00", "16:00-17:00"
                 },
                 {
-                        "?", "?"
+                        "8:00-9:00", "10:00-11:00", "12:00-13:00", "13:00-14:00", "14:00-15:00", "15:00-16:00", "16:00-17:00"
+
                 },
                 {
-                        "aaa", "bbbb", "cccc", "dddd", "eee"
+                        "8:00-9:00", "10:00-11:00", "12:00-13:00", "13:00-14:00", "14:00-15:00", "15:00-16:00", "16:00-17:00"
                 },
                 {
-                        "aaaaa", "cccc"
+                        "8:00-9:00", "10:00-11:00", "12:00-13:00", "13:00-14:00", "14:00-15:00", "15:00-16:00", "16:00-17:00"
+
                 },
                 {
-                        "1", "2", "3", "4", "5", "6"
+                        "8:00-9:00", "10:00-11:00", "12:00-13:00", "13:00-14:00", "14:00-15:00", "15:00-16:00", "16:00-17:00"
+
                 },
                 {
-                        "?", "?"
-                }
+                        "8:00-9:00", "10:00-11:00", "12:00-13:00", "13:00-14:00", "14:00-15:00", "15:00-16:00", "16:00-17:00"
+
+                }, {
+                "8:00-9:00", "10:00-11:00", "12:00-13:00", "13:00-14:00", "14:00-15:00", "15:00-16:00", "16:00-17:00"
+
+        }, {
+                "8:00-9:00", "10:00-11:00", "12:00-13:00", "13:00-14:00", "14:00-15:00", "15:00-16:00", "16:00-17:00"
+
+        }, {
+                "8:00-9:00", "10:00-11:00", "12:00-13:00", "13:00-14:00", "14:00-15:00", "15:00-16:00", "16:00-17:00"
+
+        }, {
+                "8:00-9:00", "10:00-11:00", "12:00-13:00", "13:00-14:00", "14:00-15:00", "15:00-16:00", "16:00-17:00"
+
+        }
         };
         request.getIt(new PerdetermingEntity().setData(data).setTime(time));
     }

@@ -147,7 +147,7 @@ public class OrderSeatActivity extends BaseActivity {
                     finish();
                     goPreAnim();
                     break;
-                case Title.BUTTON_RIGHT1://不好用？
+                case Title.BUTTON_RIGHT1:
                     verifyOrder();
                     startActivity(new Intent(OrderSeatActivity.this, OrderSubmitActivity.class));
                     break;
@@ -208,8 +208,7 @@ public class OrderSeatActivity extends BaseActivity {
             case R.id.tv_timeSelect:
 
                 DishesOrderDialog dishesOrderDialog = new DishesOrderDialog
-                        (OrderSeatActivity.this,
-                                data, time);
+                        (OrderSeatActivity.this, data, time);
                 dishesOrderDialog.setDateSelectListener
                         (dates -> tv_timeSelect.setText(dates));
                 break;
