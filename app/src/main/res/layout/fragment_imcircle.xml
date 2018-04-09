@@ -43,15 +43,36 @@
                 <com.lucky.sweet.views.TitleIndicatorView
                     android:id="@+id/circle_titie_sarch"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    />
 
-                <com.lucky.sweet.views.CircleImageView
-                    android:id="@+id/imv_head"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
-                    android:src="@mipmap/test_head"/>
+                <!--<LinearLayout-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:layout_marginRight="10dp">-->
+                    <com.lucky.sweet.views.CircleImageView
+                        android:id="@+id/imv_head"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="10dp"
+                        android:src="@mipmap/send_circle"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="发 布"
+                        android:textSize="12dp"
+                        android:layout_marginRight="18.5dp"
+                        android:layout_marginTop="42dp"
+                        android:layout_gravity="center"/>
+
+                <!--</LinearLayout>-->
+
+
 
 
             </RelativeLayout>
@@ -84,6 +105,7 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/emptycircle"
                 android:layout_gravity="center"
+                android:layout_marginTop="30dp"
                 android:visibility="gone"/>
 
         </FrameLayout>

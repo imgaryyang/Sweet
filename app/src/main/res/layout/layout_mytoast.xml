@@ -11,8 +11,8 @@
         android:id="@+id/tv_toastContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12dp"
+        android:textSize="13dp"
         android:layout_marginRight="5dp"
-        android:textColor="@color/white"/>
+        android:textColor="@color/black"/>
 
 </LinearLayout>
