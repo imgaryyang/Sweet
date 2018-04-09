@@ -26,6 +26,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -235,38 +236,44 @@ public class StoreDisplayActivity extends BaseActivity {
 
     }
 
-@Subscribe(threadMode = ThreadMode.MAIN)
-public void Event(CollectStoreEntitiy collectStoreEntitiy){
-    if (collectStoreEntitiy.getAttr()) {
-        String log;
-        if (collectStoreEntitiy.isCollect()) {
-            log="收藏成功";
-        }else
-        {
-            log="取关成功";
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(CollectStoreEntitiy collectStoreEntitiy) {
+        if (collectStoreEntitiy.getAttr()) {
+            String log;
+            if (collectStoreEntitiy.isCollect()) {
+                log = "收藏成功";
+            } else {
+                log = "取关成功";
+
+            }
+
+            MyToast.showShort(log);
 
         }
-
-        MyToast.showShort(log);
-
     }
-}
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(StoreDisplaySearchEntity info) {
 
         StoreDisplaySearchEntity.LiistBean list = info.getLiist();
+        circle = new ArrayList<>();
+        ArrayList<StoreDisplaySearchEntity.LiistBean.SelectBean.ListBean> type = new ArrayList<>();
+        for (StoreDisplaySearchEntity.LiistBean.SelectBean selectBean : list.getSelect()) {
+            circle.add(selectBean.getName());
+            for (StoreDisplaySearchEntity.LiistBean.SelectBean.ListBean bean : selectBean.getList()) type.add(bean);
 
-        circle = list.getCircle();
-        classify = list.getClassify();
-        order = list.getOrder();
+        }
+
+
+        this.order = list.getOrder();
         businessArea = circle.get(0);
         rankType = classify.get(0);
-        recreationType = order.get(0);
+        recreationType = this.order.get(0);
         sp_BusinessArea.setAdapter(new SearchSpinnerAdapter(circle, this));
 
         sp_RecreationType.setAdapter(new SearchSpinnerAdapter(classify, this));
 
-        sp_RankType.setAdapter(new SearchSpinnerAdapter(order, this));
+        sp_RankType.setAdapter(new SearchSpinnerAdapter(this.order, this));
 
         setListener();
 

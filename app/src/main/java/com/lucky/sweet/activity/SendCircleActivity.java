@@ -150,12 +150,12 @@ public class SendCircleActivity extends BaseActivity {
     public void Event(String string) {
         switch (string) {
             case "1":
-                ToastUtils.getInstance().show(this, "发送成功");
+                MyToast.showShort("发送成功");
                 finish();
                 //todo 通知用户上传成功
                 break;
             case "0":
-                ToastUtils.getInstance().show(this, "发送失败");
+                MyToast.showShort("发送失败");
                 //todo 通知用户上传失败
                 break;
             case "250":
