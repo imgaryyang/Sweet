@@ -170,8 +170,8 @@ public class SendCircleActivity extends BaseActivity {
 
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
                 .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
-        Title.ButtonInfo buttonRight = new Title.ButtonInfo(true, Title
-                .BUTTON_RIGHT1, 0, "#选择话题");
+//        Title.ButtonInfo buttonRight = new Title.ButtonInfo(true, Title
+//                .BUTTON_RIGHT1, 0, "选择相片");
         title.setOnTitleButtonClickListener(new Title
                 .OnTitleButtonClickListener() {
             @Override
@@ -182,12 +182,13 @@ public class SendCircleActivity extends BaseActivity {
                         goPreAnim();
                         break;
 
+
                 }
             }
         });
 
         title.mSetButtonInfo(buttonLeft);
-        title.mSetButtonInfo(buttonRight);
+//        title.mSetButtonInfo(buttonRight);
     }
 
     private void initViews() {
@@ -201,7 +202,7 @@ public class SendCircleActivity extends BaseActivity {
     private void initRcv() {
         InitCacheFileUtils.initImgDir(FILE_DIR_NAME, FILE_IMG_NAME);//清除图片缓存
         rec_selecter = findViewById(R.id.rev_share_circle);
-        rec_selecter.setLayoutManager(new StaggeredGridLayoutManager(4,
+        rec_selecter.setLayoutManager(new StaggeredGridLayoutManager(3,
                 StaggeredGridLayoutManager.VERTICAL));
         postArticleImgAdapter = new PostArticleImgAdapter(this, dragImages);
         rec_selecter.setAdapter(postArticleImgAdapter);
