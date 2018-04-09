@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -84,8 +86,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private LatLng latLng;
     private TextView tv_moreFood;
     private TextView tv_moreevr;
-    private ScrollView sv_storeInfo;
-    private LinearLayout ll_store_part_info;
+
     private String mer_id;
     private ImageButton ibtn_back;
     private LinearLayout ll_null;
@@ -103,6 +104,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
     private CommunicationService.MyBinder myBinder;
     private ImageButton imb_store_collect;
+    private NestedScrollView sc_shop_show;
 
     public static void newInStance(Context context, String shopId) {
 
@@ -154,6 +156,13 @@ public class StoreParticularInfoActivity extends BaseActivity {
     }
     private Boolean collect =true;
     public void onButtonClick(View view){
+        if (MyApplication.sessionId.equals("")) {
+//                Toast.makeText(StoreParticularInfoActivity.this, "请先登陆",
+//                        Toast.LENGTH_SHORT).show();
+            MyToast.showShort("请先登陆");
+
+            return;
+        }
         myBinder.collectShop(mer_id,!collect);
 
     }
@@ -171,9 +180,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
         tv_shop_worktime = findViewById(R.id.tv_shop_worktime);
         tv_shop_des = findViewById(R.id.tv_shop_des);
         btn_map_position = findViewById(R.id.btn_map_position);
-        sv_storeInfo = findViewById(R.id.sv_storeInfo);
 
-        ll_store_part_info = findViewById(R.id.ll_store_part_info);
         imv_shop_one = findViewById(R.id.imv_shop_one);
         imv_shop_two = findViewById(R.id.imv_shop_two);
         imv_shop_three = findViewById(R.id.imv_shop_three);
@@ -189,7 +196,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
         layout_order_content = findViewById(R.id.layout_order_content);
         ll_orderbtn = findViewById(R.id.ll_orderbtn);
         imb_store_collect = findViewById(R.id.imb_store_collect);
-
+        sc_shop_show = findViewById(R.id.sc_shop_show);
 
 //        StarLevelIndicatorView startIndicator = findViewById(R.id.startIndicator);
 //        startIndicator.initStarNumber(4);
@@ -201,8 +208,9 @@ public class StoreParticularInfoActivity extends BaseActivity {
         });
 
         lv_circle = findViewById(R.id.lv_circle);
-
-
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
         setListViewHeightBasedOnChildren(lv_circle);
 
         ibtn_back.setOnClickListener(new View.OnClickListener() {
@@ -222,17 +230,11 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
                 return;
             }
-            new BlurBitmapThread(StoreParticularInfoActivity.this,
-                    ll_store_part_info, 20) {
-                @Override
-                public void onBulerBitmapFinish() {
+            Intent intent = new Intent(StoreParticularInfoActivity.this, OrderSeatActivity.class);
+            intent.putExtra("mer_id", mer_id);
+            startActivity(intent);
+            goNextAnim();
 
-                    Intent intent = new Intent(StoreParticularInfoActivity.this, OrderSeatActivity.class);
-                    intent.putExtra("mer_id", mer_id);
-                    startActivity(intent);
-                    goNextAnim();
-                }
-            }.run();
         });
         ibtn_orderSingle.setOnClickListener(view -> {
             if (MyApplication.sessionId.equals("")) {
@@ -282,7 +284,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(CircleMainInfo info) {
         lv_circle.setAdapter(new CircleListViewAdapter(this, info.getCircle_list()));
-
+        sc_shop_show.smoothScrollTo(0, 0);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -314,6 +316,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
             collect=Boolean.TRUE;
            Glide.with(this).load(R.mipmap.shopstarfull).into(imb_store_collect);
         }
+         sc_shop_show.smoothScrollTo(0, 0);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -401,8 +404,8 @@ public class StoreParticularInfoActivity extends BaseActivity {
             });
 
         }
+        sc_shop_show.smoothScrollTo(0, 0);
 
-        sv_storeInfo.smoothScrollTo(0, 0);
     }
 
     public static void setListViewHeightBasedOnChildren(ListView listView) {
