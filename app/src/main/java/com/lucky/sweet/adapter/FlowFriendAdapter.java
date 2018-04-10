@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.FlowPeople;
+import com.lucky.sweet.views.CircleImageView;
 
 import java.util.List;
 
@@ -62,6 +63,8 @@ public class FlowFriendAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.name.setText(attentListBean.getNickname());
+        viewHolder.pic.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
+
         Glide.with(context).load(attentListBean.getPhoto()).into(viewHolder.pic);
         viewHolder.invitation.setOnClickListener(v -> {
             if (onInvitationClick != null) {
@@ -83,7 +86,7 @@ public class FlowFriendAdapter extends BaseAdapter {
     static public class ViewHolder {
         TextView name;
         Button invitation;
-        ImageView pic;
+        CircleImageView pic;
     }
 
 }
