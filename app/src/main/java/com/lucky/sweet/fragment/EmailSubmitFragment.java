@@ -22,7 +22,7 @@ import com.lucky.sweet.utility.StringFormatUtility;
  */
 public class EmailSubmitFragment extends Fragment {
 
-    private final Boolean isRegister;
+
     private EditText edt_userEmail;
     private EditText edt_verPassword;
     private Button btn_delete;
@@ -30,10 +30,6 @@ public class EmailSubmitFragment extends Fragment {
     private Button btn_verCode;
     private String email;
 
-    public EmailSubmitFragment(Boolean isRegister) {
-
-        this.isRegister = isRegister;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,15 +47,10 @@ public class EmailSubmitFragment extends Fragment {
                 String email = edt_userEmail.getText().toString().trim();
                 if (!email.isEmpty()) {
                     if (StringFormatUtility.checkoutEmail(email)) {
-                        if (isRegister) {
-                            if (onEmailVer != null) {
-                                onEmailVer.checkOutEmail(email);
-                            }
-                        } else {
-                            if (onEmailVer != null) {
-                                onEmailVer.forgetSubmit(email);
-                            }
-                        }
+
+                        onEmailVer.checkOutEmail(email);
+
+
                     } else
                         Toast.makeText(getActivity(), "请输入正确邮箱", Toast.LENGTH_SHORT).show();
                 } else
@@ -79,15 +70,9 @@ public class EmailSubmitFragment extends Fragment {
                 email = edt_userEmail.getText().toString().trim();
                 String verPsw = edt_verPassword.getText().toString().trim();
                 if (!email.isEmpty() && !verPsw.isEmpty()) {
-                    if (isRegister) {
-                        if (onEmailVer != null) {
-                            onEmailVer.onEmailVer(email, verPsw);
-                        }
-                    } else {
-                        if (onEmailVer != null) {
-                            onEmailVer.onGetValidate(email, verPsw);
-                        }
-                    }
+
+                    onEmailVer.onEmailVer(email, verPsw);
+
                 } else
                     Toast.makeText(getActivity(), "请填写完整信息", Toast.LENGTH_SHORT).show();
             }
@@ -97,11 +82,8 @@ public class EmailSubmitFragment extends Fragment {
     public interface OnEmailVer {
         void onEmailVer(String email, String verPsw);
 
-        void onGetValidate(String email, String verPsw);
-
         void checkOutEmail(String email);
 
-        void forgetSubmit(String email);
     }
 
     private OnEmailVer onEmailVer;

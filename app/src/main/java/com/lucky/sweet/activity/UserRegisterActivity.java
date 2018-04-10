@@ -35,8 +35,9 @@ public class UserRegisterActivity extends BaseActivity {
     private ToolBar toolBar;
 
     private NoScrollViewPager vp_reg;
-    private PassWordSubimitFragment passWordSubimitFragment;
-    private EmailSubmitFragment emailSubmitFragment;
+    private PassWordSubimitFragment passWordSubimitFragment = new PassWordSubimitFragment();
+    private EmailSubmitFragment emailSubmitFragment = new EmailSubmitFragment();
+    //注册true ，找回flase
     private Boolean isRegister;
     private CommunicationService.MyBinder myBinder;
     private SharedPreferences.Editor edit;
@@ -56,7 +57,6 @@ public class UserRegisterActivity extends BaseActivity {
         setIsBindEventBus();
 
         isRegister = getIntent().getBooleanExtra(INTENTTAG, true);
-
 
         initView();
 
@@ -91,8 +91,6 @@ public class UserRegisterActivity extends BaseActivity {
         toolBar.setImmersionBar();
         vp_reg = findViewById(R.id.vp_reg);
 
-        emailSubmitFragment = new EmailSubmitFragment(isRegister);
-        passWordSubimitFragment = new PassWordSubimitFragment(isRegister);
 
     }
 
@@ -112,8 +110,7 @@ public class UserRegisterActivity extends BaseActivity {
                 case Title.BUTTON_LEFT:
                     hintInputKb();
                     if (vp_reg.getCurrentItem() != 0) {
-                        vp_reg.setCurrentItem(vp_reg.getCurrentItem() -
-                                1, true);
+                        vp_reg.setCurrentItem(vp_reg.getCurrentItem() - 1, true);
                         return;
                     }
                     finish();
@@ -129,40 +126,15 @@ public class UserRegisterActivity extends BaseActivity {
         emailSubmitFragment.setOnEmailVerListener(new EmailSubmitFragment.OnEmailVer() {
             @Override
             public void onEmailVer(String email, String verPsw) {
-
                 myBinder.emailVer(email, verPsw, isRegister);
-
-
-            }
-
-            @Override
-            public void onGetValidate(String email, String verPsw) {
-                myBinder.emailVer(email, verPsw,isRegister);
             }
 
             @Override
             public void checkOutEmail(String email) {
                 myBinder.checkOutEmail(email, isRegister);
-
-            }
-
-            @Override
-            public void forgetSubmit(String email) {
-                myBinder.checkOutEmail(email, isRegister);
             }
         });
-        passWordSubimitFragment.setOnUserUpdataInfo(new PassWordSubimitFragment.OnUserUpdataInfo() {
-            @Override
-            public void onUserRegister(String email, String psw) {
-                myBinder.userRegister(email, psw, isRegister);
-            }
-
-            @Override
-            public void onUserForget(String email, String psw) {
-                myBinder.userRegister(email, psw, isRegister);
-
-            }
-        });
+        passWordSubimitFragment.setOnUserUpdataInfo((email, psw) -> myBinder.userRegister(email, psw, isRegister));
     }
 
     protected void hintInputKb() {
@@ -176,9 +148,6 @@ public class UserRegisterActivity extends BaseActivity {
         }
     }
 
-    public void setEmail(String email) {
-        passWordSubimitFragment.setCurrentEmail(email);
-    }
 
     public void moveToNextStep() {
         vp_reg.setCurrentItem(vp_reg.getCurrentItem() + 1, true);
@@ -196,12 +165,22 @@ public class UserRegisterActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(GetMailVerInfo info) {
-        if (info.getAttr()) {
-            MyToast.showShort("请耐心等待邮件");
+        String toast;
+        if (isRegister) {
+            if (info.getAttr()) {
+                toast = "请耐心等待邮件";
+            } else {
+                toast = "邮箱已存在或操作过于频繁";
+            }
+        } else {
+            if (info.getAttr()) {
+                toast = "邮箱已存在或操作过于频繁";
 
-        } else
-        MyToast.showShort("邮箱已存在或操作过于频繁");
-
+            } else {
+                toast = "请耐心等待邮件";
+            }
+        }
+        MyToast.showShort(toast);
 
     }
 
@@ -213,7 +192,7 @@ public class UserRegisterActivity extends BaseActivity {
 
             moveToNextStep();
         } else
-        MyToast.showShort("验证失败");
+            MyToast.showShort("验证失败");
 
 
     }
@@ -239,7 +218,7 @@ public class UserRegisterActivity extends BaseActivity {
                     });
                 }
             } else
-            MyToast.showShort("注册失败");
+                MyToast.showShort("注册失败");
 
 
         } else {
@@ -247,7 +226,7 @@ public class UserRegisterActivity extends BaseActivity {
                 MyToast.showShort("修改成功");
 
             } else
-            MyToast.showShort("原密码不能重复");
+                MyToast.showShort("原密码不能重复");
 
 
         }

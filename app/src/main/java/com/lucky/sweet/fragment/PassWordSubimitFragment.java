@@ -15,17 +15,20 @@ import com.lucky.sweet.R;
 import com.lucky.sweet.activity.BaseActivity;
 import com.lucky.sweet.utility.StringFormatUtility;
 
+import java.nio.file.FileVisitOption;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class PassWordSubimitFragment extends Fragment {
 
 
-    private final Boolean isRegister;
     private String userEmail;
     private EditText edt_psw;
     private EditText edt_verifypsw;
     private Button btn_submit_regerist;
+
+
 
 
     @Override
@@ -39,14 +42,9 @@ public class PassWordSubimitFragment extends Fragment {
 
     }
 
-    public PassWordSubimitFragment(Boolean isRegister) {
-        this.isRegister = isRegister;
-    }
 
     public interface OnUserUpdataInfo {
-        void onUserRegister(String email, String psw);
-
-        void onUserForget(String email, String psw);
+        void userSubmit(String email, String psw);
     }
 
     private OnUserUpdataInfo onUserUpdataInfo;
@@ -61,15 +59,10 @@ public class PassWordSubimitFragment extends Fragment {
             String verifypsw = edt_verifypsw.getText().toString().trim();
             if (psw.equals(verifypsw)) {
                 if (psw.length() >= 6 && StringFormatUtility.checkOutPSW(psw)) {
-                    if (isRegister) {
-                        if (onUserUpdataInfo != null) {
-                            onUserUpdataInfo.onUserRegister(userEmail, psw);
-                        }
-                    } else {
-                        if (onUserUpdataInfo != null) {
-                            onUserUpdataInfo.onUserForget(userEmail, psw);
-                        }
-                    }
+
+                    onUserUpdataInfo.userSubmit(userEmail, psw);
+
+
                 } else {
                     ((BaseActivity) getContext()).showDialogBaseAct
                             (null, "密码必须同时包含数字和字母。并且长度不小于6位", "确认", new DialogInterface.OnClickListener() {
@@ -86,10 +79,12 @@ public class PassWordSubimitFragment extends Fragment {
     }
 
     private void initView(View inflate) {
+
         edt_psw = inflate.findViewById(R.id.edt_psw);
         edt_verifypsw = inflate.findViewById(R.id.edt_verifypsw);
         btn_submit_regerist = inflate.findViewById(R.id
                 .btn_submit_regerist);
+
     }
 
 

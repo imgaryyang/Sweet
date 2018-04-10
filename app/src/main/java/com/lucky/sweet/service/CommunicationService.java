@@ -1513,7 +1513,6 @@ public class CommunicationService extends Service {
                         MyOkhttpHelper() {
                             @Override
                             public void onResponseSuccessfulString(String string) {
-                                Log.i(TAG, string);
                                 UserRegestInfo userRegestInfo = new UserRegestInfo(string);
                                 userRegestInfo.setPassword(password);
                                 userRegestInfo.setUserID(email);
