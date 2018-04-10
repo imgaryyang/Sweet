@@ -7,6 +7,7 @@
 
     <include layout="@layout/layout_title" />
 
+
     <!--<LinearLayout-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
@@ -22,23 +23,7 @@
             <!--android:textSize="14dp" />-->
     <!--</LinearLayout>-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <EditText
-            android:layout_weight="1"
-            android:id="@+id/edt_search_user"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
-        <Button
-            android:layout_weight="3"
-            android:id="@+id/btn_user_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="查询用户" />
-    </LinearLayout>
 
     <!--<LinearLayout-->
         <!--android:layout_width="match_parent"-->
@@ -51,13 +36,7 @@
 
 
 
-        <!--<Button-->
-        <!--android:layout_width="@dimen/dimen_280_dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="@drawable/shape_btn_order"-->
-        <!--android:onClick="addRoom"-->
-        <!--android:text="加入房间"-->
-        <!--android:textColor="@color/white" />-->
+
 
         <!--<Button-->
         <!--android:layout_width="@dimen/dimen_280_dp"-->
@@ -67,16 +46,7 @@
         <!--android:text="取消订单"-->
         <!--android:textColor="@color/white" />-->
     <!--</LinearLayout>-->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="详细查询" />
 
-    <ListView
-        android:id="@+id/lv_search_detailed_user_show"
-        android:layout_width="match_parent"
-        android:layout_height="90dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -86,17 +56,40 @@
     <com.lucky.sweet.views.HorizontalListView
         android:id="@+id/lv_add_friend"
         android:layout_width="match_parent"
-        android:layout_height="90dp" />
-
-    <Button
+        android:layout_height="70dp" />
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@drawable/shape_btn_order"
-        android:onClick="submitCreate"
-        android:text="创建房间"
-        android:layout_marginTop="150dp"
-        android:textColor="@color/white"/>
+        android:layout_height="wrap_content">
+    <include layout="@layout/layout_searchuser"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="bottom">
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_btn_order"
+            android:onClick="addRoom"
+            android:text="加入房间"
+            android:textColor="@color/white" />
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/shape_btn_order"
+            android:onClick="submitCreate"
+            android:text="创建房间"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+
 
 
 </LinearLayout>
