@@ -57,7 +57,7 @@ public class FlowFriendAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             viewHolder.name = convertView.findViewById(R.id.tv_flow_friend);
             viewHolder.pic = convertView.findViewById(R.id.imv_flow_friend);
-            viewHolder.invitation = convertView.findViewById(R.id.btn_in_frinde);
+//            viewHolder.invitation = convertView.findViewById(R.id.btn_in_frinde);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -66,7 +66,7 @@ public class FlowFriendAdapter extends BaseAdapter {
         viewHolder.pic.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
 
         Glide.with(context).load(attentListBean.getPhoto()).into(viewHolder.pic);
-        viewHolder.invitation.setOnClickListener(v -> {
+        viewHolder.pic.setOnClickListener(v -> {
             if (onInvitationClick != null) {
                 onInvitationClick.onClick(attent_list.get(position).getUser_id());
             }
@@ -85,7 +85,7 @@ public class FlowFriendAdapter extends BaseAdapter {
 
     static public class ViewHolder {
         TextView name;
-        Button invitation;
+//        Button invitation;
         CircleImageView pic;
     }
 

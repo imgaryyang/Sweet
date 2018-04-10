@@ -16,7 +16,7 @@
         android:src="@mipmap/test_head"
         android:id="@+id/imv_flow_friend"
         android:scaleType="centerCrop"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="25dp"
         android:layout_centerHorizontal="true"/>
 
     <TextView
@@ -31,10 +31,10 @@
         android:layout_centerHorizontal="true"/>
     <Button
         android:id="@+id/btn_in_frinde"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginRight="15dp"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
+        android:layout_marginRight="25dp"
         android:layout_below="@+id/tv_flow_friend"
-        android:background="@mipmap/wait_order"
+        android:background="@mipmap/add_friend"
         android:layout_centerHorizontal="true"/>
 </LinearLayout>

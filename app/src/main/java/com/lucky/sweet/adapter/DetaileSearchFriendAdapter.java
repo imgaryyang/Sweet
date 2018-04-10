@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -50,21 +51,19 @@ public class DetaileSearchFriendAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             viewHolder.name = convertView.findViewById(R.id.tv_flow_friend);
             viewHolder.invitation = convertView.findViewById(R.id.btn_in_frinde);
-            viewHolder.head = convertView.findViewById(R.id.imv_flow_friend);
-
+            viewHolder.title = convertView.findViewById(R.id.imv_flow_friend);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.name.setText(userListBean.getNickname());
+        viewHolder.title.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
         Glide.with(context).load(userListBean.getPhoto());
-        viewHolder.head.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
         viewHolder.invitation.setOnClickListener(v -> {
             if (onInvitationClick != null) {
                 onInvitationClick.onClick(userListBean.getId());
             }
         });
-
         return convertView;
     }
 
@@ -80,7 +79,7 @@ public class DetaileSearchFriendAdapter extends BaseAdapter {
     static public class ViewHolder {
         TextView name;
         Button invitation;
-        CircleImageView head;
+        CircleImageView title;
 
     }
 

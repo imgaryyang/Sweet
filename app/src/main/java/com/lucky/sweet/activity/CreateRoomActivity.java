@@ -52,10 +52,10 @@ public class CreateRoomActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_createroom);
+        hintInputKb();
         setIsBindEventBus();
         initView();
         initData();
-
     }
 
     public final static void newInStrance(Activity activity, String mer_id) {

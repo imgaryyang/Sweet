@@ -65,10 +65,10 @@ public class FloatPageActivity extends BaseActivity {
         btn_join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(FloatPageActivity.this,
-                        JoinRoomActivity.class);
+                Intent intent=new Intent(FloatPageActivity.this,CreateRoomActivity.class);
                 startActivity(intent);
                 goNextAnim();
+
             }
         });
     }

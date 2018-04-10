@@ -253,30 +253,45 @@ public class StoreParticularInfoActivity extends BaseActivity {
             goNextAnim();
         });
 
-        ibtn_orderMulti.setOnClickListener(view -> {
-            if (MyApplication.sessionId.equals("")) {
-//                Toast.makeText(StoreParticularInfoActivity.this, "请先登陆",
-//                        Toast.LENGTH_SHORT).show();
-                MyToast.showShort("请先登陆");
+        ibtn_orderMulti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (MyApplication.sessionId.equals("")) {
 
-                return;
+                    MyToast.showShort("请先登陆");
+
+                    return;
+                }
+                CreateRoomActivity.newInStrance(StoreParticularInfoActivity.this, mer_id);
+                        goNextAnim();
+
             }
-
-            new AlertDialog.Builder(StoreParticularInfoActivity.this)
-                    .setMessage("请选择加入方式")
-                    .setPositiveButton("加入房间", (dialog, which) -> {
-                        Intent intent = new Intent(StoreParticularInfoActivity.this, JoinRoomActivity.class);
-                        intent.putExtra("mer_id", mer_id);
-                        startActivityForResult(intent, 0);
-                        goNextAnim();
-                    })
-                    .setNegativeButton("创建房间", (dialog, which) -> {
-                        CreateRoomActivity.newInStrance(StoreParticularInfoActivity.this, mer_id);
-                        goNextAnim();
-                    })
-                    .create()
-                    .show();
         });
+
+//        ibtn_orderMulti.setOnClickListener(view -> {
+//            if (MyApplication.sessionId.equals("")) {
+////                Toast.makeText(StoreParticularInfoActivity.this, "请先登陆",
+////                        Toast.LENGTH_SHORT).show();
+//                MyToast.showShort("请先登陆");
+//
+//                return;
+//            }
+//
+//            new AlertDialog.Builder(StoreParticularInfoActivity.this)
+//                    .setMessage("请选择加入方式")
+//                    .setPositiveButton("加入房间", (dialog, which) -> {
+//                        Intent intent = new Intent(StoreParticularInfoActivity.this, JoinRoomActivity.class);
+//                        intent.putExtra("mer_id", mer_id);
+//                        startActivityForResult(intent, 0);
+//                        goNextAnim();
+//                    })
+//                    .setNegativeButton("创建房间", (dialog, which) -> {
+//                        CreateRoomActivity.newInStrance(StoreParticularInfoActivity.this, mer_id);
+//                        goNextAnim();
+//                    })
+//                    .create()
+//                    .show();
+//        });
 
     }
 
