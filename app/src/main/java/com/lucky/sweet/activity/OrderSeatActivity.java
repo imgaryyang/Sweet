@@ -192,19 +192,19 @@ public class OrderSeatActivity extends BaseActivity {
 
     public void onButtonClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_order_submit:
-      /*          if (MORE_PEOPLE) {
-
-                    OrderSubmitActivity.newInstance( getIntent().getStringExtra(SHOP_CAR_INFO));
-
-                } else {*/
-                OrderDisInfo orderDisInfo = sendOrderSeatInfo();
-                if (orderDisInfo!=null) {
-                    OrderSubmitActivity.newInstance( OrderSeatActivity.this,(ShopCarSingleInformation) getIntent().getSerializableExtra(SHOP_CAR_INFO),orderDisInfo);
-
-                }
-               /* }*/
-                break;
+//            case R.id.btn_order_submit:
+//      /*          if (MORE_PEOPLE) {
+//
+//                    OrderSubmitActivity.newInstance( getIntent().getStringExtra(SHOP_CAR_INFO));
+//
+//                } else {*/
+//                OrderDisInfo orderDisInfo = sendOrderSeatInfo();
+//                if (orderDisInfo!=null) {
+//                    OrderSubmitActivity.newInstance( OrderSeatActivity.this,(ShopCarSingleInformation) getIntent().getSerializableExtra(SHOP_CAR_INFO),orderDisInfo);
+//
+//                }
+//               /* }*/
+//                break;
             case R.id.tv_timeSelect:
 
                 DishesOrderDialog dishesOrderDialog = new DishesOrderDialog
