@@ -18,6 +18,7 @@ import com.lucky.sweet.entity.FlowPeople;
 import com.lucky.sweet.entity.InvitationInfo;
 import com.lucky.sweet.entity.SearchFriendInfo;
 import com.lucky.sweet.service.CommunicationService;
+import com.lucky.sweet.views.HorizontalListView;
 import com.lucky.sweet.views.MyToast;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
@@ -42,7 +43,7 @@ public class CreateRoomActivity extends BaseActivity {
     private CommunicationService.MyBinder myBinder;
     private String mer_id;
     private final static String SHOPID = "mer_id";
-    private ListView lv_add_friend;
+    private HorizontalListView lv_add_friend;
     private FlowFriendAdapter flowFriendAdapter;
     private ListView lv_search_user_show;
     private EditText edt_serch;
