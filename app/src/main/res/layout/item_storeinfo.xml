@@ -18,17 +18,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="13dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:textColor="#000000"
+        android:text="哈哈哈"
         android:textSize="25dp"/>
 
-    <TextView
-        android:id="@+id/tv_shop_des"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="16dp"
-        android:text="王兴田最帅王兴田最牛逼别老爆炸别老生气"/>
+    <!--<TextView-->
+        <!--android:id="@+id/tv_shop_des"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:textSize="16dp"-->
+        <!--android:text="王兴田最帅王兴田最牛逼别老爆炸别老生气"/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,7 +42,8 @@
             android:id="@+id/imv_shop_dis_fir"
             android:layout_width="0dp"
             android:layout_height="80dp"
-            android:layout_margin="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_weight="1"
             android:scaleType="centerCrop"
             android:src="@mipmap/photo_null_bg"
@@ -48,7 +53,8 @@
             android:id="@+id/imv_shop_dis_sec"
             android:layout_width="0dp"
             android:layout_height="80dp"
-            android:layout_margin="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_weight="1"
             android:scaleType="centerCrop"
             android:src="@mipmap/photo_null_bg"
@@ -58,7 +64,8 @@
             android:id="@+id/imv_shop_dis_the"
             android:layout_width="0dp"
             android:layout_height="80dp"
-            android:layout_margin="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_weight="1"
             android:scaleType="centerCrop"
             android:src="@mipmap/photo_null_bg"
@@ -68,7 +75,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="18dp"
         android:background="@color/transparent"/>
 
 
