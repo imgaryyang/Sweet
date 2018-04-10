@@ -1410,7 +1410,6 @@ public class CommunicationService extends Service {
 
     }
 
-
     private void getStoreDisplayInfo(final String project, final String circle, final String rank, final String num) {
         final HashMap<String, String> map = new HashMap<>();
         map.put("small_project", project);
@@ -1418,6 +1417,7 @@ public class CommunicationService extends Service {
         map.put("city", MyApplication.CURRENT_CITY);
         map.put("rank", rank);
         map.put("num_start", num);
+        System.out.println(map);
         new Thread() {
             @Override
             public void run() {

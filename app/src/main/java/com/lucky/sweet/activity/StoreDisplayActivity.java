@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
+import com.lucky.sweet.adapter.CircleCommentAdapter;
 import com.lucky.sweet.adapter.SearchSpinnerAdapter;
 import com.lucky.sweet.adapter.ShowInfoListViewAdapter;
 import com.lucky.sweet.entity.CollectStoreEntitiy;
@@ -27,7 +28,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -59,10 +62,12 @@ public class StoreDisplayActivity extends BaseActivity {
     private String businessArea = "";
     private String rankType = "";
     private String recreationType = "";
-    private List<String> circle;
-    private List<String> classify;
-    private List<String> order;
+    private ArrayList<String> circle = new ArrayList<>();
+    private ArrayList<List<String>> classify = new ArrayList<>();
+    private List<String> order = new ArrayList<>();
     private int num = 0;
+    private int bussinessAre = 0;
+    private boolean addFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,21 +124,15 @@ public class StoreDisplayActivity extends BaseActivity {
     //设置监听事件，将来商家列表的排序都在这里面处理
     private void setListener() {
         sp_BusinessArea.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            Boolean flag = false;
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (!flag) {
-                    if (position == 0) {
 
-                        flag = true;
-                        return;
-                    }
-                }
-
+                bussinessAre = position;
+                sp_RecreationType.setAdapter(new SearchSpinnerAdapter(classify.get(position), StoreDisplayActivity.this));
+                recreationType = classify.get(position).get(0);
                 businessArea = circle.get(position);
-
-                requestSearchItem(false);
+                requestSearchItem();
             }
 
             @Override
@@ -143,21 +142,13 @@ public class StoreDisplayActivity extends BaseActivity {
         });
 
         sp_RecreationType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            Boolean flag = false;
+
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (!flag) {
-                    if (position == 0) {
 
-                        flag = true;
-                        return;
-                    }
-                }
-
-                recreationType = classify.get(position);
-                requestSearchItem(false);
-
+                recreationType = classify.get(bussinessAre).get(position);
+                requestSearchItem();
             }
 
             @Override
@@ -167,20 +158,13 @@ public class StoreDisplayActivity extends BaseActivity {
         });
 
         sp_RankType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            Boolean flag = false;
+
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (!flag) {
-                    if (position == 0) {
-
-                        flag = true;
-                        return;
-                    }
-                }
 
                 rankType = order.get(position);
-                requestSearchItem(false);
+                requestSearchItem();
 
             }
 
@@ -200,11 +184,11 @@ public class StoreDisplayActivity extends BaseActivity {
             switch (direction.name()) {
                 case "TOP":
                     num = 0;
-                    requestSearchItem(true);
+                    requestSearchItem();
                     break;
                 case "BOTTOM":
-                    requestSearchItem(false);
                     num++;
+                    addFlag = true;
                     myBinder.requestStoreDisplayInfo(recreationType, businessArea, rankType, num + "");
                     MyToast.showShort("加载更多");
                     break;
@@ -221,15 +205,17 @@ public class StoreDisplayActivity extends BaseActivity {
         if (sw_store_info.isRefreshing()) {
             sw_store_info.setRefreshing(false);
         }
-        if (adapter == null) {
-            displayList = info.getMer_list();
+        if (addFlag) {
+            if (info.getMer_list().size() != 0) {
+                displayList.addAll(info.getMer_list());
+                adapter.notifyDataSetChanged();
+            } else {
+                MyToast.showShort("暂时无数据");
+            }
+        } else {
+            displayList=info.getMer_list();
             adapter = new ShowInfoListViewAdapter(displayList, this);
             lv_storeInfo.setAdapter(adapter);
-        } else if (info != null) {
-            displayList.addAll(info.getMer_list());
-            adapter.notifyDataSetChanged();
-        } else {
-            MyToast.showShort("暂时无数据");
 
         }
 
@@ -252,28 +238,25 @@ public class StoreDisplayActivity extends BaseActivity {
         }
     }
 
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(StoreDisplaySearchEntity info) {
-
-        StoreDisplaySearchEntity.LiistBean list = info.getLiist();
-        circle = new ArrayList<>();
-        ArrayList<StoreDisplaySearchEntity.LiistBean.SelectBean.ListBean> type = new ArrayList<>();
-        for (StoreDisplaySearchEntity.LiistBean.SelectBean selectBean : list.getSelect()) {
+        StoreDisplaySearchEntity.CircleListBean list = info.getCircle_list();
+        List<StoreDisplaySearchEntity.CircleListBean.SelectBean> select = list.getSelect();
+        for (StoreDisplaySearchEntity.CircleListBean.SelectBean selectBean : select) {
             circle.add(selectBean.getName());
-            for (StoreDisplaySearchEntity.LiistBean.SelectBean.ListBean bean : selectBean.getList()) type.add(bean);
-
+            classify.add(selectBean.getList());
         }
 
 
-        this.order = list.getOrder();
-        businessArea = circle.get(0);
-        rankType = classify.get(0);
-        recreationType = this.order.get(0);
+        order = list.getOrder();
+        businessArea = classify.get(0).get(0);
+        rankType = circle.get(0);
+        recreationType = order.get(0);
+
+        sp_RecreationType.setAdapter(new SearchSpinnerAdapter(classify.get(0), this));
         sp_BusinessArea.setAdapter(new SearchSpinnerAdapter(circle, this));
-
-        sp_RecreationType.setAdapter(new SearchSpinnerAdapter(classify, this));
-
-        sp_RankType.setAdapter(new SearchSpinnerAdapter(this.order, this));
+        sp_RankType.setAdapter(new SearchSpinnerAdapter(order, this));
 
         setListener();
 
@@ -281,16 +264,11 @@ public class StoreDisplayActivity extends BaseActivity {
 
     }
 
-    private int CURRENT_PAGE_NUM = 0;
 
-    private void requestSearchItem(boolean isRefresh) {
-        String page = "0";
-        if (!isRefresh) {
-            CURRENT_PAGE_NUM++;
-            page = String.valueOf(CURRENT_PAGE_NUM);
-        }
-        myBinder.requestStoreDisplayInfo(recreationType, businessArea, rankType, page);
-
+    private void requestSearchItem() {
+        num = 0;
+        addFlag = false;
+        myBinder.requestStoreDisplayInfo(recreationType, businessArea, rankType, num + "");
     }
 
 
