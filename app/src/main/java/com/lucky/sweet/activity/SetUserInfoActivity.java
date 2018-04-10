@@ -52,15 +52,11 @@ public class SetUserInfoActivity extends BaseActivity {
         title.setTitleNameStr("设置");
         Title.ButtonInfo buttonLeft = new Title.ButtonInfo(true, Title
                 .BUTTON_LEFT, R.drawable.selector_btn_titleback, null);
-        title.setOnTitleButtonClickListener(new Title
-                .OnTitleButtonClickListener() {
-            @Override
-            public void onClick(int id, Title.ButtonViewHolder viewHolder) {
-                switch (id) {
-                    case Title.BUTTON_LEFT:
-                        finish();
-                        break;
-                }
+        title.setOnTitleButtonClickListener((id, viewHolder) -> {
+            switch (id) {
+                case Title.BUTTON_LEFT:
+                    finish();
+                    break;
             }
         });
         title.mSetButtonInfo(buttonLeft);

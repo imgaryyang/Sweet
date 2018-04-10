@@ -1,9 +1,10 @@
 package com.lucky.sweet.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lucky.sweet.R;
@@ -25,15 +26,34 @@ public class UserDetailctivity extends BaseActivity {
     private EditText edt_change_nikname;
     private EditText edt_chang_psw;
     private CommunicationService.MyBinder myBinder;
+    private TextView tv_use_detail;
+    private final static String USERNAME = "userName";
+    private final static int CHANGE_NAME_SUCCESSFUL = 1;
+
+    public static void newInstance(String userName, Activity activity) {
+        Intent intent = new Intent(activity, UserDetailctivity.class);
+        intent.putExtra(USERNAME, userName);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_use_detailctivity);
         setIsBindEventBus();
-//        initView();
+        initView();
         ToolBar toolBar = new ToolBar(this);
         toolBar.setColorNewBar(getResources().getColor(R.color.white), 0);
+    }
+
+    private void initView() {
+        String name = getIntent().getStringExtra(USERNAME);
+
+        tv_use_detail = findViewById(R.id.tv_use_detail);
+        tv_use_detail.setText(name);
+        tv_use_detail.setOnClickListener(v ->
+                UserChangeInfo.newInstance(this, name, CHANGE_NAME_SUCCESSFUL)
+        );
     }
 
 //    private void initTitle() {
@@ -88,6 +108,18 @@ public class UserDetailctivity extends BaseActivity {
 //        }
 //    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (RESULT_OK == resultCode) {
+            switch (requestCode) {
+                case CHANGE_NAME_SUCCESSFUL:
+                    tv_use_detail.setText( data.getStringExtra("change"));
+                    break;
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Evnet(ChangeNameRequstInfo info) {
         if (info.getAttr()) {
@@ -95,15 +127,17 @@ public class UserDetailctivity extends BaseActivity {
 
         } else
 
-        MyToast.showShort("匿名修改失败");
+            MyToast.showShort("匿名修改失败");
 
-    }   @Subscribe(threadMode = ThreadMode.MAIN)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(StatueCheckBaseEntitiy info) {
         if (info.getAttr()) {
             MyToast.showShort("密码修改成功");
 
         } else
-        MyToast.showShort("密码修改失败");
+            MyToast.showShort("密码修改失败");
 
     }
 }

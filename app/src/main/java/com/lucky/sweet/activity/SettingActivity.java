@@ -27,6 +27,13 @@ public class SettingActivity extends BaseActivity {
     private SharedPreferences config;
     private SharedPreferences.Editor edit;
     private Button btn_userOut;
+    private final static String USERNAME = "userName";
+
+    public static void newInstance(String userName, Activity activity) {
+        Intent intent = new Intent(activity, SettingActivity.class);
+        intent.putExtra(USERNAME,userName);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +111,7 @@ public class SettingActivity extends BaseActivity {
     public void onButtonClick(View view) {
         switch (view.getId()) {
             case R.id.ll_setUserInfo:
-                startActivity(new Intent(SettingActivity.this, UserDetailctivity.class));
+                UserDetailctivity.newInstance(getIntent().getStringExtra(USERNAME),this);
                 overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
                 break;
             case R.id.ll_setUserPhone:

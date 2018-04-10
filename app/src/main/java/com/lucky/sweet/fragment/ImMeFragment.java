@@ -83,7 +83,7 @@ public class ImMeFragment extends Fragment implements View.OnClickListener {
     }
 
     public void upPersonPortrait(String info) {
-       Glide.with(this).load(info).into(imv_head);
+        Glide.with(this).load(info).into(imv_head);
     }
 
     @Override
@@ -185,8 +185,7 @@ public class ImMeFragment extends Fragment implements View.OnClickListener {
                 getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
                 break;
             case R.id.btn_setUserInfo:
-                Intent intent = new Intent(getActivity(), SettingActivity.class);
-                startActivity(intent);
+                SettingActivity.newInstance(userName.getText().toString(), getActivity());
                 getActivity().overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
                 break;
             case R.id.imv_head:

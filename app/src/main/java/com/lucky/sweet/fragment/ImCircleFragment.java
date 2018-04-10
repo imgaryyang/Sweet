@@ -151,7 +151,8 @@ public class ImCircleFragment extends Fragment implements
             if (imv_empty.getVisibility()== View.VISIBLE) {
                 imv_empty.setVisibility(View.GONE);
             }
-            circleListViewAdapter = new CircleListViewAdapter(getActivity(), circle_list).setCallBack(this);
+            circleListViewAdapter = new CircleListViewAdapter(getActivity(), circle_list);
+            circleListViewAdapter.setCallBack(this);
             circleListViewAdapter.setOnLikeItClickListener(
                     new CircleListViewAdapter.OnLikeItClickListener() {
                         @Override
@@ -166,9 +167,9 @@ public class ImCircleFragment extends Fragment implements
                     });
             lv_circle.setAdapter(circleListViewAdapter);
         }else {
-            circleListViewAdapter = new CircleListViewAdapter(getActivity(),new ArrayList<CircleMainInfo.CircleListBean>()).setCallBack(this);
+            circleListViewAdapter = new CircleListViewAdapter(getActivity(),new ArrayList<CircleMainInfo.CircleListBean>());
+            circleListViewAdapter.setCallBack(this);
             lv_circle.setAdapter(circleListViewAdapter);
-
             imv_empty.setVisibility(View.VISIBLE);
         }
 

@@ -23,7 +23,6 @@
         android:layout_height="55dp"
         android:background="@drawable/selector_item_click"
         android:gravity="center_vertical"
-        android:onClick="onButtonClick"
         android:orientation="horizontal">
 
         <TextView
@@ -58,7 +57,6 @@
         android:layout_height="55dp"
         android:background="@drawable/selector_item_click"
         android:gravity="center_vertical"
-        android:onClick="onButtonClick"
         android:orientation="horizontal">
 
         <TextView
@@ -77,6 +75,7 @@
         <!--android:scaleType="centerCrop"-->
         <!--android:src="@mipmap/test_head"/>-->
         <TextView
+            android:id="@+id/tv_use_detail"
             android:layout_weight="0.3"
             android:layout_width="@dimen/_10dp"
             android:layout_height="wrap_content"
@@ -101,7 +100,7 @@
         android:layout_height="55dp"
         android:background="@drawable/selector_item_click"
         android:gravity="center_vertical"
-        android:onClick="onButtonClick"
+
         android:orientation="horizontal">
 
         <TextView

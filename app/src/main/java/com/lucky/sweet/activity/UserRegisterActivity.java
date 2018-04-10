@@ -165,23 +165,12 @@ public class UserRegisterActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(GetMailVerInfo info) {
-        String toast;
-        if (isRegister) {
-            if (info.getAttr()) {
-                toast = "请耐心等待邮件";
-            } else {
-                toast = "邮箱已存在或操作过于频繁";
-            }
+        if (info.getAttr()) {
+            MyToast.showShort("请耐心等待邮件");
         } else {
-            if (info.getAttr()) {
-                toast = "邮箱已存在或操作过于频繁";
+            MyToast.showShort("邮箱已存在或操作过于频繁");
 
-            } else {
-                toast = "请耐心等待邮件";
-            }
         }
-        MyToast.showShort(toast);
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -224,7 +213,7 @@ public class UserRegisterActivity extends BaseActivity {
         } else {
             if (info.getAttr()) {
                 MyToast.showShort("修改成功");
-
+                finish();
             } else
                 MyToast.showShort("原密码不能重复");
 

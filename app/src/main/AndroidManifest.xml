@@ -82,8 +82,9 @@
             android:name=".activity.MerchantActivity"
             android:launchMode="singleTop" />
         <activity android:name=".activity.OrderSubmitActivity" />
-        <activity android:name=".activity.RecruitmentDisplayActivity"
-            android:launchMode="singleTop"/>
+        <activity
+            android:name=".activity.RecruitmentDisplayActivity"
+            android:launchMode="singleTop" />
         <activity android:name=".activity.CaptureActivity" />
         <activity android:name=".activity.VipCardActiviry" />
         <activity
@@ -108,7 +109,8 @@
         <activity android:name=".activity.MyLikeStoreActivity" />
         <activity android:name=".activity.BindUserPhoneActivity" />
         <activity android:name=".activity.AlterPwdActivity" />
-
+        <activity android:name=".activity.UserDetailctivity" />
+        <activity android:name=".activity.UserChangeInfo"/>
         <meta-data
             android:name="com.alibaba.app.appkey"
             android:value="24801052" /> <!-- 请填写你自己的- appKey -->
@@ -147,7 +149,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.UserDetailctivity"></activity>
+
     </application>
 
 </manifest>

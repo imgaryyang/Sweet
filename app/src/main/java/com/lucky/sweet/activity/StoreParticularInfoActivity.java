@@ -105,7 +105,8 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private CommunicationService.MyBinder myBinder;
     private ImageButton imb_store_collect;
     private NestedScrollView sc_shop_show;
-
+    private TextView tv_store_ave;
+    private Button btn_order;
     public static void newInStance(Context context, String shopId) {
 
         Intent intent = new Intent(context, StoreParticularInfoActivity.class);
@@ -142,7 +143,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
     private void initEvent() {
         btn_more_map_detal.setOnClickListener(v -> {
 
-            MapWebAcivity.Companion.InStance(StoreParticularInfoActivity.this,String.valueOf(MyApplication.lat)   , String.valueOf(MyApplication.longi)   ,latLng.getLongitude() + "", "" + latLng.getLatitude());
+            MapWebAcivity.Companion.InStance(StoreParticularInfoActivity.this, String.valueOf(MyApplication.lat), String.valueOf(MyApplication.longi), latLng.getLongitude() + "", "" + latLng.getLatitude());
         });
         btn_map_position.setOnClickListener(v -> maps.setCenter(latLng));
         tv_moreFood.setOnClickListener(v -> {
@@ -154,8 +155,10 @@ public class StoreParticularInfoActivity extends BaseActivity {
             goUpAnim();
         });
     }
-    private Boolean collect =true;
-    public void onButtonClick(View view){
+
+    private Boolean collect = true;
+
+    public void onButtonClick(View view) {
         if (MyApplication.sessionId.equals("")) {
 //                Toast.makeText(StoreParticularInfoActivity.this, "请先登陆",
 //                        Toast.LENGTH_SHORT).show();
@@ -163,7 +166,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
             return;
         }
-        myBinder.collectShop(mer_id,!collect);
+        myBinder.collectShop(mer_id, !collect);
 
     }
 
@@ -180,7 +183,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
         tv_shop_worktime = findViewById(R.id.tv_shop_worktime);
         tv_shop_des = findViewById(R.id.tv_shop_des);
         btn_map_position = findViewById(R.id.btn_map_position);
-
+        tv_store_ave = findViewById(R.id.tv_store_ave);
         imv_shop_one = findViewById(R.id.imv_shop_one);
         imv_shop_two = findViewById(R.id.imv_shop_two);
         imv_shop_three = findViewById(R.id.imv_shop_three);
@@ -197,12 +200,14 @@ public class StoreParticularInfoActivity extends BaseActivity {
         ll_orderbtn = findViewById(R.id.ll_orderbtn);
         imb_store_collect = findViewById(R.id.imb_store_collect);
         sc_shop_show = findViewById(R.id.sc_shop_show);
+        btn_order = findViewById(R.id.btn_order);
 
 //        StarLevelIndicatorView startIndicator = findViewById(R.id.startIndicator);
 //        startIndicator.initStarNumber(4);
         map = findViewById(R.id.map);
-        findViewById(R.id.btn_order).setOnClickListener(v -> {
+        btn_order.setOnClickListener(v -> {
             layout_order_content.setVisibility(View.VISIBLE);
+            btn_order.setVisibility(View.GONE);
             startbtnAnim();
 
         });
@@ -211,7 +216,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-        setListViewHeightBasedOnChildren(lv_circle);
+
 
         ibtn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -283,40 +288,39 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(CircleMainInfo info) {
-        lv_circle.setAdapter(new CircleListViewAdapter(this, info.getCircle_list()));
-        sc_shop_show.smoothScrollTo(0, 0);
+         lv_circle.setAdapter(new CircleListViewAdapter(this, info.getCircle_list()));
+        //setListViewHeightBasedOnChildren(lv_circle);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void Event(CollectStoreEntitiy collectStoreEntitiy){
+    public void Event(CollectStoreEntitiy collectStoreEntitiy) {
         String log;
         if (collectStoreEntitiy.getAttr()) {
             if (collectStoreEntitiy.isCollect()) {
                 Glide.with(this).load(R.mipmap.shopstarfull).into(imb_store_collect);
-                log="收藏成功";
-                collect=Boolean.TRUE;
-            }else {
+                log = "收藏成功";
+                collect = Boolean.TRUE;
+            } else {
                 Glide.with(this).load(R.mipmap.shopstar).into(imb_store_collect);
-                log="取关成功";
-                collect=Boolean.FALSE;
-        }
-        }else {
-            log="操作失败";
+                log = "取关成功";
+                collect = Boolean.FALSE;
+            }
+        } else {
+            log = "操作失败";
         }
         MyToast.showShort(log);
 
     }
 
-     @Subscribe(threadMode = ThreadMode.MAIN)
-   public void Event(LikeShopEntity base){
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(LikeShopEntity base) {
         if (base.getAttr()) {
-            collect= Boolean.FALSE;
-          Glide.with(this).load(R.mipmap.shopstar).into(imb_store_collect);
-        }else {
-            collect=Boolean.TRUE;
-           Glide.with(this).load(R.mipmap.shopstarfull).into(imb_store_collect);
+            collect = Boolean.FALSE;
+            Glide.with(this).load(R.mipmap.shopstar).into(imb_store_collect);
+        } else {
+            collect = Boolean.TRUE;
+            Glide.with(this).load(R.mipmap.shopstarfull).into(imb_store_collect);
         }
-         sc_shop_show.smoothScrollTo(0, 0);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -348,7 +352,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
         tv_shop_title.setText(shopdes.getName());
         tv_shop_des.setText(shopdes.getIntroduce());
         tv_shop_worktime.setText(shopdes.getBusiness_hours());
-
+        tv_store_ave.setText("￥`" + shopdes.getAvecon());
         latLng = new LatLng(Double.valueOf(shopdes.getLatitude()),
                 Double.valueOf(shopdes.getLongitude()));
         maps = map.getMap();
@@ -364,7 +368,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
             marker = this.map.addMarker(new MarkerOptions().title("您当前位置").anchor(0.5f, 0.5f).position(current));
             marker.showInfoWindow();
             btn_more_map_detal.setVisibility(View.VISIBLE);
-            maps.zoomToSpan(new LatLng(latLng.getLatitude()-0.0013, latLng.getLongitude()-0.0013), new LatLng(latitude+0.0013, longitude+0.0013));
+            maps.zoomToSpan(new LatLng(latLng.getLatitude() - 0.0013, latLng.getLongitude() - 0.0013), new LatLng(latitude + 0.0013, longitude + 0.0013));
             TencentSearch tencentSearch = new TencentSearch(this);
             WalkingParam walkingParam = new WalkingParam();
             walkingParam.from(new Location(Float.valueOf(shopdes.getLatitude()), Float.valueOf(shopdes.getLongitude())));
@@ -404,8 +408,10 @@ public class StoreParticularInfoActivity extends BaseActivity {
             });
 
         }
-        sc_shop_show.smoothScrollTo(0, 0);
 
+        tv_shop_title.setFocusable(true);
+        tv_shop_title.setFocusableInTouchMode(true);
+        tv_shop_title.requestFocus();
     }
 
     public static void setListViewHeightBasedOnChildren(ListView listView) {
@@ -425,7 +431,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         //计算分割线高度
-        params.height = totalHeight + (listView.getDividerHeight() * (adapter.getCount() - 1));
+        params.height = totalHeight + (listView.getDividerHeight() * (adapter.getCount()));
         //给listview设置高度
         listView.setLayoutParams(params);
     }
@@ -525,6 +531,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
                 ibtn_orderMulti.clearAnimation();
                 tv_weibo.clearAnimation();
                 ll_share.startAnimation(T_Anim[3]);
+                btn_order.setVisibility(View.VISIBLE);
                 layout_order_content.setVisibility(View.GONE);
 
             }

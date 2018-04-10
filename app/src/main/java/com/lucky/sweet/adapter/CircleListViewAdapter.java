@@ -34,9 +34,9 @@ public class CircleListViewAdapter extends BaseAdapter {
 
     }
 
-    public CircleListViewAdapter setCallBack(MessagePicturesLayout.Callback mcallback) {
+    public void setCallBack(MessagePicturesLayout.Callback mcallback) {
         this.mcallback = mcallback;
-        return this;
+
     }
 
     @Override
@@ -85,21 +85,17 @@ public class CircleListViewAdapter extends BaseAdapter {
         viewHolder.sendText.setText(datas.get(position).getCreate_time());
         viewHolder.messPicLayout.set(datas.get(position).getPhoto_url());
         final ViewHolder finalViewHolder = viewHolder;
-        viewHolder.button.setOnClickListener(new View.OnClickListener() {
-            Boolean flag = true;
+        viewHolder.button.setOnClickListener(v -> {
+            if (onLikeItClickListener != null) {
 
-            @Override
-            public void onClick(View v) {
-                if (onLikeItClickListener != null) {
-                    if (flag) {
+                    finalViewHolder.likeNum.setText(Integer.parseInt(circleListBean.getLike_num()) + 1 + "");
+                    onLikeItClickListener.meridBack(circleListBean.getCircle_id(), position);
+                    viewHolder.button.setClickable(false);
+                    viewHolder.button.setFocusable(false);
 
-                        finalViewHolder.likeNum.setText(Integer.parseInt(circleListBean.getLike_num()) + 1 + "");
-                        onLikeItClickListener.meridBack(circleListBean.getCircle_id(), position);
-                        flag = false;
-                    }
-                }
             }
         });
+        viewHolder.flowShow.setText("关注");
         viewHolder.flowShow.setOnClickListener(v -> {
             TextView tv_flow = (TextView) v;
             if (tv_flow.getText().equals("关注")) {
