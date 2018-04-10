@@ -46,7 +46,7 @@ public class DetaileSearchFriendAdapter extends BaseAdapter {
         ViewHolder viewHolder;
         SearchFriendInfo.UserListBean userListBean = listBean.get(position);
         if (convertView == null) {
-            convertView = View.inflate(context, R.layout.item_flow_friend, null);
+            convertView = View.inflate(context, R.layout.item_select_user, null);
             viewHolder = new ViewHolder();
             viewHolder.name = convertView.findViewById(R.id.tv_flow_friend);
             viewHolder.invitation = convertView.findViewById(R.id.btn_in_frinde);
