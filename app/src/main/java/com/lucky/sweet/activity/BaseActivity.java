@@ -166,10 +166,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (context != null) {
             final AlertDialog.Builder normalDialog = new AlertDialog.Builder(context);
             normalDialog.setTitle("您的好友邀请您一起点餐");
-            normalDialog.setMessage("您的好友ID：" + invitationInfo.getUserId());
+            normalDialog.setMessage("您的好友ID：" + invitationInfo.getUserId()+"在"+invitationInfo.getShopName()+"餐厅邀请您一起点餐");
             normalDialog.setPositiveButton("接受邀请", (dialog, which) -> {
 
-                MerchantActivity.newMoreOrderInStance((Activity) context, invitationInfo.getMerId(), invitationInfo.getRoomId(),"老板娘烤肉");
+                MerchantActivity.newMoreOrderInStance((Activity) context, invitationInfo.getMerId(), invitationInfo.getRoomId(), invitationInfo.getShopName());
             });
             normalDialog.setNegativeButton("果断拒绝", (dialog, which) -> {
                 dialog.dismiss();
@@ -192,8 +192,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                     ((Activity) context).finish();
                 });
                 normalDialog.show();
-            } else {
-                MyToast.showShort("当前不是购物车");
             }
         }
     }

@@ -808,8 +808,7 @@ public class CommunicationService extends Service {
         HashMap<String, String> map = new HashMap<>();
         map.put("invite_user_id", inviteUserId);
         map.put("session", MyApplication.sessionId);
-        map.put("key_value", info.toJsonString());
-        System.out.println(map);
+        map.put("key_value", new Gson().toJson(info));
         HttpUtils.sendOkHttpRequest(ReserveProperties.INVITATION_FRIEND, new MyOkhttpHelper() {
             @Override
             public void onResponseSuccessfulString(String string) {

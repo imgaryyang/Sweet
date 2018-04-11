@@ -12,12 +12,22 @@ public class InvitationInfo {
     private String userId;
     private String roomId;
     private String merId;
+    private String shopName;
 
-    public InvitationInfo(String userId, String roomId, String merId) {
+    public InvitationInfo(String userId, String roomId, String merId,String shopName) {
         this.userId = userId;
         this.roomId = roomId;
         this.merId = merId;
+        this.shopName = shopName;
 
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
     }
 
     public String getUserId() {
@@ -45,18 +55,5 @@ public class InvitationInfo {
         this.roomId = roomId;
     }
 
-    public String toJsonString() {
-        JSONObject jsonObject = new JSONObject();
 
-        try {
-            jsonObject.put("userId", userId);
-            jsonObject.put("merId", merId);
-            jsonObject.put("roomId", roomId);
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return jsonObject.toString();
-    }
 }

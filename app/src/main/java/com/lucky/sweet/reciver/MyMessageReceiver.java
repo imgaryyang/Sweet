@@ -61,6 +61,7 @@ public class MyMessageReceiver extends MessageReceiver {
                 EventBus.getDefault().post(MuliiOrderInfo);
                 break;
             case INVITE_PEOPLE:
+                System.out.println(content);
                 InvitationInfo invitationInfo = gson.fromJson(content, InvitationInfo.class);
                 BaseActivity.invitationFriend(invitationInfo);
 

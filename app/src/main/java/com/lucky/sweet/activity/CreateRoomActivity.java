@@ -48,6 +48,7 @@ public class CreateRoomActivity extends BaseActivity {
     private FlowFriendAdapter flowFriendAdapter;
     private ListView lv_search_user_show;
     private EditText edt_serch;
+    private String shopName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class CreateRoomActivity extends BaseActivity {
         initData();
     }
 
-    public final static void newInStrance(Activity activity, String mer_id, String shopName) {
+    public   static void newInStrance(Activity activity, String mer_id, String shopName) {
         Intent intent = new Intent(activity, CreateRoomActivity.class);
         intent.putExtra("mer_id", mer_id);
         intent.putExtra(SHOP_NAME, shopName);
@@ -68,6 +69,7 @@ public class CreateRoomActivity extends BaseActivity {
 
     private void initData() {
         Intent intent = getIntent();
+        shopName = getIntent().getStringExtra(SHOP_NAME);
         mer_id = intent.getStringExtra(SHOPID);
     }
 
@@ -119,7 +121,7 @@ public class CreateRoomActivity extends BaseActivity {
 
     public void addRoom(View v) {
         if (roomID != null) {
-            MerchantActivity.newMoreOrderInStance(CreateRoomActivity.this, mer_id, roomID, getIntent().getStringExtra(SHOP_NAME));
+            MerchantActivity.newMoreOrderInStance(CreateRoomActivity.this, mer_id, roomID, shopName);
         }
 
     }
@@ -139,12 +141,10 @@ public class CreateRoomActivity extends BaseActivity {
         lv_add_friend.setAdapter(flowFriendAdapter);
 
         flowFriendAdapter.setOnInvitationClick(userId -> {
-            MyToast.showShort(userId);
 
             if (roomID != null) {
                 MyToast.showShort("已经为您邀请您的好友");
-
-                myBinder.invitationFriend(userId, new InvitationInfo(MyApplication.USER_ID, roomID, mer_id));
+                myBinder.invitationFriend(userId, new InvitationInfo(MyApplication.USER_ID, roomID, mer_id,shopName));
             } else
                 MyToast.showShort("请创建房间");
 
@@ -158,7 +158,7 @@ public class CreateRoomActivity extends BaseActivity {
     public void Event(String info) {
         roomID = info;
 
-        MyToast.showShort("建立房间成功："/*+ info*/);
+        MyToast.showShort("建立房间成功"/*+ info*/);
 
     }
 
@@ -170,8 +170,7 @@ public class CreateRoomActivity extends BaseActivity {
         detaileSearchFriendAdapter.setOnInvitationClick(userId -> {
             if (roomID != null) {
                 MyToast.showShort("已经为您邀请您的好友");
-
-                myBinder.invitationFriend(userId, new InvitationInfo(MyApplication.USER_ID, roomID, mer_id));
+                myBinder.invitationFriend(userId, new InvitationInfo(MyApplication.USER_ID, roomID, mer_id,shopName ));
             } else
                 MyToast.showShort("请创建房间");
 

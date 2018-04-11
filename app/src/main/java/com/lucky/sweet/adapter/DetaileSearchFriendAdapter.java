@@ -58,7 +58,8 @@ public class DetaileSearchFriendAdapter extends BaseAdapter {
         }
         viewHolder.name.setText(userListBean.getNickname());
         viewHolder.title.setmDrawShapeType(CircleImageView.SHAPE_CIRCLE);
-        Glide.with(context).load(userListBean.getPhoto());
+        String photo = userListBean.getPhoto();
+        Glide.with(context).load(photo).into(     viewHolder.title);
         viewHolder.invitation.setOnClickListener(v -> {
             if (onInvitationClick != null) {
                 onInvitationClick.onClick(userListBean.getId());
