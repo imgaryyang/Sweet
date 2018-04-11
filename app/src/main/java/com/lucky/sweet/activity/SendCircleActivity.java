@@ -119,6 +119,10 @@ public class SendCircleActivity extends BaseActivity {
                     MyToast.showShort("请输入文字描述");
                     return;
                 }
+                if (originImages.size()==0){
+                    MyToast.showShort("请添加图片");
+                    return;
+                }
 
                  myBinder.ossCirclePicUpdata(originImages, desc);
 
