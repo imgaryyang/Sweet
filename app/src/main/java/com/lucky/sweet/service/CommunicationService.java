@@ -809,10 +809,11 @@ public class CommunicationService extends Service {
         map.put("invite_user_id", inviteUserId);
         map.put("session", MyApplication.sessionId);
         map.put("key_value", info.toJsonString());
+        System.out.println(map);
         HttpUtils.sendOkHttpRequest(ReserveProperties.INVITATION_FRIEND, new MyOkhttpHelper() {
             @Override
             public void onResponseSuccessfulString(String string) {
-
+                System.out.println(string);
             }
 
             @Override
@@ -1185,7 +1186,7 @@ public class CommunicationService extends Service {
         HttpUtils.sendOkHttpRequest(Properties.DISPLAYSEARCHTITLE, new MyOkhttpHelper() {
             @Override
             public void onResponseSuccessfulString(String string) {
-
+                System.out.println(string);
                 EventBus.getDefault().post(new Gson().fromJson(string, StoreDisplaySearchEntity.class));
             }
 
@@ -1250,7 +1251,7 @@ public class CommunicationService extends Service {
 
             @Override
             public void onResponseSuccessfulString(String string) {
-
+                System.out.println(string);
                 EventBus.getDefault().post(new Gson().fromJson(string, MainStoreInfo.class));
             }
 
@@ -1417,7 +1418,6 @@ public class CommunicationService extends Service {
         map.put("city", MyApplication.CURRENT_CITY);
         map.put("rank", rank);
         map.put("num_start", num);
-        System.out.println(map);
         new Thread() {
             @Override
             public void run() {
@@ -1425,7 +1425,6 @@ public class CommunicationService extends Service {
                         MyOkhttpHelper() {
                             @Override
                             public void onResponseSuccessfulString(String string) {
-                                System.out.println(string);
                                 EventBus.getDefault().post(new Gson().fromJson(string, StoreDisplayInfo.class));
                             }
 

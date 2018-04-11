@@ -16,6 +16,7 @@ import com.lucky.sweet.model.shoppingcar.mode.ShopProduct;
 import com.lucky.sweet.properties.ServiceProperties;
 import com.lucky.sweet.service.CommunicationService;
 import com.lucky.sweet.utility.HttpUtils;
+import com.lucky.sweet.views.MyToast;
 import com.lucky.sweet.widgets.Title;
 import com.lucky.sweet.widgets.ToolBar;
 
@@ -43,6 +44,8 @@ public class OrderSubmitActivity extends BaseActivity {
     private Title title;
     private static String SHOP_CAR_INFO = "carInfo";
     private static String ORDER_DES = "orderdes";
+    private static String MER_ID = "MERID";
+    private static String SHOP_NAME = "NAME";
     private CommunicationService.MyBinder myBinder;
     private ShopCarSingleInformation data;
 
@@ -54,9 +57,10 @@ public class OrderSubmitActivity extends BaseActivity {
         activity.overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
     }
 
-    public static void newInstance(Activity activity, String roomId) {
+    public static void newInstance(Activity activity, String merId, String shopName) {
         Intent intent = new Intent(activity, OrderSubmitActivity.class);
-        intent.putExtra(SHOP_CAR_INFO, roomId);
+        intent.putExtra(MER_ID, merId);
+        intent.putExtra(SHOP_NAME, shopName);
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
     }
@@ -80,9 +84,7 @@ public class OrderSubmitActivity extends BaseActivity {
     void onServiceBind(CommunicationService.MyBinder myBinder) {
         myBinder.getCurrentIntentTime();
         this.myBinder = myBinder;
-    /*    if (MORE_PEOPLE) {
-            myBinder.getMultShopCarInfo(getIntent().getStringExtra(SHOP_CAR_INFO));
-        }*/
+
     }
 
     private void initEvent() {
@@ -144,6 +146,9 @@ public class OrderSubmitActivity extends BaseActivity {
                 tv_dishes_num.setText("  " + number);
                 ll_order_list.addView(inflate);
             }
+        }else {
+            tv_shop_name.setText(intent.getStringExtra(SHOP_NAME));
+            MyToast.showShort("您当前只预定座位");
         }
 
     }
@@ -167,5 +172,6 @@ public class OrderSubmitActivity extends BaseActivity {
                 ("-", ".");
         tv_now_time.setText(sysTimeFormatTwo);
     }
+
 
 }

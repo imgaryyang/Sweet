@@ -169,7 +169,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             normalDialog.setMessage("您的好友ID：" + invitationInfo.getUserId());
             normalDialog.setPositiveButton("接受邀请", (dialog, which) -> {
 
-                MerchantActivity.newMoreOrderInStance((Activity) context, invitationInfo.getMerId(), invitationInfo.getRoomId());
+                MerchantActivity.newMoreOrderInStance((Activity) context, invitationInfo.getMerId(), invitationInfo.getRoomId(),"老板娘烤肉");
             });
             normalDialog.setNegativeButton("果断拒绝", (dialog, which) -> {
                 dialog.dismiss();

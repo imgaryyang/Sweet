@@ -14,8 +14,8 @@ public class CircleProperties {
     public static final String SEND_CIRCLE = "https://thethreestooges.cn:666/circle/issue";
 
     public static final String COMMENT_PEOPLE = "https://thethreestooges.cn:666/circle/comment";
-
-    public static final String FLOW_PEOPLE = "https://thethreestooges.cn:666/circle/attention";
+                                            //
+    public static final String FLOW_PEOPLE = "https://thethreestooges.cn:666/relation/attention_sumit";
 
     public static final String UN_FLOW_PEOPLE = "https://thethreestooges.cn:666/relation/unattention/submit";
 

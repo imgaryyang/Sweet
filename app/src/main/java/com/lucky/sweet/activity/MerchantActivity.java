@@ -24,6 +24,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.jar.Attributes;
 
 /**
  * Created by Qiuyue on 2018/1/3.
@@ -43,6 +44,7 @@ public class MerchantActivity extends BaseActivity {
     private static Boolean isSingleOrder = true;
     private String room_id = "";
     private String mer_id = "1";
+    private final static String SHOPNAME = "SHOPNAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,17 +60,19 @@ public class MerchantActivity extends BaseActivity {
 
     }
 
-    public static void newSingleOrderInStance(Activity activity, String mer_id) {
+    public static void newSingleOrderInStance(Activity activity, String mer_id, String shopName) {
         Intent intent = new Intent(activity, MerchantActivity.class);
         intent.putExtra("mer_id", mer_id);
+        intent.putExtra(SHOPNAME, shopName);
         activity.startActivity(intent);
     }
 
-    public static void newMoreOrderInStance(Activity activity, String mer_id, String room_id) {
+    public static void newMoreOrderInStance(Activity activity, String mer_id, String room_id, String shopName) {
         isSingleOrder = false;
         Intent intent = new Intent(activity, MerchantActivity.class);
         intent.putExtra("mer_id", mer_id);
         intent.putExtra("room_id", room_id);
+        intent.putExtra(SHOPNAME, shopName);
         activity.startActivity(intent);
     }
 
@@ -98,6 +102,7 @@ public class MerchantActivity extends BaseActivity {
 
                 }
                 shopCarSingleInformation.setMer_id(mer_id);
+                shopCarSingleInformation.setShopName(getIntent().getStringExtra(SHOPNAME));
                 OrderSeatActivity.newInstance(MerchantActivity.this, shopCarSingleInformation);
             }
 
@@ -165,7 +170,7 @@ public class MerchantActivity extends BaseActivity {
 
         String name = joinRoomInfo.getName();
         if (!name.equals(MyApplication.USER_ID))
-        MyToast.showShort("感谢这位老铁：" + name + "加入房间");
+            MyToast.showShort("感谢这位老铁：" + name + "加入房间");
 
     }
 

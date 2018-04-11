@@ -8,9 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lucky.sweet.R;
 import com.lucky.sweet.entity.OrderDisInfo;
@@ -42,21 +40,25 @@ public class OrderSeatActivity extends BaseActivity {
     private EditText edt_order_des;
     private String[] data;
     private String[][] time;
-    private String mer_id;
+    private static boolean nullShopCar = false;
     private static String SHOP_CAR_INFO = "DATA";
+    private static String MER_ID = "1";
+    private static String SHOP_NAME = "1";
 
     public static void newInstance(Activity activity, ShopCarSingleInformation shopCarSingleInformation) {
+        nullShopCar = false;
         Intent intent = new Intent(activity, OrderSeatActivity.class);
         intent.putExtra(SHOP_CAR_INFO, shopCarSingleInformation);
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
     }
 
-    public static void newInstance(Activity activity, String roomId) {
+    public static void newInstance(String mer_id, String shopName, Activity activity) {
+        nullShopCar = true;
         Intent intent = new Intent(activity, OrderSeatActivity.class);
-        intent.putExtra(SHOP_CAR_INFO, roomId);
+        intent.putExtra(MER_ID, mer_id);
+        intent.putExtra(SHOP_NAME, shopName);
         activity.startActivity(intent);
-        activity.overridePendingTransition(R.anim.act_left_in, R.anim.act_left_out);
     }
 
     @Override
@@ -73,12 +75,7 @@ public class OrderSeatActivity extends BaseActivity {
     }
 
     private void initData() {
-        try {
-            Intent intent = getIntent();
-            mer_id = intent.getStringExtra("mer_id");
-        } catch (Exception e) {
 
-        }
     }
 
     @Override
@@ -105,10 +102,10 @@ public class OrderSeatActivity extends BaseActivity {
 
     private void initEvent() {
 
-        findViewById(R.id.btn_order_commit).setOnClickListener(v -> verifyOrder());
+        //  findViewById(R.id.btn_order_commit).setOnClickListener(v -> verifyOrder());
     }
 
-    private void verifyOrder() {
+    private void verifyOrder() {/*
         String phone = et_input_phone.getText().toString().trim();
         boolean result = RegularUtils.isPhoneNumber(phone);
         if (result == true) {
@@ -129,7 +126,7 @@ public class OrderSeatActivity extends BaseActivity {
         } else {
             MyToast.showShort("手机号不对哦，请重新输入");
 
-        }
+        }*/
     }
 
     private void initTitle() {
@@ -148,8 +145,8 @@ public class OrderSeatActivity extends BaseActivity {
                     goPreAnim();
                     break;
                 case Title.BUTTON_RIGHT1:
-                    verifyOrder();
-                    startActivity(new Intent(OrderSeatActivity.this, OrderSubmitActivity.class));
+                    //verifyOrder();
+                    //startActivity(new Intent(OrderSeatActivity.this, OrderSubmitActivity.class));
                     break;
             }
         });
@@ -192,19 +189,25 @@ public class OrderSeatActivity extends BaseActivity {
 
     public void onButtonClick(View view) {
         switch (view.getId()) {
-//            case R.id.btn_order_submit:
-//      /*          if (MORE_PEOPLE) {
-//
-//                    OrderSubmitActivity.newInstance( getIntent().getStringExtra(SHOP_CAR_INFO));
-//
-//                } else {*/
-//                OrderDisInfo orderDisInfo = sendOrderSeatInfo();
-//                if (orderDisInfo!=null) {
-//                    OrderSubmitActivity.newInstance( OrderSeatActivity.this,(ShopCarSingleInformation) getIntent().getSerializableExtra(SHOP_CAR_INFO),orderDisInfo);
-//
-//                }
-//               /* }*/
-//                break;
+            case R.id.btn_order_commit:
+           /*     if (MORE_PEOPLE) {
+
+                    OrderSubmitActivity.newInstance( getIntent().getStringExtra(SHOP_CAR_INFO));
+
+                } else {*/
+                OrderDisInfo orderDisInfo = sendOrderSeatInfo();
+                if (orderDisInfo != null) {
+                    if (!nullShopCar) {
+                        OrderSubmitActivity.newInstance(OrderSeatActivity.this, (ShopCarSingleInformation) getIntent().getSerializableExtra(SHOP_CAR_INFO), orderDisInfo);
+                    }else {
+                        String merId = getIntent().getStringExtra(MER_ID);
+                        String shopName = getIntent().getStringExtra(SHOP_NAME);
+                        OrderSubmitActivity.newInstance(OrderSeatActivity.this, merId ,shopName  );
+                    }
+
+                }
+                /*         }*/
+                break;
             case R.id.tv_timeSelect:
 
                 DishesOrderDialog dishesOrderDialog = new DishesOrderDialog
@@ -214,5 +217,6 @@ public class OrderSeatActivity extends BaseActivity {
                 break;
         }
     }
+
 
 }

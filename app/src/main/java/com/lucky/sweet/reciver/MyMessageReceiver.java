@@ -45,7 +45,6 @@ public class MyMessageReceiver extends MessageReceiver {
     public void onMessage(Context context, CPushMessage cPushMessage) {
         String content = cPushMessage.getContent();
         Gson gson = new Gson();
-        Toast.makeText(context, "onMessage, messageId: " + cPushMessage.getMessageId() + ", title: " + cPushMessage.getTitle() + ", content:" + cPushMessage.getContent(), Toast.LENGTH_SHORT).show();
         Log.e("MyMessageReceiver", "onMessage, messageId: " + cPushMessage.getMessageId() + ", title: " + cPushMessage.getTitle() + ", content:" + cPushMessage.getContent());
 
         switch (cPushMessage.getTitle()) {

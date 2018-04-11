@@ -1,4 +1,5 @@
 package com.lucky.sweet.activity;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,12 +23,13 @@ import com.lucky.sweet.widgets.ToolBar;
 
 /**
  * 拍照的Activity
- *
- *
  */
 public class CaptureActivity extends FragmentActivity {
-private ScanningQR fragment;
-    /** Called when the activity is first created. */
+    private ScanningQR fragment;
+
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,46 +51,48 @@ private ScanningQR fragment;
             lp = view_margin.getLayoutParams();
             lp.height = statusBarHeight;
             view_margin.setLayoutParams(lp);
-        } else {}
+        } else {
+        }
     }
 
     private void initView() {
         FragmentManager supportFragmentManager = getSupportFragmentManager();
-         fragment= (ScanningQR) supportFragmentManager.findFragmentById(R.id.fragment_scanningqr);
-findViewById(R.id.mo_scanner_photo);
+        fragment = (ScanningQR) supportFragmentManager.findFragmentById(R.id.fragment_scanningqr);
+        findViewById(R.id.mo_scanner_photo);
     }
+
     private void initEvent() {
-       fragment.setBackOnClickListener(new ScanningQR.BackOnClickListener() {
-           @Override
-           public void setonBackClickListener(View view) {
-               finish();
-           }
-       });
-       fragment.setObtainResultCodeListener(new ScanningQR.GetDecode() {
-           @Override
-           public void getDecodeString(String decode) {
+        fragment.setBackOnClickListener(new ScanningQR.BackOnClickListener() {
+            @Override
+            public void setonBackClickListener(View view) {
+                finish();
+            }
+        });
+        fragment.setObtainResultCodeListener(new ScanningQR.GetDecode() {
+            @Override
+            public void getDecodeString(String decode) {
 
-               DecodeEntity decodeEntity;
-               try {
-                     decodeEntity = new Gson().fromJson(decode, DecodeEntity.class);
+                DecodeEntity decodeEntity;
+                try {
+                    decodeEntity = new Gson().fromJson(decode, DecodeEntity.class);
 
-               }catch (JsonSyntaxException e){
-                   MyToast.showShort("请勿解析其他二维码");
+                } catch (JsonSyntaxException e) {
+                    MyToast.showShort("请勿解析其他二维码");
 
-                   finish();
-                   return;
-               }
-               AlertDialog.Builder builder = new AlertDialog.Builder(CaptureActivity.this);
-               builder.setTitle("提示").setMessage("确认加入购物！").setPositiveButton("确认", (dialogInterface, i) -> {
-                   MerchantActivity.newMoreOrderInStance(CaptureActivity.this,decodeEntity.getMerId(),decodeEntity.getRoomId());
-                   finish();
-                   overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-               }).setNegativeButton("取消", (dialogInterface, i) -> finish()).create();
-               AlertDialog show = builder.show();
-               show.setCanceledOnTouchOutside(false);
+                    finish();
+                    return;
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(CaptureActivity.this);
+                builder.setTitle("提示").setMessage("确认加入购物！").setPositiveButton("确认", (dialogInterface, i) -> {
+                    MerchantActivity.newMoreOrderInStance(CaptureActivity.this, decodeEntity.getMerId(), decodeEntity.getRoomId(), decodeEntity.getName() );
+                    finish();
+                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                }).setNegativeButton("取消", (dialogInterface, i) -> finish()).create();
+                AlertDialog show = builder.show();
+                show.setCanceledOnTouchOutside(false);
 
 
-           }
-       });
+            }
+        });
     }
 }

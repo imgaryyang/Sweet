@@ -42,6 +42,7 @@ public class CreateRoomActivity extends BaseActivity {
 
     private CommunicationService.MyBinder myBinder;
     private String mer_id;
+    private final static String SHOP_NAME = "3";
     private final static String SHOPID = "mer_id";
     private HorizontalListView lv_add_friend;
     private FlowFriendAdapter flowFriendAdapter;
@@ -58,12 +59,13 @@ public class CreateRoomActivity extends BaseActivity {
         initData();
     }
 
-    public final static void newInStrance(Activity activity, String mer_id) {
+    public final static void newInStrance(Activity activity, String mer_id, String shopName) {
         Intent intent = new Intent(activity, CreateRoomActivity.class);
         intent.putExtra("mer_id", mer_id);
+        intent.putExtra(SHOP_NAME, shopName);
         activity.startActivity(intent);
     }
-    
+
     private void initData() {
         Intent intent = getIntent();
         mer_id = intent.getStringExtra(SHOPID);
@@ -114,13 +116,10 @@ public class CreateRoomActivity extends BaseActivity {
 
     }
 
-    public void cancelCreate(View v) {
-
-    }
 
     public void addRoom(View v) {
         if (roomID != null) {
-            MerchantActivity.newMoreOrderInStance(CreateRoomActivity.this, mer_id, roomID);
+            MerchantActivity.newMoreOrderInStance(CreateRoomActivity.this, mer_id, roomID, getIntent().getStringExtra(SHOP_NAME));
         }
 
     }
@@ -143,11 +142,11 @@ public class CreateRoomActivity extends BaseActivity {
             MyToast.showShort(userId);
 
             if (roomID != null) {
-                MyToast.showShort("已经邀请您的好友");
+                MyToast.showShort("已经为您邀请您的好友");
 
                 myBinder.invitationFriend(userId, new InvitationInfo(MyApplication.USER_ID, roomID, mer_id));
             } else
-            MyToast.showShort("请创建房间");
+                MyToast.showShort("请创建房间");
 
         });
 
@@ -158,23 +157,23 @@ public class CreateRoomActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(String info) {
         roomID = info;
-//        Toast.makeText(this, "建立房间成功：" + info, Toast.LENGTH_SHORT).show();
-        MyToast.showShort("建立房间成功："+ info);
+
+        MyToast.showShort("建立房间成功："/*+ info*/);
 
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(SearchFriendInfo info) {
 
-        DetaileSearchFriendAdapter detaileSearchFriendAdapter = new DetaileSearchFriendAdapter( info.getUser_list(), this);
+        DetaileSearchFriendAdapter detaileSearchFriendAdapter = new DetaileSearchFriendAdapter(info.getUser_list(), this);
         lv_search_user_show.setAdapter(detaileSearchFriendAdapter);
         detaileSearchFriendAdapter.setOnInvitationClick(userId -> {
             if (roomID != null) {
-                MyToast.showShort("已经邀请您的好友");
+                MyToast.showShort("已经为您邀请您的好友");
 
                 myBinder.invitationFriend(userId, new InvitationInfo(MyApplication.USER_ID, roomID, mer_id));
             } else
-            MyToast.showShort("请创建房间");
+                MyToast.showShort("请创建房间");
 
         });
 

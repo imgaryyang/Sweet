@@ -229,27 +229,24 @@ public class StoreParticularInfoActivity extends BaseActivity {
         ll_null.setOnClickListener(view -> cancelbtnAnim());
         ibtn_order_seat.setOnClickListener(view -> {
             if (MyApplication.sessionId.equals("")) {
-//                Toast.makeText(StoreParticularInfoActivity.this, "请先登陆",
-//                        Toast.LENGTH_SHORT).show();
+
                 MyToast.showShort("请先登陆");
 
                 return;
             }
-            Intent intent = new Intent(StoreParticularInfoActivity.this, OrderSeatActivity.class);
-            intent.putExtra("mer_id", mer_id);
-            startActivity(intent);
+            OrderSeatActivity.newInstance(mer_id,tv_shop_title.getText().toString().trim(),this);
+
             goNextAnim();
 
         });
         ibtn_orderSingle.setOnClickListener(view -> {
             if (MyApplication.sessionId.equals("")) {
-//                Toast.makeText(StoreParticularInfoActivity.this, "请先登陆",
-//                        Toast.LENGTH_SHORT).show();
+
                 MyToast.showShort("请先登陆");
 
                 return;
             }
-            MerchantActivity.newSingleOrderInStance(StoreParticularInfoActivity.this, mer_id);
+            MerchantActivity.newSingleOrderInStance(StoreParticularInfoActivity.this, mer_id,tv_shop_title.getText().toString().trim());
             goNextAnim();
         });
 
@@ -262,8 +259,8 @@ public class StoreParticularInfoActivity extends BaseActivity {
 
                     return;
                 }
-                CreateRoomActivity.newInStrance(StoreParticularInfoActivity.this, mer_id);
-                        goNextAnim();
+                CreateRoomActivity.newInStrance(StoreParticularInfoActivity.this, mer_id,tv_shop_title.getText().toString().trim());
+                goNextAnim();
 
             }
         });
@@ -367,7 +364,7 @@ public class StoreParticularInfoActivity extends BaseActivity {
         tv_shop_title.setText(shopdes.getName());
         tv_shop_des.setText(shopdes.getIntroduce());
         tv_shop_worktime.setText(shopdes.getBusiness_hours());
-        tv_store_ave.setText("￥`" + shopdes.getAvecon());
+        tv_store_ave.setText("￥" + shopdes.getAvecon());
         latLng = new LatLng(Double.valueOf(shopdes.getLatitude()),
                 Double.valueOf(shopdes.getLongitude()));
         maps = map.getMap();

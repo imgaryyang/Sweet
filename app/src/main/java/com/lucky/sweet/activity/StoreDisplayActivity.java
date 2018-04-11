@@ -62,8 +62,8 @@ public class StoreDisplayActivity extends BaseActivity {
     private String businessArea = "";
     private String rankType = "";
     private String recreationType = "";
-    private ArrayList<String> circle = new ArrayList<>();
-    private ArrayList<List<String>> classify = new ArrayList<>();
+    private ArrayList<String> circle ;
+    private ArrayList<List<String>> classify ;
     private List<String> order = new ArrayList<>();
     private int num = 0;
     private int bussinessAre = 0;
@@ -241,13 +241,13 @@ public class StoreDisplayActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(StoreDisplaySearchEntity info) {
+        circle = new ArrayList<>();
+        classify = new ArrayList<>();
         StoreDisplaySearchEntity.CircleListBean list = info.getCircle_list();
-        List<StoreDisplaySearchEntity.CircleListBean.SelectBean> select = list.getSelect();
-        for (StoreDisplaySearchEntity.CircleListBean.SelectBean selectBean : select) {
+        for (StoreDisplaySearchEntity.CircleListBean.SelectBean selectBean :  list.getSelect()) {
             circle.add(selectBean.getName());
             classify.add(selectBean.getList());
         }
-
 
         order = list.getOrder();
         businessArea = classify.get(0).get(0);
