@@ -1,40 +1,33 @@
-## Welcome to GitHub Pages
+# Sweet智能商户APP
 
-You can use the [editor on GitHub](https://github.com/QueenRoad/Sweet/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+> 本项目是针对餐饮服务行业设计出的一款在线智能餐饮app。由智能商铺管理系统和用户智能点餐系统两部分组成。
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+- 商铺管理系统部分涵盖了店铺管理、菜品服务管理、账目管理、会员管理、员工管理、订单管理等主要功能, 而且更为重要的是系统可以智能的对相关数据进行分析挖掘，
 
-```markdown
-Syntax highlighted code block
+- 在特定算法的支持定期主动完成对财务报表的分析,菜品销售情况的分析,并生成相应的经营策略调整报告,以帮助商户更好地经营商铺,提高经济效益。
 
-# Header 1
-## Header 2
-### Header 3
+- 而客户智能点餐系统部分除了具有其他常用订餐app系统的在线点单业务以外，还专门提供了提前预定功能，使得客户可以提前预订座位，提前点菜下单。
 
-- Bulleted
-- List
+- 另外为了解决传统一桌一菜单，传递看菜单点菜的麻烦，本系统也提供了多人同时点菜的功能。客户借助本app可以实现远程点菜，下单后，菜单即可直接通过移动设备传单到后厨，后厨便可以做菜。
 
-1. Numbered
-2. List
+- 同时也可以到店后通过扫码识别电子菜单进行自主点菜，用餐后可直接通过app付款，方便快捷。更为重要的系统会智能的对客户点菜历及浏览页面历史、距离远近、口味喜好等数据进行分析，主动为客户推荐更适合的菜品。更好的为客户服务。 
 
-**Bold** and _Italic_ and `Code` text
+  
 
-[Link](url) and ![Image](src)
-```
+  
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+  > 本应用由两个系统组成，分别为商铺管理系统和客户点餐系统。商铺管理部分主要分为店铺管理、菜品服务管理、账目管理、会员管理、员工管理、订单管理等六个模块
 
-### Jekyll Themes
+部分软件截图：
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/QueenRoad/Sweet/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+![启动页](https://i.loli.net/2018/07/16/5b4c9c85c395b.png)
 
-### Support or Contact
+![首页](https://i.loli.net/2018/07/16/5b4c9ce58c7e7.png)
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.   
+![圈子](https://i.loli.net/2018/07/16/5b4c9cf9b91f3.png)
 
+![个人主页](https://i.loli.net/2018/07/16/5b4c9d18cdfd8.png)
 
 
